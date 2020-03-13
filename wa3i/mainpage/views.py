@@ -11,3 +11,9 @@ def index(request):
     context = {
     }
     return render(request, 'mainpage/index.html', context)
+
+
+def introduce(request):
+    context = {
+    }
+    return render(request, 'mainpage/introduce.html', context)
