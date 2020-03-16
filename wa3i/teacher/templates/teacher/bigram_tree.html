@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>WA3i</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+
+    <!-- login -->
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+    <!-- ./login -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <style type="text/css">
+        #login-menu ul{
+            background-color: #343a40!important;
+            display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+            height:auto;
+            padding:0px;
+            margin:0px;
+            border:0px;
+            position:absolute;
+            width:100px;
+            z-index:200;
+        }
+        #login-menu:hover ul{
+            display: block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+        }
+        #login-menu:hover ul li{
+            text-align: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#menubar').click(function () {
+                var username = $('#user-name').text();
+                if (username == 'User') {
+                    alert('로그인을 하셔야 이용 가능합니다. 먼저 로그인을 해주세요.');
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto" id="menubar">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher' %}">소개
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'notice' %}">게시판</a>
+                </li>
+            </ul>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#"></a>-->
+<!--                </li>-->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" id="login-menu">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i class="fa fa-user fa-fw"></i> User </a>
+                    <ul>
+                        <li><a class="nav-link" href="#">로그인</a></li>
+                        <li><a class="nav-link" href="#">회원가입</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+        <div class="col-lg-3">
+            <img class="img-fluid rounded mb-4 mb-lg-0" style="height: 250px;" src="{% static 'mainpage/image/logo.png' %}" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5">
+            <h1 class="font-weight-light">Bigram Tree</h1><br>
+            <p>분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성해 주세요.<br>
+                입력 형식은 텍스트로 부탁드립니다.</p>
+            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- login -->
+	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/animsition/js/animsition.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'teacher/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/select2/select2.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'teacher/vendor/daterangepicker/daterangepicker.js' %}"></script>
+	<script src="{% static 'teacher/vendor/countdowntime/countdowntime.js' %}"></script>
+	<script src="{% static 'teacher/js/main.js' %}"></script>
+</body>
+
+</html>
