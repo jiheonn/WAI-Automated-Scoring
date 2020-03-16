@@ -17,3 +17,8 @@ def introduce(request):
     context = {
     }
     return render(request, 'mainpage/introduce.html', context)
+
+def handbook(request):
+    context = {
+    }
+    return render(request, 'mainpage/handbook.html', context)
