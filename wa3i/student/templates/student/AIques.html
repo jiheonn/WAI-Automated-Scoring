@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <head>
 
     <meta charset="utf-8">
@@ -76,8 +76,9 @@
     <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4">
         <div class="card-body">
-            <a class="btn btn-primary" href="{% url 'AI' %}">전체문항</a>
+            <a class="w3-btn w3-small w3-light-grey" href="{% url 'AI' %}">전체문항</a>
             <h5 class="text-white m-0 text-center">문제 풀기</h5>
+
         </div>
     </div>
 
@@ -86,7 +87,7 @@
     <div class="row">
 
       <!-- Post Content Column -->
-      <div class="col-lg-9">
+      <div class="col-lg-12">
 
         <!-- Title -->
         <h2 class="mt-4">지붕 위의 발전기</h2>
@@ -94,7 +95,7 @@
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/img1.png' %}">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}">
 
         <hr>
 
@@ -115,12 +116,11 @@
               <div class="form-group">
                 <textarea class="form-control" rows="3"></textarea>
               </div>
-<!--              <button type="submit" class="btn btn-primary">제출하기</button>-->
 
                 <div class="col-md-10">
                     <table>
                         <td>
-                            <button type="submit" class="btn btn-primary">제출하기</button>
+                            <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
                         </td>
                         <td>
                             <select class="form-control form-control-a">
@@ -159,7 +159,7 @@
 
     <div class="container" align="center">
         <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/기관.png' %}" width="300" height="300" alt="">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" width="300" height="300" alt="">
     </div>
     <!-- /.container -->
 </footer>

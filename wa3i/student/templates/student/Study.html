@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <head>
 
     <meta charset="utf-8">
@@ -65,9 +65,9 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <h1 class="font-weight-light">Welcome</h1>
-            <p>선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.
+            <p>선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.<br>
                 평가 결과는 수업 시간에 선생님께서 알려주십니다.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
@@ -76,22 +76,6 @@
     </div>
     <!-- /.row -->
 
-<!--    <form action="/code_num_url/" method="post">-->
-<!--        <input id="code_num" type="text" name="code_num" value="0000 0000">-->
-<!--        <input type="submit" value="OK">-->
-<!--    </form>-->
-
-    <form action="" method="post">
-        <label for="code_num">8자리 code: </label>
-        <input id="code_num" type="text" name="code_num" value="{{ current_code }}">
-        <input type="submit" value="OK">
-    </form>
-
-    <form action="" method="post">
-        <label for="ID_num">개인 ID: </label>
-        <input id="ID_num" type="text" name="ID_num" value="{{ current_id }}">
-        <input type="submit" value="OK">
-    </form>
 
 <!--    <form method="POST">-->
 <!--        {% csrf_token %}-->
@@ -99,6 +83,29 @@
 <!--        <input type="submit" value="Submit">-->
 <!--    </form>-->
 
+
+    <!-- Content Row -->
+    <br>
+    <center>
+            <div class="w3-container">
+                <form action="getBoardList.do" method="post" >
+                    <table style="text-align: center; width:600px; height:160px;">
+                        <tr>
+                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
+                        </tr>
+                        <tr>
+                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        <br><br>
+        <a href="{% url 'Studyquestion' %}">
+        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
+        </a>
+        <br><br>
+    </center>
+    <!-- /.row -->
 
 
 </div>
@@ -109,7 +116,7 @@
 
     <div class="container" align="center">
         <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/기관.png' %}" width="300" height="300" alt="">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" width="300" height="300" alt="">
     </div>
     <!-- /.container -->
 </footer>

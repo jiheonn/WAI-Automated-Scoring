@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
+
+
 # from .forms import CodeForm
 
 
@@ -45,3 +47,8 @@ def AIques(request):
     }
     return render(request, 'student/AIques.html', context)
 
+
+def Studyques(request):
+    context = {
+    }
+    return render(request, 'student/Studyques.html', context)

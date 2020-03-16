@@ -9,4 +9,5 @@ urlpatterns = [
     path('Homework/', views.Homework, name='Homework'),
     path('Self/', views.Self, name='Self'),
     path('AI/AIques', views.AIques, name='AIquestion'),
+    path('Study/Studyques', views.Studyques, name='Studyquestion'),
 ]

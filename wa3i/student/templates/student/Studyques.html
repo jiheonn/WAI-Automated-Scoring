@@ -1,0 +1,198 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>WA3i</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Study' %}">학습평가
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Homework' %}">숙제하기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">게시판</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5">
+            <h1 class="font-weight-light">Welcome</h1>
+            <p>선생님이 선택한 문항입니다.<br>
+                성실하게 응답해주세요.
+            </p>
+            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+
+
+
+
+    <div class="row">
+        <div class="col-lg-5">
+            <table cellpadding="10px">
+                <tr>
+                    <td>
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
+                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
+                    </td>
+                    <td>
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
+                        <a href="{% url 'AIquestion' %}">지붕 위의 발전기</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
+                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
+                    </td>
+                    <td>
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
+                        <a href="{% url 'AIquestion' %}" >지붕 위의 발전기</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <!--문항 작성-->
+        <div class="col-md-7">
+            <h2 class="mt-4">지붕 위의 발전기</h2>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}">
+
+        <hr>
+
+        <!-- Post Content -->
+        <p>시연이 아버지는 새로 집을 지으시면서 지붕 위에 태양광 발전 장치를 설치하셨습니다. 비용이 많이 들었지만 "태양광 발전"이 석
+            탄이나 석유와 같은 화석 에너지에 비해 우리가 미래에도 지속 가능하게 살아가는데 도움이 된다고 생각했기 때문에 설치하기로
+            결정하였습니다. 태양광 발전이 왜 석탄하고 석유보다 미래에도 지속 가능하게 살아가는 데에 도움이 될까요? 과학적으로 설명해
+            봅시다.
+        </p>
+
+        <hr>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">생각을 적어보세요:</h5>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+
+                <div class="col-md-10">
+                    <table>
+                        <td>
+                            <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                        </td>
+                        <td>&emsp;&emsp;</td>
+                        <td>
+                            <select class="form-control form-control-a">
+                                <option value="">학교</option>
+                                <option>초등학교</option>
+                                <option>중학교</option>
+                                <option>고등학교</option>
+                            </select>
+                        </td>
+                        <td>
+                             <select class="form-control form-control-a">
+                                <option value="">성별</option>
+                                <option>남자</option>
+                                <option>여자</option>
+                            </select>
+                        </td>
+                        <td>&emsp;&emsp;&emsp;&emsp;&emsp;</td>
+                        <td>
+                            <a href="{% url 'Study' %}">
+                                <button class="w3-button w3-small w3-round w3-grey">< 이전</button>
+                            </a>
+                        </td>
+                    </table>
+                </div>
+            </form>
+          </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+
+    <div class="container" align="center">
+        <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" width="300" height="300" alt="">
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
