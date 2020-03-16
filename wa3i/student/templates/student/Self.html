@@ -32,9 +32,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'student' %}">좋은 설명
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
@@ -45,8 +44,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Homework' %}">숙제하기</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">게시판</a>
@@ -67,8 +67,8 @@
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
             <h1 class="font-weight-light">Welcome</h1>
-            <p>좋은 설명을 작성하는데 필요한 학습자료입니다.
-            문제 풀이 전 학습합시다.
+            <p>스스로 학습하고 평가하는 능력을 키우는 항목입니다.
+                과목을 선택해주세요.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -77,40 +77,64 @@
     <!-- /.row -->
 
     <!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
         <div class="card-body">
-
-                 <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">서술형 문제풀이</a></td>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">좋은 설명이란?</a></td>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">좋은 국어 표현</a></td>
-                    </tr>
-                     <tr>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">올바른 논술</a></td>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">과정 중심 평가</a></td>
-                        <td><img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/pdf.png' %}" width="50" height="50" alt=""> <a href="#">창의성 키우기</a></td>
-                    </tr>
-                    <tbody>
-                </table>
-
-
-
-            </div>
+            <p class="text-white m-0">This call to action card is a great place to showcase some important information
+                or display a clever tagline!</p>
+        </div>
     </div>
 
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">학생</h2>
+                    <p class="card-text">학생설명이 들어갈 예정입니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">선생님</h2>
+                    <p class="card-text">선생님설명이 들어갈 예정입니다.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'teacher' %}" class="btn btn-primary btn-sm">More Info</a>
+                </div>
+            </div>
+        </div>
+        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+        <!--      <div class="col-md-4 mb-5">-->
+        <!--        <div class="card h-100">-->
+        <!--          <div class="card-body">-->
+        <!--            <h2 class="card-title">Card Three</h2>-->
+        <!--            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>-->
+        <!--          </div>-->
+        <!--          <div class="card-footer">-->
+        <!--            <a href="#" class="btn btn-primary btn-sm">More Info</a>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+
+    </div>
+    <!-- /.row -->
 
 </div>
 <!-- /.container -->
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
-
     <div class="container" align="center">
         <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/기관.png' %}" width="300" height="300" alt="">
     </div>
-
     <!-- /.container -->
 </footer>
 
