@@ -37,13 +37,13 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가
+                    <a class="nav-link" href="{% url 'AI' %}">평가연습
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'Homework' %}">숙제하기</a>
                 </li>
                 <li class="nav-item">
@@ -66,51 +66,31 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">선생님이 선택한 문항입니다.<br>
-                성실하게 응답해주세요.
-            </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+        <div class="col-lg-4">
+        <p class="font-weight-bolder triangle-border left">문제를 잘 읽고 여러분의 생각을 설명해 보세요.</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
+    <!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-4">
+        <div class="card-body">
+<!--            <a class="w3-btn w3-small w3-light-grey" href="{% url 'Homework' %}">전체문항</a>-->
+            <h5 class="text-white m-0 text-center">문제 풀기</h5>
 
-
-
-
-    <div class="row">
-        <div class="col-lg-5">
-            <table cellpadding="10px">
-                <tr>
-                    <td>
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
-                    </td>
-                    <td>
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">지붕 위의 발전기</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
-                    </td>
-                    <td>
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}" >지붕 위의 발전기</a>
-                    </td>
-                </tr>
-            </table>
         </div>
+    </div>
 
 
+    <!-- Content Row -->
+    <div class="row">
 
-        <!--문항 작성-->
-        <div class="col-md-7">
-            <h2 class="mt-4">지붕 위의 발전기</h2>
+      <!-- Post Content Column -->
+      <div class="col-lg-12">
+
+        <!-- Title -->
+        <h2 class="mt-4">지붕 위의 발전기</h2>
 
         <hr>
 
@@ -138,7 +118,7 @@
               </div>
 
                 <div class="col-md-10">
-                    <table width="600">
+                    <table>
                         <td>
                             <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
                         </td>
@@ -157,20 +137,18 @@
                                 <option>여자</option>
                             </select>
                         </td>
-                        <td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
-                        <td>
-                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>
-                        </td>
                     </table>
                 </div>
             </form>
           </div>
         </div>
 
-
-
+      </div>
     </div>
+    <!-- /.row -->
+
 </div>
+<!-- /.container -->
 
 
 
@@ -193,3 +171,7 @@
 </body>
 
 </html>
+
+
+
+

@@ -52,3 +52,9 @@ def Studyques(request):
     context = {
     }
     return render(request, 'student/Studyques.html', context)
+
+
+def Homeworkques(request):
+    context = {
+    }
+    return render(request, 'student/Homeworkques.html', context)

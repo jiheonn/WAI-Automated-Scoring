@@ -17,7 +17,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -65,65 +66,38 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-            <h1 class="font-weight-light">Welcome</h1>
-            <p>문제를 잘 읽고 여러분의 생각을 설명해 보세요.
-            </p>
+        <div class="col-lg-6">
+            <p class="font-weight-bolder triangle-border left">선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.<br>
+                모든 문항에 대해 학습을 완료하면 선생님께 결과가 전달됩니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-    <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-        <div class="card-body">
-            <p class="text-white m-0">This call to action card is a great place to showcase some important information
-                or display a clever tagline!</p>
-        </div>
-    </div>
-
     <!-- Content Row -->
-    <div class="row">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">학생</h2>
-                    <p class="card-text">학생설명이 들어갈 예정입니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
+    <br>
+    <center>
+            <div class="w3-container">
+                <form action="getBoardList.do" method="post" >
+                    <table style="text-align: center; width:600px; height:160px;">
+                        <tr>
+                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
+                        </tr>
+                        <tr>
+                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">선생님</h2>
-                    <p class="card-text">선생님설명이 들어갈 예정입니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'teacher' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
-            </div>
-        </div>
-        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
-        <!--      <div class="col-md-4 mb-5">-->
-        <!--        <div class="card h-100">-->
-        <!--          <div class="card-body">-->
-        <!--            <h2 class="card-title">Card Three</h2>-->
-        <!--            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>-->
-        <!--          </div>-->
-        <!--          <div class="card-footer">-->
-        <!--            <a href="#" class="btn btn-primary btn-sm">More Info</a>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
-
-    </div>
+        <br><br>
+        <a href="{% url 'Homeworkquestion' %}">
+        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
+        </a>
+        <br><br>
+    </center>
     <!-- /.row -->
+
 
 </div>
 <!-- /.container -->
