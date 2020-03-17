@@ -43,11 +43,11 @@
                     <a class="nav-link" href="{% url 'introduce' %}">소개</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'handbook' %}">사용방법</a>
+                    <a class="nav-link" href="{% url 'handbook' %}">활용가이드</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">연구진</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">연구진</a>-->
+<!--                </li>-->
             </ul>
         </div>
     </div>
@@ -60,7 +60,7 @@
 <!--    <div class="row align-content-center my-5">-->
     <div class="row justify-content-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
+            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
@@ -92,7 +92,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">학생</h2>
-                    <p class="card-text">학생설명이 들어갈 예정입니다.</p>
+                    <p class="card-text">학생페이지로 이동합니다.</p>
                 </div>
                 <div class="card-footer">
                     <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
@@ -104,7 +104,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h2 class="card-title">선생님</h2>
-                    <p class="card-text">선생님설명이 들어갈 예정입니다.</p>
+                    <p class="card-text">선생님페이지로 이동합니다.</p>
                 </div>
                 <div class="card-footer">
                     <a href="{% url 'teacher' %}" class="btn btn-primary btn-sm">More Info</a>
@@ -116,7 +116,7 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h2 class="card-title">관리자</h2>
-                    <p class="card-text">관리자설명이 들어갈 예정입니다.</p>
+                    <p class="card-text">관리자페이지로 이동합니다.</p>
                   </div>
                   <div class="card-footer">
                     <a href="{% url 'sysop' %}" class="btn btn-primary btn-sm">More Info</a>

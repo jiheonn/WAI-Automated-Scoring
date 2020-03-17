@@ -22,6 +22,7 @@
 
 </head>
 
+
 <body>
 
 <!-- Navigation -->
@@ -43,11 +44,11 @@
                     <a class="nav-link active" href="{% url 'introduce' %}">소개</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'handbook' %}"">사용방법</a>
+                    <a class="nav-link" href="{% url 'handbook' %}">활용가이드</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">연구진</a>
-                </li>
+                <!--                                <li class="nav-item">-->
+                <!--                                    <a class="nav-link" href="#">연구진</a>-->
+                <!--                                </li>-->
             </ul>
         </div>
     </div>
@@ -68,11 +69,12 @@
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo-right.png' %}" width="120"
-                 height="120" alt="">
+            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
+                 src="{% static 'mainpage/image/logo-right.png' %}" alt="">
         </div>
         <!-- /.col-md-4 -->
     </div>
+
 
     <div class="row align-items-center my-2">
 
@@ -84,30 +86,143 @@
     <div class="row align-items-center my-2">
 
         <div class="align-items-center col-lg-12">
-            <span class='font-weight-bolder text-highlight'>WA3I(와이)는</span> ‘인공지능을 활용한 웹기반 자동평가(Web-based Automated Assessment with Artificial Intelligence)’의 영문 약자로 학생들이 현상에
+            <span class='font-weight-bolder text-highlight'>WA3I(와이)는</span> ‘인공지능을 활용한 웹기반 자동평가(Web-based Automated
+            Assessment with Artificial Intelligence)’의 영문 약자로 학생들이 현상에
             대한 의문 ‘왜(Why, 와이)?’에 대한 설명을 효과적으로 구성할 수 있도록 돕는 온라인 교육 프로그램을 뜻합니다. <br><br>
 
             교육부와 한국과학창의재단이 지원하여 개발되는 WA3I프로그램은 인공지능을 활용하여 학생들이 문제에 대하여 자신의 설명을 완성하면서 서술형 평가를 대비할 수 있도록 개발되었습니다. 미래는 제시된
             답에서 정답을 고르는 것이 아닌 문제를 읽고 자신의 지식과 생각을 바탕으로 합리적이고 논리적인 설명을 구성할 수 있는 능력이 필요합니다. <br><br>
 
-            <span class='font-weight-bolder'>4차 산업혁명 시대를 이끌어 갈 우리 학생들에게 문제 해결력, 의사소통, 창의성은 중요한 역량입니다.</span> 학생들의 미래 역량을 발달시키기 위하여 서술형 평가가 확대되고 있습니다. 이 프로그램을
+            <span class='font-weight-bolder'>4차 산업혁명 시대를 이끌어 갈 우리 학생들에게 문제 해결력, 의사소통, 창의성은 중요한 역량입니다.</span> 학생들의 미래 역량을
+            발달시키기 위하여 서술형 평가가 확대되고 있습니다. 이 프로그램을
             통하여 학생들의 문제해결력과 설명 구성 능력이 향상될 수 있습니다. <br><br>
 
             WA3I ver.1에서는 초등학생에서 고등학생까지 도전할 수 있는 30개 서술형 문항에 대한 설명을 구성하면서 학습할 수 있도록 개발되었습니다. 앞으로 WA3I의 개선된 버전에서는 다음의 기능을
             갖출 것입니다.
 
-            <div class="card text-white main-introduce-card my-5 py-4 text-center">
+            <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
                     <p class="text-black-50 m-0">
                         ▷ 학생들이 작성하는 설명의 국어적인 문장 수준을 확인할 수 있는 기능이 추가됩니다. 맞춤법, 띄어쓰기 오류 등 기본적인 요소와 국어 문법에 근거하여 완성된 문장이 갖추어야
                         하는 요소들이 포함되어
                         있는지 확인할 수 있는 기능이 추가됩니다. <br><br>
-                        ▷ 교실에서 수업 전과 후에 학생들이 서술형 평가 문항을 수행해보고 선생님이 바로 학생들의 응답을 분석할 수 있는 기능이 추가됩니다. 학생들은 수업 시간에 선생님과 함께 자신의
+                        ▷ 교실에서 수업 전과 후에 학생들이 서술형 평가 문항을 수행해보고 선생님이 바로 학생들의 응답을 분석할 수 있는 기능이 추가됩니다. 학생들은 수업 시간에 선생님과 함께
+                        자신의
                         설명에 대한 피드백을
                         받을 수 있습니다. <br><br>
                         ▷ 모든 문항은 QR코드로 제공될 것입니다. 선생님은 다양한 학습 자료를 개발하시면서 WA3I 문항의 QR코드를 활용하실 수 있으며, 학생들은 스마트폰에서 바로 설명을
                         구성하면서 학습할 수 있도록
                         다양한 기능들이 제공될 것입니다.
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row align-items-center my-2">
+
+        <div class="col-lg-3">
+            <h5> ▶ 참여 연구진 </h5>
+        </div>
+    </div>
+
+    <div class="card text-white main-introduce-card my-5 py-4 text-left">
+        <div class="card-body text-black-50 m-0">
+            <ul>
+                <li> 하민수 (연구책임,강원대학교 과학교육학부 교수)</li>
+                <li> 최성철 (가천대학교 산업경영공학과 교수)</li>
+                <li> 신세인 (충북대학교 생물교육과 교수)</li>
+                <li> 박지원 (강원대학교 과학교육학부 석박통합과정)</li>
+                <li> 이주림 (고려대학교 컴퓨터학과 석사과정)</li>
+            </ul>
+            <ul>
+                <li> 이준기 (전북대학교 과학교육학부 교수)</li>
+                <li> 주재걸 (고려대학교 컴퓨터학과 교수)</li>
+                <li> 강경필 (고려대 컴퓨터학과 박사과정)</li>
+                <li> 이현주 (가천대학교 산업경영공학과 석사과정)</li>
+                <li> 이종호 (가천대학교 산업경영공학과 학사과정)</li>
+            </ul>
+            <ul>
+                <li> 박지선 (이화여자대학교 초등교육과 교수)</li>
+                <li> 김남형 (가천대학교 응용통계학과 교수)</li>
+                <li> 이경건 (서울대학교 화학교육과 석박통합과정)</li>
+                <li> 조용장 (고려대학교 컴퓨터학과 석사과정)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row align-items-center my-2">
+
+        <div class="col-lg-3">
+            <h5> ▶ 자료 수집 협조 교사 </h5>
+        </div>
+    </div>
+
+
+    <div class="row align-items-center my-2">
+
+        <div class="align-items-center col-lg-12">
+            인공지능을 기계학습방법으로 개발한 WA3I 프로그램의 채점모델은 문항 당 약 1300개의 전문가 채점 자료로 훈련되었습니다.<br>
+            WA3I 프로그램의 개발을 위하여 많은 양의 학생응답자료를 수집해 준 선생님들께 감사의 말씀을 전합니다.
+
+            <div class="card text-white main-introduce-card my-5 py-4 text-left">
+                <div class="card-body text-black-50 m-0">
+                    <ul>
+                        <li>· 고성원</li>
+                        <li>· 구슬애</li>
+                        <li>· 김광진</li>
+                        <li>· 김기남</li>
+                    </ul>
+                    <ul>
+                        <li>· 김성기</li>
+                        <li>· 김효민</li>
+                        <li>· 박상현</li>
+                        <li>· 박선옥</li>
+                    </ul>
+                    <ul>
+                        <li>· 박인혜</li>
+                        <li>· 박준형</li>
+                        <li>· 박철용</li>
+                        <li>· 배성은</li>
+                    </ul>
+                    <ul>
+                        <li>· 서상민</li>
+                        <li>· 성기백</li>
+                        <li>· 성정화</li>
+                        <li>· 오득빈</li>
+                    </ul>
+                    <ul>
+                        <li>· 오현명</li>
+                        <li>· 윤희상</li>
+                        <li>· 이상의</li>
+                        <li>· 이안나</li>
+                    </ul>
+                    <ul>
+                        <li>· 이은혜</li>
+                        <li>· 이인혜</li>
+                        <li>· 이정윤</li>
+                        <li>· 이준규</li>
+                    </ul>
+                    <ul>
+                        <li>· 이지은</li>
+                        <li>· 이혜림</li>
+                        <li>· 전조협</li>
+                        <li>· 정영희</li>
+                    </ul>
+                    <ul>
+                        <li>· 정현민</li>
+                        <li>· 조용광</li>
+                        <li>· 지인수</li>
+                        <li>· 채윤정</li>
+                    </ul>
+                    <ul>
+                        <li>· 최 희</li>
+                        <li>· 한문현</li>
+                        <li>· 한한결</li>
+                        <li>· 허양숙</li>
+                    </ul>
                 </div>
             </div>
 
@@ -116,7 +231,14 @@
     </div>
 
 
-</div>
+    <div class="text-right">
+        <img src="{% static 'mainpage/image/mark.png' %}" alt="">
+    </div>
+
+        <div class="m-3 text-center">
+            <a href="{% url 'home' %}" class="mr-1 btn btn-outline-dark">홈으로 바로가기</a>
+            <a href="{% url 'handbook' %}"class="ml-1 btn btn-outline-primary">활용가이드 바로가기</a>
+    </div>
 
 </div>
 <!-- /.container -->
