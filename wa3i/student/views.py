@@ -58,3 +58,39 @@ def Homeworkques(request):
     context = {
     }
     return render(request, 'student/Homeworkques.html', context)
+
+
+def Selfcateg(request):
+    context = {
+    }
+    return render(request, 'student/Selfcateg.html', context)
+
+
+def Selfques(request):
+    context = {
+    }
+    return render(request, 'student/Selfques.html', context)
+
+
+def Selfdiag(request):
+    context = {
+    }
+    return render(request, 'student/Selfdiag.html', context)
+
+
+def Selfgrade(request):
+    context = {
+    }
+    return render(request, 'student/Selfgrade.html', context)
+
+
+def Homeworkdiag(request):
+    context = {
+    }
+    return render(request, 'student/Homeworkdiag.html', context)
+
+
+def AIdiag(request):
+    context = {
+    }
+    return render(request, 'student/AIdiag.html', context)

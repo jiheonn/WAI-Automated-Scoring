@@ -97,3 +97,74 @@
   </div>
 </div>
 
+
+
+<!--검색하기 크레존-->
+<div class="stch_inner mmStchArea">
+    <form method="get" action="/result.php" id="topSearchResult">
+        <div class="sch_fild">
+        <select name="tab">
+            <option value=""  selected >통합검색</option>
+                <option value="field_work" >창의적 체험활동</option>
+                <option value="school_trip" >현장체험학습</option>
+                <option value="idea_train" >창의교육</option>
+                <option value="TAB_SUSTAINABLE"  >지속가능발전교육</option>
+                <option value="blog" >크레존 소식</option>
+                <option value="reference" >자료실</option>
+                <option value="TAG" >#태그</option>
+            </select>
+            <input type="text" class="sch_input" title="검색어입력" placeholder="검색어를 입력해주세요." name="s"  value="" id="search-text_m" autocomplete="off" maxlength="30">
+            <input type="submit" class="sch_btn" title="검색하기" id="top_Search"/>
+        </div>
+    </form>
+    <script>
+    //jQuery(".sch_fild").submit(function() { if(jQuery("#search-text_m").val() == "") { alert("검색어를 입력해주세요."); return false; } });
+    var tmatchCnt = 0;
+    var slang = true;
+
+    jQuery("#top_Search").on('click',function(e){
+        tmatchCnt = 0;
+        var searchTxt = $("#search-text_m").val();
+
+        if(searchTxt == "") {
+                alert('검색어를 입력하세요.');
+                return false;
+        }
+
+        for(var i in geumji){
+           try{
+            var compare = searchTxt.match(geumji[i]);
+             console.log(compare.index);
+             alert('금지어가 포함 되어 있습니다.-' + geumji[i]);
+             tmatchCnt++;
+             if(tmatchCnt > 0) return;
+           }catch(err){
+             console.log("통과");
+           }
+        }
+        jQuery('#topSearchResult').submit();
+    });
+
+    </script>
+
+        <div class="sch_pers nanum">
+            <span class="tit">인기검색어</span>
+            <ol class="scpers_lst">
+                                                <li data-number="1">
+                        <a href="/result.php?s=창의체험" class="txt">창의체험</a>
+                    </li>
+                                                    <li data-number="2">
+                        <a href="/result.php?s=수업모델" class="txt">수업모델</a>
+                    </li>
+                                                    <li data-number="3">
+                        <a href="/result.php?s=겨울방학" class="txt">겨울방학</a>
+                    </li>
+                                                    <li data-number="4">
+                        <a href="/result.php?s=체험활동" class="txt">체험활동</a>
+                    </li>
+                                            </ol>
+        </div>
+
+        <a href="#" class="mm_sch_close02 mmSchCloseBtn" title="통합검색 닫기"></a>
+
+    </div>
