@@ -17,19 +17,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <!-- login -->
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-    <!-- ./login -->
+    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -126,24 +119,39 @@
 <div class="container">
 
     <!-- Heading Row -->
-    <div class="row align-items-center my-5">
-        <div class="col-lg-3">
-            <img class="img-fluid rounded mb-4 mb-lg-0" style="height: 250px;" src="{% static 'mainpage/image/logo.png' %}" alt="">
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <h1 class="font-weight-light">주제분석</h1><br>
-            <p>주제를 분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성하고,<br>
+<!--            <h1 class="font-weight-light">주제분석</h1><br>-->
+            <p class="font-weight-bolder triangle-border left">
+                주제를 분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성하고,
                 '토픽 모델링' 알고리즘을 선택해 주세요.<br>
                 입력 형식은 텍스트로 부탁드립니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
+    <div class="col-lg-7" style="float: none; margin: 30px auto;">
+            <select name="evaluation_type">
+                <option value="select" selected="selected">--토픽 모델링--</option>
+                <option value="learning_evaluation">간단한 모델</option>
+                <option value="homework">복잡한 모델</option>
+            </select>
+    </div>
     <!-- /.row -->
-
+    <div class="col-7" style="float: none; margin: 50px auto; border-style: solid; border-width: 1px; border-color: gray;">
+        <textarea style="width: 630px; height: 300px; line-height: 70px;" type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
+    </div>
+    <div class="col-lg-3" style="float: none; margin: 50px auto;">
+        <button type="submit" class="w3-button w3-large w3-round w3-blue">주제 분석 결과 보기</button>
+    </div>
 </div>
 <!-- /.container -->
+
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
@@ -157,17 +165,6 @@
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- login -->
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/animsition/js/animsition.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/popper.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/select2/select2.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/daterangepicker.js' %}"></script>
-	<script src="{% static 'teacher/vendor/countdowntime/countdowntime.js' %}"></script>
-	<script src="{% static 'teacher/js/main.js' %}"></script>
 </body>
 
 </html>

@@ -17,6 +17,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
     <!-- login -->
 	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
@@ -77,7 +79,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto" id="menubar">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'teacher' %}">소개
+                    <a class="nav-link" href="{% url 'teacher' %}">홈
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -126,14 +128,16 @@
 <div class="container">
 
     <!-- Heading Row -->
-    <div class="row align-items-center my-5">
-        <div class="col-lg-3">
-            <img class="img-fluid rounded mb-4 mb-lg-0" style="height: 250px;" src="{% static 'mainpage/image/logo.png' %}" alt="">
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <h1 class="font-weight-light">Welcome</h1><br>
-            <p>교사용 모드를 이용하시려면 먼저 로그인을 해주세요.<br>
+<!--            <h1 class="font-weight-light">Welcome</h1><br>-->
+            <p class="font-weight-bolder triangle-border left">
+                안녕하세요!<br>
+                교사용 모드를 이용하시려면 먼저 로그인을 해주세요.<br>
                회원이 아니신 선생님께서는 회원가입을 부탁드립니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -201,6 +205,7 @@
 			</div>
     </div>
 	</div>
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 <!-- Footer -->
 <footer class="py-5 bg-dark">
     <div class="container">

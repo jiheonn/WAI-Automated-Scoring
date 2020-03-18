@@ -17,19 +17,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <!-- login -->
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-    <!-- ./login -->
+    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+    
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -126,23 +119,32 @@
 <div class="container">
 
     <!-- Heading Row -->
-    <div class="row align-items-center my-5">
-        <div class="col-lg-3">
-            <img class="img-fluid rounded mb-4 mb-lg-0" style="height: 250px;" src="{% static 'mainpage/image/logo.png' %}" alt="">
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <h1 class="font-weight-light">결과보기</h1><br>
-            <p>확인하고자 하는 문항 코드를 입력하여 응답 결과를 확인할 수 있습니다.<br>
+<!--            <h1 class="font-weight-light">결과보기</h1><br>-->
+            <p class="font-weight-bolder triangle-border left">
+                확인하고자 하는 문항 코드를 입력하여 응답 결과를 확인할 수 있습니다.
                 응답 결과는 파일로도 저장이 가능합니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
+    <div class="col-lg-4" style="float: none; margin: 50px auto;">
+            <form action="getBoardList.do" method="post" >
+                <input id="code_num" type="text" name="code_num" placeholder="   8자리 코드를 입력하세요." style="width:330px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
+            </form>
+        </div>
     <!-- /.row -->
-
+    <div class="col-lg-2" style="float: none; margin: 50px auto;">
+        <button type="submit" class="w3-button w3-large w3-round w3-blue">평가 결과 보기</button>
+    </div>
 </div>
 <!-- /.container -->
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
@@ -156,17 +158,6 @@
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- login -->
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/animsition/js/animsition.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/popper.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/select2/select2.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/daterangepicker.js' %}"></script>
-	<script src="{% static 'teacher/vendor/countdowntime/countdowntime.js' %}"></script>
-	<script src="{% static 'teacher/js/main.js' %}"></script>
 </body>
 
 </html>
