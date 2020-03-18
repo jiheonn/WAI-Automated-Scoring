@@ -1,27 +1,6 @@
+{% extends 'student/base.html' %}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>WA3i</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
-</head>
-
-<body>
+{% block content %}
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -68,80 +47,99 @@
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
             <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다.<br>
-                과목을 선택해주세요.
-            </p>
+                과목을 선택해주세요.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-    <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-        <div class="card-body">
-            <p class="text-white m-0">This call to action card is a great place to showcase some important information
-                or display a clever tagline!</p>
-        </div>
-    </div>
 
     <!-- Content Row -->
-    <div class="row">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">학생</h2>
-                    <p class="card-text">학생설명이 들어갈 예정입니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
-            </div>
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">선생님</h2>
-                    <p class="card-text">선생님설명이 들어갈 예정입니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'teacher' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
-            </div>
-        </div>
-        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
-        <!--      <div class="col-md-4 mb-5">-->
-        <!--        <div class="card h-100">-->
-        <!--          <div class="card-body">-->
-        <!--            <h2 class="card-title">Card Three</h2>-->
-        <!--            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>-->
-        <!--          </div>-->
-        <!--          <div class="card-footer">-->
-        <!--            <a href="#" class="btn btn-primary btn-sm">More Info</a>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--      &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+    <center>
 
-    </div>
+        <form>
+            <div class="w3-container">
+<!--                <span>-->
+<!--                    <table style="width:400px; height:100px;">-->
+<!--                        <tr>-->
+<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">국어</button></td>-->
+<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">영어</button></td>-->
+<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">수학</button></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+
+<!--                    <tabe style="width:400px; height:100px;">-->
+<!--                        <tr>-->
+<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">과학</button></td>-->
+<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">사회</button></td>-->
+<!--                        </tr>-->
+<!--                    </tabe>-->
+<!--                </span>-->
+
+<!--                <input type="hidden" name="q_no" value="1" />-->
+<!--                <table>-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            <input type="radio" name="grade" value="ele" id="r1" />-->
+<!--                            <label for="r1">초</label>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <input type="radio" name="grade" value="mid" id="r2" />-->
+<!--                            <label for="r2">중</label>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            <input type="radio" name="grade" value="high" id="r3" />-->
+<!--						    <label for="r3">고</label>-->
+
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+
+
+
+
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> 국어
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> 영어
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> 수학
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option4" autocomplete="off"> 과학
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option5" autocomplete="off"> 사회
+              </label>
+            </div>
+
+
+
+            </div>
+        </form>
+
+        <br><br>
+        <div class="row my-5">
+            <div class="col-lg-12">
+                <a href="{% url 'Selfcategory' %}">
+                    <button type="submit" class="w3-button w3-large w3-round w3-indigo w3-display-bottommiddle w3-margin-bottom">다음</button>
+                </a>
+                <br>
+            </div>
+        </div>
+
+    </center>
     <!-- /.row -->
 
 </div>
 <!-- /.container -->
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container" align="center">
-        <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" width="300" height="300" alt="">
-    </div>
-    <!-- /.container -->
-</footer>
 
-<!-- Bootstrap core JavaScript -->
-<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
-</body>
-
-</html>
+{% endblock %}
