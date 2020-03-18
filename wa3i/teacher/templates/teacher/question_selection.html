@@ -17,19 +17,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <!-- login -->
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-    <!-- ./login -->
+    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -51,6 +44,55 @@
         #login-menu:hover ul li{
             text-align: center;
         }
+        /*.box { margin: 50px auto; width: 500px; }*/
+
+        /* custom checkbox */
+        .dft-chk {
+          display: inline-block;
+        }
+
+        .dft-chk + .dft-chk {
+          margin-left: 15px;
+        }
+
+        .ctm-check {
+          position: relative;
+          display: inline-block;
+          overflow: hidden;
+          vertical-align: middle;
+          *display: inline;
+          *zoom: 1
+        }
+
+        .ctm-check input {
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          opacity: 0;
+          filter: alpha(opacity=0);
+        }
+
+        .ctm-check label {
+          display: inline-block;
+          height: 20px;
+          padding-right: 10px;
+          font-size: 12px;
+          line-height: 1.6em;
+          line-height: 19px\9
+        }
+
+        .ctm-check label i {
+          display: inline-block;
+          float: left;
+          width: 14px;
+          height: 14px;
+          margin: 2px 5px 0 0;
+          background: url('http://cfile23.uf.tistory.com/image/23689442562748E40C3309') no-repeat 0 0;
+        }
+
+        .ctm-check.checked label i {
+          background-position: 0 -14px
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -61,6 +103,20 @@
                 }
             });
         });
+        jQuery(function($) {
+          /* Checkbox  */
+          var checkBox = $('.ctm-check');
+          var addClassCheckBox = function($input) {
+            if ($input.prop('checked')) {
+              $input.parent().addClass('checked');
+            } else {
+              $input.parent().removeClass('checked');
+            }
+          };
+          checkBox.on('change', 'input', function() {
+            addClassCheckBox($(this));
+          })
+});
     </script>
 </head>
 
@@ -126,21 +182,137 @@
 <div class="container">
 
     <!-- Heading Row -->
-    <div class="row align-items-center my-5">
-        <div class="col-lg-3">
-            <img class="img-fluid rounded mb-4 mb-lg-0" style="height: 250px;" src="{% static 'mainpage/image/logo.png' %}" alt="">
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <h1 class="font-weight-light">문항선택</h1><br>
-            <p>8자리 코드를 입력하고, '학습평가'와 '숙제하기' 중 하나를<br>
+<!--            <h1 class="font-weight-light">문항선택</h1><br>-->
+            <p class="font-weight-bolder triangle-border left">
+                8자리 코드를 입력하고, '학습평가'와 '숙제하기' 중 하나를<br>
                 선택해 주세요. 그리고 원하는 문항을 선택할 수 있습니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
+        <div style="margin: 50px;">
+            <select name="evaluation_type">
+                <option value="select" selected="selected">--선택--</option>
+                <option value="learning_evaluation">학습평가</option>
+                <option value="homework">숙제하기</option>
+            </select>
+            <form action="getBoardList.do" method="post" >
+                <input id="code_num" type="text" name="code_num" placeholder="   8자리 코드를 입력하세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;"><br>
+                <input type="text" name="start-date" placeholder="   시작날짜를 입력하세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
+                <input type="text" name="end-date" placeholder="   종료날짜를 입력하세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
+                <a>ex)2020-03-17</a>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>유리종 쥐 실험</label>
+                    </span>
+                </div>
+            </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>지붕 위의 발전기</label>
+                    </span>
+                </div>
+            </div>
+                  <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>유리종 쥐 실험</label>
+                    </span>
+                </div>
+            </div>
+                  <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>지붕 위의 발전기</label>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>유리종 쥐 실험</label>
+                    </span>
+                </div>
+            </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>지붕 위의 발전기</label>
+                    </span>
+                </div>
+            </div>
+                  <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>유리종 쥐 실험</label>
+                    </span>
+                </div>
+            </div>
+                  <!-- /.col-md-4 -->
+            <div class="col-md-3 mb-5">
+                <div class="card h-100" align="center">
+                    <div class="card-body">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
+                    </div>
+                    <span class="card-footer ctm-check">
+                        <input type="checkbox" id="a" >
+                        <label for="a"><i></i>지붕 위의 발전기</label>
+                    </span>
+                </div>
+            </div>
+
+    </div>
+
     </div>
     <!-- /.row -->
-
+    <div class="col-lg-2" style="float: none; margin: 50px auto;">
+        <button type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
+    </div>
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 </div>
 <!-- /.container -->
 
@@ -156,17 +328,6 @@
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- login -->
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/animsition/js/animsition.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/popper.js' %}"></script>
-	<script src="{% static 'teacher/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/select2/select2.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'teacher/vendor/daterangepicker/daterangepicker.js' %}"></script>
-	<script src="{% static 'teacher/vendor/countdowntime/countdowntime.js' %}"></script>
-	<script src="{% static 'teacher/js/main.js' %}"></script>
 </body>
 
 </html>
