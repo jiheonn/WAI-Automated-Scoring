@@ -70,7 +70,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto" id="menubar">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">소개
+                    <a class="nav-link" href="{% url 'teacher' %}">홈
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -138,9 +138,47 @@
                 <input id="code_num" type="text" name="code_num" placeholder="   8자리 코드를 입력하세요." style="width:330px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
             </form>
         </div>
+
+    <table border="1" bordercolor="gray" width ="700" height="150" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
+    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+        <td>제목</td>
+        <td>타입</td>
+        <td>코드</td>
+        <td>기간</td>
+        <td>학년</td>
+        <td style="width: 40px;">반</td>
+    </tr>
+    <tr align = "center">
+        <td>과학 3주차 숙제</td>
+        <td>숙제하기</td>
+        <td>0000 0000</td>
+        <td>2020-03-06 ~ 2020-03-14</td>
+        <td>1</td>
+        <td>4</td>
+    </tr>
+        <tr align = "center">
+        <td>과학 3주차 평가</td>
+        <td>학습평가</td>
+        <td>0000 0000</td>
+        <td>2020-03-14 ~ 2020-03-15</td>
+        <td>1</td>
+        <td>4</td>
+    </tr>
+        <tr align = "center">
+        <td>수학 3주차 숙제</td>
+        <td>숙제하기</td>
+        <td>0000 0000</td>
+        <td>2020-03-06 ~ 2020-03-14</td>
+        <td>1</td>
+        <td>7</td>
+    </tr>
+</table>
+
     <!-- /.row -->
     <div class="col-lg-2" style="float: none; margin: 50px auto;">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">평가 결과 보기</button>
+        <form action="{% url 'ex_view_result' %}">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">평가 결과 보기</button>
+        </form>
     </div>
 </div>
 <!-- /.container -->
