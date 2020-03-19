@@ -59,3 +59,9 @@ def notice(request):
     context = {
     }
     return render(request, 'teacher/notice.html', context)
+
+
+def ex_view_result(request):
+    context = {
+    }
+    return render(request, 'teacher/ex_view_result.html', context)

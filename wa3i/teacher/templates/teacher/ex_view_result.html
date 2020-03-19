@@ -21,6 +21,8 @@
     <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+    
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -42,6 +44,18 @@
         #login-menu:hover ul li{
             text-align: center;
         }
+        .btn21 {
+          width: 80px;
+          /*height: 50px;*/
+          /*font-size:30px;*/
+          /*font-family: 'Nanum Gothic';*/
+          /*color: white;*/
+          /*line-height: 50px;*/
+          text-align: center;
+          /*background: blue;*/
+          border: solid 2px grey;
+          border-radius: 12px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -51,6 +65,14 @@
                     alert('로그인을 하셔야 이용 가능합니다. 먼저 로그인을 해주세요.');
                 }
             });
+        });
+        var abc = {};
+        abc['aaa'] = 'bbb';
+        $("#file_download").on("click", function (e) {
+            $("a#download").attr({
+                "download": "download.json",
+                "href": "data:application/json;charset=utf8;base64," + window.btoa(JSON.stringify(abc))
+            }).get(0).click();
         });
     </script>
 </head>
@@ -75,7 +97,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
                 </li>
                 <li class="nav-item">
@@ -90,7 +112,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
                 </li>
                 <li class="nav-item">
@@ -123,19 +145,104 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-<!--            <h1 class="font-weight-light">QR코드</h1><br>-->
+<!--            <h1 class="font-weight-light">결과보기</h1><br>-->
             <p class="font-weight-bolder triangle-border left">
-                문항을 선택하면 QR코드가 생성됩니다. 생성된 QR코드를<br>
-                스마트폰으로도 인공지능 자동평가를 수행할 수 있습니다.</p>
+                학생들의 응답 결과입니다.<br>
+                응답 결과는 파일로도 저장이 가능합니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
-    <!-- /.row -->
+    <table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
+    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+        <td>제목</td>
+        <td>타입</td>
+        <td>코드</td>
+        <td>기간</td>
+        <td>학년</td>
+        <td style="width: 40px;">반</td>
+        <td>문항수</td>
+        <td>전체 평균점수</td>
+        <td>평균 진행률(%)</td>
+        <td>평균 성공률(%)</td>
+        <td>결과 저장</td>
+        <td>더보기</td>
+    </tr>
+    <tr align = "center">
+        <td>과학 3주차 숙제</td>
+        <td>숙제하기</td>
+        <td>0000 0000</td>
+        <td>2020-03-06 ~<br>2020-03-14</td>
+        <td>1</td>
+        <td>4</td>
+        <td>3</td>
+        <td>1.75</td>
+        <td>80</td>
+        <td>70</td>
+        <td><button class="btn21" id="file_download">다운로드</button> <a id="download" download="" href=""></a></td>
+        <td><button class="btn21">더보기</button> <a download="" href=""></a></td>
+    </tr>
+</table>
 
+    <table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
+    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+        <td>학생ID</td>
+        <td>학생이름</td>
+        <td>평균점수</td>
+        <td>진행률(%)</td>
+        <td>성공률(%)</td>
+        <td>학생응답</td>
+    </tr>
+    <tr align = "center">
+        <td>2018347</td>
+        <td>홍길동1</td>
+        <td>3.00</td>
+        <td>100</td>
+        <td>100</td>
+        <td align="left">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
+            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
+            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
+    </tr>
+        <tr align = "center">
+        <td>2018347</td>
+        <td>홍길동2</td>
+        <td>3.00</td>
+        <td>100</td>
+        <td>100</td>
+        <td align="left">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
+            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
+            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
+    </tr>
+        <tr align = "center">
+        <td>2018347</td>
+        <td>홍길동3</td>
+        <td>3.00</td>
+        <td>100</td>
+        <td>100</td>
+        <td align="left">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
+            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
+            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
+    </tr>
+        <tr align = "center">
+        <td>2018347</td>
+        <td>홍길동4</td>
+        <td>3.00</td>
+        <td>100</td>
+        <td>100</td>
+        <td align="left">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
+            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
+            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
+    </tr>
+</table>
+
+    <!-- /.row -->
+    <div class="col-lg-0" style="float: none; margin: 50px auto;">
+        <form action="{% url 'view_result' %}">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">이전</button>
+        </form>
+    </div>
 </div>
 <!-- /.container -->
-
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 
 <!-- Footer -->
