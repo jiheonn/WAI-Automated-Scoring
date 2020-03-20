@@ -46,3 +46,13 @@ def detailed_quiz(request):
     context = {
     }
     return render(request, 'sysop/detailed_quiz.html', context)
+
+def detailed_download(request):
+    context = {
+    }
+    return render(request, 'sysop/detailed_download.html', context)
+
+def write_quiz(request):
+    context = {
+    }
+    return render(request, 'sysop/write_quiz.html', context)
