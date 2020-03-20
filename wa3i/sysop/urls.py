@@ -10,5 +10,7 @@ urlpatterns = [
     path('quiz_download/', views.quiz_download, name='quiz_download'),
     path('notice/', views.notice, name='notice'),
     path('detailed_review/', views.detailed_review, name='detailed_review'),
-    path('detailed_quiz/', views.detailed_quiz, name='detailed_quiz')
+    path('detailed_quiz/', views.detailed_quiz, name='detailed_quiz'),
+    path('detailed_download/', views.detailed_download, name='detailed_download'),
+    path('write_quiz/', views.write_quiz, name='write_quiz')
 ]
