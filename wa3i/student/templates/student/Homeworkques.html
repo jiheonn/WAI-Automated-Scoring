@@ -5,7 +5,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">WA3I</a>
+        <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">게시판</a>
+                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -93,35 +93,61 @@
           <h5 class="card-header">생각을 적어보세요:</h5>
           <div class="card-body">
             <form>
-              <div class="form-group">
+              <div class="form-group clearfix">
                 <textarea class="form-control" rows="3"></textarea>
               </div>
             </form>
 
                 <div class="col-md-10">
                     <table>
+<!--                        <tr>-->
                         <td>
                             <a href="{% url 'Homeworkdiagnosis' %}">
-                                <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                                <button type="submit" class="w3-btn w3-round w3-blue w3-display-left w3-margin-bottom">제출하기</button>
                             </a>
                         </td>
+                        <table align="center">
+                            <td><div style="margin:10px">
+                                <select class="form-control form-control-a">
+                                    <option value="">학교</option>
+                                    <option>초등학교</option>
+                                    <option>중학교</option>
+                                    <option>고등학교</option>
+                                </select></div>
+                            </td>
+                            <td><div style="margin:10px">
+                                 <select class="form-control form-control-a">
+                                    <option value="">성별</option>
+                                    <option>남자</option>
+                                    <option>여자</option>
+                                 </select></div>
+                            </td>
+                        </table>
+
                         <td>
-                            <select class="form-control form-control-a">
-                                <option value="">학교</option>
-                                <option>초등학교</option>
-                                <option>중학교</option>
-                                <option>고등학교</option>
-                            </select>
+                            <a href="{% url 'Homeworkselect' %}">
+                                <button type="submit" class="w3-btn w3-round w3-grey w3-display-right w3-margin-bottom">< 이전</button>
+                            </a>
                         </td>
-                        <td>
-                             <select class="form-control form-control-a">
-                                <option value="">성별</option>
-                                <option>남자</option>
-                                <option>여자</option>
-                            </select>
-                        </td>
+                        </tr>
                     </table>
                 </div>
+
+
+<!--                <div class="col-md-12">-->
+<!--                    <a href="{% url 'Homeworkdiagnosis' %}">-->
+<!--                        <button type="submit" class="w3-btn w3-round w3-blue w3-display-left w3-section">제출하기</button>-->
+<!--                    </a>-->
+<!--                    <a href="{% url 'Self' %}">-->
+<!--                        <button type="submit" class="w3-btn w3-round w3-grey w3-display-right w3-section">< 이전</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+
+
+
+
+
+
 <!--            </form>-->
           </div>
         </div>

@@ -18,12 +18,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가
-                    </a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Homework' %}">숙제하기</a>
+                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Homework' %}">숙제하기
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
@@ -45,9 +45,9 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.<br>
-                평가 결과는 수업 시간에 선생님께서 알려주십니다.
+        <div class="col-lg-6">
+            <p class="font-weight-bolder triangle-border left">새로운 숙제를 하려면 ‘숙제하기’ 버튼을,<br>
+            과거 숙제를 조회 및 재작성하려면 ‘숙제조회’ 버튼을 눌러주세요.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -55,35 +55,29 @@
     </div>
     <!-- /.row -->
 
-
-<!--    <form method="POST">-->
-<!--        {% csrf_token %}-->
-<!--        {{ form.as_p }}-->
-<!--        <input type="submit" value="Submit">-->
-<!--    </form>-->
-
-
     <!-- Content Row -->
     <br>
-    <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
-                    <table style="text-align: center; width:600px; height:160px;">
-                        <tr>
-                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                    </table>
-                </form>
+<!--    <center>-->
+            <div class="w3-container w3-center">
+                <div class="w3-bar">
+<!--                    <table class="table" style="text-align: center; width:600px; height:160px;">-->
+<!--                        <tr>-->
+                        <a href="{% url 'Homeworkcode' %}">
+                            <button type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-right">숙제하기</button>
+                        </a>
+                        <a href="{% url 'Homeworkcheck' %}">
+                            <button type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-left">숙제 조회</button>
+                        </a>
+<!--                    </tr>-->
+<!--                    </table>-->
+                </div>
             </div>
         <br><br>
-        <a href="{% url 'Studyquestion' %}">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
-        </a>
+<!--        <a href="{% url 'Homeworkselect' %}">-->
+<!--        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>-->
+<!--        </a>-->
         <br><br>
-    </center>
+<!--    </center>-->
     <!-- /.row -->
 
 

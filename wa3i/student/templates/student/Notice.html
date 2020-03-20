@@ -12,15 +12,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'student' %}">좋은 설명
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Homework' %}">숙제하기</a>
@@ -45,9 +45,8 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.<br>
-                평가 결과는 수업 시간에 선생님께서 알려주십니다.
+        <div class="col-lg-3">
+             <p class="font-weight-bolder triangle-border left">게시판입니다.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -55,36 +54,8 @@
     </div>
     <!-- /.row -->
 
+    <!-- Call to Action Well -->
 
-<!--    <form method="POST">-->
-<!--        {% csrf_token %}-->
-<!--        {{ form.as_p }}-->
-<!--        <input type="submit" value="Submit">-->
-<!--    </form>-->
-
-
-    <!-- Content Row -->
-    <br>
-    <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
-                    <table style="text-align: center; width:600px; height:160px;">
-                        <tr>
-                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        <br><br>
-        <a href="{% url 'Studyquestion' %}">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
-        </a>
-        <br><br>
-    </center>
-    <!-- /.row -->
 
 
 </div>

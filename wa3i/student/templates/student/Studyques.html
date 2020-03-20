@@ -5,7 +5,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">WA3I</a>
+        <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">게시판</a>
+                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -45,7 +45,7 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <p class="font-weight-bolder triangle-border left">선생님이 선택한 문항입니다.<br>
                 성실하게 응답해주세요.
             </p>
@@ -65,21 +65,21 @@
                 <tr>
                     <td>
                         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
+                        <a href="{% url 'Studyquestion' %}">유리종 쥐 실험</a>
                     </td>
                     <td>
                         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">지붕 위의 발전기</a>
+                        <a href="{% url 'Studyquestion' %}">지붕 위의 발전기</a>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img2.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}">유리종 쥐 실험</a>
+                        <a href="{% url 'Studyquestion' %}">유리종 쥐 실험</a>
                     </td>
                     <td>
                         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}"><br>
-                        <a href="{% url 'AIquestion' %}" >지붕 위의 발전기</a>
+                        <a href="{% url 'Studyquestion' %}" >지붕 위의 발전기</a>
                     </td>
                 </tr>
             </table>
@@ -116,11 +116,13 @@
               <div class="form-group">
                 <textarea class="form-control" rows="3"></textarea>
               </div>
-
+            </form>
                 <div class="col-md-10">
                     <table width="600">
                         <td>
-                            <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                            <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.'); document.location.href='{% url 'Study' %}'" style="cursor:pointer">
+                                <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                            </a>
                         </td>
                         <td>
                             <select class="form-control form-control-a">
@@ -139,11 +141,11 @@
                         </td>
                         <td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
                         <td>
-                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>
+<!--                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>-->
                         </td>
                     </table>
                 </div>
-            </form>
+
           </div>
         </div>
 
