@@ -94,3 +94,33 @@ def AIdiag(request):
     context = {
     }
     return render(request, 'student/AIdiag.html', context)
+
+
+def Homeworkselect(request):
+    context = {
+    }
+    return render(request, 'student/Homeworkselect.html', context)
+
+
+def Homeworkcheck(request):
+    context = {
+    }
+    return render(request, 'student/Homeworkcheck.html', context)
+
+
+def Homeworkcode(request):
+    context = {
+    }
+    return render(request, 'student/Homeworkcode.html', context)
+
+
+def Searchres(request):
+    context = {
+    }
+    return render(request, 'student/Searchres.html', context)
+
+
+def Notice(request):
+    context = {
+    }
+    return render(request, 'student/Notice.html', context)

@@ -1,0 +1,71 @@
+{% load static %}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery nicelabel.js Plugin Demos</title>
+
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+	<link href="{% static 'student/css/jquery-nicelabel.css' %}" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+	<style>
+    body { background-color:#fafafa; font-family:'Open Sans';}
+    .container { margin:150px auto 30px auto; max-width:640px;}
+		.clearfix{clear:both;}
+		.text_checkbox{float:left;margin-left:20px;}
+		.text_radio{float:left;margin-left:20px;}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div id="text-checkbox">
+		<h2 style="margin-left:20px;">Text Label: Checkboxes</h2>
+		<br>
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_checkbox", "checked_text": "Checked", "unchecked_text": "jQuery"}' checked type="checkbox" />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_checkbox", "checked_text": "Checked", "unchecked_text": "HTML5"}' type="checkbox" />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_checkbox", "checked_text": "Checked", "unchecked_text": "CSS3"}' type="checkbox" />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_checkbox"}' type="checkbox" />
+	</div>
+<div class="clearfix"></div>
+	<br>
+	<div id="text-radio">
+		<h2 style="margin-left:20px;">Text Label: Radio Buttons</h2>
+		<br>
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "jQuery"}' checked type="radio" name="text_radio" />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "HTML5"}' type="radio" name="text_radio"  />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "CSS3"}' type="radio" name="text_radio"  />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio"}' type="radio" name="text_radio"  />
+	</div>
+	<div class="clearfix"></div>
+	<br>
+
+</body>
+	<script src="{% static 'student/js/jquery.nicelabel.js' %}"></script>
+	<script>
+	$(function(){
+
+		$('#text-checkbox > input').nicelabel();
+		$('#text-radio > input').nicelabel();
+
+	});
+	</script><script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36251023-1']);
+      _gaq.push(['_setDomainName', 'jqueryscript.net']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    </div>
+
+</html>

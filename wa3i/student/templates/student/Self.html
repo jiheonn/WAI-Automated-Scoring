@@ -5,7 +5,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">WA3I</a>
+        <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">게시판</a>
+                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -51,15 +51,28 @@
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
-    </div>
+
+            <div class="col-3">
+                <div class="card-body">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="검색어 입력">
+                    <span class="input-group-btn">
+                        <a href="{% url 'Searchresult' %}">
+                            <button class="btn btn-secondary" type="button">검색</button>
+                        </a>
+                    </span>
+                  </div>
+                </div>
+            </div>
+        </div>
     <!-- /.row -->
 
 
     <!-- Content Row -->
     <center>
-
         <form>
             <div class="w3-container">
+
 <!--                <span>-->
 <!--                    <table style="width:400px; height:100px;">-->
 <!--                        <tr>-->
@@ -76,28 +89,6 @@
 <!--                        </tr>-->
 <!--                    </tabe>-->
 <!--                </span>-->
-
-<!--                <input type="hidden" name="q_no" value="1" />-->
-<!--                <table>-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <input type="radio" name="grade" value="ele" id="r1" />-->
-<!--                            <label for="r1">초</label>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <input type="radio" name="grade" value="mid" id="r2" />-->
-<!--                            <label for="r2">중</label>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <input type="radio" name="grade" value="high" id="r3" />-->
-<!--						    <label for="r3">고</label>-->
-
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-
 
 
 
@@ -134,6 +125,41 @@
                 <br>
             </div>
         </div>
+
+
+<!---->
+    <div id="text-radio">
+<!--		<h2 style="margin-left:20px;">Text Label: Radio Buttons</h2>-->
+		<br>
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "jQuery"}' checked type="radio" name="text_radio" />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "HTML5"}' type="radio" name="text_radio"  />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "CSS3"}' type="radio" name="text_radio"  />
+		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio"}' type="radio" name="text_radio"  />
+	</div>
+<!--	<div class="clearfix"></div>-->
+	<br>
+    <script src="{% static 'student/js/jquery.nicelabel.js' %}"></script>
+	<script>
+	$(function(){
+
+		$('#text-checkbox > input').nicelabel();
+		$('#text-radio > input').nicelabel();
+
+	});
+	</script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36251023-1']);
+      _gaq.push(['_setDomainName', 'jqueryscript.net']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+	</script>
+<!---->
+
 
     </center>
     <!-- /.row -->

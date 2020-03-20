@@ -5,7 +5,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">WA3I</a>
+        <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">게시판</a>
+                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -100,7 +100,7 @@
                 <div class="col-md-10">
                     <table>
                         <td>
-                            <a href="{% url 'AIdiagnosis' %}">
+                            <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'AIdiagnosis' %}'" style="cursor:pointer">
                                 <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
                             </a>
                         </td>

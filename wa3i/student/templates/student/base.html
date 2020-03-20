@@ -11,7 +11,22 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+<!--        -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--        -->
+
         <title>WA3i</title>
+
+<!--        -->
+        <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <link href="{% static 'student/css/jquery-nicelabel.css' %}" rel="stylesheet" type="text/css" />
+        <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+        <style>
+            .clearfix{clear:both;overflow: auto;}
+            .text_checkbox{float:left;margin-left:20px;}
+            .text_radio{float:left;margin-left:20px;}
+        </style>
+<!--        -->
 
         <!-- Bootstrap core CSS -->
         <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -20,6 +35,7 @@
         <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
         <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
         <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+
     </head>
 
     <body>
@@ -28,19 +44,22 @@
         {% endblock %}
 
         <!-- Footer -->
-        <footer class="py-5 bg-dark">
-
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" style="display: block; margin: 0px auto;">
+        <footer class="page-footer py-5 bg-dark">
             <div class="container" align="center">
                 <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" width="300" height="300" alt="">
             </div>
-            <!-- /.container -->
         </footer>
+        <!-- Footer -->
+
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
         <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
         <script src="{% static 'student/vendor/jquery/jquery.twbs-toggle-buttons.min.js' %}"></script>
+
+        <script src="jquery.nicelabel.js"></script>
 
     </body>
 

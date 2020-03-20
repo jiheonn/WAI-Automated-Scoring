@@ -45,8 +45,9 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-3">
-            <p class="font-weight-bolder triangle-border left">자신의 ID를 입력하세요.</p>
+        <div class="col-lg-4">
+            <p class="font-weight-bolder triangle-border left">지금까지 작성했던 숙제 내역입니다.<br>
+                첨삭 전 답안을 수정할 수 있습니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
@@ -54,23 +55,49 @@
     <!-- /.row -->
 
     <!-- Content Row -->
-    <br>
-    <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
-                    <table style="text-align: center; width:600px; height:80px;">
-                        <tr>
-                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        <br><br>
+    <div class="row my-5">
+        <table class="w3-table-all w3-centered" style="text-center table-layout:fixed;">
+            <tr class="w3-indigo">
+              <th>문항명</th>
+              <th>최종 수정날짜</th>
+              <th>첨삭여부</th>
+              <th>수정하기</th>
+            </tr>
+            <tr>
+              <td>지붕 위의 발전기</td>
+              <td>2020.03.09</td>
+              <td>X</td>
+              <td>
+                  <a href="{% url 'Homeworkquestion' %}">
+                      <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen.png' %}" width="15%" alt="">
+                  </a>
+              </td>
+            </tr>
+            <tr>
+              <td>감나무 키우기</td>
+              <td>2020.03.07</td>
+              <td>O</td>
+              <td>
+                  <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen2.png' %}" width="15%" alt="">
+              </td>
+            </tr>
+            <tr>
+              <td>소금물 만들기</td>
+              <td>2020.03.04</td>
+              <td>X</td>
+              <td>
+                  <a href="{% url 'Homeworkquestion' %}">
+                      <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen.png' %}" width="15%" alt="">
+                  </a>
+              </td>
+            </tr>
+        </table>
+
         <a href="{% url 'Homeworkselect' %}">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue w3-margin-bottom">완료</button>
+            <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
         </a>
-        <br><br>
-    </center>
+    </div>
+
     <!-- /.row -->
 
 
