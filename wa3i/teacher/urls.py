@@ -13,4 +13,5 @@ urlpatterns = [
     path('qr_code/', views.qr_code, name='qr_code'),
     path('notice/', views.notice, name='notice'),
     path('view_result/ex_view_result/', views.ex_view_result, name='ex_view_result'),
+    path('response_analysis/ex_response_analysis/', views.ex_response_analysis, name='ex_response_analysis'),
 ]
