@@ -44,17 +44,18 @@
         #login-menu:hover ul li{
             text-align: center;
         }
+        .cooperation-center {
+            display: block;
+            margin: 0px auto;
+        }
+        .btn-center {
+            float: none;
+            margin: 50px auto;
+        }
+        .btn-file {
+            margin-top: 20px;
+        }
     </style>
-    <script>
-        $(document).ready(function () {
-            $('#menubar').click(function () {
-                var username = $('#user-name').text();
-                if (username == 'User') {
-                    alert('로그인을 하셔야 이용 가능합니다. 먼저 로그인을 해주세요.');
-                }
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -136,17 +137,19 @@
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
-    <div class="col-lg-7" style="float: none; margin: 50px auto;">
-        <input style="margin-top: 20px;" type="file" name="file">
+    <div class="col-lg-7 btn-center">
+        <input class="btn-file" type="file" name="file">
     </div>
-    <div class="col-lg-3" style="float: none; margin: 50px auto;">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">학생 응답 분석하기</button>
+    <div class="col-lg-2 btn-center">
+        <form action="{% url 'ex_response_analysis' %}">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">응답 분석하기</button>
+        </form>
     </div>
 
 </div>
 <!-- /.container -->
 
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
+<img class="img-fluid rounded mb-4 mb-lg-0 cooperation-center" src="{% static 'teacher/images/cooperation.png' %}">
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">

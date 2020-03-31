@@ -65,3 +65,9 @@ def ex_view_result(request):
     context = {
     }
     return render(request, 'teacher/ex_view_result.html', context)
+
+
+def ex_response_analysis(request):
+    context = {
+    }
+    return render(request, 'teacher/ex_response_analysis.html', context)

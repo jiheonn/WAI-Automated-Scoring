@@ -22,6 +22,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
 
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <style type="text/css">
@@ -42,22 +44,18 @@
         #login-menu:hover ul li{
             text-align: center;
         }
-        .qr-button form input{
-            border-style: solid;
-            border-width: 4px;
-            width: 100px;
-            height: 50px;
-            background-color: #2E4A62;
-            color: white;
-            font-weight: bold;
-            margin-right: 20px;
-        }
         .cooperation-center {
             display: block;
             margin: 0px auto;
         }
-        .qr-code-img {
-            text-align: right;
+        .btn-center {
+            float: none;
+            margin: 50px auto;
+        }
+        .response-table {
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -94,10 +92,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
                 </li>
                 <li class="nav-item">
@@ -130,28 +128,55 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-<!--            <h1 class="font-weight-light">QR코드</h1><br>-->
+<!--            <h1 class="font-weight-light">응답분석</h1><br>-->
             <p class="font-weight-bolder triangle-border left">
-                문항을 선택하면 QR코드가 생성됩니다. 생성된 QR코드를<br>
-                스마트폰으로도 인공지능 자동평가를 수행할 수 있습니다.</p>
+                1열 '단어 입력'에 단어를 입력하면 해당 단어가 색깔로<br>
+                보여집니다. 같은 의미의 단어는 콤마(,)로 구분하여<br>
+                입력하면 같은 색으로 묶어집니다. 아래에는 해당 단어가<br>
+                몇 번 나타나는지 숫자로 보여집니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
+    <table border="1" bordercolor="gray" width ="1200" height="150" align = "center">
+    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+        <td>학생 응답</td>
+        <td style="color: red;">태양, 빛</td>
+        <td style="color: skyblue;">이산화탄소, CO2</td>
+        <td style="color: green;">물, H2O</td>
+        <td><input type="text" name="user_input" placeholder="단어 입력" style="background-color: #2E4A62; color: white; text-align: center;"></td>
+    </tr>
+    <tr>
+        <td>식물이 <span style="color: red; font-weight: bold;">태양빛</span>으로 녹말을 생성한다.</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">0</td>
+        <td style="text-align: center;">0</td>
+        <td style="text-align: center;">-</td>
+    </tr>
+    <tr>
+        <td>광합성 과정을 통해 <span style="color: skyblue; font-weight: bold;">이산화탄소</span>를 활용하여 포도당을 생성한다. 이때 <span style="color: green; font-weight: bold;">물</span>이 필요하다.</td>
+        <td style="text-align: center;">0</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">-</td>
+    </tr>
+    <tr>
+        <td><span style="color: skyblue; font-weight: bold;">CO2</span>, <span style="color: green; font-weight: bold;">물</span>, <span style="color: red; font-weight: bold;">태양</span> 에너지를 이용한다.</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">-</td>
+    </tr>
+</table>
 
-    <div class="qr-button">
-            <form>
-                <input type="button" value="광합성">
-                <input type="button" value="세포호흡">
-                <input type="button" value="힘과 운동">
-            </form>
-        </div>
+    <div class="col-lg-0 btn-center">
+        <form action="{% url 'response_analysis' %}">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">이전</button>
+        </form>
+    </div>
 </div>
 <!-- /.container -->
-<p class="col-10 qr-code-img">
-   <img src="{% static 'teacher/images/qr_code_img.png' %}">
-</p>
 
 <img class="img-fluid rounded mb-4 mb-lg-0 cooperation-center" src="{% static 'teacher/images/cooperation.png' %}">
 
