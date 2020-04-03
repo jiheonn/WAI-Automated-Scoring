@@ -108,16 +108,12 @@
             outline: none;
             box-shadow: none;
         }
+        * {
+            font-size: 16px;
+            font-family: Consolas, sans-serif;
+        }
     </style>
     <script>
-        $(document).ready(function () {
-            $('#menubar').click(function () {
-                var username = $('#user-name').text();
-                if (username == 'User') {
-                    alert('로그인을 하셔야 이용 가능합니다. 먼저 로그인을 해주세요.');
-                }
-            });
-        });
         jQuery(function($) {
           /* Checkbox  */
           var checkBox = $('.ctm-check');
@@ -137,6 +133,31 @@
                 var user_input = prompt("복사할 시험지의 코드를 입력해 주세요.");
             });
         });
+        $(document).ready(function(){
+            $('#input_text').keyup(function(){
+                if ($(this).val().length > $(this).attr('maxlength')) {
+                    alert('입력 제한 길이를 초과하였습니다.');
+                    $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+                }
+            });
+        });
+        $(document).ready(function(){
+            $('#code_num').keyup(function(){
+                if ($(this).val().length > $(this).attr('maxlength')) {
+                    alert('최대 8자리 입력을 초과하였습니다.');
+                    $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+                }
+            });
+        });
+        $(document).ready(function(){
+            $('#make-submit').click(function(){
+                var result = confirm("코드 : 0000 0000\n시험지 제목 : 과학 3주차 숙제\n문항 수 : 3\n시작날짜 : 2020-01-01 종료날짜 : 2020-03-14\n\n입력한 정보로 생성하겠습니까?");
+                if(result){
+                    alert('문항 선택이 완료되었습니다.');
+                    location.href="/teacher/question_selection/";
+                }
+            });
+        });
     </script>
 </head>
 
@@ -145,7 +166,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">WA3I</a>
+        <a class="navbar-brand" href="{% url 'teacher' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -179,7 +200,7 @@
                     <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
                 </li>
             </ul>
 <!--                <li class="nav-item">-->
@@ -227,12 +248,11 @@
                 <option value="homework">숙제하기</option>
             </select>
             <form action="getBoardList.do" method="post" >
-                <input id="code_num" type="text" name="code_num" placeholder="   8자리 코드를 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
+                <input id="code_num" type="text" name="code_num" placeholder="8자리 코드를 입력해 주세요." maxlength="8" style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center; margin-bottom: 10px;">
                 <a>ex) 0000 0000</a><br>
-                <input type="text" name="start-date" placeholder="   시작날짜를 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
-                <input type="text" name="end-date" placeholder="   종료날짜를 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
-                <a>ex)2020-03-17</a><br>
-                <input type="text" name="question-title" placeholder="   시험지 제목을 입력해 주세요." style="width:564px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
+                <input type="text"  id="input_text" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요." style="width:564px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; padding: 10px; margin-bottom: 10px;"><br>
+                <span>시작날짜 : <input type="date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
+                <span>종료날짜 : <input type="date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
             </form>
         </div>
 
@@ -247,7 +267,7 @@
                                     </div>
                                     <!--end of col-->
                                     <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="검색어를 입력해 주세요.">
+                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="키워드를 입력해 주세요.">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto">
@@ -372,7 +392,7 @@
     </div>
     <!-- /.row -->
     <div class="col-lg-2" style="float: none; margin: 50px auto;">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
+        <button id="make-submit" type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
     </div>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 </div>

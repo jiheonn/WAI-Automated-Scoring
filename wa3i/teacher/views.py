@@ -55,10 +55,10 @@ def qr_code(request):
     return render(request, 'teacher/QR_code.html', context)
 
 
-def notice(request):
+def teacher_notice(request):
     context = {
     }
-    return render(request, 'teacher/notice.html', context)
+    return render(request, 'teacher/teacher_notice.html', context)
 
 
 def ex_view_result(request):
