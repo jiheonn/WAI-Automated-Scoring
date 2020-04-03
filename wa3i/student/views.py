@@ -54,6 +54,12 @@ def Studyques(request):
     return render(request, 'student/Studyques.html', context)
 
 
+def Studyques2(request):
+    context = {
+    }
+    return render(request, 'student/Studyques2.html', context)
+
+
 def Homeworkques(request):
     context = {
     }
@@ -100,6 +106,12 @@ def Homeworkselect(request):
     context = {
     }
     return render(request, 'student/Homeworkselect.html', context)
+
+
+def Homeworklist(request):
+    context = {
+    }
+    return render(request, 'student/Homeworklist.html', context)
 
 
 def Homeworkcheck(request):
