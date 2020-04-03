@@ -11,22 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-<!--        -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!--        -->
-
         <title>WA3i</title>
-
-<!--        -->
-        <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-        <link href="{% static 'student/css/jquery-nicelabel.css' %}" rel="stylesheet" type="text/css" />
-        <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
-        <style>
-            .clearfix{clear:both;overflow: auto;}
-            .text_checkbox{float:left;margin-left:20px;}
-            .text_radio{float:left;margin-left:20px;}
-        </style>
-<!--        -->
 
         <!-- Bootstrap core CSS -->
         <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -36,8 +21,19 @@
         <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
         <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    </head>
 
+        <script type="text/javascript" language="javascript">
+            function IDAlert() {
+                 if (confirm("입력하신 아이디가 맞는지 확인해주세요.\n 맞다면 <확인>을 눌러주세요.") == true) {
+                     document.location.href='{% url 'Homeworkselect' %}';
+                 }else{
+                     return false;
+                 }
+            }
+
+        </script>
+
+    </head>
     <body>
 
         {% block content %}

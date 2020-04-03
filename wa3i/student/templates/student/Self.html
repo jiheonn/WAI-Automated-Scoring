@@ -73,45 +73,23 @@
         <form>
             <div class="w3-container">
 
-<!--                <span>-->
-<!--                    <table style="width:400px; height:100px;">-->
-<!--                        <tr>-->
-<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">국어</button></td>-->
-<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">영어</button></td>-->
-<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">수학</button></td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-
-<!--                    <tabe style="width:400px; height:100px;">-->
-<!--                        <tr>-->
-<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">과학</button></td>-->
-<!--                            <td><button type="button" class="w3-button w3-xxlarge w3-white w3-border w3-border-blue">사회</button></td>-->
-<!--                        </tr>-->
-<!--                    </tabe>-->
-<!--                </span>-->
-
-
-
-
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> 국어
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> 영어
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> 수학
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option4" autocomplete="off"> 과학
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option5" autocomplete="off"> 사회
-              </label>
-            </div>
-
-
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> 국어
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> 영어
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> 수학
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option4" autocomplete="off"> 과학
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="options" id="option5" autocomplete="off"> 사회
+                  </label>
+                </div>
 
             </div>
         </form>
@@ -125,42 +103,6 @@
                 <br>
             </div>
         </div>
-
-
-<!---->
-    <div id="text-radio">
-<!--		<h2 style="margin-left:20px;">Text Label: Radio Buttons</h2>-->
-		<br>
-		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "jQuery"}' checked type="radio" name="text_radio" />
-		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "HTML5"}' type="radio" name="text_radio"  />
-		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio", "checked_text": "Checked", "unchecked_text": "CSS3"}' type="radio" name="text_radio"  />
-		<input class="text-nicelabel" data-nicelabel='{"position_class": "text_radio"}' type="radio" name="text_radio"  />
-	</div>
-<!--	<div class="clearfix"></div>-->
-	<br>
-    <script src="{% static 'student/js/jquery.nicelabel.js' %}"></script>
-	<script>
-	$(function(){
-
-		$('#text-checkbox > input').nicelabel();
-		$('#text-radio > input').nicelabel();
-
-	});
-	</script><script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-36251023-1']);
-      _gaq.push(['_setDomainName', 'jqueryscript.net']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-	</script>
-<!---->
-
-
     </center>
     <!-- /.row -->
 
