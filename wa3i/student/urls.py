@@ -24,4 +24,5 @@ urlpatterns = [
     path('Homework/Homeworkselect/Homeworkcode/', views.Homeworkcode, name='Homeworkcode'),
     path('Self/Searchres/', views.Searchres, name='Searchresult'),
     path('Notice/', views.Notice, name='Notice'),
+    path('AI/AIsearch', views.AIsearch, name='AIsearch'),
 ]

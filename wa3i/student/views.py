@@ -136,3 +136,9 @@ def Notice(request):
     context = {
     }
     return render(request, 'student/Notice.html', context)
+
+
+def AIsearch(request):
+    context = {
+    }
+    return render(request, 'student/AIsearch.html', context)

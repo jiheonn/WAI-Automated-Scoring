@@ -31,6 +31,14 @@
                  }
             }
 
+            function ScoreAlert() {
+                 if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {
+                     document.location.href='{% url 'Self' %}';
+                 }else{
+                     return false;
+                 }
+            }
+
         </script>
 
     </head>
