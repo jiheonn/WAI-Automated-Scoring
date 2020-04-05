@@ -24,8 +24,18 @@
 
         <script type="text/javascript" language="javascript">
             function IDAlert() {
-                 if (confirm("입력하신 아이디가 맞는지 확인해주세요.\n 맞다면 <확인>을 눌러주세요.") == true) {
+                var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + document.getElementById("ID_num").value)
+                 if ( msg == true) {
                      document.location.href='{% url 'Homeworkselect' %}';
+                 }else{
+                     return false;
+                 }
+            }
+
+            function CodeAlert() {
+                var msg = confirm("입력하신 코드가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + document.getElementById("code_num").value)
+                 if ( msg == true) {
+                     document.location.href='{% url 'Homeworkquestion' %}';
                  }else{
                      return false;
                  }
@@ -34,6 +44,16 @@
             function ScoreAlert() {
                  if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {
                      document.location.href='{% url 'Self' %}';
+                 }else{
+                     return false;
+                 }
+            }
+
+            function AIAlert() {
+                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\n코드 : "
+                + document.getElementById("code_num").value + "\nID : "+document.getElementById("ID_num").value)
+                 if ( AImsg == true) {
+                     document.location.href='{% url 'Studyquestion' %}';
                  }else{
                      return false;
                  }
