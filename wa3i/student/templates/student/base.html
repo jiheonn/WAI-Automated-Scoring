@@ -33,7 +33,7 @@
             }
 
             function CodeAlert() {
-                var msg = confirm("입력하신 코드가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + document.getElementById("code_num").value)
+                var msg = confirm("입력하신 코드가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : " + document.getElementById("code_num").value)
                  if ( msg == true) {
                      document.location.href='{% url 'Homeworkquestion' %}';
                  }else{
@@ -50,7 +50,7 @@
             }
 
             function AIAlert() {
-                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\n코드 : "
+                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "
                 + document.getElementById("code_num").value + "\nID : "+document.getElementById("ID_num").value)
                  if ( AImsg == true) {
                      document.location.href='{% url 'Studyquestion' %}';
