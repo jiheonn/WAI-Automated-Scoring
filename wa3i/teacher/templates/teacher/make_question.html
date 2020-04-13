@@ -70,14 +70,41 @@
     <script>
         $(document).ready(function () {
             $('#add-btn').click(function () {
+                var trCnt = $('#questionTable tr').length;
+                if(trCnt < 6){
+                    mytable = document.getElementById('questionTable');
+                    row = mytable.insertRow(mytable.rows.length);
 
-                var add_row = '<tr>\n' +
-                    // '                    <td style="text-align: center;">1</td>\n' +
-                    '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>\n' +
-                    '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>\n' +
-                    '                </tr>';
-                var trHtml = $("tr[name=trQuestion]:last");
-                trHtml.after(add_row);
+                    cell1 = row.insertCell(0);
+                    cell2 = row.insertCell(1);
+
+                    cell1.innerHTML = '<td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>';
+                    cell2.innerHTML = '<td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>';
+
+                    // var add_row = '<tr>\n' +
+                    //     // '                    <td style="text-align: center;">1</td>\n' +
+                    //     '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>\n' +
+                    //     '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>\n' +
+                    //     '                </tr>';
+                    // var trHtml = $("tr[name=trQuestion]:last");
+                    // trHtml.after(add_row);
+                }else{
+                    alert("최대 5개까지만 가능합니다.");
+                    return false;
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#del-btn').click(function () {
+                var my_tbody = document.getElementById('questionTable');
+                var trCnt = $('#questionTable tr').length;
+                if(trCnt >= 3){
+                    if (my_tbody.rows.length < 1) return;
+                    my_tbody.deleteRow(my_tbody.rows.length - 1);
+                }else{
+                    alert("더 이상 삭제할 수 없습니다.");
+                    return false;
+                }
             });
         });
         $(document).ready(function () {
@@ -187,11 +214,11 @@
 <!--                    <td><textarea style="width: 345px; height: 300px; padding: 20px; type="text" name="" placeholder="   모범 답안을 작성해 주세요."></textarea></td>-->
 <!--                </tr>-->
 <!--            </table>-->
-            <table border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+            <table id="questionTable" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
                 <tr name="trQuestion" align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
 <!--                    <td width="50px;" height="40px;">번호</td>-->
-                    <td height="40px;">채점 준거</td>
-                    <td>모범 답안</td>
+                    <th height="40px;">채점 준거</th>
+                    <th>모범 답안</th>
                 </tr>
                 <tr>
 <!--                    <td style="text-align: center;">1</td>-->
@@ -200,11 +227,12 @@
                 </tr>
             </table>
         </div>
-        <button id="add-btn" class="btn3" style="margin-top: 50px;">+</button>
+        <button id="add-btn" class="btn3" style="margin-top: 50px; margin-right: 50px;">추가</button>
+        <button id="del-btn" class="btn3" style="margin-top: 50px;">삭제</button>
     </div>
     <!-- /.row -->
     <div class="col-lg-2" style="float: none; margin: 50px auto;">
-        <button id="make-btn" type="submit" class="w3-button w3-large w3-round w3-blue">문항 생성 완료</button>
+        <button id="make-btn" type="submit" class="w3-button w3-large w3-round w3-blue" style="margin-top: 50px;">문항 생성 완료</button>
     </div>
 </div>
 <!-- /.container -->
