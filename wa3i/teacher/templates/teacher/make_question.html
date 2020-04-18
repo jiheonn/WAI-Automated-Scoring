@@ -197,8 +197,10 @@
         <!-- /.col-md-4 -->
         <div class="col-7" style="float: none; margin: 50px auto;">
             <form action="getBoardList.do" method="post" >
-                <input id="title" type="text" name="code_num" placeholder="   문항 제목을 입력해 주세요." style="width:700px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray;">
-                <input style="margin-top: 20px;" type="file" name="file">
+                <span>문항 제목 : <input type="text" name="" placeholder="문항 제목을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span>
+                <span>학습 개념 : <input type="text" name="" placeholder="학습 개념을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span><br>
+                <span>문항 내용 : <textarea style="width: 100%; height:150px; padding: 20px; border-style: solid; border-width: 1px; border-color: grey; margin-top: 20px; margin-bottom: 20px;" type="text" name="description" placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
+                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input style="margin-top: 20px;" type="file" name="file">
             </form>
         </div>
         <div>
@@ -217,13 +219,13 @@
             <table id="questionTable" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
                 <tr name="trQuestion" align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
 <!--                    <td width="50px;" height="40px;">번호</td>-->
-                    <th height="40px;">채점 준거</th>
+                    <th height="40px;">도움 생각</th>
                     <th>모범 답안</th>
                 </tr>
                 <tr>
 <!--                    <td style="text-align: center;">1</td>-->
-                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>
-                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="도움 생각을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="모범 답안을 작성해 주세요."></textarea></td>
                 </tr>
             </table>
         </div>
