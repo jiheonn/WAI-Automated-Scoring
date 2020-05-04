@@ -164,7 +164,7 @@ class DjangoSession(models.Model):
 
 
 class Keyword(models.Model):
-    keyword_iid = models.IntegerField(primary_key=True)
+    keyword_id = models.IntegerField(primary_key=True)
     question = models.ForeignKey('Question', models.DO_NOTHING, blank=True, null=True)
     keyword_name = models.CharField(max_length=50, blank=True, null=True)
 
@@ -177,7 +177,7 @@ class MakeQuestion(models.Model):
     make_question_id = models.IntegerField(primary_key=True)
     teacher = models.ForeignKey('Teacher', models.DO_NOTHING, blank=True, null=True)
     question_name = models.CharField(max_length=50, blank=True, null=True)
-    discription = models.CharField(max_length=255, blank=True, null=True)
+    discription = models.TextField(blank=True, null=True)
     answer = models.CharField(max_length=255, blank=True, null=True)
     image = models.TextField(blank=True, null=True)
     hint = models.CharField(max_length=200, blank=True, null=True)
@@ -194,7 +194,7 @@ class Question(models.Model):
     category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True)
     model_id = models.CharField(max_length=50, blank=True, null=True)
     question_name = models.CharField(max_length=50, blank=True, null=True)
-    discription = models.CharField(max_length=255, blank=True, null=True)
+    discription = models.TextField(blank=True, null=True)
     answer = models.CharField(max_length=255, blank=True, null=True)
     image = models.CharField(max_length=50, blank=True, null=True)
     hint = models.CharField(max_length=200, blank=True, null=True)
