@@ -63,9 +63,10 @@
               <th>첨삭여부</th>
               <th>수정하기</th>
             </tr>
+            {% for data in data %}
             <tr>
-              <td>지붕 위의 발전기</td>
-              <td>2020.03.09</td>
+              <td>{{data.question.question_name}}</td>
+              <td>{{data.solve.modified_date}}</td>
               <td>X</td>
               <td>
                   <a href="{% url 'Homeworkquestion' %}">
@@ -73,24 +74,7 @@
                   </a>
               </td>
             </tr>
-            <tr>
-              <td>감나무 키우기</td>
-              <td>2020.03.07</td>
-              <td>O</td>
-              <td>
-                  <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen2.png' %}" width="15%" alt="">
-              </td>
-            </tr>
-            <tr>
-              <td>소금물 만들기</td>
-              <td>2020.03.04</td>
-              <td>X</td>
-              <td>
-                  <a href="{% url 'Homeworkquestion' %}">
-                      <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen.png' %}" width="15%" alt="">
-                  </a>
-              </td>
-            </tr>
+            {% endfor %}
         </table>
 
         <a href="{% url 'Homeworklist' %}">

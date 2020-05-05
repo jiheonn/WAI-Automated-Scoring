@@ -90,7 +90,7 @@ def Selfques(request):
 
 
 def Selfdiag(request):
-    data = Question.objects.last()
+    data = SelfSolveData.objects.select_related('make_question').last()
     context = {
         'data': data
     }
@@ -136,7 +136,10 @@ def Homeworklist(request):
 
 
 def Homeworkcheck(request):
+    data = AssignmentQuestionRel.objects.select_related('assignment','question','solve')
+
     context = {
+        'data' : data
     }
     return render(request, 'student/Homeworkcheck.html', context)
 
