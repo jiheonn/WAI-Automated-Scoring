@@ -77,9 +77,19 @@ WSGI_APPLICATION = 'wa3i.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': "C:/workspace/mysql.cnf",
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  # strict mode 설정 추가
+#         }
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'wai',
         'USER': 'root',
         'PASSWORD': 'mysql21!',
@@ -88,10 +98,18 @@ DATABASES = {
         'OPTIONS': {
             'read_default_file': "C:/Dev/workspace/my.ini",
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  # strict mode 설정 추가
+=======
+        'NAME': 'wa3i',
+        'USER': 'root',
+        'PASSWORD': '123456789a',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+>>>>>>> d7251109dcd8f1af228b5ef210134179de5dcf55
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
