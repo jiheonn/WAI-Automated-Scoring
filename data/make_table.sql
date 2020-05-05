@@ -1,3 +1,5 @@
+CREATE DATABASE wa3i DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 use wa3i;
 
 CREATE TABLE `teacher` (
@@ -83,14 +85,14 @@ CREATE TABLE `assignment_question_rel` (
 CREATE TABLE `solve` (
   `solve_id` int(11),
   `student_id` int(11),
-  `assignment_id` varchar(50),
+  `as_qurel_id` int(11),
   `modified_date` date,
   `response` longtext,
   `score` decimal(5,2),
   `student_name` varchar(50),
   PRIMARY KEY (`solve_id`),
-  FOREIGN KEY (`assignment_id`)
-      references assignment_question_rel(assignment_id) on delete cascade on update cascade
+  FOREIGN KEY (`as_qurel_id`)
+      references assignment_question_rel(as_qurel_id) on delete cascade on update cascade
 );
 CREATE TABLE `category_question_rel` (
   `cate_qurel_id` int(11),
