@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
-
-
-# from .forms import CodeForm
+import q as q
+from django.db.models import Q
+from mainpage.models import *
 
 
 def index(request):
@@ -14,19 +14,15 @@ def index(request):
 
 
 def AI(request):
+    qs = Question.objects.all()
     context = {
+        'qs': qs
     }
     return render(request, 'student/AI.html', context)
 
 
 def Study(request):
     context = {}
-    # form = CodeForm(request.POST or None)
-    # context['form']= form
-    # if request.POST:
-    #     if form.is_valid():
-    #         temp = form.cleaned_data.get("code_field")
-    #         print(type(temp))
     return render(request, 'student/Study.html', context)
 
 
@@ -37,19 +33,28 @@ def Homework(request):
 
 
 def Self(request):
+    cat = Category.objects.all()
     context = {
+        'cat':cat
     }
     return render(request, 'student/Self.html', context)
 
 
 def AIques(request):
+    data = Question.objects.first()
+
     context = {
+        'data': data
     }
     return render(request, 'student/AIques.html', context)
 
 
 def Studyques(request):
+    data = Question.objects.all()
+    f = data.first()
     context = {
+        'data' : data,
+        'f' : f
     }
     return render(request, 'student/Studyques.html', context)
 
@@ -61,25 +66,33 @@ def Studyques2(request):
 
 
 def Homeworkques(request):
+    data = Question.objects.first()
     context = {
+        'data':data
     }
     return render(request, 'student/Homeworkques.html', context)
 
 
 def Selfcateg(request):
+    data = Keyword.objects.all()
     context = {
+        'data': data
     }
     return render(request, 'student/Selfcateg.html', context)
 
 
 def Selfques(request):
+    data = Question.objects.last()
     context = {
+        'data': data
     }
     return render(request, 'student/Selfques.html', context)
 
 
 def Selfdiag(request):
+    data = Question.objects.last()
     context = {
+        'data': data
     }
     return render(request, 'student/Selfdiag.html', context)
 
@@ -91,13 +104,18 @@ def Selfgrade(request):
 
 
 def Homeworkdiag(request):
+    data = Question.objects.first()
     context = {
+        'data':data
     }
     return render(request, 'student/Homeworkdiag.html', context)
 
 
 def AIdiag(request):
+    data = Question.objects.first()
+
     context = {
+        'data': data
     }
     return render(request, 'student/AIdiag.html', context)
 
@@ -109,7 +127,14 @@ def Homeworkselect(request):
 
 
 def Homeworklist(request):
+    # AssignmentQuestionRel.objects.select_related('Assignment','Solve').values()
+    # AssignmentQuestionRel.objects.select_related('Solve').select_related('Assignment').values()
+    # rel = AssignmentQuestionRel.objects.select_related('Solve__Assignment').filter(assignment_id='546A5N3Q').values()
+    rel = Assignment.objects.prefetch_related('Solve').values()
+    # rel = Solve.objects.select_related('Assignment').filter(assignment_id='546A5N3Q').values()
+
     context = {
+        'rel':rel
     }
     return render(request, 'student/Homeworklist.html', context)
 
@@ -139,6 +164,9 @@ def Notice(request):
 
 
 def AIsearch(request):
+    data = Question.objects.first()
+
     context = {
+        'data': data
     }
     return render(request, 'student/AIsearch.html', context)

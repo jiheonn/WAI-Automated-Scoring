@@ -82,27 +82,27 @@
     <div class="w3-row-padding w3-section w3-center">
       <div class="w3-quarter">
         <div class="w3-card" style="width:258px; height:213px;">
-          <img src="{% static 'student/image/img1.png' %}" style="width:100%">
+          <img src="{% static data.image %}">
           <div class="w3-container">
-            <h5><a href="{% url 'AIquestion' %}" class="card-link">지붕 위의 발전기</a></h5>
+            <h5><a href="{% url 'AIquestion' %}" class="card-link">{{data.question_name}}</a></h5>
           </div>
         </div>
       </div>
 
       <div class="w3-quarter">
         <div class="w3-card" style="width:258px; height:213px;">
-          <img src="{% static 'student/image/img1.png' %}" style="width:100%">
+          <img src="{% static data.image %}">
           <div class="w3-container">
-            <h5><a href="{% url 'AIquestion' %}" class="card-link">지붕 위의 발전기</a></h5>
+            <h5><a href="{% url 'AIquestion' %}" class="card-link">{{data.question_name}}</a></h5>
           </div>
         </div>
       </div>
 
       <div class="w3-quarter">
         <div class="w3-card" style="width:258px; height:213px;">
-          <img src="{% static 'student/image/img1.png' %}" style="width:100%">
+          <img src="{% static data.image %}">
           <div class="w3-container">
-            <h5><a href="{% url 'AIquestion' %}" class="card-link">지붕 위의 발전기</a></h5>
+            <h5><a href="{% url 'AIquestion' %}" class="card-link">{{data.question_name}}</a></h5>
           </div>
         </div>
       </div>

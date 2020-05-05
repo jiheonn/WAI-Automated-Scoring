@@ -74,21 +74,12 @@
             <div class="w3-container">
 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> 국어
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> 영어
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> 수학
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option4" autocomplete="off"> 과학
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option5" autocomplete="off"> 사회
-                  </label>
+                    {% for c in cat %}
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" id="option" autocomplete="off">{{c.category_name}}
+                    </label>
+                    {% endfor %}
+
                 </div>
 
             </div>

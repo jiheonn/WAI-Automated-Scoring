@@ -75,24 +75,12 @@
             <div class="w3-container">
 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> 광합성
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> 세포호흡
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> 힘과 운동
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option4" autocomplete="off"> DNA
-                  </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option5" autocomplete="off"> 광합성
-                  </label>
+                    {% for k in data %}
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" autocomplete="off">{{k.keyword_name}}
+                    </label>
+                    {% endfor %}
                 </div>
-
-
 
             </div>
         </form>

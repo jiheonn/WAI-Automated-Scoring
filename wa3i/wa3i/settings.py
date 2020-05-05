@@ -80,8 +80,13 @@ WSGI_APPLICATION = 'wa3i.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wai',
+        'USER': 'root',
+        'PASSWORD': 'mysql21!',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
         'OPTIONS': {
-            'read_default_file': "C:/workspace/mysql.cnf",
+            'read_default_file': "C:/Dev/workspace/my.ini",
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  # strict mode 설정 추가
         }
     }

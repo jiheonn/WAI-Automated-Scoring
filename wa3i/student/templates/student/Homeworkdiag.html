@@ -66,16 +66,13 @@
         <!-- Post Content Column -->
         <div class="col-lg-12">
             <!-- Title -->
-            <h2 class="mt-4">지붕 위의 발전기</h2>
+            <h2 class="mt-4">{{data.question_name}}</h2>
             <hr>
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img1.png' %}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
             <hr>
             <!-- Post Content -->
-            <p>시연이 아버지는 새로 집을 지으시면서 지붕 위에 태양광 발전 장치를 설치하셨습니다. 비용이 많이 들었지만 "태양광 발전"이 석
-                탄이나 석유와 같은 화석 에너지에 비해 우리가 미래에도 지속 가능하게 살아가는데 도움이 된다고 생각했기 때문에 설치하기로
-                결정하였습니다. 태양광 발전이 왜 석탄하고 석유보다 미래에도 지속 가능하게 살아가는 데에 도움이 될까요? 과학적으로 설명해
-                봅시다.
+            <p>{{data.discription}}
             </p>
             <hr>
         </div>
@@ -96,8 +93,7 @@
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section">
-                    태양만 보이면 태양광 에너지는 항상 있어요. 다시 생각해 볼까요?<br>
-                    태양광 발전장치에는 굴뚝이 없어요. 조금 더 생각을 발전시켜볼까요?
+                    {{data.hint}}
                 </p>
             </dd>
         </dl>
