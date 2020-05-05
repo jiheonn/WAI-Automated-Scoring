@@ -28,6 +28,7 @@ class AssignmentQuestionRel(models.Model):
     as_qurel_id = models.IntegerField(primary_key=True)
     assignment = models.ForeignKey(Assignment, models.DO_NOTHING, blank=True, null=True)
     question = models.ForeignKey('Question', models.DO_NOTHING, blank=True, null=True)
+    solve = models.ForeignKey('Solve', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -112,7 +113,7 @@ class SelfSolveData(models.Model):
 class Solve(models.Model):
     solve_id = models.IntegerField(primary_key=True)
     student_id = models.IntegerField(blank=True, null=True)
-    assignment = models.ForeignKey(AssignmentQuestionRel, models.DO_NOTHING, blank=True, null=True)
+    as_qurel_id = models.IntegerField(blank=True, null=True)
     modified_date = models.DateField(blank=True, null=True)
     response = models.TextField(blank=True, null=True)
     score = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
