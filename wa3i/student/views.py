@@ -112,7 +112,7 @@ def Homeworkdiag(request):
 
 
 def AIdiag(request):
-    data = Question.objects.first()
+    data = Question.objects.select_related('StudySolveData').values()
 
     context = {
         'data': data
@@ -127,11 +127,7 @@ def Homeworkselect(request):
 
 
 def Homeworklist(request):
-    # AssignmentQuestionRel.objects.select_related('Assignment','Solve').values()
-    # AssignmentQuestionRel.objects.select_related('Solve').select_related('Assignment').values()
-    # rel = AssignmentQuestionRel.objects.select_related('Solve__Assignment').filter(assignment_id='546A5N3Q').values()
-    rel = Assignment.objects.prefetch_related('Solve').values()
-    # rel = Solve.objects.select_related('Assignment').filter(assignment_id='546A5N3Q').values()
+    rel = AssignmentQuestionRel.objects.select_related('assignment','solve')
 
     context = {
         'rel':rel
