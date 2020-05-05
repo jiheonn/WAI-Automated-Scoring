@@ -61,14 +61,16 @@
               <th>제출 기한</th>
               <th>제출 완료 날짜</th>
             </tr>
-            <tr>
-                <td><a href="{% url 'Homeworkcheck' %}">과학 3주차 숙제</a></td>
-                <td>2020.03.10</td>
-                <td>2020.03.09</td>
-            </tr>
+            {% for data in rel %}
+                <tr>
+                    <td><a href="{% url 'Homeworkcheck' %}">{{data.assignment_id}}</a></td>
+                    <td>{{data.end_date}}</td>
+                    <td>{{data.modified_date}}</td>
+                </tr>
+            {% endfor %}
             <tr>
                 <td><a href="{% url 'Homeworkcheck' %}">국어 2주차 숙제</a></td>
-                <td>2020.03.03</td>
+                <td>2020.03.03{{rel.query}} ㄹ</td>
                 <td>2020.03.01</td>
             </tr>
         </table>

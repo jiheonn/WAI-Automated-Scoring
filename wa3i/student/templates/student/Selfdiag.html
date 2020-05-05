@@ -69,13 +69,12 @@
         <!-- Post Content Column -->
         <div class="col-lg-3">
           <!-- Preview Image -->
-          <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/img3.png' %}" width="120" height="120">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}" width="120" height="120">
 
         </div>
         <div class="col-lg-9">
             <!-- Post Content -->
-            <p>서연이네 유리온실에서 자라는 딸기는 다른 집에 비하여 더 달고 맛있답니다. 서연이 아버지는 당도가 더 높은 딸기를 만드는
-                비법을 알고 있죠. 딸기가 달콤한 이유를 설명하고, 딸기의 당도를 높이는 방법을 생각해 볼까요?
+            <p>{{data.discription}}
             </p>
         </div>
         <hr>
@@ -96,10 +95,10 @@
             </div>
 
             <div id="ans" class="w3-container w3-border city" style="display:none">
-                <p class=" w3-section">햇빛, 이산화탄소, 물 세 가지가 설명에 있어야 합니다.<br><br>
-                  선생님의 모범 답안: 당도가 높아지기 위해서는 식물이 광합성을 많이 해야합니다. 광합성을 하면 설탕이 생성됩니다.
-                   광합성이 많이 이루어지기 위해서는 빛을 많이 쪼여야 되며, 가장 중요한 것은 이산화탄소가 필요합니다. 아마도 유리
-                   온실이라 빛이 잘 들어오고, 온실 안에 이산화탄소의 양을 늘릴 것입니다. 물을 충분히 주고 토양에....</p>
+                <p class=" w3-section">{{data.hint}}<br><br>
+                    선생님의 모범 답안:<br>
+                    {{data.answer}}
+                </p>
             </div>
         </div>
 
