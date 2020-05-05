@@ -72,16 +72,6 @@ CREATE TABLE `question` (
   FOREIGN KEY (`category_id`)
       references category(category_id) on delete cascade on update cascade
 );
-CREATE TABLE `assignment_question_rel` (
-  `as_qurel_id` int(11),
-  `assignment_id` varchar(50),
-  `question_id` int(11),
-  PRIMARY KEY (`as_qurel_id`),
-  FOREIGN KEY (`assignment_id`)
-      references assignment(assignment_id) on delete cascade on update cascade,
-  FOREIGN KEY (`question_id`)
-      references question(question_id) on delete cascade on update cascade
-);
 CREATE TABLE `solve` (
   `solve_id` int(11),
   `student_id` int(11),
@@ -90,9 +80,20 @@ CREATE TABLE `solve` (
   `response` longtext,
   `score` decimal(5,2),
   `student_name` varchar(50),
-  PRIMARY KEY (`solve_id`),
-  FOREIGN KEY (`as_qurel_id`)
-      references assignment_question_rel(as_qurel_id) on delete cascade on update cascade
+  PRIMARY KEY (`solve_id`)
+);
+CREATE TABLE `assignment_question_rel` (
+  `as_qurel_id` int(11),
+  `assignment_id` varchar(50),
+  `question_id` int(11),
+  `solve_id` int(11),
+  PRIMARY KEY (`as_qurel_id`),
+  FOREIGN KEY (`assignment_id`)
+      references assignment(assignment_id) on delete cascade on update cascade,
+  FOREIGN KEY (`question_id`)
+      references question(question_id) on delete cascade on update cascade,
+  FOREIGN KEY (`solve_id`)
+      references solve(solve_id) on delete cascade on update cascade    
 );
 CREATE TABLE `category_question_rel` (
   `cate_qurel_id` int(11),
