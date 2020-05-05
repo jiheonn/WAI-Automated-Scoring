@@ -74,7 +74,7 @@
         </div>
         <div class="col-lg-9">
             <!-- Post Content -->
-            <p>{{data.discription}}
+            <p>{{data.make_question.discription}}
             </p>
         </div>
         <hr>
@@ -90,14 +90,13 @@
             </div>
 
             <div id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">잘 모르겠지만, 설탕이 많아서 달 것 같은데, 식물이 영양분이 많아야 합니다. 토양에 거름을 많이 주고 해가 잘 들 수
-                 있도록 해주어야 합니다.</p>
+                <p class=" w3-section">{{data.response}}</p>
             </div>
 
             <div id="ans" class="w3-container w3-border city" style="display:none">
-                <p class=" w3-section">{{data.hint}}<br><br>
+                <p class=" w3-section">{{data.make_question.hint}}<br><br>
                     선생님의 모범 답안:<br>
-                    {{data.answer}}
+                    {{data.make_question.answer}}
                 </p>
             </div>
         </div>
