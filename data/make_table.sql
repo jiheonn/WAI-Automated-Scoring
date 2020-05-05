@@ -75,7 +75,6 @@ CREATE TABLE `question` (
 CREATE TABLE `solve` (
   `solve_id` int(11),
   `student_id` int(11),
-  `as_qurel_id` int(11),
   `modified_date` date,
   `response` longtext,
   `score` decimal(5,2),
