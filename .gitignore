@@ -169,3 +169,6 @@ dmypy.json
 # Pyre type checker
 
 # End of https://www.gitignore.io/api/django,python
+#
+# information json
+wa3i/information.json
