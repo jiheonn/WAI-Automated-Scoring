@@ -127,12 +127,48 @@
           checkBox.on('change', 'input', function() {
             addClassCheckBox($(this));
           })
-});
+    });
         $(document).ready(function () {
             $('#copy').click(function () {
-                var user_input = prompt("복사할 시험지의 코드를 입력해 주세요.");
+                var copy_code = prompt("복사할 시험지의 코드를 입력해 주세요.");
+                $.ajax({
+                    url: '/teacher/assignment_copy/',
+                    data: {copy_code: copy_code},
+                    success: function (data) {
+                        var copy_data = data.copy_data;
+                        var num = copy_data.length;
+                        if (num == 0) {
+                            alert('시험지가 존재하지 않습니다. 코드를 다시 확인해 주세요.');
+                        } else {
+                            for (var i = 0; i < num; i++) {
+                                var assignment_type = copy_data[i].assignment_type;
+                                var assignment_title = copy_data[i].assignment_title;
+                                var question_id = copy_data[i].question_id;
+                                $('#evaluation_type').val(assignment_type).prop("selected", true);
+                                $('#as_name').val(assignment_title);
+                                $('input:checkbox[id='+ question_id + ']').prop("checked", true);
+                                // $('input:checkbox[id="1"]')
+                                // alert(question_id);
+                            }
+                        }
+                    jQuery(function($) {
+          /* Checkbox  */
+          var checkBox = $('.ctm-check');
+          var addClassCheckBox = function($input) {
+            if ($input.prop('checked')) {
+              $input.parent().addClass('checked');
+            } else {
+              $input.parent().removeClass('checked');
+            }
+          };
+          checkBox.on('change', 'input', function() {
+            addClassCheckBox($(this));
+          })
+    });
+                    }
+                })
+                })
             });
-        });
         $(document).ready(function(){
             $('#input_text').keyup(function(){
                 if ($(this).val().length > $(this).attr('maxlength')) {
@@ -151,7 +187,13 @@
         });
         $(document).ready(function(){
             $('#make-submit').click(function(){
-                var result = confirm("코드 : 0000 0000\n시험지 제목 : 과학 3주차 숙제\n문항 수 : 3\n시작날짜 : 2020-01-01 종료날짜 : 2020-03-14\n\n입력한 정보로 생성하겠습니까?");
+                var code_num = $('#code_num').val();
+                var as_name = $('#as_name').val();
+                var type = $('#evaluation_type option:selected').val();
+                var check_num = $('input:checked').length;
+                var st_date = $('#start-date').val();
+                var en_date = $('#end-date').val();
+                var result = confirm("코드 : " + code_num +"\n시험지 제목 : " + as_name + "\n타입 : " + type + "\n문항 수 : " + check_num + "\n시작날짜 : " + st_date + " 종료날짜 : " + en_date + "\n\n입력한 정보로 생성하겠습니까?");
                 if(result){
                     alert('문항 선택이 완료되었습니다.');
                     location.href="/teacher/question_selection/";
@@ -168,6 +210,115 @@
 
                 $('#code_num').val(text);
                 });
+            });
+        $(document).ready(function () {
+            $('#search').click(function () {
+                var user_input = $('#user_input').val();
+                 $.ajax({
+                    url: '/teacher/question_search/',
+                    data: {user_input: user_input},
+                    success: function (data) {
+                        var search_data = data.search_data;
+                        var num = search_data.length;
+                        if ( num == 0 ) {
+                            alert('검색 결과가 존재하지 않습니다.');
+                        } else {
+                            $("div").remove("#question_list");
+                        for (var i = 0; i < num; i++) {
+                            $("#category").after(
+                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                                    '<div class="card h-100" align="center">' +
+                                    '<div class="card-body">' +
+                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                    '/static/' +
+                                    search_data[i].question_image +
+                                    '">' +
+                                    '</div>' +
+                                    '<span class="card-footer ctm-check">' +
+                                    '<input type="checkbox" id="' +
+                                    search_data[i].question_id +
+                                    '">' +
+                                    '<label for="' +
+                                    search_data[i].question_id +
+                                    '"><i></i>' +
+                                    search_data[i].question_name +
+                                    '</label>' +
+                                    '</span>' +
+                                    '</div>' +
+                                    '</div>'
+                            )}
+                        }
+                    jQuery(function($) {
+          /* Checkbox  */
+          var checkBox = $('.ctm-check');
+          var addClassCheckBox = function($input) {
+            if ($input.prop('checked')) {
+              $input.parent().addClass('checked');
+            } else {
+              $input.parent().removeClass('checked');
+            }
+          };
+          checkBox.on('change', 'input', function() {
+            addClassCheckBox($(this));
+          })
+    });
+                    }
+                 });
+            });
+        });
+        $(document).ready(function () {
+            $('#category_option').change(function () {
+                var option = $("#category_option option:selected").val();
+                alert(option);
+                $.ajax({
+                    url: '/teacher/change_category/',
+                    data: {option: option},
+                    success: function (data) {
+                        var option_data = data.option_data;
+                        var num = option_data.length;
+                        $("div").remove("#question_list");
+                            for (var i = 0; i < num; i++) {
+                                $("#category").after(
+                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                                    '<div class="card h-100" align="center">' +
+                                    '<div class="card-body">' +
+                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                    '/static/' +
+                                    option_data[i].question_image +
+                                    '">' +
+                                    '</div>' +
+                                    '<span class="card-footer ctm-check">' +
+                                    '<input type="checkbox" id="' +
+                                    option_data[i].question_id +
+                                    '">' +
+                                    '<label for="' +
+                                    option_data[i].question_id +
+                                    '"><i></i>' +
+                                    option_data[i].question_name +
+                                    '</label>' +
+                                    '</span>' +
+                                    '</div>' +
+                                    '</div>'
+                                )
+
+                            }
+                    jQuery(function($) {
+          /* Checkbox  */
+          var checkBox = $('.ctm-check');
+          var addClassCheckBox = function($input) {
+            if ($input.prop('checked')) {
+              $input.parent().addClass('checked');
+            } else {
+              $input.parent().removeClass('checked');
+            }
+          };
+          checkBox.on('change', 'input', function() {
+            addClassCheckBox($(this));
+          })
+    });
+                    }
+                })
+                })
             });
     </script>
 </head>
@@ -253,19 +404,19 @@
         </div>
 
         <div style="margin: 50px;">
-            <select name="evaluation_type">
-                <option value="select" selected="selected">선택</option>
-                <option value="learning_evaluation">학습평가</option>
-                <option value="homework">숙제하기</option>
+            <select id="evaluation_type" name="evaluation_type">
+                <option value="선택없음" selected="selected">선택</option>
+                <option value="학습평가">학습평가</option>
+                <option value="숙제하기">숙제하기</option>
             </select>
             <form action="getBoardList.do" method="post" >
                 <input id="code_num" type="text" name="code_num" placeholder="코드 생성 버튼을 클릭해 주세요." maxlength="8" style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center; margin-bottom: 10px;">
                 <a id="code_generate" class="w3-button w3-large w3-round w3-blue" style="margin-left: 20px;">생성</a><br>
-                <input type="text"  id="input_text" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; padding: 10px; margin-bottom: 10px;">
+                <input type="text"  id="as_name" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; padding: 10px; margin-bottom: 10px;">
                 <span>&nbsp학년 : <input type="text" name="grade" style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
                 <span>반 : <input type="text" name="class" style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
-                <span>시작날짜 : <input type="date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
-                <span>종료날짜 : <input type="date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
+                <span>시작날짜 : <input type="date" id="start-date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
+                <span>종료날짜 : <input type="date" id="end-date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
             </form>
         </div>
 
@@ -273,132 +424,134 @@
     <br/>
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
-                            <form class="card card-sm">
+                            <div class="card card-sm">
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                     <!--end of col-->
                                     <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="키워드를 입력해 주세요.">
+                                        <input id="user_input" class="form-control form-control-lg form-control-borderless" placeholder="키워드를 입력해 주세요.">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto">
-                                        <button class="w3-button w3-large w3-round w3-blue" type="submit">검색</button>
+                                        <button id="search" class="w3-button w3-large w3-round w3-blue">검색</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <!--end of col-->
                     </div>
     </div>
 
-        <div class="col-12" style="margin: 50px;">
-            <select name="category">
+        <div id="category" class="col-12" style="margin: 50px;">
+            <select id="category_option" name="category">
                 <option value="select" selected="selected">카테고리</option>
-                <option value="language">국어</option>
-                <option value="math">수학</option>
-                <option value="social">사회</option>
-                <option value="science">과학</option>
+                <option value="국어">국어</option>
+                <option value="수학">수학</option>
+                <option value="사회">사회</option>
+                <option value="과학">과학</option>
             </select>
         </div>
 
-        <div class="row">
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
+            <div id="question_list" class="row">
+            {% for data in question_data %}
+                <div class="col-md-3 mb-5">
+                    <div class="card h-100" align="center">
+                        <div class="card-body">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                        </div>
+                        <span class="card-footer ctm-check">
+                            <input type="checkbox" id="{{ data.question_id }}">
+                            <label for="{{ data.question_id }}"><i></i>{{ data.question_name }}</label>
+                        </span>
                     </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>유리종 쥐 실험</label>
-                    </span>
                 </div>
-            </div>
             <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>지붕 위의 발전기</label>
-                    </span>
-                </div>
-            </div>
+            {% endfor %}
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>지붕 위의 발전기</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
                   <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>유리종 쥐 실험</label>
-                    </span>
-                </div>
-            </div>
-                  <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>지붕 위의 발전기</label>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>유리종 쥐 실험</label>
-                    </span>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>지붕 위의 발전기</label>
-                    </span>
-                </div>
-            </div>
-                  <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>유리종 쥐 실험</label>
-                    </span>
-                </div>
-            </div>
-                  <!-- /.col-md-4 -->
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">
-                    </div>
-                    <span class="card-footer ctm-check">
-                        <input type="checkbox" id="a" >
-                        <label for="a"><i></i>지붕 위의 발전기</label>
-                    </span>
-                </div>
-            </div>
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>유리종 쥐 실험</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--                  &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>지붕 위의 발전기</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>유리종 쥐 실험</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>지붕 위의 발전기</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--                  &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img2.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>유리종 쥐 실험</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--                  &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+<!--            <div class="col-md-3 mb-5">-->
+<!--                <div class="card h-100" align="center">-->
+<!--                    <div class="card-body">-->
+<!--                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/img1.png' %}">-->
+<!--                    </div>-->
+<!--                    <span class="card-footer ctm-check">-->
+<!--                        <input type="checkbox" id="a" >-->
+<!--                        <label for="a"><i></i>지붕 위의 발전기</label>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
 
     </div>
 
