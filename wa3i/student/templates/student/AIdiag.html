@@ -70,10 +70,10 @@
             <h2 class="mt-4">{{data.question_name}}</h2>
             <hr>
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.queestion.image %}">
             <hr>
             <!-- Post Content -->
-            <p>{{data.discription}}
+            <p>{{data.question.discription}}
             </p>
             <hr>
         </div>
@@ -93,15 +93,15 @@
             </dt>
 
             <dd id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">{{data.response}} {{data.query}}</p>
+                <p class=" w3-section">{{data.solve.response}}</p>
             </dd>
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section">
                 <h5 class="w3-text-blue">배움 개념<br></h5>
-                    {{data.ques_concept}}<br><br>
+                    {{data.question.ques_concept}}<br><br>
                 <h5 class="w3-text-blue">이렇게 설명해 볼까요?<br></h5>
-                    {{data.answer}}
+                    {{data.question.answer}}
                 </p>
             </dd>
         </dl>
