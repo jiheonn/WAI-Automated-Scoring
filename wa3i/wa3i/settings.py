@@ -11,16 +11,28 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+with open('information.json') as json_file:
+    json_data = json.load(json_file)
+    host_ = json_data['host']
+    user_ = json_data['user']
+    password_ = json_data['password']
+    port_ = json_data['port']
+    database_ = json_data['database']
+    secret_key = json_data['secret_key']
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ce04_o5-4#7t@ncerjr#z1!p-6+fng-b+z!o%l(rh*$-c#z@^3'
+SECRET_KEY = secret_key
+
+# SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,11 +101,12 @@ WSGI_APPLICATION = 'wa3i.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wa3i',
-        'USER': 'root',
-        'PASSWORD': 'mysql21!',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': database_,  # DB명
+        'USER': user_,  # 데이터베이스 계정
+        'PASSWORD': password_,  # 계정 비밀번호
+        'HOST': host_,  # 데이테베이스 주소(IP)
+        'PORT': port_,  # 데이터베이스 포트
+
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
         }

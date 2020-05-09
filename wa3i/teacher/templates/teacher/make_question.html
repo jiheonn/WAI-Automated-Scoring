@@ -109,7 +109,10 @@
         });
         $(document).ready(function () {
             $('#make-btn').click(function () {
-                var result = confirm("문항제목 : 식물이 광합성을 수행하기 위하여 필요한 것은 무엇일까요?\n채점준거 : 햇빛을 설명에 적절히 넣었나요?\n\n입력한 정보로 생성하겠습니까?");
+                var as_name = $('#as_name').val();
+                var as_concept = $('#as_concept').val();
+                var as_discription = $('#as_discription').val();
+                var result = confirm("문항제목 : " + as_name + "\n학습개념 : " + as_concept + "\n문항내용 :\n" + as_discription + "\n\n입력한 정보로 생성하겠습니까?");
                 if(result) {
                     alert('문항 생성이 완료되었습니다.');
                     location.href = "/teacher/make_question/";
@@ -197,9 +200,9 @@
         <!-- /.col-md-4 -->
         <div class="col-7" style="float: none; margin: 50px auto;">
             <form action="getBoardList.do" method="post" >
-                <span>문항 제목 : <input type="text" name="" placeholder="문항 제목을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span>
-                <span>학습 개념 : <input type="text" name="" placeholder="학습 개념을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span><br>
-                <span>문항 내용 : <textarea style="width: 100%; height:150px; padding: 20px; border-style: solid; border-width: 1px; border-color: grey; margin-top: 20px; margin-bottom: 20px;" type="text" name="description" placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
+                <span>문항 제목 : <input id="as_name" type="text" name="" placeholder="문항 제목을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span>
+                <span>학습 개념 : <input id="as_concept" type="text" name="" placeholder="학습 개념을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span><br>
+                <span>문항 내용 : <textarea id="as_discription" style="width: 100%; height:150px; padding: 20px; border-style: solid; border-width: 1px; border-color: grey; margin-top: 20px; margin-bottom: 20px;" type="text" name="description" placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
                 <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input style="margin-top: 20px;" type="file" name="file">
             </form>
         </div>

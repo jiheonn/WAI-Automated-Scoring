@@ -14,4 +14,10 @@ urlpatterns = [
     path('notice/', views.teacher_notice, name='teacher_notice'),
     path('view_result/ex_view_result/', views.ex_view_result, name='ex_view_result'),
     path('response_analysis/ex_response_analysis/', views.ex_response_analysis, name='ex_response_analysis'),
+    path('view_result_detail/', views.view_result_detail, name='view_result_detail'),
+    path('change_qr_code/', views.change_qr_code, name='change_qr_code'),
+    path('question_search/', views.question_search, name='question_search'),
+    path('view_search/', views.view_search, name='view_search'),
+    path('assignment_copy/', views.assignment_copy, name='assignment_copy'),
+    path('change_category/', views.change_category, name='change_category'),
 ]
