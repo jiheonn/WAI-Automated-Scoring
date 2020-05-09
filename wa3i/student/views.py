@@ -104,7 +104,7 @@ def Selfgrade(request):
 
 
 def Homeworkdiag(request):
-    data = Question.objects.first()
+    data = AssignmentQuestionRel.objects.select_related('question','solve').first()
     context = {
         'data':data
     }
@@ -112,7 +112,7 @@ def Homeworkdiag(request):
 
 
 def AIdiag(request):
-    data = Question.objects.select_related('StudySolveData').values()
+    data = AssignmentQuestionRel.objects.select_related('question','solve').first()
 
     context = {
         'data': data

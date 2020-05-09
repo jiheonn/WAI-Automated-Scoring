@@ -69,10 +69,10 @@
             <h2 class="mt-4">{{data.question_name}}</h2>
             <hr>
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.question.image %}">
             <hr>
             <!-- Post Content -->
-            <p>{{data.discription}}
+            <p>{{data.question.discription}}
             </p>
             <hr>
         </div>
@@ -88,12 +88,12 @@
             </dt>
 
             <dd id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">태양광은 좋은 에너지이기 때문이다.</p>
+                <p class=" w3-section">{{data.solve.response}}</p>
             </dd>
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section">
-                    {{data.hint}}
+                    {{data.question.hint}}
                 </p>
             </dd>
         </dl>
