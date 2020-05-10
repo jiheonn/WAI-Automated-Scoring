@@ -54,25 +54,23 @@
 
         <div class="col-6" style="position: relative; left: 230px; top: 60px;">
             <div class="card-body row no-gutters">
-            <div class="col">
-                <input id="user_input" class="form-control" placeholder="키워드를 입력하세요.">
-            </div>
-            <div class="col-auto">
-                <button id="search" class="w3-button w3-round w3-gray">검색</button>
-            </div>
-
-
-            <div id="category" class="col" style="left:10px">
-            <select id="category_option" name="category">
-                <option value="select" selected="selected">카테고리</option>
-                <option value="국어">국어</option>
-                <option value="수학">수학</option>
-                <option value="사회">사회</option>
-                <option value="과학">과학</option>
-            </select>
-            </div>
-
+                <div class="col">
+                    <input id="user_input" class="form-control" placeholder="키워드를 입력하세요.">
                 </div>
+                <div class="col-auto">
+                    <button id="search" class="w3-button w3-round w3-gray">검색</button>
+                </div>
+
+                <div id="category" class="col" style="left:10px">
+                    <select id="category_option" name="category">
+                        <option value="select" selected="selected">카테고리</option>
+                        <option value="국어">국어</option>
+                        <option value="수학">수학</option>
+                        <option value="사회">사회</option>
+                        <option value="과학">과학</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
 
@@ -87,20 +85,24 @@
             <h5 class="text-white m-0">문항 선택하기</h5>
         </div>
     </div>
+
     <!-- Content Row -->
-   <div id="question_list" class="row">
-        {% for data in qs %}
-        <div class="col-md-3 mb-5">
-            <div class="card h-100" align="center">
-                <div class="card-body">
-                    <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+    <div class="row my-5">
+        <div id="whole_card"></div>
+           <div id="question_list" class="row">
+                {% for data in qs %}
+                <div class="col-md-3 mb-5">
+                    <div class="card h-100" align="center">
+                        <div class="card-body">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                        </div>
+                        <span class="card-footer">
+                            <a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
+                        </span>
+                    </div>
                 </div>
-                <span class="card-footer">
-                    <a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
-                </span>
+                {% endfor %}
             </div>
-        </div>
-        {% endfor %}
     </div>
     <!-- /.row -->
 

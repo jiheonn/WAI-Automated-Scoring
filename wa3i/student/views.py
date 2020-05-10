@@ -8,7 +8,7 @@ import q as q
 from django.db.models import Q
 from django.http import JsonResponse
 
-from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword
+from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve
 
 
 def index(request):
@@ -26,7 +26,9 @@ def AI(request):
 
 
 def Study(request):
-    context = {}
+    context = {
+
+    }
     return render(request, 'student/Study.html', context)
 
 
@@ -155,7 +157,7 @@ def Notice(request):
 def search(request):
     user_input = request.GET['user_input']
     key_data = Keyword.objects.select_related('question').filter(keyword_name__icontains=user_input)
-    # key_data = Question.objects.filter(question_name__icontains=user_input)
+
     search_data = []
     for i in key_data:
         search_data_dict = dict()
@@ -163,12 +165,6 @@ def search(request):
         search_data_dict['question_name'] = i.question.question_name
         search_data_dict['question_image'] = i.question.image
         search_data.append(search_data_dict)
-    # for j in name_data:
-    #     search_data_dict = dict()
-    #     search_data_dict['question_id'] = j.question.question_id
-    #     search_data_dict['question_name'] = j.question.question_name
-    #     search_data_dict['question_image'] = j.question.image
-    #     search_data.append(search_data_dict)
     context = {
         'search_data': search_data
     }
@@ -182,9 +178,9 @@ def search_name(request):
     search_data = []
     for j in name_data:
         search_data_dict = dict()
-        search_data_dict['question_id'] = j.question.question_id
-        search_data_dict['question_name'] = j.question.question_name
-        search_data_dict['question_image'] = j.question.image
+        search_data_dict['question_id'] = j.question_id
+        search_data_dict['question_name'] = j.question_name
+        search_data_dict['question_image'] = j.image
         search_data.append(search_data_dict)
     context = {
         'search_data': search_data
@@ -209,5 +205,28 @@ def change_category(request):
 
     context = {
         'option_data': option_data
+    }
+    return JsonResponse(context)
+
+
+def check_code(request):
+    code_num = request.GET['code_num']
+    ID_num = request.GET['ID_num']
+    try:
+        code = Solve.objects.get(solve_id=code_num)
+    except:
+        code=None
+    try:
+        ID = Solve.objects.get(student_id=ID_num)
+    except:
+        ID=None
+
+    if (code is None) or (ID is None):
+        overlap="fail"
+    else:
+        overlap="pass"
+
+    context = {
+        'overlap': overlap
     }
     return JsonResponse(context)

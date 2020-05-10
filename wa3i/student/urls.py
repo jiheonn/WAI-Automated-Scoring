@@ -25,4 +25,5 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('search_name/', views.search_name, name='search_name'),
     path('change_category/', views.change_category, name='change_category'),
+    path('check_code/', views.check_code, name='check_code'),
 ]
