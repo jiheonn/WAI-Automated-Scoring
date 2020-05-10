@@ -168,8 +168,6 @@ def view_search(request):
         assignment_data_dict['student_class'] = i.class_field
         assignment_data.append(assignment_data_dict)
 
-    print(assignment_data)
-
     context = {
         'assignment_data': assignment_data
     }
@@ -188,7 +186,7 @@ def assignment_copy(request):
         copy_data_dict['assignment_type'] = i.assignment.type
         copy_data_dict['assignment_title'] = i.assignment.assignment_title
         copy_data.append(copy_data_dict)
-    print(copy_data)
+
     context = {
         'copy_data': copy_data
     }
@@ -207,8 +205,6 @@ def change_category(request):
         option_data_dict['question_name'] = i.question_name
         option_data_dict['question_image'] = i.image
         option_data.append(option_data_dict)
-
-    print(option_data)
 
     context = {
         'option_data': option_data
