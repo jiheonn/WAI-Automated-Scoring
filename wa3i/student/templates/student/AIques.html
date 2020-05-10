@@ -91,14 +91,14 @@
           <div class="card-body">
             <form>
               <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="3" id="ques_ans"></textarea>
               </div>
             </form>
                 <div class="col-md-10">
                     <table>
                         <td>
                             <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'AIdiagnosis' %}'" style="cursor:pointer">
-                                <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                                <button type="submit" class="w3-btn w3-round w3-blue" id="bt">제출하기</button>
                             </a>
                         </td>
                         <td>

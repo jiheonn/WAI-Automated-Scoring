@@ -1,10 +1,14 @@
+from builtins import dict
+
 from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
 import q as q
 from django.db.models import Q
-from mainpage.models import *
+from django.http import JsonResponse
+
+from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword
 
 
 def index(request):
@@ -33,9 +37,9 @@ def Homework(request):
 
 
 def Self(request):
-    cat = Category.objects.all()
+    qs = Question.objects.all()
     context = {
-        'cat':cat
+        'qs': qs
     }
     return render(request, 'student/Self.html', context)
 
@@ -71,14 +75,6 @@ def Homeworkques(request):
         'data':data
     }
     return render(request, 'student/Homeworkques.html', context)
-
-
-def Selfcateg(request):
-    data = Keyword.objects.all()
-    context = {
-        'data': data
-    }
-    return render(request, 'student/Selfcateg.html', context)
 
 
 def Selfques(request):
@@ -150,22 +146,68 @@ def Homeworkcode(request):
     return render(request, 'student/Homeworkcode.html', context)
 
 
-def Searchres(request):
-    context = {
-    }
-    return render(request, 'student/Searchres.html', context)
-
-
 def Notice(request):
     context = {
     }
     return render(request, 'student/Notice.html', context)
 
 
-def AIsearch(request):
-    data = Question.objects.first()
+def search(request):
+    user_input = request.GET['user_input']
+    key_data = Keyword.objects.select_related('question').filter(keyword_name__icontains=user_input)
+    # key_data = Question.objects.filter(question_name__icontains=user_input)
+    search_data = []
+    for i in key_data:
+        search_data_dict = dict()
+        search_data_dict['question_id'] = i.question.question_id
+        search_data_dict['question_name'] = i.question.question_name
+        search_data_dict['question_image'] = i.question.image
+        search_data.append(search_data_dict)
+    # for j in name_data:
+    #     search_data_dict = dict()
+    #     search_data_dict['question_id'] = j.question.question_id
+    #     search_data_dict['question_name'] = j.question.question_name
+    #     search_data_dict['question_image'] = j.question.image
+    #     search_data.append(search_data_dict)
+    context = {
+        'search_data': search_data
+    }
+    return JsonResponse(context)
+
+
+def search_name(request):
+    name_input = request.GET['name_input']
+    name_data = Question.objects.filter(question_name__icontains=name_input)
+
+    search_data = []
+    for j in name_data:
+        search_data_dict = dict()
+        search_data_dict['question_id'] = j.question.question_id
+        search_data_dict['question_name'] = j.question.question_name
+        search_data_dict['question_image'] = j.question.image
+        search_data.append(search_data_dict)
+    context = {
+        'search_data': search_data
+    }
+    return JsonResponse(context)
+
+
+def change_category(request):
+    category_option = request.GET['option']
+    print(category_option)
+    opt_data = Question.objects.select_related('category').filter(category__category_name=category_option)
+
+    option_data = []
+    for i in opt_data:
+        option_data_dict = dict()
+        option_data_dict['question_id'] = i.question_id
+        option_data_dict['question_name'] = i.question_name
+        option_data_dict['question_image'] = i.image
+        option_data.append(option_data_dict)
+
+    print(option_data)
 
     context = {
-        'data': data
+        'option_data': option_data
     }
-    return render(request, 'student/AIsearch.html', context)
+    return JsonResponse(context)

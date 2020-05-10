@@ -60,19 +60,13 @@
             <tr class="w3-indigo">
               <th>문항명</th>
               <th>최종 수정날짜</th>
-              <th>첨삭여부</th>
-              <th>수정하기</th>
+                <th>최종 점수</th>
             </tr>
             {% for data in data %}
             <tr>
               <td>{{data.question.question_name}}</td>
               <td>{{data.solve.modified_date}}</td>
-              <td>X</td>
-              <td>
-                  <a href="{% url 'Homeworkquestion' %}">
-                      <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/pen.png' %}" width="15%" alt="">
-                  </a>
-              </td>
+              <td>{{data.solve.score}}</td>
             </tr>
             {% endfor %}
         </table>

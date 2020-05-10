@@ -46,59 +46,74 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다.<br>
-                과목을 선택해주세요.</p>
+            <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
 
-            <div class="col-3">
+         <div class="col-5" style="position: relative; left: 90px; top: 60px;">
+            <div class="card-body row no-gutters">
+        <!--              <div class="input-group">-->
+        <!--                <input id="user_input" type="text" class="form-control" placeholder="검색어를 입력하세요.">-->
+
+        <!--                  <span class="input-group-btn">-->
+        <!--&lt;!&ndash;                    <a href="{% url 'search' %}">&ndash;&gt;-->
+        <!--                        <button id="search" class="btn btn-secondary" type="button">검색</button>-->
+        <!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+        <!--                    </span>-->
+        <!--              </div>-->
+
+
+                <div class="col">
+                    <input id="user_input" class="form-control" placeholder="문항명을 입력하세요.">
+                </div>
+                <div class="col-auto">
+                    <button id="search" class="w3-button w3-round w3-gray">검색</button>
+                </div>
+
+
+                <div id="category" class="col" style="left:10px">
+                <select id="category_option" name="category">
+                    <option value="select" selected="selected">카테고리</option>
+                    <option value="국어">국어</option>
+                    <option value="수학">수학</option>
+                    <option value="사회">사회</option>
+                    <option value="과학">과학</option>
+                </select>
+                </div>
+
+                    </div>
+            </div>
+
+
+            </div>
+            <!-- /.row -->
+
+            <!-- Call to Action Well -->
+            <div class="card text-white bg-secondary my-5 py-4 text-center">
                 <div class="card-body">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="검색어 입력">
-                    <span class="input-group-btn">
-                        <a href="{% url 'Searchresult' %}">
-                            <button class="btn btn-secondary" type="button">검색</button>
-                        </a>
-                    </span>
-                  </div>
+                    <h5 class="text-white m-0">문항 선택하기</h5>
                 </div>
             </div>
-        </div>
-    <!-- /.row -->
 
-
-    <!-- Content Row -->
-    <center>
-        <form>
-            <div class="w3-container">
-
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    {% for c in cat %}
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" id="option" autocomplete="off">{{c.category_name}}
-                    </label>
-                    {% endfor %}
-
+            <!-- Content Row -->
+            <div id="question_list" class="row">
+                {% for data in qs %}
+                <div class="col-md-3 mb-5">
+                    <div class="card h-100" align="center">
+                        <div class="card-body">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                        </div>
+                        <span class="card-footer">
+                            <a href="{% url 'Selfquestion' %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
+                        </span>
+                    </div>
                 </div>
-
+                {% endfor %}
             </div>
-        </form>
-
-        <br><br>
-        <div class="row my-5">
-            <div class="col-lg-12">
-                <a href="{% url 'Selfcategory' %}">
-                    <button type="submit" class="w3-button w3-large w3-round w3-indigo w3-display-bottommiddle w3-margin-bottom">다음</button>
-                </a>
-                <br>
-            </div>
-        </div>
-    </center>
     <!-- /.row -->
 
 </div>
 <!-- /.container -->
-
 
 {% endblock %}
