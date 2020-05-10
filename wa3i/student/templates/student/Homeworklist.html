@@ -63,7 +63,7 @@
             </tr>
             {% for data in rel %}
                 <tr>
-                    <td><a href="{% url 'Homeworkcheck' %}">{{data.assignment_id}}</a></td>
+                    <td><a href="{% url 'Homeworkcheck' %}">{{data.assignment.assignment_title}}</a></td>
                     <td>{{data.assignment.end_date}}</td>
                     <td>{{data.solve.modified_date}}</td>
                 </tr>

@@ -70,7 +70,7 @@
             <h2 class="mt-4">{{data.question_name}}</h2>
             <hr>
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.queestion.image %}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.question.image %}">
             <hr>
             <!-- Post Content -->
             <p>{{data.question.discription}}
@@ -92,8 +92,8 @@
                 </span>
             </dt>
 
-            <dd id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">{{data.solve.response}}</p>
+            <dd class="w3-container w3-border city">
+                <div class="w3-section" id="ques_ans"></div>
             </dd>
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
