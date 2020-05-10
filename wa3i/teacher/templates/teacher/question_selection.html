@@ -138,7 +138,9 @@
                         var copy_data = data.copy_data;
                         var num = copy_data.length;
                         if (num == 0) {
-                            alert('시험지가 존재하지 않습니다. 코드를 다시 확인해 주세요.');
+                            if (copy_code) {
+                                alert('시험지가 존재하지 않습니다. 코드를 다시 확인해 주세요.');
+                            }
                         } else {
                             for (var i = 0; i < num; i++) {
                                 var assignment_type = copy_data[i].assignment_type;
