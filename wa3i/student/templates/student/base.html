@@ -28,10 +28,12 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script type="text/javascript" language="javascript">
+
             function IDAlert() {
-                var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + document.getElementById("ID_num").value)
+                var ID_num = document.getElementById("ID_num").value
+                var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + ID_num)
                  if ( msg == true) {
-                     document.location.href='{% url 'Homeworkselect' %}';
+                     return checkID(ID_num);
                  }else{
                      return false;
                  }
@@ -53,16 +55,6 @@
                      return false;
                  }
             }
-
-<!--            function AIAlert() {-->
-<!--                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "-->
-<!--                + document.getElementById("code_num").value + "\nID : "+document.getElementById("ID_num").value)-->
-<!--                 if ( AImsg == true) {-->
-<!--                     document.location.href='{% url 'Studyquestion' %}';-->
-<!--                 }else{-->
-<!--                     return false;-->
-<!--                 }-->
-<!--            }-->
 
             function AIAlert() {
                 var code_num = document.getElementById("code_num").value
@@ -98,38 +90,16 @@
 
 
 
-            function checkInfo(data) {
-                alert("check");
-            code_overlap_input = document.querySelector('input[id="code_num"]');
-            ID_overlap_input = document.querySelector('input[id="ID_num"]');
-
-            $.ajax({
-              url: '/student/check_code/',
-              data: {
-                'code_num': code_overlap_input.value,
-                'ID_num': ID_overlap_input.value
-              },
-              datatype: 'json',
-              success: function (data) {
-                console.log(data['overlap']);
-                if (data['overlap'] == "pass") {
-                  document.location.href='{% url 'Studyquestion' %}';
-                } else {
-                  return false;
-                }
-              }
-            });
-          }
-
-<!--코드만 성공-->
 <!--            function checkInfo(data) {-->
 <!--                alert("check");-->
 <!--            code_overlap_input = document.querySelector('input[id="code_num"]');-->
+<!--            ID_overlap_input = document.querySelector('input[id="ID_num"]');-->
 
 <!--            $.ajax({-->
 <!--              url: '/student/check_code/',-->
 <!--              data: {-->
-<!--                'code_num': code_overlap_input.value-->
+<!--                'code_num': code_overlap_input.value,-->
+<!--                'ID_num': ID_overlap_input.value-->
 <!--              },-->
 <!--              datatype: 'json',-->
 <!--              success: function (data) {-->
@@ -143,6 +113,51 @@
 <!--            });-->
 <!--          }-->
 
+<!--코드만 성공-->
+            function checkInfo(data) {
+                alert("check");
+            code_overlap_input = document.querySelector('input[id="code_num"]');
+
+            $.ajax({
+              url: '/student/check_code/',
+              data: {
+                'code_num': code_overlap_input.value
+              },
+              datatype: 'json',
+              success: function (data) {
+                console.log(data['overlap']);
+                if (data['overlap'] == "pass") {
+                  document.location.href='{% url 'Studyquestion' %}';
+                } else {
+                  return false;
+                }
+              }
+            });
+          }
+
+
+
+<!--ID만-->
+            function checkID(ID_num) {
+                alert("checkID");
+            ID_overlap_input = document.querySelector('input[id="ID_num"]');
+
+            $.ajax({
+              url: '/student/check_ID/',
+              data: {
+                'ID_num': ID_overlap_input.value
+              },
+              datatype: 'json',
+              success: function (data) {
+                console.log(data['overlap']);
+                if (data['overlap'] == "pass") {
+                  document.location.href='{% url 'Homeworkselect' %}';
+                } else {
+                  return false;
+                }
+              }
+            });
+          }
 
 
             function Print() {

@@ -8,7 +8,7 @@ import q as q
 from django.db.models import Q
 from django.http import JsonResponse
 
-from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve
+from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment
 
 
 def index(request):
@@ -201,17 +201,36 @@ def change_category(request):
 
 def check_code(request):
     code_num = request.GET['code_num']
-    ID_num = request.GET['ID_num']
+    # ID_num = request.GET['ID_num']
     try:
-        code = Solve.objects.get(solve_id=code_num)
+        code = Assignment.objects.get(assignment_id=code_num)
     except:
         code=None
+    # try:
+    #     ID = Solve.objects.get(student_id=ID_num)
+    # except:
+    #     ID=None or (ID is None)
+
+    if (code is None):
+        overlap="fail"
+    else:
+        overlap="pass"
+
+    context = {
+        'overlap': overlap
+    }
+    return JsonResponse(context)
+
+
+def check_ID(request):
+    ID_num = request.GET['ID_num']
+
     try:
         ID = Solve.objects.get(student_id=ID_num)
     except:
         ID=None
 
-    if (code is None) or (ID is None):
+    if ID is None:
         overlap="fail"
     else:
         overlap="pass"
