@@ -201,15 +201,15 @@ def change_category(request):
 
 def check_code(request):
     code_num = request.GET['code_num']
-    # ID_num = request.GET['ID_num']
+    ID_num = int(request.GET['ID_num'])
     try:
         code = Assignment.objects.get(assignment_id=code_num)
     except:
         code=None
-    # try:
-    #     ID = Solve.objects.get(student_id=ID_num)
-    # except:
-    #     ID=None or (ID is None)
+    try:
+        ID = Solve.objects.filter(student_id=ID_num)
+    except:
+        ID=None or (ID is None)
 
     if (code is None):
         overlap="fail"
@@ -223,10 +223,10 @@ def check_code(request):
 
 
 def check_ID(request):
-    ID_num = request.GET['ID_num']
+    ID_num = int(request.GET['ID_num'])
 
     try:
-        ID = Solve.objects.get(student_id=ID_num)
+        ID = Solve.objects.filter(student_id=ID_num)
     except:
         ID=None
 
@@ -234,6 +234,7 @@ def check_ID(request):
         overlap="fail"
     else:
         overlap="pass"
+    # print(overlap)
 
     context = {
         'overlap': overlap
