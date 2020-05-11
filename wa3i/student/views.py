@@ -112,8 +112,15 @@ def Homeworkdiag(request):
 def AIdiag(request):
     data = AssignmentQuestionRel.objects.select_related('question','solve').first()
 
+    c1 = request.GET['cat_school']
+    c2 = request.GET['cat_sex']
+
+
     context = {
-        'data': data
+        'data': data,
+
+        'c1': c1,
+        'c2': c2
     }
     return render(request, 'student/AIdiag.html', context)
 
@@ -189,27 +196,34 @@ def search_name(request):
 
 
 def change_category(request):
-    c1 = request.GET['cat_school']
-    c2= request.GET['cat_sex']
+    category_option = request.GET['option']
+    opt_data = Question.objects.select_related('category').filter(category__category_name=category_option)
+
+    option_data = []
+    for i in opt_data:
+        option_data_dict = dict()
+        option_data_dict['question_id'] = i.question_id
+        option_data_dict['question_name'] = i.question_name
+        option_data_dict['question_image'] = i.image
+        option_data.append(option_data_dict)
 
     context = {
-        'c1':c1,
-        'c2':c2
+        'option_data': option_data
     }
     return JsonResponse(context)
 
 
 def check_code(request):
     code_num = request.GET['code_num']
-    ID_num = int(request.GET['ID_num'])
+    # ID_num = int(request.GET['ID_num'])
     try:
         code = Assignment.objects.get(assignment_id=code_num)
     except:
         code=None
-    try:
-        ID = Solve.objects.filter(student_id=ID_num)
-    except:
-        ID=None or (ID is None)
+    # try:
+    #     ID = Solve.objects.filter(student_id=ID_num)
+    # except:
+    #     ID=None or (ID is None)
 
     if (code is None):
         overlap="fail"
