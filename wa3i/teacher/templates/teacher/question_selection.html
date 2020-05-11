@@ -198,7 +198,7 @@
                 var result = confirm("코드 : " + code_num +"\n시험지 제목 : " + as_name + "\n타입 : " + type + "\n문항 수 : " + check_num + "\n시작날짜 : " + st_date + " 종료날짜 : " + en_date + "\n\n입력한 정보로 생성하겠습니까?");
                 if(result){
                     alert('문항 선택이 완료되었습니다.');
-                    location.href="/teacher/question_selection/";
+                    // location.href="/teacher/question_selection/";
                 }
             });
         });
@@ -406,12 +406,15 @@
         </div>
 
         <div style="margin: 50px;">
+            <form action="{% url 'question_selection' %}" method="post" >
+                {% csrf_token %}
             <select id="evaluation_type" name="evaluation_type">
                 <option value="선택없음" selected="selected">선택</option>
                 <option value="학습평가">학습평가</option>
                 <option value="숙제하기">숙제하기</option>
             </select>
-            <form action="getBoardList.do" method="post" >
+                <p></p>
+<!--            <form action="getBoardList.do" method="post" >-->
                 <input id="code_num" type="text" name="code_num" placeholder="코드 생성 버튼을 클릭해 주세요." maxlength="8" style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center; margin-bottom: 10px;">
                 <a id="code_generate" class="w3-button w3-large w3-round w3-blue" style="margin-left: 20px;">생성</a><br>
                 <input type="text"  id="as_name" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요." style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; padding: 10px; margin-bottom: 10px;">
@@ -419,7 +422,7 @@
                 <span>반 : <input type="text" name="class" style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
                 <span>시작날짜 : <input type="date" id="start-date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
                 <span>종료날짜 : <input type="date" id="end-date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
-            </form>
+<!--            </form>-->
         </div>
 
         <div class="container">
@@ -564,6 +567,7 @@
     </div>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 </div>
+</form>
 <!-- /.container -->
 
 <!-- Footer -->
