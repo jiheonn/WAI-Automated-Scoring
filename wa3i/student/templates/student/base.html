@@ -90,38 +90,15 @@
 
 
 
-<!--            function checkInfo(data) {-->
-<!--                alert("check");-->
-<!--            code_overlap_input = document.querySelector('input[id="code_num"]');-->
-<!--            ID_overlap_input = document.querySelector('input[id="ID_num"]');-->
-
-<!--            $.ajax({-->
-<!--              url: '/student/check_code/',-->
-<!--              data: {-->
-<!--                'code_num': code_overlap_input.value,-->
-<!--                'ID_num': ID_overlap_input.value-->
-<!--              },-->
-<!--              datatype: 'json',-->
-<!--              success: function (data) {-->
-<!--                console.log(data['overlap']);-->
-<!--                if (data['overlap'] == "pass") {-->
-<!--                  document.location.href='{% url 'Studyquestion' %}';-->
-<!--                } else {-->
-<!--                  return false;-->
-<!--                }-->
-<!--              }-->
-<!--            });-->
-<!--          }-->
-
-<!--코드만 성공-->
             function checkInfo(data) {
-                alert("check");
             code_overlap_input = document.querySelector('input[id="code_num"]');
+            ID_overlap_input = document.querySelector('input[id="ID_num"]');
 
             $.ajax({
               url: '/student/check_code/',
               data: {
-                'code_num': code_overlap_input.value
+                'code_num': code_overlap_input.value,
+                'ID_num': ID_overlap_input.value
               },
               datatype: 'json',
               success: function (data) {
@@ -135,11 +112,32 @@
             });
           }
 
+<!--코드만 성공-->
+<!--            function checkInfo(data) {-->
+<!--                alert("check");-->
+<!--            code_overlap_input = document.querySelector('input[id="code_num"]');-->
+
+<!--            $.ajax({-->
+<!--              url: '/student/check_code/',-->
+<!--              data: {-->
+<!--                'code_num': code_overlap_input.value-->
+<!--              },-->
+<!--              datatype: 'json',-->
+<!--              success: function (data) {-->
+<!--                console.log(data['overlap']);-->
+<!--                if (data['overlap'] == "pass") {-->
+<!--                  document.location.href='{% url 'Studyquestion' %}';-->
+<!--                } else {-->
+<!--                  return false;-->
+<!--                }-->
+<!--              }-->
+<!--            });-->
+<!--          }-->
+
 
 
 <!--ID만-->
             function checkID(ID_num) {
-                alert("checkID");
             ID_overlap_input = document.querySelector('input[id="ID_num"]');
 
             $.ajax({
@@ -151,7 +149,7 @@
               success: function (data) {
                 console.log(data['overlap']);
                 if (data['overlap'] == "pass") {
-                  document.location.href='{% url 'Homeworkselect' %}';
+                  document.location.href='{% url 'Homeworklist' %}';
                 } else {
                   return false;
                 }
