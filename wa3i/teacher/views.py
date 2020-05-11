@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from mainpage.models import Question, Assignment, AssignmentQuestionRel, Solve, Keyword, Category
 from django.http import JsonResponse
 from django.db.models import Q
+import datetime
 
 # Create your views here.
 # from django.http import HttpResponse
@@ -18,10 +19,39 @@ def index(request):
 
 
 def question_selection(request):
+    now = datetime.datetime.now()
+    now_date = now.strftime('%Y-%m-%d')
     question_data = Question.objects.all()
     context = {
         'question_data': question_data
     }
+    # if request.method == 'POST':
+    #     form = Assignment(request.POST)
+    #     if form.is_valid():
+    #         obj = Assignment(assignment_id=request.GET['code_num'],
+    #                          assignment_title=request.GET['question-title'],
+    #                          type=request.GET['evaluation_type'],
+    #                          start_date=request.GET['start-date'],
+    #                          end_data=request.GET['end-date'],
+    #                          made_date=request.GET[now_date],
+    #                          grade=request.GET['grade'],
+    #                          class_field=request.GET['class'])
+    #         obj.save()
+    #         return print('성공')
+    #     return print('실패')
+    try:
+        assignment_data = Assignment(assignment_id=request.GET['code_num'],
+                                     assignment_title=request.GET['question-title'],
+                                     type=request.GET['evaluation_type'],
+                                     start_date=request.GET['start-date'],
+                                     end_data=request.GET['end-date'],
+                                     made_date=request.GET[now_date],
+                                     grade=request.GET['grade'],
+                                     class_field=request.GET['class'])
+        assignment_data.save()
+    except:
+        assignment_data = None
+
     return render(request, 'teacher/question_selection.html', context)
 
 
