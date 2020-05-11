@@ -91,6 +91,7 @@
 
 
             function checkInfo(data) {
+
             code_overlap_input = document.querySelector('input[id="code_num"]');
             ID_overlap_input = document.querySelector('input[id="ID_num"]');
 
@@ -106,7 +107,8 @@
                 if (data['overlap'] == "pass") {
                   document.location.href='{% url 'Studyquestion' %}';
                 } else {
-                  return false;
+                  alert("코드와 ID를 다시 확인하세요.");
+<!--                  return false;-->
                 }
               }
             });
@@ -151,7 +153,7 @@
                 if (data['overlap'] == "pass") {
                   document.location.href='{% url 'Homeworklist' %}';
                 } else {
-                  return false;
+                  alert("코드와 ID를 다시 확인하세요.");
                 }
               }
             });
@@ -270,7 +272,7 @@
                                     '<img src="' +
                                     '/static/student/image/' +
                                     'ico_' +
-                                    i +
+                                    str(i) +
                                     '.png"' +
                                     ' width="35" height="35" scale="0">' +
                                     '<img src="' +

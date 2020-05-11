@@ -234,7 +234,6 @@ def check_ID(request):
         overlap="fail"
     else:
         overlap="pass"
-    # print(overlap)
 
     context = {
         'overlap': overlap
