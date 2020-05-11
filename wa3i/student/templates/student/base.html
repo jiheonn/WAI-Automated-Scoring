@@ -144,10 +144,6 @@
 <!--          }-->
 
 
-            function QuesAnswer() {
-                var ques_ans = document.getElementById("ques_ans").value;
-                temp = ques_ans;
-                 }
 
             function Print() {
             var print_ans = document.getElementById("print_ans");
@@ -231,33 +227,47 @@
 
 
         $(document).ready(function () {
-            $('#category_option').change(function () {
-                var option = $("#category_option option:selected").val();
-                alert(option);
+            $('#cat_school').change(function () {
+                var option1 = $("#cat_school option:selected").val();
+                var option2 = $("#cat_sex option:selected").val();
                 $.ajax({
                     url: '/student/change_category/',
-                    data: {option: option},
+                    data: {option1: option1,option2: option2},
                     success: function (data) {
-                        var option_data = data.option_data;
-                        var num = option_data.length;
-                        $("div").remove("#question_list");
-                            for (var i = 0; i < num; i++) {
-                                $("#category").after(
-                                    '<div id="question_list" class="col-md-3 mb-5">' +
-                                    '<div class="card h-100" align="center">' +
-                                    '<div class="card-body">' +
-                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-                                    '/static/' +
-                                    option_data[i].question_image +
-                                    '">' +
-                                    '</div>' +
-                                    '<span class="card-footer">' +
-                                    '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +
-                                    search_data[i].question_name +
-                                    '</a>' +
+                        var option1_data = data.c1;
+                        var option2_data = data.c2;
+                        var i=0;
+                        var j=0
+
+                        if (option1_data == 1):
+                            i=1;
+                        else if (option1_data == 2):
+                            i=2;
+                        else:
+                            i=3;
+
+                         if (option2_data == 4):
+                            j=4;
+                        else:
+                            j=5;
+
+                        $("span").remove("#sch_sex");
+                                $("#help_btn").after(
+                                    '<span class="w3-right">' +
+                                    '<img src="' +
+                                    '/static/student/image/' +
+                                    'ico_' +
+                                    i +
+                                    '.png"' +
+                                    ' width="35" height="35" scale="0">' +
+                                    '<img src="' +
+                                    '/static/student/image/' +
+                                    'ico_' +
+                                    j +
+                                    '.png"' +
+                                    ' width="35" height="35" scale="0">' +
                                     '</span>' +
-                                    '</div>' +
-                                    '</div>'
+
                                 )
 
                             }}

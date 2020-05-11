@@ -89,7 +89,7 @@
             <input type="hidden" name="q_no" value="1" />
           <h5 class="card-header">생각을 적어보세요:</h5>
           <div class="card-body">
-            <form>
+            <form action="{% static 'student/vendor/jquery/QuesAnswer.jsp' %}" method="post">
               <div class="form-group">
                 <textarea class="form-control" rows="3" id="ques_ans"></textarea>
               </div>
@@ -102,18 +102,18 @@
                             </a>
                         </td>
                         <td>
-                            <select class="form-control form-control-a">
+                            <select class="form-control form-control-a" id="cat_school" name="cat_school">
                                 <option value="">학교</option>
-                                <option>초등학교</option>
-                                <option>중학교</option>
-                                <option>고등학교</option>
+                                <option value="1">초등학교</option>
+                                <option value="2">중학교</option>
+                                <option value="3">고등학교</option>
                             </select>
                         </td>
                         <td>
-                             <select class="form-control form-control-a">
+                             <select class="form-control form-control-a" id="cat_sex" name="cat_sex">
                                 <option value="">성별</option>
-                                <option>남자</option>
-                                <option>여자</option>
+                                <option value="4">남자</option>
+                                <option value="5">여자</option>
                             </select>
                         </td>
                     </table>

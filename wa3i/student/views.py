@@ -189,22 +189,12 @@ def search_name(request):
 
 
 def change_category(request):
-    category_option = request.GET['option']
-    print(category_option)
-    opt_data = Question.objects.select_related('category').filter(category__category_name=category_option)
-
-    option_data = []
-    for i in opt_data:
-        option_data_dict = dict()
-        option_data_dict['question_id'] = i.question_id
-        option_data_dict['question_name'] = i.question_name
-        option_data_dict['question_image'] = i.image
-        option_data.append(option_data_dict)
-
-    print(option_data)
+    c1 = request.GET['cat_school']
+    c2= request.GET['cat_sex']
 
     context = {
-        'option_data': option_data
+        'c1':c1,
+        'c2':c2
     }
     return JsonResponse(context)
 
