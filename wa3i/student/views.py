@@ -8,7 +8,7 @@ import q as q
 from django.db.models import Q
 from django.http import JsonResponse
 
-from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve
+from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment
 
 
 def index(request):
@@ -189,39 +189,48 @@ def search_name(request):
 
 
 def change_category(request):
-    category_option = request.GET['option']
-    print(category_option)
-    opt_data = Question.objects.select_related('category').filter(category__category_name=category_option)
-
-    option_data = []
-    for i in opt_data:
-        option_data_dict = dict()
-        option_data_dict['question_id'] = i.question_id
-        option_data_dict['question_name'] = i.question_name
-        option_data_dict['question_image'] = i.image
-        option_data.append(option_data_dict)
-
-    print(option_data)
+    c1 = request.GET['cat_school']
+    c2= request.GET['cat_sex']
 
     context = {
-        'option_data': option_data
+        'c1':c1,
+        'c2':c2
     }
     return JsonResponse(context)
 
 
 def check_code(request):
     code_num = request.GET['code_num']
-    ID_num = request.GET['ID_num']
+    # ID_num = request.GET['ID_num']
     try:
-        code = Solve.objects.get(solve_id=code_num)
+        code = Assignment.objects.get(assignment_id=code_num)
     except:
         code=None
+    # try:
+    #     ID = Solve.objects.get(student_id=ID_num)
+    # except:
+    #     ID=None or (ID is None)
+
+    if (code is None):
+        overlap="fail"
+    else:
+        overlap="pass"
+
+    context = {
+        'overlap': overlap
+    }
+    return JsonResponse(context)
+
+
+def check_ID(request):
+    ID_num = request.GET['ID_num']
+
     try:
         ID = Solve.objects.get(student_id=ID_num)
     except:
         ID=None
 
-    if (code is None) or (ID is None):
+    if ID is None:
         overlap="fail"
     else:
         overlap="pass"
