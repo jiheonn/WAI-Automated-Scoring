@@ -46,13 +46,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
-                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토
                         <span class="sr-only">(current)</span>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
@@ -78,42 +78,28 @@
         <div class="col-lg-5">
 <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                등록되어 있는 문항을 다운로드할 수 있는 곳입니다.<br>
-                원하는 일부 문항들이나 전체 문항을 한번에 다운로드할 수 있습니다.
+                평가연습에 있는 문항들을 수정하거나 삭제하실 수 있는 페이지입니다.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
-        <div>
-            <select name="evaluation_type">
-                <option value="total" selected="selected">전체</option>
-                <option value="uncertify">국어</option>
-                <option value="disapprove">수학</option>
-                <option value="approve">과학</option>
-            </select>
-            <table style="text-align: center; font-size: small;">
+        <div style="margin: 50px;">
+            <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="90px">과목</th>
-                    <th width="100px">등록자</th>
+                    <th width="110px">과목</th>
                     <th width="130px">등록일자</th>
-                    <th width="90px">다운로드</th>
                 </tr>
-                {% for item in makequestion %}
+                {% for item in question %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>{{ item.make_question_id }}</td>
-                    <td><a href="{% url 'detailed_download' %}" style="color: black">{{ item.question_name }}</a></td>
+                    <td>{{ item.question_id }}</td>
+                    <td><a href="{% url 'ques_detail' %}" style="color: black">{{ item.question_name }}</a></td>
                     <td>{{ item.category.category_name }}</td>
-                    <td>{{ item.teacher_teacher_name }}</td>
                     <td>{{ item.made_date }}</td>
-                    <td><a href="#"><img src="{% static 'sysop/image/download.png' %}" style="width: 20px;"></a></td>
                 </tr>
-                {% endfor %}            
+                {% endfor %}
             </table>
-            <div class="col-lg-2" style="float: right; margin: 10px auto;">
-                <button type="submit" style="width: 150px;">전체문항 다운로드</button>
-            </div>
         </div>
     </div>
     <!-- /.row -->

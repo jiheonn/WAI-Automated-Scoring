@@ -78,8 +78,8 @@
         <div class="col-lg-5">
 <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                선생님들께서 등록하신 문항들입니다.<br>
-                문항을 검토하거나 학생모드의 스스로 평가하기에 등록하실 수 있습니다!
+                등록문항의 상세정보를 볼 수 있는 페이지입니다.<br>
+                문항의 모범답안과 채점기준을 볼 수 있고 문항을 인쇄 또는 다운로드할 수 있습니다.<br>
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -87,26 +87,57 @@
         <div style="margin: 50px;">
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="100px">등록자</th>
-                    <th width="130px">등록일자</th>
-                    <th width="80px">등록여부</th>
+                    <th width="110px">학교분류</th>
+                    <th width="110px">과목</th>                  
                 </tr>
-                {% for item in makequestion %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>{{ item.make_question_id }}</td>
-                    <td><a href="{% url 'detailed_review' %}" style="color: black">{{ item.question_name }}</a></td>
-                    <td>{{ item.teacher.teacher_name }}</td>
-                    <td>2020년 5월 10일</td>
-                    <td>{% if item.check == 0 %}
-                        미등록
-                         {% else %}
-                        등록
-                        {% endif%}</td>
+                    <td><input type="text" name="q_name" size="80px"></td>
+                    <td>
+                        <select name="evaluation_type">
+                            <option value="total" selected="selected">전체</option>
+                            <option value="disapprove">초등학교</option>
+                            <option value="approve">중학교</option>
+                            <option value="approve">고등학교</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="evaluation_type">
+                            <option value="total" selected="selected">전체</option>
+                            <option value="disapprove">수학</option>
+                            <option value="approve">과학</option>
+                            <option value="approve">영어</option>
+                            <option value="approve">국어</option>
+                        </select>
+                    </td>
                 </tr>
-                {% endfor %}
+            </table><br>
+            <table>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
+                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   문제를 작성해 주세요."></textarea></td>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
+                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   모범 답안을 작성해 주세요."></textarea></td>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
+                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   채점 기준을 작성해 주세요."></textarea></td>
+                </tr>
             </table>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit">인쇄하기</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit">다운로드</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button onclick="myFunction();" type="submit">등록하기</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit">수정하기</button>
+            </div>
         </div>
     </div>
     <!-- /.row -->
@@ -126,6 +157,15 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    function myFunction() {
+        if(confirm("스스로 평가하기에 올라갑니다. 오타는 확인하셨나요?")){
+            alert("등록되었습니다.");
+        }else {
+            alert("취소되었습니다.");
+        }
+    }
+</script>
 
 </body>
 
