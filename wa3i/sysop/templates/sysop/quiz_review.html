@@ -49,6 +49,9 @@
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
@@ -86,43 +89,23 @@
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="110px">학교분류</th>
-                    <th width="110px">과목</th>
                     <th width="100px">등록자</th>
                     <th width="130px">등록일자</th>
+                    <th width="80px">등록여부</th>
                 </tr>
+                {% for item in makequestion %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>1</td>
-                    <td><a href="{% url 'detailed_review' %}" style="color: black">지붕 위의 발전기</a></td>
-                    <td>초등학교</td>
-                    <td>과학</td>
-                    <td>***</td>
-                    <td>2020.00.00</td>
+                    <td>{{ item.make_question_id }}</td>
+                    <td><a href="{% url 'detailed_review' %}" style="color: black">{{ item.question_name }}</a></td>
+                    <td>{{ item.teacher.teacher_name }}</td>
+                    <td>2020년 5월 10일</td>
+                    <td>{% if item.check == 0 %}
+                        미등록
+                         {% else %}
+                        등록
+                        {% endif%}</td>
                 </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                {% endfor %}
             </table>
         </div>
     </div>

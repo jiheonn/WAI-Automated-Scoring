@@ -49,6 +49,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
@@ -83,11 +86,11 @@
         <div>
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="80px">문항번호</th>
+                    <th width="100px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="120px">학교분류</th>
-                    <th width="130px">과목</th>
-                    <th width="130px">등록자</th>
+                    <th width="140px">학교분류</th>
+                    <th width="140px">과목</th>
+                    <th width="140px">등록자</th>
                     <th width="180px">등록일자</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
@@ -99,22 +102,25 @@
                     <td>2020.00.00</td>
                 </tr>
             </table><br>
-            <table>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
-                    <td><textarea type="text" name="" placeholder="   문제를 작성해 주세요."></td>
+            
+
+            <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">도움 생각</th>
+                    <th>모범 답안</th>
                 </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; width: 50px; text-align: center; background-color: #343a40; color: white;">모범답안</th>
-                    <td>문항의 모범답안 작성</td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
-                    <td>문제의 채점기준 명시</td>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="도움 생각을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="모범 답안을 작성해 주세요."></textarea></td>
                 </tr>
             </table>
+
+
+
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">수정하기</button>
+                <button type="submit" onclick="myFunction();">저장하기</button>
             </div>
         </div>
     </div>
@@ -135,6 +141,15 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    function myFunction() {
+        if(confirm("신규문항으로 등록하시겠습니까?")) {
+            alert("저장하였습니다.");
+        }else {
+            alert("취소되었습니다.");
+        }
+    }
+</script>
 
 </body>
 

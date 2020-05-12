@@ -50,6 +50,9 @@
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
@@ -84,58 +87,36 @@
         <!-- /.col-md-4 -->
 
         <div style="margin: 50px;">
-            <select name="evaluation_type">
-                <option value="total" selected="selected">전체</option>
-                <option value="uncertify">본인인증 미완료</option>
-                <option value="disapprove">미승인</option>
-                <option value="approve">승인</option>
-            </select><br><br>
+            <form action="{% url 'teacher_data' %}" method="get">
+                <select name="evaluation_type">
+                    <option value="total" selected="selected">전체</option>
+                    <option value="disapprove">미승인</option>
+                    <option value="approve">승인</option>
+                <input type="submit" name="featured" value="선택">
+                </select>
+            </form><br><br>
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="90px">순번</th>
                     <th width="90px">이름</th>
                     <th width="200px">학교</th>
                     <th width="250px">이메일</th>
-                    <th width="180px">연락처</th>
-                    <th width="130px">본인인증</th>
                     <th width="100px">승인여부</th>
                 </tr>
+                {% for item in teacher %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>1</td>
-                    <td>이**</td>
-                    <td>**고등학교</td>
-                    <td></td>
-                    <td>010-****-****</td>
-                    <td><a href="#">인증메일 발송</a></td>
-                    <td><a href="#" style="color: grey">승인하기</a></td>
+                    <td>{{ item.teacher_id }}</td>
+                    <td>{{ item.teacher_name }}</td>
+                    <td>{{ item.school }}</td>
+                    <td>{{ item.email }}</td>
+                    <td class="approve">{% if item.approve == '0' %}
+                        미승인
+                         {% else %}
+                        승인
+                        {% endif%}
+                    </td>
                 </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>2</td>
-                    <td>이**</td>
-                    <td>**고등학교</td>
-                    <td></td>
-                    <td>010-****-****</td>
-                    <td>인증완료</a></td>
-                    <td><a href="#">승인하기</a></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>3</td>
-                    <td>이**</td>
-                    <td>**고등학교</td>
-                    <td></td>
-                    <td>010-****-****</td>
-                    <td>인증완료</a></td>
-                    <td>승인완료</a></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>4</td>
-                    <td>이**</td>
-                    <td>**고등학교</td>
-                    <td></td>
-                    <td>010-****-****</td>
-                    <td>인증완료</a></td>
-                    <td>승인완료</a></td>
-                </tr>
+                {% endfor %}
             </table>
         </div>
     </div>
@@ -156,6 +137,18 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $(".approve").on('click', function() {
+   let currentTd = $(this);
+    let currentRow = currentTd.closest("tr");
+    let td1 = currentRow.find("td:eq(1)").text();
+    let td2 = currentRow.find("td:eq(2)").text();
+    let td3= currentRow.find("td:eq(3)").text();
+    const data = td1+ '\n' +td2 + '\n'+td3 + '\n' + '승인하시겠습니까?';
+    confirm(data);
+   currentTd.text("승인");
+});
+</script>
 
 </body>
 

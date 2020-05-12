@@ -46,13 +46,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
-                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토
                         <span class="sr-only">(current)</span>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
@@ -78,41 +78,57 @@
         <div class="col-lg-5">
 <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                등록되어 있는 문항을 다운로드할 수 있는 곳입니다.<br>
-                원하는 일부 문항들이나 전체 문항을 한번에 다운로드할 수 있습니다.
+                등록문항의 상세정보를 볼 수 있는 페이지입니다.<br>
+                문항의 모범답안과 채점기준을 볼 수 있고 문항을 인쇄 또는 다운로드할 수 있습니다.<br>
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
-        <div>
-            <select name="evaluation_type">
-                <option value="total" selected="selected">전체</option>
-                <option value="uncertify">국어</option>
-                <option value="disapprove">수학</option>
-                <option value="approve">과학</option>
-            </select>
-            <table style="text-align: center; font-size: small;">
+        <div style="margin: 50px;">
+            <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="90px">과목</th>
-                    <th width="100px">등록자</th>
-                    <th width="130px">등록일자</th>
-                    <th width="90px">다운로드</th>
+                    <th width="120px">학교분류</th>
+                    <th width="130px">과목</th>
+                    <th width="130px">등록자</th>
+                    <th width="180px">등록일자</th>
+                    <th width="80px">등록여부</th>
                 </tr>
-                {% for item in makequestion %}
+                {% for item in row %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>{{ item.make_question_id }}</td>
-                    <td><a href="{% url 'detailed_download' %}" style="color: black">{{ item.question_name }}</a></td>
-                    <td>{{ item.category.category_name }}</td>
-                    <td>{{ item.teacher_teacher_name }}</td>
-                    <td>{{ item.made_date }}</td>
-                    <td><a href="#"><img src="{% static 'sysop/image/download.png' %}" style="width: 20px;"></a></td>
+                    <td>{{ item.question_id }}</td>
+                    <td>지붕 위의 발전기</td>
+                    <td>초등학교</td>
+                    <td>과학</td>
+                    <td>***</td>
+                    <td>2020.00.00</td>
+                    <td></td>
                 </tr>
-                {% endfor %}            
+                {% endfor %}
+            </table><br>
+            <table>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
+                    <td>서연이 아버지는 새로 집을 지으시면서 지붕 위에 태양광 발전 장치를 설치하였습니다. 비용이 많이 들었지만 ‘태양광 발전’이 석탄이나 석유와 같은 화석에너지에 비해…</td>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
+                    <td>문항의 모범답안 작성</td>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
+                    <td>문제의 채점기준 명시</td>
+                </tr>
             </table>
-            <div class="col-lg-2" style="float: right; margin: 10px auto;">
-                <button type="submit" style="width: 150px;">전체문항 다운로드</button>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit">인쇄하기</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit">다운로드</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit" onclick="myFunction();">등록하기</button>
             </div>
         </div>
     </div>
@@ -133,6 +149,16 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+function myFunction() {
+    if(confirm("문항정보\n등록하시겠습니까?")){
+        alert("등록되었습니다.");
+    }else {
+        alert("취소되었습니다.");
+    }
+}
+    
+</script>
 
 </body>
 
