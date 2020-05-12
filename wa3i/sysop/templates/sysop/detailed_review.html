@@ -49,6 +49,9 @@
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
                 </li>
                 <li class="nav-item">
@@ -90,6 +93,7 @@
                     <th width="130px">과목</th>
                     <th width="130px">등록자</th>
                     <th width="180px">등록일자</th>
+                    <th width="80px">등록여부</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <td>1</td>
@@ -98,6 +102,7 @@
                     <td>과학</td>
                     <td>***</td>
                     <td>2020.00.00</td>
+                    <td></td>
                 </tr>
             </table><br>
             <table>
@@ -121,7 +126,7 @@
                 <button type="submit">다운로드</button>
             </div>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">등록하기</button>
+                <button type="submit" onclick="myFunction();">등록하기</button>
             </div>
         </div>
     </div>
@@ -142,6 +147,16 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+function myFunction() {
+    if(confirm("문항정보\n등록하시겠습니까?")){
+        alert("등록되었습니다.");
+    }else {
+        alert("취소되었습니다.");
+    }
+}
+    
+</script>
 
 </body>
 
