@@ -239,6 +239,8 @@
                                     '<span class="card-footer ctm-check">' +
                                     '<input type="checkbox" id="' +
                                     search_data[i].question_id +
+                                    '" name="' +
+                                    search_data[i].question_id +
                                     '">' +
                                     '<label for="' +
                                     search_data[i].question_id +
@@ -291,6 +293,8 @@
                                     '</div>' +
                                     '<span class="card-footer ctm-check">' +
                                     '<input type="checkbox" id="' +
+                                    option_data[i].question_id +
+                                    '" name="' +
                                     option_data[i].question_id +
                                     '">' +
                                     '<label for="' +
@@ -406,8 +410,7 @@
         </div>
 
         <div style="margin: 50px;">
-            <form action="{% url 'question_selection' %}" method="post" >
-                {% csrf_token %}
+            <form action="{% url 'question_selection' %}" method="GET" >
             <select id="evaluation_type" name="evaluation_type">
                 <option value="선택없음" selected="selected">선택</option>
                 <option value="학습평가">학습평가</option>
@@ -422,7 +425,7 @@
                 <span>반 : <input type="text" name="class" style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
                 <span>시작날짜 : <input type="date" id="start-date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
                 <span>종료날짜 : <input type="date" id="end-date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
-<!--            </form>-->
+            </form>
         </div>
 
         <div class="container">
@@ -468,7 +471,7 @@
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
                         </div>
                         <span class="card-footer ctm-check">
-                            <input type="checkbox" id="{{ data.question_id }}">
+                            <input type="checkbox" id="{{ data.question_id }}" name="{{ data.question_id }}">
                             <label for="{{ data.question_id }}"><i></i>{{ data.question_name }}</label>
                         </span>
                     </div>
@@ -558,8 +561,7 @@
 <!--                </div>-->
 <!--            </div>-->
 
-    </div>
-
+</div>
     </div>
     <!-- /.row -->
     <div class="col-lg-2" style="float: none; margin: 50px auto;">
@@ -567,7 +569,6 @@
     </div>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 </div>
-</form>
 <!-- /.container -->
 
 <!-- Footer -->
