@@ -47,7 +47,8 @@ def Self(request):
 
 
 def AIques(request):
-    data = Question.objects.first()
+    question_name = request.GET['question']
+    data = Question.objects.filter(question_name=question_name)[0]
 
     context = {
         'data': data
