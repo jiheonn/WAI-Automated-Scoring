@@ -104,12 +104,22 @@
                 <tr style="border: 1px solid #d6d6d6;">
                     <td>{{ item.make_question_id }}</td>
                     <td><a href="{% url 'detailed_download' %}" style="color: black">{{ item.question_name }}</a></td>
-                    <td>{{ item.category.category_name }}</td>
-                    <td>{{ item.teacher_teacher_name }}</td>
-                    <td>{{ item.made_date }}</td>
+                    <td>*</td>
+                    <td>{{ item.teacher.teacher_name }}</td>
+                    <td>2020년 05월 10일</td>
                     <td><a href="#"><img src="{% static 'sysop/image/download.png' %}" style="width: 20px;"></a></td>
                 </tr>
                 {% endfor %}            
+                {% for item in question %}
+                <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ item.question_id }}</td>
+                    <td><a href="{% url 'detailed_download' %}" style="color: black">{{ item.question_name }}</a></td>
+                    <td>{{ item.category.category_name }}</td>
+                    <td>*</td>
+                    <td>{{ item.made_date}}</td>
+                    <td><a href="#"><img src="{% static 'sysop/image/download.png' %}" style="width: 20px;"></a></td>
+                </tr>
+                {% endfor %}
             </table>
             <div class="col-lg-2" style="float: right; margin: 10px auto;">
                 <button type="submit" style="width: 150px;">전체문항 다운로드</button>
