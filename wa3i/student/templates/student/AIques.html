@@ -68,9 +68,11 @@
 
         <!-- Post Content Column -->
         <div class="col-lg-12">
-
+            <!-- Comments Form -->
+            <form action="{% url 'AIdiagnosis' %}" method="GET">
             <!-- Title -->
-            <h2 class="mt-4">{{data.question_name}}</h2>
+            <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question" value="{{ data.question_id }}"
+                                               id="{{ data.question_id }}">{{data.question_name}}</h2>
 
             <hr>
 
@@ -85,10 +87,7 @@
 
             <hr>
 
-            <!-- Comments Form -->
-            <form action="{% url 'AIdiagnosis' %}" method="GET">
                 <div class="card my-4">
-                    <!--                    <input type="hidden" name="q_no" value="1"/>-->
                     <h5 class="card-header">생각을 적어보세요:</h5>
                     <div class="card-body">
                         <div class="form-group">

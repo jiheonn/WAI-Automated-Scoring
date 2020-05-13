@@ -26,10 +26,29 @@ def AI(request):
 
 
 def Study(request):
-    context = {
+    if request.method=="GET":
+        return render(request, 'student/Study.html')
+    elif request.method=="POST":
+        code_num = request.POST.get('code_num')
+        ID_num = request.POST.get('ID_num')
 
-    }
-    return render(request, 'student/Study.html', context)
+        res_data=[]
+        if not (code_num and ID_num):
+            res_data['error']="코드와 아이디 모두 입력하세요."
+        else:
+            fuser = AssignmentQuestionRel.objects.get(assignment_id=code_num)
+
+            if che_code(code_num,fuser.assignment_id):
+                request.session['user'] = fuser.assignment_id
+                return redirect('/')
+            else:
+                res_data['error']="존재하지 않는 코드입니다."
+        return render(request, 'student/Study.html',res_data)
+
+    # context = {
+    #
+    # }
+    # return render(request, 'student/Study.html', context)
 
 
 def Homework(request):
@@ -57,7 +76,9 @@ def AIques(request):
 
 
 def Studyques(request):
-    data = Question.objects.all()
+    assignment_id = request.GET['code_num']
+    data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)[0]
+
     f = data.first()
     context = {
         'data' : data,
@@ -111,10 +132,13 @@ def Homeworkdiag(request):
 
 
 def AIdiag(request):
+    question_id = request.GET['question']
+
     ques_ans = request.GET['ques_ans']
     cat_school = request.GET['cat_school']
     cat_sex = request.GET['cat_sex']
-    data = AssignmentQuestionRel.objects.select_related('question','solve').first()
+    data = AssignmentQuestionRel.objects.select_related('question','solve').filter(question_id=question_id)[0]
+
     #
     # c1 = request.GET['cat_school']
     # c2 = request.GET['cat_sex']
