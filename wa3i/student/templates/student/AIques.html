@@ -42,11 +42,12 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                 height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
-        <p class="font-weight-bolder triangle-border left">문제를 잘 읽고 여러분의 생각을 설명해 보세요.</p>
+            <p class="font-weight-bolder triangle-border left">문제를 잘 읽고 여러분의 생각을 설명해 보세요.</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -65,64 +66,64 @@
     <!-- Content Row -->
     <div class="row">
 
-      <!-- Post Content Column -->
-      <div class="col-lg-12">
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
 
-        <!-- Title -->
-        <h2 class="mt-4">{{data.question_name}}</h2>
+            <!-- Title -->
+            <h2 class="mt-4">{{data.question_name}}</h2>
 
-        <hr>
+            <hr>
 
-        <!-- Preview Image -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+            <!-- Preview Image -->
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
 
-        <hr>
+            <hr>
 
-        <!-- Post Content -->
-        <p>{{data.discription}}
-        </p>
+            <!-- Post Content -->
+            <p>{{data.discription}}
+            </p>
 
-        <hr>
+            <hr>
 
-        <!-- Comments Form -->
-        <div class="card my-4">
-            <input type="hidden" name="q_no" value="1" />
-          <h5 class="card-header">생각을 적어보세요:</h5>
-          <div class="card-body">
-            <form action="{% static 'student/vendor/jquery/QuesAnswer.jsp' %}" method="post">
-              <div class="form-group">
-                <textarea class="form-control" rows="3" id="ques_ans"></textarea>
-              </div>
-            </form>
-                <div class="col-md-10">
-                    <table>
-                        <td>
-                            <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'AIdiagnosis' %}'" style="cursor:pointer">
-                                <button type="submit" class="w3-btn w3-round w3-blue" id="bt">제출하기</button>
-                            </a>
-                        </td>
-                        <td>
-                            <select class="form-control form-control-a" id="cat_school" name="cat_school">
-                                <option value="">학교</option>
-                                <option value="1">초등학교</option>
-                                <option value="2">중학교</option>
-                                <option value="3">고등학교</option>
-                            </select>
-                        </td>
-                        <td>
-                             <select class="form-control form-control-a" id="cat_sex" name="cat_sex">
-                                <option value="">성별</option>
-                                <option value="4">남자</option>
-                                <option value="5">여자</option>
-                            </select>
-                        </td>
-                    </table>
+            <!-- Comments Form -->
+            <form action="{% url 'AIdiagnosis' %}" method="GET">
+                <div class="card my-4">
+                    <!--                    <input type="hidden" name="q_no" value="1"/>-->
+                    <h5 class="card-header">생각을 적어보세요:</h5>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
+                        </div>
+                        <div class="col-md-10">
+                            <table>
+                                <td>
+                                    <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'AIdiagnosis' %}'"
+                                       style="cursor:pointer">
+                                        <button type="submit" class="w3-btn w3-round w3-blue" id="bt">제출하기</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <select class="form-control form-control-a" id="cat_school" name="cat_school">
+                                        <option value="">학교</option>
+                                        <option value="1">초등학교</option>
+                                        <option value="2">중학교</option>
+                                        <option value="3">고등학교</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control form-control-a" id="cat_sex" name="cat_sex">
+                                        <option value="">성별</option>
+                                        <option value="4">남자</option>
+                                        <option value="5">여자</option>
+                                    </select>
+                                </td>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-<!--            </form>-->
-          </div>
-        </div>
+            </form>
 
-      </div>
+        </div>
     </div>
     <!-- /.row -->
 

@@ -113,17 +113,19 @@ def Homeworkdiag(request):
 
 
 def AIdiag(request):
+    ques_ans = request.GET['ques_ans']
+    cat_school = request.GET['cat_school']
+    cat_sex = request.GET['cat_sex']
     data = AssignmentQuestionRel.objects.select_related('question','solve').first()
-
-    c1 = request.GET['cat_school']
-    c2 = request.GET['cat_sex']
-
+    #
+    # c1 = request.GET['cat_school']
+    # c2 = request.GET['cat_sex']
 
     context = {
         'data': data,
-
-        'c1': c1,
-        'c2': c2
+        'ques_ans' : ques_ans,
+        'cat_school' : cat_school,
+        'cat_sex' : cat_sex,
     }
     return render(request, 'student/AIdiag.html', context)
 
