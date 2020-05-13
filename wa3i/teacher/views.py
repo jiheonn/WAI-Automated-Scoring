@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from mainpage.models import Question, Assignment, AssignmentQuestionRel, Solve, Keyword, Category
+from mainpage.models import Question, Assignment, AssignmentQuestionRel, Solve, Keyword, Category, Teacher
 from django.http import JsonResponse
 from django.db.models import Q
 import datetime
@@ -25,29 +25,17 @@ def question_selection(request):
     context = {
         'question_data': question_data
     }
-    # if request.method == 'POST':
-    #     form = Assignment(request.POST)
-    #     if form.is_valid():
-    #         obj = Assignment(assignment_id=request.GET['code_num'],
-    #                          assignment_title=request.GET['question-title'],
-    #                          type=request.GET['evaluation_type'],
-    #                          start_date=request.GET['start-date'],
-    #                          end_data=request.GET['end-date'],
-    #                          made_date=request.GET[now_date],
-    #                          grade=request.GET['grade'],
-    #                          class_field=request.GET['class'])
-    #         obj.save()
-    #         return print('성공')
-    #     return print('실패')
     try:
         assignment_data = Assignment(assignment_id=request.GET['code_num'],
+                                     teacher=Teacher.objects.get(teacher_id=2),
                                      assignment_title=request.GET['question-title'],
                                      type=request.GET['evaluation_type'],
-                                     start_date=request.GET['start-date'],
-                                     end_data=request.GET['end-date'],
-                                     made_date=request.GET[now_date],
-                                     grade=request.GET['grade'],
-                                     class_field=request.GET['class'])
+                                     start_date=datetime.datetime.strptime(request.GET['start-date'],
+                                                                           '%Y-%m-%d').date(),
+                                     end_date=datetime.datetime.strptime(request.GET['end-date'], '%Y-%m-%d').date(),
+                                     made_date=now_date,
+                                     grade=int(request.GET['grade']),
+                                     class_field=int(request.GET['class']))
         assignment_data.save()
     except:
         assignment_data = None
@@ -175,7 +163,7 @@ def question_search(request):
         search_data_dict['question_name'] = i.question.question_name
         search_data_dict['question_image'] = i.question.image
         search_data.append(search_data_dict)
-
+    print(search_data)
     context = {
         'search_data': search_data
     }
