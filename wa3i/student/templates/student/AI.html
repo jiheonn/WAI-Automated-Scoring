@@ -97,7 +97,8 @@
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
                         </div>
                         <span class="card-footer">
-                            <a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
+<!--                            <input type="hidden" value="안보이는값" name="aa">-->
+                            <a href="{% url 'AIquestion' data.question_id %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
                         </span>
                     </div>
                 </div>

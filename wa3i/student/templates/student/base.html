@@ -235,7 +235,6 @@
                                     '</a>' +
                                     '</span>' +
                                     '</div>' +
-
                                     '</div>'
                             )}
                         }}
@@ -293,7 +292,7 @@
 <!--                })-->
 <!--            });-->
 
-<!--검색카테고리-->
+<!--카테고리 검색-->
             $(document).ready(function () {
             $('#category_option').change(function () {
                 var option = $("#category_option option:selected").val();
@@ -307,18 +306,17 @@
                         $("div").remove("#question_list");
                             for (var i = 0; i < num; i++) {
                                 $("#whole_card").after(
-                                    '<div id="question_list" class="row">' +
-                                    '<div class="col-md-3 mb-5">' +
+                                   '<div id="question_list" class="col-md-3 mb-5">' +
                                     '<div class="card h-100" align="center">' +
                                     '<div class="card-body">' +
                                     '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
                                     '/static/' +
-                                    option_data[i].question_image +
+                                    search_data[i].question_image +
                                     '">' +
                                     '</div>' +
                                     '<span class="card-footer">' +
                                     '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +
-                                    option_data[i].question_name +
+                                    search_data[i].question_name +
                                     '</a>' +
                                     '</span>' +
                                     '</div>' +
@@ -351,7 +349,7 @@
         <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
         <script src="{% static 'student/vendor/jquery/jquery.twbs-toggle-buttons.min.js' %}"></script>
 
-        <script src="jquery.nicelabel.js"></script>
+<!--        <script src="{% static 'student/js/jquery.nicelabel.js' %}"></script>-->
 
     </body>
 
