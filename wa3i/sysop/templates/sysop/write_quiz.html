@@ -84,25 +84,29 @@
         </div>
         <!-- /.col-md-4 -->
         <div>
-            <table style="text-align: center;">
-                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="100px">문항번호</th>
-                    <th width="400px">문항명</th>
-                    <th width="140px">학교분류</th>
-                    <th width="140px">과목</th>
-                    <th width="140px">등록자</th>
-                    <th width="180px">등록일자</th>
+            <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">문항명</th>
+                    <th>과목</th>
                 </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td>1</td>
-                    <td>지붕 위의 발전기</td>
-                    <td>초등학교</td>
-                    <td>과학</td>
-                    <td>***</td>
-                    <td>2020.00.00</td>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="문항명을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="과목을 작성해 주세요."></textarea></td>
                 </tr>
             </table><br>
-            
+
+            <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">문제</th>
+                </tr>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="문항을 작성해 주세요."></textarea></td>
+                </tr>
+            </table>
 
             <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
                 <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
@@ -150,6 +154,7 @@
         }
     }
 </script>
+
 
 </body>
 
