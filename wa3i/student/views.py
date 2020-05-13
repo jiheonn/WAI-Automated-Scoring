@@ -46,8 +46,6 @@ def Self(request):
     return render(request, 'student/Self.html', context)
 
 
-
-
 def AIques(request):
     question_name = request.GET['question']
     data = Question.objects.filter(question_name=question_name)[0]
@@ -202,7 +200,6 @@ def search_name(request):
 
 def change_category(request):
     category_option = request.GET['option']
-    print(category_option)
     opt_data = Question.objects.select_related('category').filter(category__category_name=category_option)
 
     option_data = []
