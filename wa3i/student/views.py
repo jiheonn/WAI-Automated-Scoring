@@ -46,9 +46,11 @@ def Self(request):
     return render(request, 'student/Self.html', context)
 
 
-def AIques(request, question_id):
-    # question_id = request.GET['user_input']
-    data = Question.objects.get(question_id=question_id)
+
+
+def AIques(request):
+    question_name = request.GET['question']
+    data = Question.objects.filter(question_name=question_name)[0]
 
     context = {
         'data': data
