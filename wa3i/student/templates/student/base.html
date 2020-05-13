@@ -27,84 +27,62 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!--        <script type="text/javascript" language="javascript">-->
+        <script type="text/javascript" language="javascript">
 
-<!--            function IDAlert() {-->
-<!--                var ID_num = document.getElementById("ID_num").value-->
-<!--                var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + ID_num)-->
-<!--                 if ( msg == true) {-->
-<!--                     return checkID(ID_num);-->
-<!--                 }else{-->
-<!--                     return false;-->
-<!--                 }-->
-<!--            }-->
+            function IDAlert() {
+                var ID_num = document.getElementById("ID_num").value
+                var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + ID_num)
+                 if ( msg == true) {
+                     return checkID(ID_num);
+                 }else{
+                     return false;
+                 }
+            }
 
-<!--            function CodeAlert() {-->
-<!--                var code_num = document.getElementById("code_num").value-->
-<!--                var ID_num = document.getElementById("ID_num").value-->
-<!--                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "-->
-<!--                + code_num + "\nID : "+ ID_num);-->
-<!--                 if ( AImsg == true) {-->
-<!--                     return checkcode(code_num,ID_num);-->
-<!--                 }else{-->
-<!--                     return false;-->
-<!--                 }-->
-<!--            }-->
-
-
-<!--            function ScoreAlert() {-->
-<!--                 if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {-->
-<!--                     document.location.href='{% url 'Self' %}';-->
-<!--                 }else{-->
-<!--                     return false;-->
-<!--                 }-->
-<!--            }-->
-
-<!--            function AIAlert() {-->
-<!--                var code_num = document.getElementById("code_num").value-->
-<!--                var ID_num = document.getElementById("ID_num").value-->
-<!--                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "-->
-<!--                + code_num + "\nID : "+ ID_num);-->
-<!--                 if ( AImsg == true) {-->
-<!--                     return checkInfo(code_num,ID_num);-->
-<!--                 }else{-->
-<!--                     return false;-->
-<!--                 }-->
-<!--            }-->
+            function CodeAlert() {
+                var code_num = document.getElementById("code_num").value
+                var ID_num = document.getElementById("ID_num").value
+                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "
+                + code_num + "\nID : "+ ID_num);
+                 if ( AImsg == true) {
+                     return checkcode(code_num,ID_num);
+                 }else{
+                     return false;
+                 }
+            }
 
 
-<!--&lt;!&ndash;            function checkInfo(data) {&ndash;&gt;-->
+            function ScoreAlert() {
+                 if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {
+                     document.location.href='{% url 'Self' %}';
+                 }else{
+                     return false;
+                 }
+            }
 
-<!--&lt;!&ndash;            code_overlap_input = document.querySelector('input[id="code_num"]');&ndash;&gt;-->
-<!--&lt;!&ndash;            ID_overlap_input = document.querySelector('input[id="ID_num"]');&ndash;&gt;-->
+            function AIAlert() {
+                var code_num = document.getElementById("code_num").value
+                var ID_num = document.getElementById("ID_num").value
+                var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "
+                + code_num + "\nID : "+ ID_num);
+                 if ( AImsg == true) {
+                     return checkInfo(code_num,ID_num);
+                 }else{
+                     return false;
+                 }
+            }
 
-<!--&lt;!&ndash;            $.ajax({&ndash;&gt;-->
-<!--&lt;!&ndash;              url: '/student/check_code/',&ndash;&gt;-->
-<!--&lt;!&ndash;              data: {&ndash;&gt;-->
-<!--&lt;!&ndash;                'code_num': code_overlap_input.value,&ndash;&gt;-->
-<!--&lt;!&ndash;                'ID_num': ID_overlap_input.value&ndash;&gt;-->
-<!--&lt;!&ndash;              },&ndash;&gt;-->
-<!--&lt;!&ndash;              datatype: 'json',&ndash;&gt;-->
-<!--&lt;!&ndash;              success: function (data) {&ndash;&gt;-->
-<!--&lt;!&ndash;                console.log(data['overlap']);&ndash;&gt;-->
-<!--&lt;!&ndash;                if (data['overlap'] == "pass") {&ndash;&gt;-->
-<!--&lt;!&ndash;                  document.location.href='{% url 'Studyquestion' %}';&ndash;&gt;-->
-<!--&lt;!&ndash;                } else {&ndash;&gt;-->
-<!--&lt;!&ndash;                  alert("코드와 ID를 다시 확인하세요.");&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                  return false;&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                }&ndash;&gt;-->
-<!--&lt;!&ndash;              }&ndash;&gt;-->
-<!--&lt;!&ndash;            });&ndash;&gt;-->
-<!--&lt;!&ndash;          }&ndash;&gt;-->
 
-<!--&lt;!&ndash;코드만 성공&ndash;&gt;-->
 <!--            function checkInfo(data) {-->
+
 <!--            code_overlap_input = document.querySelector('input[id="code_num"]');-->
+<!--            ID_overlap_input = document.querySelector('input[id="ID_num"]');-->
 
 <!--            $.ajax({-->
 <!--              url: '/student/check_code/',-->
 <!--              data: {-->
-<!--                'code_num': code_overlap_input.value-->
+<!--                'code_num': code_overlap_input.value,-->
+<!--                'ID_num': ID_overlap_input.value-->
 <!--              },-->
 <!--              datatype: 'json',-->
 <!--              success: function (data) {-->
@@ -112,222 +90,244 @@
 <!--                if (data['overlap'] == "pass") {-->
 <!--                  document.location.href='{% url 'Studyquestion' %}';-->
 <!--                } else {-->
-<!--                alert("코드를 다시 확인하세요.");-->
-<!--&lt;!&ndash;                  return false;&ndash;&gt;-->
-<!--                }-->
-<!--              }-->
-<!--            });-->
-<!--          }-->
-
-<!--            function checkcode(data) {-->
-<!--            code_overlap_input = document.querySelector('input[id="code_num"]');-->
-
-<!--            $.ajax({-->
-<!--              url: '/student/check_code/',-->
-<!--              data: {-->
-<!--                'code_num': code_overlap_input.value-->
-<!--              },-->
-<!--              datatype: 'json',-->
-<!--              success: function (data) {-->
-<!--                console.log(data['overlap']);-->
-<!--                if (data['overlap'] == "pass") {-->
-<!--                  document.location.href='{% url 'Homeworkquestion' %}';-->
-<!--                } else {-->
-<!--                alert("코드를 다시 확인하세요.");-->
-<!--&lt;!&ndash;                  return false;&ndash;&gt;-->
-<!--                }-->
-<!--              }-->
-<!--            });-->
-<!--          }-->
-
-
-<!--&lt;!&ndash;ID만&ndash;&gt;-->
-<!--            function checkID(ID_num) {-->
-<!--            ID_overlap_input = document.querySelector('input[id="ID_num"]');-->
-
-<!--            $.ajax({-->
-<!--              url: '/student/check_ID/',-->
-<!--              data: {-->
-<!--                'ID_num': ID_overlap_input.value-->
-<!--              },-->
-<!--              datatype: 'json',-->
-<!--              success: function (data) {-->
-<!--                console.log(data['overlap']);-->
-<!--                if (data['overlap'] == "pass") {-->
-<!--                  document.location.href='{% url 'Homeworklist' %}';-->
-<!--                } else {-->
 <!--                  alert("코드와 ID를 다시 확인하세요.");-->
+<!--&lt;!&ndash;                  return false;&ndash;&gt;-->
 <!--                }-->
 <!--              }-->
 <!--            });-->
 <!--          }-->
 
+<!--코드만 성공-->
+            function checkInfo(data) {
+            code_overlap_input = document.querySelector('input[id="code_num"]');
 
-<!--            function Print() {-->
-<!--            var print_ans = document.getElementById("print_ans");-->
-<!--                print_ans = temp;-->
-<!--                }-->
-<!--        </script>-->
-<!--        <script>-->
-<!--            $(document).ready(function () {-->
-<!--            $('#search').click(function () {-->
-<!--                var user_input = $('#user_input').val();-->
-<!--                 $.ajax({-->
-<!--                    url: '/student/search/',-->
-<!--                    data: {user_input: user_input},-->
-<!--                    success: function (data) {-->
-<!--                        var search_data = data.search_data;-->
-<!--                        var num = search_data.length;-->
-<!--                        if ( num == 0 ) {-->
-<!--                            alert('검색 결과가 존재하지 않습니다.');-->
-<!--                        } else {-->
-<!--                            $("div").remove("#question_list");-->
-<!--                        for (var i = 0; i < num; i++) {-->
-<!--                            $("#whole_card").after(-->
-<!--                                    '<div id="question_list" class="col-md-3 mb-5">' +-->
-<!--                                    '<div class="card h-100" align="center">' +-->
-<!--                                    '<div class="card-body">' +-->
-<!--                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +-->
-<!--                                    '/static/' +-->
-<!--                                    search_data[i].question_image +-->
-<!--                                    '">' +-->
-<!--                                    '</div>' +-->
-<!--                                    '<span class="card-footer">' +-->
-<!--                                    '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +-->
-<!--                                    search_data[i].question_name +-->
-<!--                                    '</a>' +-->
-<!--                                    '</span>' +-->
-<!--                                    '</div>' +-->
-<!--                                    '</div>'-->
-<!--                            )}-->
-<!--                        }}-->
-<!--                 });-->
-<!--            });-->
-<!--        });-->
+            $.ajax({
+              url: '/student/check_code/',
+              data: {
+                'code_num': code_overlap_input.value
+              },
+              datatype: 'json',
+              success: function (data) {
+                console.log(data['overlap']);
+                if (data['overlap'] == "pass") {
+                  document.location.href='{% url 'Studyquestion' %}';
+                } else {
+                alert("코드를 다시 확인하세요.");
+<!--                  return false;-->
+                }
+              }
+            });
+          }
+
+            function checkcode(data) {
+            code_overlap_input = document.querySelector('input[id="code_num"]');
+
+            $.ajax({
+              url: '/student/check_code/',
+              data: {
+                'code_num': code_overlap_input.value
+              },
+              datatype: 'json',
+              success: function (data) {
+                console.log(data['overlap']);
+                if (data['overlap'] == "pass") {
+                  document.location.href='{% url 'Homeworkquestion' %}';
+                } else {
+                alert("코드를 다시 확인하세요.");
+<!--                  return false;-->
+                }
+              }
+            });
+          }
+
+
+<!--ID만-->
+            function checkID(ID_num) {
+            ID_overlap_input = document.querySelector('input[id="ID_num"]');
+
+            $.ajax({
+              url: '/student/check_ID/',
+              data: {
+                'ID_num': ID_overlap_input.value
+              },
+              datatype: 'json',
+              success: function (data) {
+                console.log(data['overlap']);
+                if (data['overlap'] == "pass") {
+                  document.location.href='{% url 'Homeworklist' %}';
+                } else {
+                  alert("코드와 ID를 다시 확인하세요.");
+                }
+              }
+            });
+          }
+
+
+            function Print() {
+            var print_ans = document.getElementById("print_ans");
+                print_ans = temp;
+                }
+        </script>
+        <script>
+            $(document).ready(function () {
+            $('#search').click(function () {
+                var user_input = $('#user_input').val();
+                 $.ajax({
+                    url: '/student/search/',
+                    data: {user_input: user_input},
+                    success: function (data) {
+                        var search_data = data.search_data;
+                        var num = search_data.length;
+                        if ( num == 0 ) {
+                            alert('검색 결과가 존재하지 않습니다.');
+                        } else {
+                            $("div").remove("#question_list");
+                        for (var i = 0; i < num; i++) {
+                            $("#whole_card").after(
+                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                                    '<div class="card h-100" align="center">' +
+                                    '<div class="card-body">' +
+                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                    '/static/' +
+                                    search_data[i].question_image +
+                                    '">' +
+                                    '</div>' +
+                                    '<span class="card-footer">' +
+                                    '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +
+                                    search_data[i].question_name +
+                                    '</a>' +
+                                    '</span>' +
+                                    '</div>' +
+                                    '</div>'
+                            )}
+                        }}
+                 });
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#search_name').click(function () {
+                var name_input = $('#name_input').val();
+                 $.ajax({
+                    url: '/student/search_name/',
+                    data: {name_input: name_input},
+                    success: function (data) {
+                        var search_data = data.search_data;
+                        var num = search_data.length;
+                        if ( num == 0 ) {
+                            alert('검색 결과가 존재하지 않습니다.');
+                        } else {
+                            $("div").remove("#question_list");
+                        for (var i = 0; i < num; i++) {
+                            $("#whole_card").after(
+                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                                    '<div class="card h-100" align="center">' +
+                                    '<div class="card-body">' +
+                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                    '/static/' +
+                                    search_data[i].question_image +
+                                    '">' +
+                                    '</div>' +
+                                    '<span class="card-footer">' +
+                                    '<a href="{% url 'Selfquestion' %}" class="card-link" name="q_name" id="q_name">' +
+                                    search_data[i].question_name +
+                                    '</a>' +
+                                    '</span>' +
+                                    '</div>' +
+
+                                    '</div>'
+                            )}
+                        }}
+                 });
+            });
+        });
 
 
 <!--        $(document).ready(function () {-->
-<!--            $('#search_name').click(function () {-->
-<!--                var name_input = $('#name_input').val();-->
-<!--                 $.ajax({-->
-<!--                    url: '/student/search_name/',-->
-<!--                    data: {name_input: name_input},-->
-<!--                    success: function (data) {-->
-<!--                        var search_data = data.search_data;-->
-<!--                        var num = search_data.length;-->
-<!--                        if ( num == 0 ) {-->
-<!--                            alert('검색 결과가 존재하지 않습니다.');-->
-<!--                        } else {-->
-<!--                            $("div").remove("#question_list");-->
-<!--                        for (var i = 0; i < num; i++) {-->
-<!--                            $("#whole_card").after(-->
-<!--                                    '<div id="question_list" class="col-md-3 mb-5">' +-->
-<!--                                    '<div class="card h-100" align="center">' +-->
-<!--                                    '<div class="card-body">' +-->
-<!--                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +-->
-<!--                                    '/static/' +-->
-<!--                                    search_data[i].question_image +-->
-<!--                                    '">' +-->
-<!--                                    '</div>' +-->
-<!--                                    '<span class="card-footer">' +-->
-<!--                                    '<a href="{% url 'Selfquestion' %}" class="card-link" name="q_name" id="q_name">' +-->
-<!--                                    search_data[i].question_name +-->
-<!--                                    '</a>' +-->
-<!--                                    '</span>' +-->
-<!--                                    '</div>' +-->
-
-<!--                                    '</div>'-->
-<!--                            )}-->
-<!--                        }}-->
-<!--                 });-->
-<!--            });-->
-<!--        });-->
-
-
-<!--&lt;!&ndash;        $(document).ready(function () {&ndash;&gt;-->
-<!--&lt;!&ndash;            $('#cat_school').change(function () {&ndash;&gt;-->
-<!--&lt;!&ndash;                var option1 = $("#cat_school option:selected").val();&ndash;&gt;-->
-<!--&lt;!&ndash;                var option2 = $("#cat_sex option:selected").val();&ndash;&gt;-->
-<!--&lt;!&ndash;                $.ajax({&ndash;&gt;-->
-<!--&lt;!&ndash;                    url: '/student/change_category/',&ndash;&gt;-->
-<!--&lt;!&ndash;                    data: {option1: option1,option2: option2},&ndash;&gt;-->
-<!--&lt;!&ndash;                    success: function (data) {&ndash;&gt;-->
-<!--&lt;!&ndash;                        var option1_data = data.c1;&ndash;&gt;-->
-<!--&lt;!&ndash;                        var option2_data = data.c2;&ndash;&gt;-->
-<!--&lt;!&ndash;                        var i=0;&ndash;&gt;-->
-<!--&lt;!&ndash;                        var j=0&ndash;&gt;-->
-
-<!--&lt;!&ndash;                        if (option1_data == 1):&ndash;&gt;-->
-<!--&lt;!&ndash;                            i=1;&ndash;&gt;-->
-<!--&lt;!&ndash;                        else if (option1_data == 2):&ndash;&gt;-->
-<!--&lt;!&ndash;                            i=2;&ndash;&gt;-->
-<!--&lt;!&ndash;                        else:&ndash;&gt;-->
-<!--&lt;!&ndash;                            i=3;&ndash;&gt;-->
-
-<!--&lt;!&ndash;                         if (option2_data == 4):&ndash;&gt;-->
-<!--&lt;!&ndash;                            j=4;&ndash;&gt;-->
-<!--&lt;!&ndash;                        else:&ndash;&gt;-->
-<!--&lt;!&ndash;                            j=5;&ndash;&gt;-->
-
-<!--&lt;!&ndash;                        $("span").remove("#sch_sex");&ndash;&gt;-->
-<!--&lt;!&ndash;                                $("#help_btn").after(&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '<span class="w3-right">' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '<img src="' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '/static/student/image/' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    'ico_' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    str(i) +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '.png"' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    ' width="35" height="35" scale="0">' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '<img src="' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '/static/student/image/' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    'ico_' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    j +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '.png"' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    ' width="35" height="35" scale="0">' +&ndash;&gt;-->
-<!--&lt;!&ndash;                                    '</span>' +&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                )&ndash;&gt;-->
-
-<!--&lt;!&ndash;                            }}&ndash;&gt;-->
-<!--&lt;!&ndash;                })&ndash;&gt;-->
-<!--&lt;!&ndash;                })&ndash;&gt;-->
-<!--&lt;!&ndash;            });&ndash;&gt;-->
-
-<!--&lt;!&ndash;검색카테고리&ndash;&gt;-->
-<!--            $(document).ready(function () {-->
-<!--            $('#category_option').change(function () {-->
-<!--                var option = $("#category_option option:selected").val();-->
-<!--                alert(option);-->
+<!--            $('#cat_school').change(function () {-->
+<!--                var option1 = $("#cat_school option:selected").val();-->
+<!--                var option2 = $("#cat_sex option:selected").val();-->
 <!--                $.ajax({-->
 <!--                    url: '/student/change_category/',-->
-<!--                    data: {option: option},-->
+<!--                    data: {option1: option1,option2: option2},-->
 <!--                    success: function (data) {-->
-<!--                        var option_data = data.option_data;-->
-<!--                        var num = option_data.length;-->
-<!--                        $("div").remove("#question_list");-->
-<!--                            for (var i = 0; i < num; i++) {-->
-<!--                                $("#whole_card").after(-->
-<!--                                    '<div id="question_list" class="row">' +-->
-<!--                                    '<div class="col-md-3 mb-5">' +-->
-<!--                                    '<div class="card h-100" align="center">' +-->
-<!--                                    '<div class="card-body">' +-->
-<!--                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +-->
-<!--                                    '/static/' +-->
-<!--                                    option_data[i].question_image +-->
-<!--                                    '">' +-->
-<!--                                    '</div>' +-->
-<!--                                    '<span class="card-footer">' +-->
-<!--                                    '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +-->
-<!--                                    option_data[i].question_name +-->
-<!--                                    '</a>' +-->
+<!--                        var option1_data = data.c1;-->
+<!--                        var option2_data = data.c2;-->
+<!--                        var i=0;-->
+<!--                        var j=0-->
+
+<!--                        if (option1_data == 1):-->
+<!--                            i=1;-->
+<!--                        else if (option1_data == 2):-->
+<!--                            i=2;-->
+<!--                        else:-->
+<!--                            i=3;-->
+
+<!--                         if (option2_data == 4):-->
+<!--                            j=4;-->
+<!--                        else:-->
+<!--                            j=5;-->
+
+<!--                        $("span").remove("#sch_sex");-->
+<!--                                $("#help_btn").after(-->
+<!--                                    '<span class="w3-right">' +-->
+<!--                                    '<img src="' +-->
+<!--                                    '/static/student/image/' +-->
+<!--                                    'ico_' +-->
+<!--                                    str(i) +-->
+<!--                                    '.png"' +-->
+<!--                                    ' width="35" height="35" scale="0">' +-->
+<!--                                    '<img src="' +-->
+<!--                                    '/static/student/image/' +-->
+<!--                                    'ico_' +-->
+<!--                                    j +-->
+<!--                                    '.png"' +-->
+<!--                                    ' width="35" height="35" scale="0">' +-->
 <!--                                    '</span>' +-->
-<!--                                    '</div>' +-->
-<!--                                    '</div>'-->
-<!--                                }-->
+
+<!--                                )-->
+
+<!--                            }}-->
 <!--                })-->
 <!--                })-->
 <!--            });-->
-<!--        </script>-->
+
+<!--검색카테고리-->
+            $(document).ready(function () {
+            $('#category_option').change(function () {
+                var option = $("#category_option option:selected").val();
+                alert(option);
+                $.ajax({
+                    url: '/student/change_category/',
+                    data: {option: option},
+                    success: function (data) {
+                        var option_data = data.option_data;
+                        var num = option_data.length;
+                        $("div").remove("#question_list");
+                            for (var i = 0; i < num; i++) {
+                                $("#whole_card").after(
+                                    '<div id="question_list" class="row">' +
+                                    '<div class="col-md-3 mb-5">' +
+                                    '<div class="card h-100" align="center">' +
+                                    '<div class="card-body">' +
+                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                    '/static/' +
+                                    option_data[i].question_image +
+                                    '">' +
+                                    '</div>' +
+                                    '<span class="card-footer">' +
+                                    '<a href="{% url 'AIquestion' %}" class="card-link" name="q_name" id="q_name">' +
+                                    option_data[i].question_name +
+                                    '</a>' +
+                                    '</span>' +
+                                    '</div>' +
+                                    '</div>'
+                                }
+                })
+                })
+            });
+        </script>
 
     </head>
     <body>

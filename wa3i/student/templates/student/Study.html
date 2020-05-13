@@ -58,8 +58,29 @@
     <!-- Content Row -->
     <br>
     <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
+<!--            <div class="w3-container">-->
+<!--                <form action="getBoardList.do" method="post" >-->
+<!--                    <table style="text-align: center; width:600px; height:160px;">-->
+<!--                        <tr>-->
+<!--                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--&lt;!&ndash;                </form>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        <br><br>-->
+<!--        <a onclick="AIAlert()" style="cursor:pointer">-->
+<!--        <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>-->
+<!--        </a>-->
+<!--        <br><br>-->
+<!--                </form>-->
+<!--            </div>-->
+
+        <div class="w3-container">
+                <form action="{% url 'Studyquestion' %}" method="post" >
+                    {% csrf_token %}
                     <table style="text-align: center; width:600px; height:160px;">
                         <tr>
                             <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
@@ -68,13 +89,15 @@
                             <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
                         </tr>
                     </table>
+<!--                </form>-->
+<!--            </div>-->
+        <br><br>
+<!--        <a onclick="AIAlert()" style="cursor:pointer">-->
+        <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
+<!--        </a>-->
+        <br><br>
                 </form>
             </div>
-        <br><br>
-        <a onclick="AIAlert()" style="cursor:pointer">
-        <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
-        </a>
-        <br><br>
     </center>
     <!-- /.row -->
 
