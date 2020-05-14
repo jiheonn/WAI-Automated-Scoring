@@ -159,24 +159,24 @@
         <td>문항수</td>
         <td>전체 평균점수</td>
         <td>평균 진행률(%)</td>
-        <td>평균 성공률(%)</td>
         <td>결과 저장</td>
         <td>더보기</td>
     </tr>
+        {% for data in assignment_data|slice:":1" %}
     <tr align = "center">
-        <td>과학 3주차 숙제</td>
-        <td>숙제하기</td>
-        <td>0000 0000</td>
-        <td>2020-03-06 ~<br>2020-03-14</td>
-        <td>1</td>
-        <td>4</td>
-        <td>3</td>
+        <td>{{ data.assignment.assignment_title }}</td>
+        <td>{{ data.assignment.type }}</td>
+        <td>{{ data.assignment_id }}</td>
+        <td>{{ data.assignment.start_date }} ~<br> {{ data.assignment.end_date }}</td>
+        <td>{{ data.assignment.grade }}</td>
+        <td>{{ data.assignment.class_field }}</td>
+        <td>{{ question_count }}</td>
         <td>1.75</td>
         <td>80</td>
-        <td>70</td>
         <td><button class="btn21" id="file_download">다운로드</button> <a id="download" download="" href=""></a></td>
         <td><button class="btn21">더보기</button></td>
     </tr>
+        {% endfor %}
 </table>
 
     <table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
@@ -185,49 +185,46 @@
         <td>학생이름</td>
         <td>평균점수</td>
         <td>진행률(%)</td>
-        <td>성공률(%)</td>
         <td>학생응답</td>
     </tr>
+        {% for data in assignment_data %}
     <tr align = "center">
-        <td>2018347</td>
-        <td>홍길동1</td>
-        <td>3.00</td>
+        <td>{{ data.solve.student_id }}</td>
+        <td>{{ data.solve.student_name }}</td>
+        <td>{{ data.solve.score }}</td>
         <td>100</td>
-        <td>100</td>
-        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
-            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
-            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
+        <td align="left" style="padding: 20px;">
+            {{ data.solve.response }}
+        </td>
     </tr>
-        <tr align = "center">
-        <td>2018347</td>
-        <td>홍길동2</td>
-        <td>3.00</td>
-        <td>100</td>
-        <td>100</td>
-        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
-            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
-            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
-    </tr>
-        <tr align = "center">
-        <td>2018347</td>
-        <td>홍길동3</td>
-        <td>3.00</td>
-        <td>100</td>
-        <td>100</td>
-        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
-            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
-            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
-    </tr>
-        <tr align = "center">
-        <td>2018347</td>
-        <td>홍길동4</td>
-        <td>3.00</td>
-        <td>100</td>
-        <td>100</td>
-        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>
-            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>
-            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>
-    </tr>
+        {% endfor %}
+<!--        <tr align = "center">-->
+<!--        <td>2018347</td>-->
+<!--        <td>홍길동2</td>-->
+<!--        <td>3.00</td>-->
+<!--        <td>100</td>-->
+<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
+<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
+<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
+<!--    </tr>-->
+<!--        <tr align = "center">-->
+<!--        <td>2018347</td>-->
+<!--        <td>홍길동3</td>-->
+<!--        <td>3.00</td>-->
+<!--        <td>100</td>-->
+<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
+<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
+<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
+<!--    </tr>-->
+<!--        <tr align = "center">-->
+<!--        <td>2018347</td>-->
+<!--        <td>홍길동4</td>-->
+<!--        <td>3.00</td>-->
+<!--        <td>100</td>-->
+<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
+<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
+<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
+<!--    </tr>-->
 </table>
 
     <!-- /.row -->

@@ -75,112 +75,112 @@
         }
     </style>
     <script>
-        $(document).ready(function () {
-            $('.btn21').click(function () {
-                var viewBtn = $(this);
-                var tr = viewBtn.parent().parent();
-                var td = tr.children();
-                var select_code = td.eq(2).text();
-                // alert(td.eq(2).text());
-                 $.ajax({
-                    url: '/teacher/view_result_detail/',
-                    data: {select_code: select_code},
-                    success: function (data) {
-                        var assignment_data = data.assignment_data;
-                        var solve_data = data.solve_data;
-                        var num = solve_data.length;
-                        $('#message').text("학생들의 응답 결과입니다. 응답 결과는 파일로도 저장이 가능합니다.");
-                        $("div").remove("#search");
-                        $("div").remove("#view_table");
-                        for (var i = 0; i < 1; i++) {
-                            $("#top").after(
-                                '<table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">' +
-                                '<tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">' +
-                                '<td>제목</td>' +
-                                '<td>타입</td>' +
-                                '<td>코드</td>' +
-                                '<td>기간</td>' +
-                                '<td>학년</td>' +
-                                '<td style="width: 40px;">반</td>' +
-                                '<td>문항수</td>' +
-                                '<td>전체 평균점수</td>' +
-                                '<td>평균 진행률(%)</td>' +
-                                '<td>결과 저장</td>' +
-                                '<td>더보기</td>' +
-                                '</tr>' +
-                                '<tr align = "center">' +
-                                '<td>' +
-                                assignment_data[i].assignment_title +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].assignment_type +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].assignment_id +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].start_date +
-                                '~<br>' +
-                                assignment_data[i].end_date +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].student_grade +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].student_class +
-                                '</td>' +
-                                '<td>' +
-                                assignment_data[i].question_count +
-                                '</td>' +
-                                '<td>1.75</td>' +
-                                '<td>80</td>' +
-                                '<td><button class="btn21" id="file_download">다운로드</button> <a id="download" download="" href=""></a></td>' +
-                                '<td><button class="btn21">더보기</button></td>' +
-                                '</tr>' +
-                                '</table>' +
-                                '<table id="append_tr" border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">' +
-                                '<tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">' +
-                                '<td>학생ID</td>' +
-                                '<td>학생이름</td>' +
-                                '<td>평균점수</td>' +
-                                '<td>진행률(%)</td>' +
-                                '<td>학생응답</td> ' +
-                                '</tr>'
-                            )
-                        }
-                        for (var j = 0; j < num; j++) {
-                            $("#append_tr").append(
-                                '<tr align = "center">' +
-                                '<td>' +
-                                solve_data[j].student_id +
-                                '</td>' +
-                                '<td>' +
-                                solve_data[j].student_name +
-                                '</td>' +
-                                '<td>3.00</td>' +
-                                '<td>100</td>' +
-                                '<td align="left" style="padding: 20px;">' +
-                                solve_data[j].question_id + '.' + solve_data[j].student_response +
-                                '<br>' +
-                                '</td>' +
-                                '</tr>' +
-                                '</table>'
-
-
-
-                                // '<div class="col-lg-0" style="float: none; margin: 50px auto;">' +
-                                // '<form action="/teacher/view_result/">' +
-                                // '<button type="submit" class="w3-button w3-large w3-round w3-blue">이전</button>' +
-                                // '</form>' +
-                                // '</div>' +
-                                // '</div>'
-
-                            )
-                        }
-                    }
-                 });
-            });
-        });
+        // $(document).ready(function () {
+        //     $('.btn21').click(function () {
+        //         var viewBtn = $(this);
+        //         var tr = viewBtn.parent().parent();
+        //         var td = tr.children();
+        //         var select_code = td.eq(2).text();
+        //         // alert(td.eq(2).text());
+        //          $.ajax({
+        //             url: '/teacher/view_result_detail/',
+        //             data: {select_code: select_code},
+        //             success: function (data) {
+        //                 var assignment_data = data.assignment_data;
+        //                 var solve_data = data.solve_data;
+        //                 var num = solve_data.length;
+        //                 $('#message').text("학생들의 응답 결과입니다. 응답 결과는 파일로도 저장이 가능합니다.");
+        //                 $("div").remove("#search");
+        //                 $("div").remove("#view_table");
+        //                 for (var i = 0; i < 1; i++) {
+        //                     $("#top").after(
+        //                         '<table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">' +
+        //                         '<tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">' +
+        //                         '<td>제목</td>' +
+        //                         '<td>타입</td>' +
+        //                         '<td>코드</td>' +
+        //                         '<td>기간</td>' +
+        //                         '<td>학년</td>' +
+        //                         '<td style="width: 40px;">반</td>' +
+        //                         '<td>문항수</td>' +
+        //                         '<td>전체 평균점수</td>' +
+        //                         '<td>평균 진행률(%)</td>' +
+        //                         '<td>결과 저장</td>' +
+        //                         '<td>더보기</td>' +
+        //                         '</tr>' +
+        //                         '<tr align = "center">' +
+        //                         '<td>' +
+        //                         assignment_data[i].assignment_title +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].assignment_type +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].assignment_id +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].start_date +
+        //                         '~<br>' +
+        //                         assignment_data[i].end_date +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].student_grade +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].student_class +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         assignment_data[i].question_count +
+        //                         '</td>' +
+        //                         '<td>1.75</td>' +
+        //                         '<td>80</td>' +
+        //                         '<td><button class="btn21" id="file_download">다운로드</button> <a id="download" download="" href=""></a></td>' +
+        //                         '<td><button class="btn21">더보기</button></td>' +
+        //                         '</tr>' +
+        //                         '</table>' +
+        //                         '<table id="append_tr" border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">' +
+        //                         '<tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">' +
+        //                         '<td>학생ID</td>' +
+        //                         '<td>학생이름</td>' +
+        //                         '<td>평균점수</td>' +
+        //                         '<td>진행률(%)</td>' +
+        //                         '<td>학생응답</td> ' +
+        //                         '</tr>'
+        //                     )
+        //                 }
+        //                 for (var j = 0; j < num; j++) {
+        //                     $("#append_tr").append(
+        //                         '<tr align = "center">' +
+        //                         '<td>' +
+        //                         solve_data[j].student_id +
+        //                         '</td>' +
+        //                         '<td>' +
+        //                         solve_data[j].student_name +
+        //                         '</td>' +
+        //                         '<td>3.00</td>' +
+        //                         '<td>100</td>' +
+        //                         '<td align="left" style="padding: 20px;">' +
+        //                         solve_data[j].question_id + '.' + solve_data[j].student_response +
+        //                         '<br>' +
+        //                         '</td>' +
+        //                         '</tr>' +
+        //                         '</table>'
+        //
+        //
+        //
+        //                         // '<div class="col-lg-0" style="float: none; margin: 50px auto;">' +
+        //                         // '<form action="/teacher/view_result/">' +
+        //                         // '<button type="submit" class="w3-button w3-large w3-round w3-blue">이전</button>' +
+        //                         // '</form>' +
+        //                         // '</div>' +
+        //                         // '</div>'
+        //
+        //                     )
+        //                 }
+        //             }
+        //          });
+        //     });
+        // });
         $(document).ready(function () {
             $('#view_search').click(function () {
                 var user_input = $('#user_input').val();
@@ -329,6 +329,7 @@
                     </div>
     </div>
 <div id="view_table" class="row">
+    <form action="{% url 'view_result_detail' %}" method="GET" >
     <table id="asi_info" border="1" bordercolor="gray" width ="1000" height="250" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
     <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white; height: 35px;">
         <td>제목</td>
@@ -347,7 +348,7 @@
             <td>{{ data.start_date }} ~ {{ data.end_date }}</td>
             <td>{{ data.grade }}</td>
             <td>{{ data.class_field }}</td>
-            <td><button class="btn21">더보기</button></td>
+            <td><button type="submit" class="btn21" name="select_code" value="{{ data.assignment_id }}">더보기</button></td>
         </tr>
     {% endfor %}
 <!--        <tr align = "center">-->
@@ -369,13 +370,12 @@
 <!--        <td><button class="btn21" onclick="location.href='/teacher/view_result/ex_view_result/' ">더보기</button></td>-->
 <!--    </tr>-->
 </table>
+        </form>
 </div>
     <!-- /.row -->
 
 <!--    <div class="col-lg-2" style="float: none; margin: 50px auto;">-->
-<!--        <form action="{% url 'ex_view_result' %}">-->
 <!--            <button type="submit" class="w3-button w3-large w3-round w3-blue">평가 결과 보기</button>-->
-<!--        </form>-->
 <!--    </div>-->
 
 </div>
