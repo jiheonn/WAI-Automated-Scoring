@@ -226,9 +226,10 @@
                             alert('검색 결과가 존재하지 않습니다.');
                         } else {
                             $("div").remove("#question_list");
+                            $("#category_option").after('<div id="question_list" class="row" style="margin-top: 50px;">' + '</div>');
                         for (var i = 0; i < num; i++) {
-                            $("#category").after(
-                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                            $("#question_list").append(
+                                    '<div class="col-md-3 mb-5">' +
                                     '<div class="card h-100" align="center">' +
                                     '<div class="card-body">' +
                                     '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
@@ -239,9 +240,12 @@
                                     '<span class="card-footer ctm-check">' +
                                     '<input type="checkbox" id="' +
                                     search_data[i].question_id +
-                                    '" name="' +
-                                    search_data[i].question_id +
+                                    '" name="question" value="' +
+                                    search_data[i].question_name +
                                     '">' +
+                                    // '" name="' +
+                                    // search_data[i].question_id +
+                                    // '">' +
                                     '<label for="' +
                                     search_data[i].question_id +
                                     '"><i></i>' +
@@ -273,7 +277,6 @@
         $(document).ready(function () {
             $('#category_option').change(function () {
                 var option = $("#category_option option:selected").val();
-                alert(option);
                 $.ajax({
                     url: '/teacher/change_category/',
                     data: {option: option},
@@ -281,9 +284,10 @@
                         var option_data = data.option_data;
                         var num = option_data.length;
                         $("div").remove("#question_list");
+                        $("#category_option").after('<div id="question_list" class="row" style="margin-top: 50px;">' + '</div>');
                             for (var i = 0; i < num; i++) {
-                                $("#category").after(
-                                    '<div id="question_list" class="col-md-3 mb-5">' +
+                                $("#question_list").append(
+                                    '<div class="col-md-3 mb-5">' +
                                     '<div class="card h-100" align="center">' +
                                     '<div class="card-body">' +
                                     '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
@@ -425,7 +429,7 @@
                 <span>반 : <input type="text" name="class" style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
                 <span>시작날짜 : <input type="date" id="start-date" name="start-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
                 <span>종료날짜 : <input type="date" id="end-date" name="end-date" style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
-            </form>
+<!--            </form>-->
         </div>
 
         <div class="container">
@@ -443,7 +447,7 @@
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto">
-                                        <button id="search" class="w3-button w3-large w3-round w3-blue">검색</button>
+                                        <button type="button" id="search" class="w3-button w3-large w3-round w3-blue">검색</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -463,6 +467,7 @@
             </select>
         </div>
 
+<!--        <form id="question_form" action="{% url 'question_selection' %}" method="GET" >-->
             <div id="question_list" class="row">
             {% for data in question_data %}
                 <div class="col-md-3 mb-5">
@@ -471,7 +476,7 @@
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
                         </div>
                         <span class="card-footer ctm-check">
-                            <input type="checkbox" id="{{ data.question_id }}" name="{{ data.question_id }}">
+                            <input type="checkbox" id="{{ data.question_id }}" name="question" value="{{ data.question_name }}">
                             <label for="{{ data.question_id }}"><i></i>{{ data.question_name }}</label>
                         </span>
                     </div>
@@ -560,12 +565,17 @@
 <!--                    </span>-->
 <!--                </div>-->
 <!--            </div>-->
-
+            </div>
+<!--        </form>-->
+    </div>
+</div>
 </div>
     </div>
     <!-- /.row -->
     <div class="col-lg-2" style="float: none; margin: 50px auto;">
-        <button id="make-submit" type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
+<!--        <form action="{% url 'question_selection' %}" method="GET" >-->
+            <button id="make-submit" type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
+        </form>
     </div>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
 </div>
