@@ -135,19 +135,16 @@ def AIdiag(request):
     question_id = request.GET['question']
 
     ques_ans = request.GET['ques_ans']
-    cat_school = request.GET['cat_school']
-    cat_sex = request.GET['cat_sex']
-    data = AssignmentQuestionRel.objects.select_related('question','solve').filter(question_id=question_id)[0]
+    school = "/static/student/school_gender_img/" + request.GET['category_school'] +".png"
+    gender = "/static/student/school_gender_img/" + request.GET['category_gender'] +".png"
 
-    #
-    # c1 = request.GET['cat_school']
-    # c2 = request.GET['cat_sex']
+    data = AssignmentQuestionRel.objects.select_related('question','solve').filter(question_id=question_id)[0]
 
     context = {
         'data': data,
         'ques_ans' : ques_ans,
-        'cat_school' : cat_school,
-        'cat_sex' : cat_sex,
+        'school' : school,
+        'gender' : gender,
     }
     return render(request, 'student/AIdiag.html', context)
 
