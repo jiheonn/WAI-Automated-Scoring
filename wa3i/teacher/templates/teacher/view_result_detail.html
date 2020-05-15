@@ -21,42 +21,46 @@
     <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-    
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <style type="text/css">
-        #login-menu ul{
-            background-color: #343a40!important;
-            display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
-            height:auto;
-            padding:0px;
-            margin:0px;
-            border:0px;
-            position:absolute;
-            width:100px;
-            z-index:200;
+        #login-menu ul {
+            background-color: #343a40 !important;
+            display: none; /* 평상시에는 서브메뉴가 안보이게 하기 */
+            height: auto;
+            padding: 0px;
+            margin: 0px;
+            border: 0px;
+            position: absolute;
+            width: 100px;
+            z-index: 200;
         }
-        #login-menu:hover ul{
-            display: block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+
+        #login-menu:hover ul {
+            display: block; /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
         }
-        #login-menu:hover ul li{
+
+        #login-menu:hover ul li {
             text-align: center;
         }
+
         .btn21 {
-          width: 80px;
-          /*height: 50px;*/
-          /*font-size:30px;*/
-          /*font-family: 'Nanum Gothic';*/
-          /*color: white;*/
-          /*line-height: 50px;*/
-          text-align: center;
-          /*background: blue;*/
-          border: solid 2px grey;
-          border-radius: 12px;
+            width: 80px;
+            /*height: 50px;*/
+            /*font-size:30px;*/
+            /*font-family: 'Nanum Gothic';*/
+            /*color: white;*/
+            /*line-height: 50px;*/
+            text-align: center;
+            /*background: blue;*/
+            border: solid 2px grey;
+            border-radius: 12px;
         }
     </style>
     <script>
@@ -69,6 +73,7 @@
                     "href": "data:application/json;charset=utf8;base64," + window.btoa(JSON.stringify(abc))
                 }).get(0).click();
             });
+        });
     </script>
 </head>
 
@@ -114,12 +119,10 @@
                     <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
                 </li>
             </ul>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#"></a>-->
-<!--                </li>-->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i class="fa fa-user fa-fw"></i> User </a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
+                            class="fa fa-user fa-fw"></i> User </a>
                     <ul>
                         <li><a class="nav-link" href="#">로그인</a></li>
                         <li><a class="nav-link" href="#">회원가입</a></li>
@@ -136,11 +139,12 @@
     <!-- Heading Row -->
     <div class="row justify-content-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                 height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-<!--            <h1 class="font-weight-light">결과보기</h1><br>-->
+            <!--            <h1 class="font-weight-light">결과보기</h1><br>-->
             <p class="font-weight-bolder triangle-border left">
                 학생들의 응답 결과입니다.<br>
                 응답 결과는 파일로도 저장이 가능합니다.</p>
@@ -148,84 +152,63 @@
         </div>
         <!-- /.col-md-4 -->
     </div>
-    <table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
-    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
-        <td>제목</td>
-        <td>타입</td>
-        <td>코드</td>
-        <td>기간</td>
-        <td>학년</td>
-        <td style="width: 40px;">반</td>
-        <td>문항수</td>
-        <td>전체 평균점수</td>
-        <td>평균 진행률(%)</td>
-        <td>결과 저장</td>
-        <td>더보기</td>
-    </tr>
+    <table border="1" bordercolor="gray" width="1200" height="100" align="center"
+           style="margin-top: 50px; margin-left: auto; margin-right: auto;">
+        <tr align="center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+            <td>제목</td>
+            <td>타입</td>
+            <td>코드</td>
+            <td>기간</td>
+            <td>학년</td>
+            <td style="width: 40px;">반</td>
+            <td>문항수</td>
+            <td>전체 평균점수</td>
+            <td>평균 진행률(%)</td>
+            <td>결과 저장</td>
+            <td>더보기</td>
+        </tr>
         {% for data in assignment_data|slice:":1" %}
-    <tr align = "center">
-        <td>{{ data.assignment.assignment_title }}</td>
-        <td>{{ data.assignment.type }}</td>
-        <td>{{ data.assignment_id }}</td>
-        <td>{{ data.assignment.start_date }} ~<br> {{ data.assignment.end_date }}</td>
-        <td>{{ data.assignment.grade }}</td>
-        <td>{{ data.assignment.class_field }}</td>
-        <td>{{ question_count }}</td>
-        <td>1.75</td>
-        <td>80</td>
-        <td><button class="btn21" id="file_download">다운로드</button> <a id="download" download="" href=""></a></td>
-        <td><button class="btn21">더보기</button></td>
-    </tr>
+        <tr align="center">
+            <td>{{ data.assignment.assignment_title }}</td>
+            <td>{{ data.assignment.type }}</td>
+            <td>{{ data.assignment_id }}</td>
+            <td>{{ data.assignment.start_date }} ~<br> {{ data.assignment.end_date }}</td>
+            <td>{{ data.assignment.grade }}</td>
+            <td>{{ data.assignment.class_field }}</td>
+            <td>{{ question_count }}</td>
+            <td>1.75</td>
+            <td>80</td>
+            <td>
+                <button class="btn21" id="file_download">다운로드</button>
+                <a id="download" download="" href=""></a></td>
+            <td>
+                <button class="btn21">더보기</button>
+            </td>
+        </tr>
         {% endfor %}
-</table>
+    </table>
 
-    <table border="1" bordercolor="gray" width ="1200" height="100" align = "center" style="margin-top: 50px; margin-left: auto; margin-right: auto;">
-    <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
-        <td>학생ID</td>
-        <td>학생이름</td>
-        <td>평균점수</td>
-        <td>진행률(%)</td>
-        <td>학생응답</td>
-    </tr>
+    <table border="1" bordercolor="gray" width="1200" height="100" align="center"
+           style="margin-top: 50px; margin-left: auto; margin-right: auto;">
+        <tr align="center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
+            <td width="90">학생ID</td>
+            <td width="70">학생이름</td>
+            <td width="70">평균점수</td>
+            <td width="80">진행률(%)</td>
+            <td>학생응답</td>
+        </tr>
         {% for data in assignment_data %}
-    <tr align = "center">
-        <td>{{ data.solve.student_id }}</td>
-        <td>{{ data.solve.student_name }}</td>
-        <td>{{ data.solve.score }}</td>
-        <td>100</td>
-        <td align="left" style="padding: 20px;">
-            {{ data.solve.response }}
-        </td>
-    </tr>
+        <tr align="center">
+            <td>{{ data.solve.student_id }}</td>
+            <td>{{ data.solve.student_name }}</td>
+            <td>{{ data.solve.score }}</td>
+            <td>100</td>
+            <td align="left" style="padding: 20px;">
+                {{ data.solve.response }}
+            </td>
+        </tr>
         {% endfor %}
-<!--        <tr align = "center">-->
-<!--        <td>2018347</td>-->
-<!--        <td>홍길동2</td>-->
-<!--        <td>3.00</td>-->
-<!--        <td>100</td>-->
-<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
-<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
-<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
-<!--    </tr>-->
-<!--        <tr align = "center">-->
-<!--        <td>2018347</td>-->
-<!--        <td>홍길동3</td>-->
-<!--        <td>3.00</td>-->
-<!--        <td>100</td>-->
-<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
-<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
-<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
-<!--    </tr>-->
-<!--        <tr align = "center">-->
-<!--        <td>2018347</td>-->
-<!--        <td>홍길동4</td>-->
-<!--        <td>3.00</td>-->
-<!--        <td>100</td>-->
-<!--        <td align="left" style="padding: 20px;">1. 지붕위의 발전기 : 태양광은 항상 존재하기 때문이다.<br>-->
-<!--            2. 계절마다 부는 바람 : 바람은 ~~~~~~~~~<br>-->
-<!--            3. 소금물 만들기 : 소금은 ~~~~~~~~~</td>-->
-<!--    </tr>-->
-</table>
+    </table>
 
     <!-- /.row -->
     <div class="col-lg-0" style="float: none; margin: 50px auto;">
@@ -235,7 +218,8 @@
     </div>
 </div>
 <!-- /.container -->
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}"
+     style="display: block; margin: 0px auto;">
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">

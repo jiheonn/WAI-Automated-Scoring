@@ -26,7 +26,7 @@ def question_selection(request):
         'question_data': question_data
     }
     try:
-        test = request.GET['question']
+        test = request.GET.getlist('question')
         print(test)
         assignment_data = Assignment(assignment_id=request.GET['code_num'],
                                      teacher=Teacher.objects.get(teacher_id=2),
@@ -93,10 +93,17 @@ def teacher_notice(request):
 
 def view_result_detail(request):
     select_code = request.GET['select_code']
-    assignment_data = AssignmentQuestionRel.objects.select_related('solve', 'assignment').filter(assignment_id=select_code)
-    print(assignment_data.values())
-    question_count = assignment_data.count()
-    print(assignment_data.values('solve__student_id', 'solve__response'))
+    assignment_data = AssignmentQuestionRel.objects.select_related('solve', 'assignment').filter(
+        assignment_id=select_code).order_by('solve__student_id')
+    question_count = assignment_data.values('question_id').distinct().count()
+
+    sum = 0
+    avg = []
+    for i in assignment_data:
+        print(i.solve.student_id, i.solve.score)
+
+    print(avg)
+
     context = {
         'assignment_data': assignment_data,
         'question_count': question_count
@@ -108,41 +115,6 @@ def ex_response_analysis(request):
     context = {
     }
     return render(request, 'teacher/ex_response_analysis.html', context)
-
-
-# def view_result_detail(request):
-#     select_code = request.GET['select_code']
-#     asi_data = AssignmentQuestionRel.objects.select_related('solve', 'assignment').filter(assignment_id=select_code)
-#     question_count = asi_data.count()
-#
-#     assignment_data = []
-#     for i in asi_data:
-#         assignment_data_dict = dict()
-#         assignment_data_dict['assignment_id'] = i.assignment_id
-#         assignment_data_dict['assignment_title'] = i.assignment.assignment_title
-#         assignment_data_dict['assignment_type'] = i.assignment.type
-#         assignment_data_dict['start_date'] = i.assignment.start_date
-#         assignment_data_dict['end_date'] = i.assignment.end_date
-#         assignment_data_dict['student_grade'] = i.assignment.grade
-#         assignment_data_dict['student_class'] = i.assignment.class_field
-#         assignment_data_dict['question_count'] = question_count
-#         assignment_data.append(assignment_data_dict)
-#
-#     solve_data = []
-#     for j in asi_data:
-#         solve_data_dict = dict()
-#         solve_data_dict['student_id'] = j.solve.student_id
-#         solve_data_dict['student_name'] = j.solve.student_name
-#         solve_data_dict['student_score'] = j.solve.score
-#         solve_data_dict['question_id'] = j.question_id
-#         solve_data_dict['student_response'] = j.solve.response
-#         solve_data.append(solve_data_dict)
-#
-#     context = {
-#         'assignment_data': assignment_data,
-#         'solve_data': solve_data
-#     }
-#     return JsonResponse(context)
 
 
 def change_qr_code(request):
