@@ -13,3 +13,7 @@
 .text-highlight {
   color: deepskyblue !important;
 }
+
+#result-table {
+    margin: 20px 0;
+}
