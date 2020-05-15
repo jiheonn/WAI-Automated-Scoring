@@ -163,14 +163,16 @@ def change_qr_code(request):
 
 def question_search(request):
     user_input = request.GET['user_input']
-    sah_data = Keyword.objects.select_related('question').filter(keyword_name__icontains=user_input)
 
+    # sah_data = Keyword.objects.select_related('question').filter(keyword_name__icontains=user_input)
+    sah_data = Keyword.objects.select_related('question').filter(keyword_name__icontains=user_input).values_list('question_id', flat=True).distinct()
+    data = Question.objects.filter(pk__in=sah_data)
     search_data = []
-    for i in sah_data:
+    for i in data:
         search_data_dict = dict()
-        search_data_dict['question_id'] = i.question.question_id
-        search_data_dict['question_name'] = i.question.question_name
-        search_data_dict['question_image'] = i.question.image
+        search_data_dict['question_id'] = i.question_id
+        search_data_dict['question_name'] = i.question_name
+        search_data_dict['question_image'] = i.image
         search_data.append(search_data_dict)
     print(search_data)
     context = {
