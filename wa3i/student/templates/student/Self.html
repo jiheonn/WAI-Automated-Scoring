@@ -82,25 +82,29 @@
         </div>
     </div>
 
-    <div class="row my-5">
-        <div id="whole_card"></div>
-                <!-- Content Row -->
-        <div id="question_list" class="row">
-            {% for data in qs %}
-            <div class="col-md-3 mb-5">
-                <div class="card h-100" align="center">
-                    <div class="card-body">
-                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+    <!-- Content Row -->
+    <form action="{% url 'Selfquestion' %}" method="get">
+        <div class="row my-5">
+            <div id="whole_card"></div>
+            <div id="question_list" class="row">
+                {% for data in qs %}
+                <div class="col-md-3 mb-5">
+                    <div class="card h-100" align="center">
+                        <div class="card-body">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                        </div>
+                        <span class="card-footer">
+                            <input type="submit" class="btn btn-outline-dark card-link" name="question" value="{{ data.question_name }}"
+                               id="{{ data.question_id }}">
+                        </span>
                     </div>
-                    <span class="card-footer">
-                        <a href="{% url 'Selfquestion' %}" class="card-link" name="q_name" id="q_name">{{ data.question_name }}</a>
-                    </span>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-        <!-- /.row -->
-    </div>
+    </form>
+    <!-- /.row -->
+
 </div>
 <!-- /.container -->
 
