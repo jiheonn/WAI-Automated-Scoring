@@ -66,9 +66,11 @@
 
     <!-- Content Row -->
     <div class="row">
-
+    <form action="{% url 'Selfdiagnosis' %}" method="GET">
       <!-- Post Content Column -->
       <div class="col-lg-6">
+          <input type="hidden" class="w3-btn w3-round w3-blue" name="question" value="{{ data.question_id }}"
+                                               id="{{ data.question_id }}">
         <!-- Preview Image -->
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}" width="120" height="120">
 
@@ -99,7 +101,7 @@
             <br>
         </div>
 
-
+    </form>
     </div>
     <!-- /.row -->
 

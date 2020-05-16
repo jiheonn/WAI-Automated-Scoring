@@ -1,6 +1,6 @@
 from builtins import dict
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 # Create your views here.
 from django.http import HttpResponse
@@ -9,6 +9,9 @@ from django.db.models import Q
 from django.http import JsonResponse
 
 from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment
+
+from django.contrib.auth.hashers import check_password
+from django.urls import reverse
 
 
 def index(request):
@@ -24,31 +27,32 @@ def AI(request):
     }
     return render(request, 'student/AI.html', context)
 
+#
+# def Study(request):
+#     if request.method=="GET":
+#         return render(request, 'student/Study.html')
+#     elif request.method=="POST":
+#         code_num = request.POST.get('code_num')
+#         ID_num = request.POST.get('ID_num')
+#
+#         res_data=[]
+#         if not (code_num and ID_num):
+#             res_data['error']="코드와 아이디 모두 입력하세요."
+#         else:
+#             fuser = AssignmentQuestionRel.objects.get(assignment_id=code_num)
+#
+#             if check_password(code_num,fuser.assignment_id):
+#                 request.session['user'] = fuser.assignment_id
+#                 return redirect(reverse('Study'))
+#             else:
+#                 res_data['error']="존재하지 않는 코드입니다."
+#         return render(request, 'student/Study.html',res_data)
 
 def Study(request):
-    if request.method=="GET":
-        return render(request, 'student/Study.html')
-    elif request.method=="POST":
-        code_num = request.POST.get('code_num')
-        ID_num = request.POST.get('ID_num')
+    context = {
 
-        res_data=[]
-        if not (code_num and ID_num):
-            res_data['error']="코드와 아이디 모두 입력하세요."
-        else:
-            fuser = AssignmentQuestionRel.objects.get(assignment_id=code_num)
-
-            if che_code(code_num,fuser.assignment_id):
-                request.session['user'] = fuser.assignment_id
-                return redirect('/')
-            else:
-                res_data['error']="존재하지 않는 코드입니다."
-        return render(request, 'student/Study.html',res_data)
-
-    # context = {
-    #
-    # }
-    # return render(request, 'student/Study.html', context)
+    }
+    return render(request, 'student/Study.html', context)
 
 
 def Homework(request):
@@ -77,9 +81,10 @@ def AIques(request):
 
 def Studyques(request):
     assignment_id = request.GET['code_num']
-    data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)[0]
-
-    f = data.first()
+    data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
+    # print(data.query)
+    f=data.first()
+    # ques_data = data.filter()
     context = {
         'data' : data,
         'f' : f
@@ -102,7 +107,9 @@ def Homeworkques(request):
 
 
 def Selfques(request):
-    data = Question.objects.last()
+    question_name = request.GET['question']
+    data = Question.objects.filter(question_name=question_name)[0]
+
     context = {
         'data': data
     }
@@ -110,9 +117,14 @@ def Selfques(request):
 
 
 def Selfdiag(request):
-    data = SelfSolveData.objects.select_related('make_question').last()
+    question_id = request.GET['question']
+    ques_ans = request.GET['ques_ans']
+
+    data = SelfSolveData.objects.select_related('make_question').filter(make_question__question_id=question_id)[0]
+
     context = {
-        'data': data
+        'data': data,
+        'ques_ans': ques_ans,
     }
     return render(request, 'student/Selfdiag.html', context)
 

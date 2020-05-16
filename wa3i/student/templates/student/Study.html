@@ -79,7 +79,7 @@
 <!--            </div>-->
 
         <div class="w3-container">
-                <form action="{% url 'Studyquestion' %}" method="post" >
+                <form action="{% url 'Studyquestion' %}" method="get" >
                     {% csrf_token %}
                     <table style="text-align: center; width:600px; height:160px;">
                         <tr>

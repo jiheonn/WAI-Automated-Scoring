@@ -58,7 +58,7 @@
 
 
 
-
+<!--    <form action="." method="get">-->
     <div class="row">
         <div class="col-lg-3">
             <table class="w3-table-all w3-centered">
@@ -67,7 +67,7 @@
                 </tr>
                 {% for d in data %}
                 <tr>
-                    <td><a href="{% url 'Studyquestion' %}" >{{d.question_name}}</a></td>
+                    <td><a href="{% url 'Studyquestion' %}" >{{d.question.question_name}}</a></td>
                 </tr>
                 {% endfor %}
             </table>
@@ -77,50 +77,45 @@
 
         <!--문항 작성-->
         <div class="col-lg-9">
-            <h2 class="mt-4">{{f.question_name}}</h2>
+            <h2 class="mt-4">{{f.question.question_name}}</h2>
+            <hr>
 
-        <hr>
+            <!-- Preview Image -->
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static f.question.image %}">
+            <hr>
 
-        <!-- Preview Image -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static f.image %}">
+            <!-- Post Content -->
+            <p>{{f.question.discription}}
+            </p>
+            <hr>
 
-        <hr>
-
-        <!-- Post Content -->
-        <p>{{f.discription}}
-        </p>
-
-        <hr>
-
-        <!-- Comments Form -->
-        <div class="card my-4">
-            <input type="hidden" name="q_no" value="1" />
-          <h5 class="card-header">생각을 적어보세요:</h5>
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <input type="hidden" name="q_no" value="1" />
+                <h5 class="card-header">생각을 적어보세요:</h5>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                    <div class="col-md-10">
+                        <table width="600">
+                            <td>
+                                <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.'); document.location.href='{% url 'Studyquestion2' %}'" style="cursor:pointer">
+                                    <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
+                                </a>
+                            </td>
+                            <td>
+        <!--                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>-->
+                            </td>
+                        </table>
+                    </div>
               </div>
-            </form>
-            <div class="col-md-10">
-                <table width="600">
-                    <td>
-                        <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.'); document.location.href='{% url 'Studyquestion2' %}'" style="cursor:pointer">
-                            <button type="submit" class="w3-btn w3-round w3-blue">제출하기</button>
-                        </a>
-                    </td>
-                    <td>
-<!--                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>-->
-                    </td>
-                </table>
-            </div>
-
-          </div>
         </div>
-
-
 
     </div>
 </div>
+<!--    </form>-->
 </div>
 {% endblock %}
