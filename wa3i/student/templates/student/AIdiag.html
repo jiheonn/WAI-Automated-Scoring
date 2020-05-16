@@ -91,8 +91,9 @@
                 </button>
                 <span id="sch_sex" class="w3-right">
 
-                <img src="{{school|safe}}" width="35" height="35" scale="0">
-                <img src="{{gender|safe}}" width="35" height="35" scale="0">
+                    <img src="{{school|safe}}" width="35" height="35" scale="0">
+                    <img src="{{gender|safe}}" width="35" height="35" scale="0">
+
                 </span>
             </dt>
 
@@ -125,6 +126,11 @@
                 }
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " w3-indigo";
+            }
+
+            function sch_gen_alert() {
+            alert("학교와 성별을 선택하세요");
+            return false;
             }
         </script>
     </div>
