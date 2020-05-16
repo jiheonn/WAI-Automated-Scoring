@@ -132,12 +132,15 @@ def Homeworkdiag(request):
 
 
 def AIdiag(request):
+
     question_id = request.GET['question']
-
     ques_ans = request.GET['ques_ans']
-    school = "/static/student/school_gender_img/" + request.GET['category_school'] +".png"
-    gender = "/static/student/school_gender_img/" + request.GET['category_gender'] +".png"
-
+    try:
+        school = "/static/student/school_gender_img/" + request.GET['category_school'] +".png"
+        gender = "/static/student/school_gender_img/" + request.GET['category_gender'] +".png"
+    except:
+        school = ""
+        gender= ""
     data = AssignmentQuestionRel.objects.select_related('question','solve').filter(question_id=question_id)[0]
 
     context = {
