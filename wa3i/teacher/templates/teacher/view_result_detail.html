@@ -176,8 +176,8 @@
             <td>{{ data.assignment.grade }}</td>
             <td>{{ data.assignment.class_field }}</td>
             <td>{{ question_count }}</td>
-            <td>1.75</td>
-            <td>80</td>
+            <td>{{ all_avg }}</td>
+            <td>{{ all_pgs }}</td>
             <td>
                 <button class="btn21" id="file_download">다운로드</button>
                 <a id="download" download="" href=""></a></td>
@@ -197,17 +197,36 @@
             <td width="80">진행률(%)</td>
             <td>학생응답</td>
         </tr>
-        {% for data in assignment_data %}
-        <tr align="center">
-            <td>{{ data.solve.student_id }}</td>
-            <td>{{ data.solve.student_name }}</td>
-            <td>{{ data.solve.score }}</td>
-            <td>100</td>
-            <td align="left" style="padding: 20px;">
-                {{ data.solve.response }}
-            </td>
-        </tr>
+
+            {% for data in result %}
+<tr align="center">
+    <td>{{ data.student_id }}</td>
+    <td>{{ data.student_name }}</td>
+    <td>{{ data.student_score }}</td>
+    <td>{{ data.student_progress}}</td>
+    <td align="left" style="padding: 20px;">
+<!--        {{ data.student_response }}-->
+        {% for i in data.student_response %}
+            {{ i }}
+            <br><br>
         {% endfor %}
+    </td>
+</tr>
+{% endfor %}
+
+<!--        {% for data in result %}-->
+<!--        <tr align="center">-->
+<!--&lt;!&ndash;            <td>{{ data.solve.student_id }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ data.solve.student_name }}</td>&ndash;&gt;-->
+<!--            <td>{{ result }}</td>-->
+<!--            <td>{{ data }}</td>-->
+<!--            <td>{{ data.student_score }}</td>-->
+<!--            <td>100</td>-->
+<!--            <td align="left" style="padding: 20px;">-->
+<!--                {{ data.student_response }}-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
     </table>
 
     <!-- /.row -->
