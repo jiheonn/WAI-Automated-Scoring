@@ -126,7 +126,8 @@ def Selfdiag(request):
     question_id = request.GET['question']
     ques_ans = request.GET['ques_ans']
 
-    img = MakeQuestion.objects.filter()
+    img = MakeQuestion.objects.filter(make_question_id=question_id).get('image')[0]
+    print(img)
 
     data = SelfSolveData.objects.select_related('make_question').filter(make_question__make_question_id=question_id)[0]
 
