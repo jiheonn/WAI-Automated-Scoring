@@ -48,7 +48,8 @@ def notice(request):
     return render(request, 'sysop/notice.html', context)
 
 def detailed_review(request):
-    makequestion = MakeQuestion.objects.all()
+    question_id = request.GET['question_id']
+    makequestion = MakeQuestion.objects.select_related('teacher').filter(make_question_id=question_id)[0]
     context = {'makequestion':makequestion
     }
     return render(request, 'sysop/detailed_review.html', context)
