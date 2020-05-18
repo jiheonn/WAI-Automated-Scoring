@@ -8,7 +8,7 @@ import q as q
 from django.db.models import Q
 from django.http import JsonResponse
 
-from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment
+from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment,MakeQuestion
 
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
@@ -80,11 +80,17 @@ def AIques(request):
 
 
 def Studyques(request):
-    assignment_id = request.GET['code_num']
-    data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
-    # print(data.query)
-    f=data.first()
-    # ques_data = data.filter()
+    try:
+        assignment_id = request.GET['code_num']
+        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
+        f = data.first()
+    except:
+        question_info = request.GET['question_name'].split(',')
+        question_name = question_info[0]
+        assignment_id = question_info[1]
+        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
+        f = AssignmentQuestionRel.objects.select_related('question').filter(question__question_name=question_name)[0]
+
     context = {
         'data' : data,
         'f' : f
@@ -120,11 +126,14 @@ def Selfdiag(request):
     question_id = request.GET['question']
     ques_ans = request.GET['ques_ans']
 
-    data = SelfSolveData.objects.select_related('make_question').filter(make_question__question_id=question_id)[0]
+    img = MakeQuestion.objects.filter()
+
+    data = SelfSolveData.objects.select_related('make_question').filter(make_question__make_question_id=question_id)[0]
 
     context = {
         'data': data,
         'ques_ans': ques_ans,
+        'img' : img
     }
     return render(request, 'student/Selfdiag.html', context)
 
@@ -171,7 +180,13 @@ def Homeworkselect(request):
 
 
 def Homeworklist(request):
-    rel = AssignmentQuestionRel.objects.select_related('assignment','solve')
+    # question_info = request.GET['question_name'].split(',')
+    # question_name = question_info[0]
+    # assignment_id = question_info[1]
+    # data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
+    # f = AssignmentQuestionRel.objects.select_related('question').filter(question__question_name=question_name)[0]
+    student_id = int(request.GET['ID_num'])
+    rel = AssignmentQuestionRel.objects.select_related('assignment','solve').filter(solve__student_id=student_id)
 
     context = {
         'rel':rel
@@ -180,7 +195,10 @@ def Homeworklist(request):
 
 
 def Homeworkcheck(request):
-    data = AssignmentQuestionRel.objects.select_related('assignment','question','solve')
+    student_id = int(request.GET['student_id'])
+    assignment_title = request.GET['assignment_title']
+    print(assignment_title.values())
+    data = AssignmentQuestionRel.objects.select_related('assignment','question','solve').filter(solve__student_id=student_id)
 
     context = {
         'data' : data

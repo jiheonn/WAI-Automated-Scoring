@@ -56,20 +56,21 @@
     <!-- Content Row -->
     <br>
     <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
-                    <table style="text-align: center; width:600px; height:80px;">
-                        <tr>
-                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-        <br><br>
-        <a onclick="IDAlert()" style="cursor:pointer">
-            <button type="submit" class="w3-button w3-large w3-round w3-blue w3-margin-bottom">완료</button>
-        </a>
-        <br><br>
+        <div class="w3-container">
+            <form action="{% url 'Homeworklist' %}" method="get" >
+                <table style="text-align: center; width:600px; height:80px;">
+                    <tr>
+                        <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
+                    </tr>
+                </table>
+
+                <br><br>
+                <a onclick="IDAlert()" style="cursor:pointer">
+                    <button type="submit" class="w3-button w3-large w3-round w3-blue w3-margin-bottom">완료</button>
+                </a>
+                <br><br>
+            </form>
+        </div>
     </center>
     <!-- /.row -->
 
