@@ -55,6 +55,7 @@
 
     <!-- Content Row -->
     <div class="row my-5">
+
         <table class="w3-table-all w3-centered" style="text-center table-layout:fixed;">
             <tr class="w3-indigo">
               <th>제목</th>
@@ -62,17 +63,24 @@
               <th>제출 완료 날짜</th>
             </tr>
             {% for data in rel %}
+        <form action="{% url 'Homeworkcheck' %}" method="get" >
                 <tr>
-                    <td><a href="{% url 'Homeworkcheck' %}">{{data.assignment.assignment_title}}</a></td>
+                    <td>
+                        <a href="{% url 'Homeworkcheck' %}"name="assignment_title" value="{{ data.assignment.assignment_title }}" id="{{ data.assignment.assignment_title }}">
+                            {{data.assignment.assignment_title}}</a>
+                        <input type="hidden" class="w3-btn w3-round w3-blue" name="student_id" value="{{ data.solve.student_id }}" id="{{ data.solve.student_id }}">
+                    </td>
                     <td>{{data.assignment.end_date}}</td>
                     <td>{{data.solve.modified_date}}</td>
                 </tr>
             {% endfor %}
+            </form>
         </table>
 
         <a href="{% url 'Homeworkselect' %}">
             <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
         </a>
+
     </div>
 
     <!-- /.row -->
