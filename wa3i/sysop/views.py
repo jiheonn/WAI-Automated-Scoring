@@ -16,10 +16,12 @@ def index(request):
 def teacher_data(request):
     teacher_id = request.GET.get('teacher_id')
     # print(teacher)
-    if teacher_id == "":
+    if teacher_id == None:
         teacher = Teacher.objects.all()
     else:
-        print(teacher_id)
+        teacher_info = Teacher.objects.get(teacher_id=teacher_id)
+        teacher_info.approve = 1
+        teacher_info.save()
         teacher = Teacher.objects.all()
 
     context = {'teacher':teacher}

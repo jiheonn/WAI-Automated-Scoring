@@ -99,8 +99,17 @@ def view_result_detail(request):
 
     sum = 0
     avg = []
+    test = {}
     for i in assignment_data:
-        print(i.solve.student_id, i.solve.score)
+        if i.solve.student_id in test:
+            test[i.solve.student_id].append(i.solve.score)
+        else:
+            test[i.solve.student_id] = []
+            test[i.solve.student_id].append(i.solve.score)
+    for key in test.keys():
+        test[key] = sum(test[key])/len(test[key])
+
+    print(assignment_data)
 
     print(avg)
 

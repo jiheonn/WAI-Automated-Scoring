@@ -51,7 +51,7 @@
                     <a class="nav-link" href="{% url 'sysop' %}">홈</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보
+                    <a id="new_teacher_page" class="nav-link" href="{% url 'teacher_data' %}">신규교사정보
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -137,8 +137,9 @@
                     </td>
                     <td>
                         {% if item.approve == '0' %}
-                        <form action="{% url 'teacher_data' %}" method="get">
-                        <button name="teacher_id" value="{{ item.teacher_id }}" class="approve"> 승인하기</button>
+                        <form name="change_approve_form" action="{% url 'teacher_data' %}" method="get">
+                            <button type="submit" name="teacher_id"
+                                    value="{{ item.teacher_id }}" class="approve"> 등록하기 </button>
                         </form>
                         {% else %}
                         -
@@ -192,6 +193,20 @@
 <!-- Bootstrap core JavaScript -->
 <!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!--<script>-->
+<!--        $(".approve").on('click', function () {-->
+<!--            let currentTd = $(this);-->
+<!--            let currentRow = currentTd.closest("tr");-->
+<!--            let td1 = currentRow.find("td:eq(1)").text();-->
+<!--            let td2 = currentRow.find("td:eq(2)").text();-->
+<!--            let td3 = currentRow.find("td:eq(3)").text();-->
+<!--            const data = td1 + '\n' + td2 + '\n' + td3 + '\n' + '승인하시겠습니까?';-->
+<!--            confirm(data);-->
+<!--            // currentTd.text("승인");-->
+<!--        });-->
+<!--</script>-->
+
 <script>
     $(".approve").on('click', function () {
         let currentTd = $(this);
@@ -200,7 +215,11 @@
         let td2 = currentRow.find("td:eq(2)").text();
         let td3 = currentRow.find("td:eq(3)").text();
         const data = td1 + '\n' + td2 + '\n' + td3 + '\n' + '승인하시겠습니까?';
-        confirm(data);
+        if (confirm(data) == true) {    //확인
+            document.change_approve_form.submit();
+        } else {   //취소
+            return false;
+        }
         // currentTd.text("승인");
     });
 </script>
