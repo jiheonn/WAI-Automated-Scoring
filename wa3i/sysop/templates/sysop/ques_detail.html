@@ -122,10 +122,13 @@
                 </tr>
             </table>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">삭제하기</button>
+                <button type="submit">인쇄하기</button>
             </div>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit" onclick="myFunction();">수정하기</button>
+                <button type="submit">다운로드</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit" onclick="myFunction();">등록하기</button>
             </div>
         </div>
     </div>
@@ -146,7 +149,16 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
+<script>
+function myFunction() {
+    if(confirm("문항정보\n등록하시겠습니까?")){
+        alert("등록되었습니다.");
+    }else {
+        alert("취소되었습니다.");
+    }
+}
+    
+</script>
 
 </body>
 

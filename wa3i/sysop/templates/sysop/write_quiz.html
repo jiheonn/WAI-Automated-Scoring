@@ -85,32 +85,41 @@
         <!-- /.col-md-4 -->
         <div>
             <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
-                <tr name="trQuestion" align = "center"  style="font-weight: bold; color: white;">
-                    <th height="40px;" bgcolor="#343a40" width="100px">문항명</th>
-                    <td><input type="text" name="q_name" style="width:1000px;"></td>
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">문항명</th>
+                    <th>과목</th>
                 </tr>
-                <tr name="trQuestion" align = "center"  style="font-weight: bold;">
-                    <th height="40px;" bgcolor="#343a40" width="100px" style="color:white;";>과목</th>
-                    <td>
-                        <input type="radio" name="subject">국어
-                        <input type="radio" name="subject">수학
-                        <input type="radio" name="subject">사회
-                        <input type="radio" name="subject">과학
-                    </td>
-                </tr>
-                <tr name="trQuestion" align = "center"  style="font-weight: bold; color: white;">
-                    <th height="40px;" bgcolor="#343a40" width="100px">문제</th>
-                    <td><input type="text" name="q_name" style="width:1000px; height:400px;"></td>
-                </tr>
-                <tr name="trQuestion" align = "center"  style="font-weight: bold; color: white;">
-                    <th height="40px;" bgcolor="#343a40" width="100px">도움생각</th>
-                    <td><input type="text" name="q_name" style="width:1000px; height:200px;"></td>
-                </tr>
-                <tr name="trQuestion" align = "center"  style="font-weight: bold; color: white;">
-                    <th height="40px;" bgcolor="#343a40" width="100px">모범답안</th>
-                    <td><input type="text" name="q_name" style="width:1000px; height:400px;"></td>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="문항명을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="과목을 작성해 주세요."></textarea></td>
                 </tr>
             </table><br>
+
+            <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">문제</th>
+                </tr>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="문항을 작성해 주세요."></textarea></td>
+                </tr>
+            </table>
+
+            <table id="question" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
+                <tr name="trQuestion" align = "center" bgcolor="#343a40" style="font-weight: bold; color: white;">
+<!--                    <td width="50px;" height="40px;">번호</td>-->
+                    <th height="40px;">도움 생각</th>
+                    <th>모범 답안</th>
+                </tr>
+                <tr>
+<!--                    <td style="text-align: center;">1</td>-->
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="도움 생각을 작성해 주세요."></textarea></td>
+                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="모범 답안을 작성해 주세요."></textarea></td>
+                </tr>
+            </table>
 
 
 

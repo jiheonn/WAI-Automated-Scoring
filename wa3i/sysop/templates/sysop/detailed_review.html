@@ -84,6 +84,7 @@
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
+
         <div style="margin: 50px;">
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
@@ -96,19 +97,23 @@
                     <th width="80px">등록여부</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>1</td>
-                    <td>지붕 위의 발전기</td>
-                    <td>초등학교</td>
-                    <td>과학</td>
-                    <td>***</td>
-                    <td>2020.00.00</td>
-                    <td></td>
+                    <td>{{ makequestion.make_question_id }}</td>
+                    <td>{{ makequestion.question_name }}</td>
+                    <td> 드롭다운 제작 </td>
+                    <td> 드롭다운 제작 </td>
+                    <td>{{ makequestion.teacher.teacher_name }}</td>
+                    <td> DB없음 제작필요함 </td>
+                    <td>{% if makequestion.check == 0 %}
+                        미등록
+                        {% else %}
+                        등록
+                        {% endif%}</td>
                 </tr>
             </table><br>
             <table>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
-                    <td>서연이 아버지는 새로 집을 지으시면서 지붕 위에 태양광 발전 장치를 설치하였습니다. 비용이 많이 들었지만 ‘태양광 발전’이 석탄이나 석유와 같은 화석에너지에 비해…</td>
+                    <td>{{ makequestion.discription }}</td>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
@@ -157,18 +162,7 @@ function myFunction() {
 }
     
 </script>
-<!-- <script>
-    $(".approve").on('click', function() {
-   let currentTd = $(this);
-    let currentRow = currentTd.closest("tr");
-    let td1 = currentRow.find("td:eq(1)").text();
-    let td2 = currentRow.find("td:eq(2)").text();
-    let td3= currentRow.find("td:eq(3)").text();
-    const data = td1+ '\n' +td2 + '\n'+td3 + '\n' + '승인하시겠습니까?';
-    confirm(data);
-   currentTd.text("승인");
-});
-</script> -->
+
 </body>
 
 </html>
