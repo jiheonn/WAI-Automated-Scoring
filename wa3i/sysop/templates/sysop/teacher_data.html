@@ -137,7 +137,9 @@
                     </td>
                     <td>
                         {% if item.approve == '0' %}
-                        <button class="approve"> 승인하기</button>
+                        <form action="{% url 'teacher_data' %}" method="get">
+                        <button name="teacher_id" value="{{ item.teacher_id }}" class="approve"> 승인하기</button>
+                        </form>
                         {% else %}
                         -
                         {% endif%}

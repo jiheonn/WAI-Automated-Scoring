@@ -14,10 +14,12 @@ def index(request):
     return render(request, 'sysop/index.html', context)
 
 def teacher_data(request):
-    if request.GET.get('evaluation_type'):
-        featured_filter = request.GET.get('evaluation_type')
-        teacher = Teacher.objects.filter()
+    teacher_id = request.GET.get('teacher_id')
+    # print(teacher)
+    if teacher_id == "":
+        teacher = Teacher.objects.all()
     else:
+        print(teacher_id)
         teacher = Teacher.objects.all()
 
     context = {'teacher':teacher}
