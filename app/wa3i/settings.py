@@ -16,28 +16,35 @@ import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open('information.json') as json_file:
-    json_data = json.load(json_file)
-    host_ = json_data['host']
-    user_ = json_data['user']
-    password_ = json_data['password']
-    port_ = json_data['port']
-    database_ = json_data['database']
-    secret_key = json_data['secret_key']
+# with open('information.json') as json_file:
+#     json_data = json.load(json_file)
+#     host_ = json_data['host']
+#     user_ = json_data['user']
+#     password_ = json_data['password']
+#     port_ = json_data['port']
+#     database_ = json_data['database']
+#     secret_key = json_data['secret_key']
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key
+if os.environ.get("SECRET_KEY") is not None:
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+else:
+    SECRET_KEY = "sdfkjshdfkjshdkjfhweiu7fh"
+
 
 # SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+if os.environ.get("DJANGO_ALLOWED_HOSTS") is None:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+else:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -98,20 +105,31 @@ WSGI_APPLICATION = 'wa3i.wsgi.application'
 #         }
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': database_,  # DB명
-        'USER': user_,  # 데이터베이스 계정
-        'PASSWORD': password_,  # 계정 비밀번호
-        'HOST': host_,  # 데이테베이스 주소(IP)
-        'PORT': port_,  # 데이터베이스 포트
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': database_,  # DB명
+#         'USER': user_,  # 데이터베이스 계정
+#         'PASSWORD': password_,  # 계정 비밀번호
+#         'HOST': host_,  # 데이테베이스 주소(IP)
+#         'PORT': port_,  # 데이터베이스 포트
 
-        'OPTIONS': {
-            'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
-        }
+#         'OPTIONS': {
+#             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'
+#         }
+#     }
+# }
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -149,4 +167,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
+STATIC_URL = "/staticfiles/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")

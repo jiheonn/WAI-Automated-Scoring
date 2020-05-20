@@ -1,0 +1,62 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    command: gunicorn system.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - pdf_volume:/home/app/web/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - pdf_volume:/home/app/web/mediafiles
+    ports:
+      - 8888:80
+    depends_on:
+      - web
+  elasticsearch1:
+    build:
+      context: ./elasticsearch
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - es_data_prod:/usr/share/elasticsearch/data
+  fscrawler:
+    build:
+      context: ./fscrawler
+    volumes:
+      - pdf_volume:/usr/share/fscrawler/data
+      - ./fscrawler/config/docker-compose:/usr/share/fscrawler/config-mount/docker-compose
+    depends_on:
+      - elasticsearch1
+    ports:
+      - 8080:8080
+        
+    command:
+      - --trace
+      - --config_dir
+      - /usr/share/fscrawler/config
+      - docker-compose
+        
+volumes:
+  es_data_prod:
+  postgres_data:
+  static_volume:
+  pdf_volume:
