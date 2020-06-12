@@ -4,6 +4,7 @@ services:
   web:
     build: ./app
     command: python manage.py runserver 0.0.0.0:8000
+    image: wa3i_web:latest
     volumes:
       - ./app/:/usr/src/app/
     ports:
