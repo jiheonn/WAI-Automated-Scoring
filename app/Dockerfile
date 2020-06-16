@@ -1,4 +1,5 @@
-FROM python:3.8.0-alpine
+FROM python:3.7.5-slim
+
 
 # set work directory
 WORKDIR /usr/src/app
@@ -8,8 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apt-get update && apt-get install -y \
+            gcc python3-dev musl-dev netcat \
+            libpq-dev postgresql-client postgresql-client-common            
 
 # install dependencies
 RUN pip install --upgrade pip
