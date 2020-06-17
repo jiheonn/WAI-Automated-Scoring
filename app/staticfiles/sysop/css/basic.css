@@ -1,0 +1,19 @@
+.main-card {
+  /*background-color: #6c757d !important;*/
+  background-image: url('../image/main-page-card.jpg') !important;
+  background-size: 100% 100%;
+}
+
+.main-introduce-card {
+  background-color: #F3F3F3 !important;
+  /*background-image: url('../image/main-page-card.jpg') !important;*/
+  /*background-size: 100% 100%;*/
+}
+
+.text-highlight {
+  color: deepskyblue !important;
+}
+
+#result-table {
+    margin: 20px 0;
+}

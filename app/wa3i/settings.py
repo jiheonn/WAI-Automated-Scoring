@@ -42,7 +42,7 @@ else:
 DEBUG = True
 
 if os.environ.get("DJANGO_ALLOWED_HOSTS") is None:
-    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost", "leon.gachon.ac.kr"]
 else:
     ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
