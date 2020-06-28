@@ -3,19 +3,31 @@
 {% block content %}
 
 <script>
+    // $(document).ready(function () {
+    //         $('#submit_btn').click(function () {
+    //             var q_table = document.getElementById('ques_table');
+    //             var q_le = $('#ques_table tr').length;
+    //             if(q_le >= 3){
+    //                 if (q_table.rows.length < 1) return;
+    //                 q_table.deleteRow(q_table.rows.length - 1);
+    //             }else{
+    //                 alert("문항을 모두 풀었습니다. 수고하셨습니다!");
+    //                 return false;
+    //             }
+    //         });
+    //     });
+
     $(document).ready(function () {
-            $('#submit_btn').click(function () {
-                var q_table = document.getElementById('ques_table');
-                var q_le = $('#ques_table tr').length;
-                if(q_le >= 3){
-                    if (q_table.rows.length < 1) return;
-                    q_table.deleteRow(q_table.rows.length - 1);
-                }else{
-                    alert("문항을 모두 풀었습니다. 수고하셨습니다!");
-                    return false;
-                }
-            });
+        $('#submit_btn').click(function () {
+            var q_table = document.getElementById('ques_table');
+            var q_id = document.getElementById('q_id');
+            if (q_id in q_table) {
+                // $('#t_id').empty();
+            }
+
         });
+    });
+
 </script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -71,8 +83,6 @@
     <!-- /.row -->
 
 
-
-
 <!--    <form action="." method="get">-->
     <div class="row">
         <div class="col-lg-3">
@@ -81,11 +91,12 @@
                     <th>학습 목록</th>
                 </tr>
                 {% for d in data %}
-                <tr>
+                <tr id="t_id">
                     <td>
                         <form action="{% url 'Studyquestion' %}" method="GET">
-                            <button type="submit" name="question_name"
-                                    value="{{d.question.question_name}},{{d.assignment_id}}">
+<!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
+                                    value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
                                 {{d.question.question_name}}
                             </button>
                             <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
@@ -100,11 +111,11 @@
 
         <!--문항 작성-->
         <div class="col-lg-9">
-            <h2 class="mt-4">{{f.question.question_name}}</h2>
+            <h2 class="mt-4" id="q_name">{{f.question.question_name}}</h2>
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static f.question.image %}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
             <hr>
 
             <!-- Post Content -->

@@ -46,14 +46,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
                 </li>
@@ -83,14 +75,17 @@
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
-        <div style="margin: 50px;">
-            <table style="text-align: center;">
+        <div class="container">
+            <table style="text-align: center;" id="quiz_table" class="display" style="width:100%">
+                <thead>
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
                     <th width="110px">과목</th>
                     <th width="130px">등록일자</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% for item in question %}
                 <tr style="border: 1px solid #d6d6d6;">
                     <td>{{ item.question_id }}</td>
@@ -99,8 +94,28 @@
                     <td>{{ item.made_date }}</td>
                 </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
+
+        <!--        <div style="margin: 50px;">-->
+        <!--            <table style="text-align: center;">-->
+        <!--                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">-->
+        <!--                    <th width="80px">문항번호</th>-->
+        <!--                    <th width="400px">문항명</th>-->
+        <!--                    <th width="110px">과목</th>-->
+        <!--                    <th width="130px">등록일자</th>-->
+        <!--                </tr>-->
+        <!--                {% for item in question %}-->
+        <!--                <tr style="border: 1px solid #d6d6d6;">-->
+        <!--                    <td>{{ item.question_id }}</td>-->
+        <!--                    <td><a href="{% url 'ques_detail' %}" style="color: black">{{ item.question_name }}</a></td>-->
+        <!--                    <td>{{ item.category.category_name }}</td>-->
+        <!--                    <td>{{ item.made_date }}</td>-->
+        <!--                </tr>-->
+        <!--                {% endfor %}-->
+        <!--            </table>-->
+        <!--        </div>-->
     </div>
     <!-- /.row -->
 
@@ -117,7 +132,7 @@
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<!-- <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script> -->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>

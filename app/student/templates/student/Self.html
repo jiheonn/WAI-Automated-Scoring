@@ -1,7 +1,87 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
+<script>
+    // <!--문항명검색-->
+    $(document).ready(function () {
+        $('#search_name').click(function () {
+            var name_input = $('#name_input').val();
+            $.ajax({
+                url: '/student/search_name/',
+                data: {name_input: name_input},
+                success: function (data) {
+                    var search_data = data.search_data;
+                    var num = search_data.length;
+                    if (num == 0) {
+                        alert('검색 결과가 존재하지 않습니다.');
+                    } else {
+                        $("div").remove("#question_list");
+                        $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
+                        for (var i = 0; i < num; i++) {
+                            $("#question_list").append(
+                                '<div class="col-md-3 mb-5">' +
+                                '<div class="card h-100" align="center">' +
+                                '<div class="card-body">' +
+                                '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                '/media/' +
+                                search_data[i].question_image +
+                                '" style="width:auto; height:100%;">' +
+                                '</div>' +
+                                '<span class="card-footer">' +
+                                '<button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id" value="' +
+                                search_data[i].make_question_id +
+                                '">' +
+                                search_data[i].question_name +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</div>'
+                            )
+                        }
+                    }
+                }
+            });
+        });
+    });
 
+    <!--검색카테고리-->
+    // $(document).ready(function () {
+    // $('#category_option2').change(function () {
+    //     var option = $("#category_option2 option:selected").val();
+    //     $.ajax({
+    //         url: '/student/change_category_self/',
+    //         data: {option: option},
+    //         success: function (data) {
+    //             var option_data = data.option_data;
+    //             var num = option_data.length;
+    //             $("div").remove("#question_list");
+    //             $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
+    //                 for (var i = 0; i < num; i++) {
+    //                     $("#question_list").append(
+    //                         '<div class="col-md-3 mb-5">' +
+    //                         '<div class="card h-100" align="center">' +
+    //                         '<div class="card-body">' +
+    //                         '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+    //                         '/static/' +
+    //                         option_data[i].question_image +
+    //                         '" style="width:auto; height:100%;">' +
+    //                         '</div>' +
+    //                         '<span class="card-footer">' +
+    //                         '<button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id" value="' +
+    //                         option_data[i].make_question_id  +
+    //                         '">' +
+    //                         option_data[i].question_name +
+    //                         '</button>' +
+    //                         '</span>' +
+    //                         '</div>' +
+    //                         '</div>'
+    //                     )
+    //                 }
+    //             }
+    //         });
+    //     });
+    // });
+</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -16,7 +96,8 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'AI' %}">평가연습
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
@@ -25,8 +106,7 @@
                     <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가
-                    </a>
+                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
@@ -42,16 +122,18 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                 height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다.</p>
+        <div class="col-lg-3">
+            <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다. 
+            </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
 
-        <div class="col-5" style="position: relative; left: 100px; top: 60px;">
+        <div class="col-4" style="position: relative; left: 230px; top: 60px;">
             <div class="card-body row no-gutters">
                 <div class="col">
                     <input id="name_input" class="form-control" placeholder="문항명을 입력하세요.">
@@ -59,23 +141,25 @@
                 <div class="col-auto">
                     <button id="search_name" class="w3-button w3-round w3-gray">검색</button>
                 </div>
+                <!--카테고리-->
+                <!--                <div id="category" class="col" style="left:10px">-->
+                <!--                    <select id="category_option2" name="category">-->
+                <!--                        <option value="select" selected="selected">카테고리</option>-->
+                <!--                        {% for data in category %}-->
+                <!--                        <option value="{{ data.category_name }}">{{ data.category_name }}</option>-->
+                <!--                        {% endfor %}-->
+                <!--                    </select>-->
+                <!--                </div>-->
 
-                <div id="category" class="col" style="left:10px">
-                    <select id="category_option" name="category">
-                        <option value="select" selected="selected">카테고리</option>
-                        <option value="국어">국어</option>
-                        <option value="수학">수학</option>
-                        <option value="사회">사회</option>
-                        <option value="과학">과학</option>
-                    </select>
-                </div>
             </div>
-         </div>
+        </div>
+
 
     </div>
-            <!-- /.row -->
+    <!-- /.row -->
 
-            <!-- Call to Action Well -->
+
+    <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4 text-center">
         <div class="card-body">
             <h5 class="text-white m-0">문항 선택하기</h5>
@@ -84,18 +168,20 @@
 
     <!-- Content Row -->
     <form action="{% url 'Selfquestion' %}" method="get">
-        <div class="row my-5">
-            <div id="whole_card"></div>
+        {% csrf_token %}
+        <div id="whole_card" class="row my-5">
             <div id="question_list" class="row">
                 {% for data in qs %}
                 <div class="col-md-3 mb-5">
                     <div class="card h-100" align="center">
                         <div class="card-body">
-                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}"
+                                 style="width:auto; height:100%;">
                         </div>
                         <span class="card-footer">
-                            <input type="submit" class="btn btn-outline-dark card-link" name="question" value="{{ data.question_name }}"
-                               id="{{ data.question_id }}">
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id"
+                                    value="{{ data.make_question_id }}">{{ data.question_name }}
+                            </button>
                         </span>
                     </div>
                 </div>

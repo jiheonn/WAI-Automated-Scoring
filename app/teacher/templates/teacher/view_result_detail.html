@@ -1,137 +1,44 @@
+{% extends 'teacher/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ko">
+{% block content %}
 
-<head>
+<!--datatable source-->
+<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>WA3i</title>
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+<!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<script type="text/javascript">
+    $('#view_result').addClass('active');
 
-    <style type="text/css">
-        #login-menu ul {
-            background-color: #343a40 !important;
-            display: none; /* 평상시에는 서브메뉴가 안보이게 하기 */
-            height: auto;
-            padding: 0px;
-            margin: 0px;
-            border: 0px;
-            position: absolute;
-            width: 100px;
-            z-index: 200;
-        }
+    function tableToExcel(id) {
+        var data_type = 'data:application/vnd.ms-excel;charset=utf-8';
+        var table_html = encodeURIComponent(document.getElementById(id).outerHTML);
 
-        #login-menu:hover ul {
-            display: block; /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-        }
-
-        #login-menu:hover ul li {
-            text-align: center;
-        }
-
-        .btn21 {
-            width: 80px;
-            /*height: 50px;*/
-            /*font-size:30px;*/
-            /*font-family: 'Nanum Gothic';*/
-            /*color: white;*/
-            /*line-height: 50px;*/
-            text-align: center;
-            /*background: blue;*/
-            border: solid 2px grey;
-            border-radius: 12px;
-        }
-    </style>
-    <script>
-        $(document).ready(function () {
-            var abc = {};
-            abc['aaa'] = 'bbb';
-            $("#file_download").on("click", function (e) {
-                $("a#download").attr({
-                    "download": "download.json",
-                    "href": "data:application/json;charset=utf8;base64," + window.btoa(JSON.stringify(abc))
-                }).get(0).click();
-            });
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'teacher' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto" id="menubar">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
-                            class="fa fa-user fa-fw"></i> User </a>
-                    <ul>
-                        <li><a class="nav-link" href="#">로그인</a></li>
-                        <li><a class="nav-link" href="#">회원가입</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+        var a = document.createElement('a');
+        a.href = data_type + ',%EF%BB%BF' + table_html;
+        a.download = 'result' + '_excel' + '.xls';
+        a.click();
+    }
+</script>
 
 <!-- Page Content -->
 <div class="container">
@@ -144,114 +51,104 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <!--            <h1 class="font-weight-light">결과보기</h1><br>-->
             <p class="font-weight-bolder triangle-border left">
                 학생들의 응답 결과입니다.<br>
                 응답 결과는 파일로도 저장이 가능합니다.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
-    <table border="1" bordercolor="gray" width="1200" height="100" align="center"
-           style="margin-top: 50px; margin-left: auto; margin-right: auto;">
-        <tr align="center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
-            <td>제목</td>
-            <td>타입</td>
-            <td>코드</td>
-            <td>기간</td>
-            <td>학년</td>
-            <td style="width: 40px;">반</td>
-            <td>문항수</td>
-            <td>전체 평균점수</td>
-            <td>평균 진행률(%)</td>
-            <td>결과 저장</td>
-            <td>더보기</td>
-        </tr>
-        {% for data in assignment_data|slice:":1" %}
-        <tr align="center">
-            <td>{{ data.assignment.assignment_title }}</td>
-            <td>{{ data.assignment.type }}</td>
-            <td>{{ data.assignment_id }}</td>
-            <td>{{ data.assignment.start_date }} ~<br> {{ data.assignment.end_date }}</td>
-            <td>{{ data.assignment.grade }}</td>
-            <td>{{ data.assignment.class_field }}</td>
-            <td>{{ question_count }}</td>
-            <td>{{ all_avg }}</td>
-            <td>{{ all_pgs }}</td>
-            <td>
-                <button class="btn21" id="file_download">다운로드</button>
-                <a id="download" download="" href=""></a></td>
-            <td>
-                <button class="btn21">더보기</button>
-            </td>
-        </tr>
+    <form action="{% url 'chart' %}" method="POST">
+        {% csrf_token %}
+        {% for data in result %}
+        <input type="hidden" name="student_name" value="{{ data.student_name }}">
+        <input type="hidden" name="student_score" value="{{ data.student_score }}">
         {% endfor %}
-    </table>
 
-    <table border="1" bordercolor="gray" width="1200" height="100" align="center"
-           style="margin-top: 50px; margin-left: auto; margin-right: auto;">
-        <tr align="center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
-            <td width="90">학생ID</td>
-            <td width="70">학생이름</td>
-            <td width="70">평균점수</td>
-            <td width="80">진행률(%)</td>
-            <td>학생응답</td>
-        </tr>
+        <div style="margin-bottom: 100px;">
+            <table border="1" bordercolor="gray" width="1200" height="100" align="center"
+                   class="display">
+                <thead>
+                <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
+                    <td>제목</td>
+                    <td>타입</td>
+                    <td>코드</td>
+                    <td>기간</td>
+                    <td>학년</td>
+                    <td class="class-box-width">반</td>
+                    <td>문항수</td>
+                    <td>전체 평균점수</td>
+                    <td>평균 진행률(%)</td>
+                    <td>결과 저장</td>
+                    <td>더보기</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in assignment_data|slice:":1" %}
+                <tr align="center">
+                    <td>{{ data.assignment_title }}</td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.assignment_id }}</td>
+                    <td>{{ data.start_date }} ~<br> {{ data.end_date }}</td>
+                    <td>{{ data.grade }}</td>
+                    <td>{{ data.school_class }}</td>
+                    <td>{{ question_count }}</td>
+                    <td>{{ all_avg }}</td>
+                    <td>{{ all_pgs }}</td>
+                    <td>
+                        <button type="button" class="btn21" onclick="tableToExcel('asi_info')">다운로드</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn21">더보기</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-            {% for data in result %}
-<tr align="center">
-    <td>{{ data.student_id }}</td>
-    <td>{{ data.student_name }}</td>
-    <td>{{ data.student_score }}</td>
-    <td>{{ data.student_progress}}</td>
-    <td align="left" style="padding: 20px;">
-<!--        {{ data.student_response }}-->
-        {% for i in data.student_response %}
-            {{ i }}
-            <br><br>
-        {% endfor %}
-    </td>
-</tr>
-{% endfor %}
-
-<!--        {% for data in result %}-->
-<!--        <tr align="center">-->
-<!--&lt;!&ndash;            <td>{{ data.solve.student_id }}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <td>{{ data.solve.student_name }}</td>&ndash;&gt;-->
-<!--            <td>{{ result }}</td>-->
-<!--            <td>{{ data }}</td>-->
-<!--            <td>{{ data.student_score }}</td>-->
-<!--            <td>100</td>-->
-<!--            <td align="left" style="padding: 20px;">-->
-<!--                {{ data.student_response }}-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        {% endfor %}-->
-    </table>
+        <div>
+            <table id="asi_info" class="display" width="1200">
+                <thead>
+                <tr class="asi_info_tr">
+                    <th width="90">학생ID</th>
+                    <th width="70">학생이름</th>
+                    <th width="70">평균점수</th>
+                    <th width="80">진행률(%)</th>
+                    <th>학생응답</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in result %}
+                <tr id="asi_tr" align="center">
+                    <td>{{ data.student_id }}</td>
+                    <td>{{ data.student_name }}</td>
+                    <td>{{ data.student_score }}</td>
+                    <td>{{ data.student_progress}}</td>
+                    <td style="text-align: left;">
+                        {% for i in data.student_response %}
+                        <br>
+                        {{ i }}
+                        <br><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
 
     <!-- /.row -->
-    <div class="col-lg-0" style="float: none; margin: 50px auto;">
-        <form action="{% url 'view_result' %}">
-            <button type="submit" class="w3-button w3-large w3-round w3-blue">이전</button>
-        </form>
-    </div>
+<!--    <div class="col-lg-0 btn-center">-->
+<!--        <form action="{% url 'view_result' %}">-->
+<!--            <button type="submit" class="w3-button w3-large w3-round w3-blue btn21">이전</button>-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 <!-- /.container -->
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}"
-     style="display: block; margin: 0px auto;">
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
+<!--<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>-->
 
-</body>
-
-</html>
+{% endblock %}

@@ -1,7 +1,18 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
+<script>
+    $(document).ready(function () {
+        $('#submit_btn').click(function () {
+            var q_table = document.getElementById('ques_table');
+            var q_id = document.getElementById('q_id');
+            if (q_id in q_table) {
+                // $('#t_id').empty();
+            }
 
+        });
+    });
+</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -52,72 +63,86 @@
     </div>
     <!-- /.row -->
 
-    <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4">
-        <div class="card-body">
-<!--            <a class="w3-btn w3-small w3-light-grey" href="{% url 'Homework' %}">전체문항</a>-->
-            <h5 class="text-white m-0 text-center">문제 풀기</h5>
-
-        </div>
-    </div>
-
-
     <!-- Content Row -->
     <div class="row">
 
+        <div class="col-lg-4">
+            <table class="w3-table-all w3-centered" id="ques_table">
+                <th class="w3-indigo">
+                    학습 목록
+                </th>
+                <th class="w3-indigo">
+                    완료
+                </th>
+                {% for d in data %}
+                <tr id="t_id">
+                    <td>
+                        <form action="{% url 'Homeworkquestion' %}" method="GET">
+<!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
+                                    value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
+                                {{d.question.question_name}}
+                            </button>
+                            <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
+                        </form>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
       <!-- Post Content Column -->
-      <div class="col-lg-12">
+        <div class="col-lg-8">
 
-        <!-- Title -->
-        <h2 class="mt-4">{{data.question_name}}</h2>
+            <!-- Title -->
+            <form action="{% url 'Homeworkdiagnosis' %}" method="GET">
+<!--                {% csrf_token %}-->
+                <input type="hidden" name="student_id" id ="student_id" value="{{student_id}}">
+                <input type="hidden" name="student_name" id ="student_name" value="{{student_name}}">
+            <!-- Title -->
+                <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{f.question.question_id}}"
+                                                   id="{{f.question.question_id}}">{{f.question.question_name}}</h2>
 
-        <hr>
+                <hr>
 
-        <!-- Preview Image -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                <!-- Preview Image -->
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
 
-        <hr>
+                <hr>
 
-        <!-- Post Content -->
-        <p>{{data.discription}}
-        </p>
+                <!-- Post Content -->
+                <p>{{f.question.discription}}
+                </p>
 
-        <hr>
+                <hr>
 
-        <!-- Comments Form -->
-        <div class="card my-4">
-            <input type="hidden" name="q_no" value="1" />
-              <h5 class="card-header">생각을 적어보세요:</h5>
-              <div class="card-body">
-                <form>
-                  <div class="form-group clearfix">
-                    <textarea class="form-control" rows="3"></textarea>
-                  </div>
-                </form>
-
-                <div class="col-md-12">
-                    <table height="20">
-                        <td>
-                            <a href="{% url 'Homeworkdiagnosis' %}">
-                                <button type="submit" class="w3-btn w3-round w3-blue w3-display-left w3-margin-bottom">제출하기</button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{% url 'Homeworkselect' %}">
-                                <button type="submit" class="w3-btn w3-round w3-grey w3-display-right w3-margin-bottom">< 이전</button>
-                            </a>
-                        </td>
-                    </table>
+                <div class="card my-4">
+                    <h5 class="card-header">생각을 적어보세요:</h5>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
+                        </div>
+                        <div class="col-md-10">
+                            <table>
+                                <td>
+                                    <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'Homeworkdiagnosis' %}'"
+                                       style="cursor:pointer">
+                                        <button type="submit" class="w3-btn w3-round w3-blue" id="bt">제출하기</button>
+                                    </a>
+                                </td>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-<!--            </form>-->
-
-          </div>
+            </form>
         </div>
 
       </div>
     </div>
     <!-- /.row -->
-
 </div>
 <!-- /.container -->
 

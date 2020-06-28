@@ -52,9 +52,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
                 </li>
 <!--                <li class="nav-item">-->
@@ -89,46 +86,36 @@
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th width="80px">문항번호</th>
                     <th width="400px">문항명</th>
-                    <th width="120px">학교분류</th>
                     <th width="130px">과목</th>
-                    <th width="130px">등록자</th>
                     <th width="180px">등록일자</th>
-                    <th width="80px">등록여부</th>
                 </tr>
-                {% for item in row %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>{{ item.question_id }}</td>
-                    <td>지붕 위의 발전기</td>
-                    <td>초등학교</td>
-                    <td>과학</td>
-                    <td>***</td>
-                    <td>2020.00.00</td>
-                    <td></td>
+                    <td>{{ question.question_id }}</td>
+                    <td>{{ question.question_name }}</td>
+                    <td>{{ question.category.category_name }}</td>
+                    <td>{{ question.made_date }}</td>
                 </tr>
                 {% endfor %}
             </table><br>
             <table>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
-                    <td>서연이 아버지는 새로 집을 지으시면서 지붕 위에 태양광 발전 장치를 설치하였습니다. 비용이 많이 들었지만 ‘태양광 발전’이 석탄이나 석유와 같은 화석에너지에 비해…</td>
+                    <td>{{ question.discription }}</td>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
-                    <td>문항의 모범답안 작성</td>
+                    <td>{{ question.answer }}</td>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
-                    <td>문제의 채점기준 명시</td>
+                    <td>{{ question.hint }}</td>
                 </tr>
             </table>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">인쇄하기</button>
+                <button type="submit">삭제하기</button>
             </div>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">다운로드</button>
-            </div>
-            <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit" onclick="myFunction();">등록하기</button>
+                <button type="submit" onclick="myFunction();">수정하기</button>
             </div>
         </div>
     </div>
@@ -149,16 +136,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script>
-function myFunction() {
-    if(confirm("문항정보\n등록하시겠습니까?")){
-        alert("등록되었습니다.");
-    }else {
-        alert("취소되었습니다.");
-    }
-}
-    
-</script>
+
 
 </body>
 

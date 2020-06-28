@@ -1,261 +1,100 @@
+{% extends 'teacher/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ko">
+{% block content %}
 
-<head>
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <title>WA3i</title>
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+<link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-    <style type="text/css">
-        #login-menu ul{
-            background-color: #343a40!important;
-            display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
-            height:auto;
-            padding:0px;
-            margin:0px;
-            border:0px;
-            position:absolute;
-            width:100px;
-            z-index:200;
-        }
-        #login-menu:hover ul{
-            display: block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-        }
-        #login-menu:hover ul li{
-            text-align: center;
-        }
-        textarea{
-            resize : none;
-        }
-        .btn3 {
-            width:100px;
-            background-color: #2E4A62;
-            border: none;
-            color:#fff;
-            padding: 15px 0;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 15px;
-            margin: 4px;
-            cursor: pointer;
-            border-radius:10px;
-        }
-        .btn3:hover {
-            background-color: skyblue;
-        }
-    </style>
-    <script>
-        $(document).ready(function () {
-            $('#add-btn').click(function () {
-                var trCnt = $('#questionTable tr').length;
-                if(trCnt < 6){
-                    mytable = document.getElementById('questionTable');
-                    row = mytable.insertRow(mytable.rows.length);
-
-                    cell1 = row.insertCell(0);
-                    cell2 = row.insertCell(1);
-
-                    cell1.innerHTML = '<td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>';
-                    cell2.innerHTML = '<td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>';
-
-                    // var add_row = '<tr>\n' +
-                    //     // '                    <td style="text-align: center;">1</td>\n' +
-                    //     '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="채점 준거를 작성해 주세요."></textarea></td>\n' +
-                    //     '                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="" placeholder="모범 답안을 작성해 주세요."></textarea></td>\n' +
-                    //     '                </tr>';
-                    // var trHtml = $("tr[name=trQuestion]:last");
-                    // trHtml.after(add_row);
-                }else{
-                    alert("최대 5개까지만 가능합니다.");
-                    return false;
-                }
-            });
-        });
-        $(document).ready(function () {
-            $('#del-btn').click(function () {
-                var my_tbody = document.getElementById('questionTable');
-                var trCnt = $('#questionTable tr').length;
-                if(trCnt >= 3){
-                    if (my_tbody.rows.length < 1) return;
-                    my_tbody.deleteRow(my_tbody.rows.length - 1);
-                }else{
-                    alert("더 이상 삭제할 수 없습니다.");
-                    return false;
-                }
-            });
-        });
-        $(document).ready(function () {
-            $('#make-btn').click(function () {
-                var as_name = $('#as_name').val();
-                var as_concept = $('#as_concept').val();
-                var as_discription = $('#as_discription').val();
-                var result = confirm("문항제목 : " + as_name + "\n학습개념 : " + as_concept + "\n문항내용 :\n" + as_discription + "\n\n입력한 정보로 생성하겠습니까?");
-                if(result) {
-                    alert('문항 생성이 완료되었습니다.');
-                    location.href = "/teacher/make_question/";
-                }
-            });
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'teacher' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto" id="menubar">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
-                </li>
-            </ul>
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" href="#"></a>-->
-            <!--                </li>-->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i class="fa fa-user fa-fw"></i> User </a>
-                    <ul>
-                        <li><a class="nav-link" href="#">로그인</a></li>
-                        <li><a class="nav-link" href="#">회원가입</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+{% if messages %}
+{% for message in messages %}
+<input id="message" type="hidden" value="{{ message }}">
+{% endfor %}
+{% endif %}
 
 <!-- Page Content -->
 <div class="container">
+    <form action="{% url 'make_question_save' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
+<!--        <input type="hidden" name="path" value="{{ request.path }}">-->
+        <!-- Heading Row -->
+        <div class="row justify-content-center my-5">
+            <div class="col-lg-2">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                     height="120" alt="">
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-5">
+                <p class="font-weight-bolder triangle-border left">
+                    좋은 문항을 학생들이 학습할 수 있도록 공유해 주세요.<br>
+                    문항 그리고 채점 준거별 모범 답안을 작성해 주세요.<br>
+                    참고자료로 그림이나 사진 파일을 업로드 할 수 있습니다.</p>
+            </div>
+            <!-- /.col-md-4 -->
 
-    <!-- Heading Row -->
-    <div class="row justify-content-center my-5">
-        <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}"  width="120" height="120"  alt="">
+            <div class="col-7 sct-center">
+                <span>문항 제목 : <input id="as_name" type="text" name="question_name" placeholder="문항 제목을 입력해 주세요."></span><br>
+                <span>문항 내용 : <textarea id="as_discription"
+                                        type="text" name="discription"
+                                        placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
+                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input type="file"
+                                                                           name="image">
+            </div>
+            <div class="col-11">
+                <table border="1" bordercolor="gray" width="1000" align="center" id="hint-answer-table">
+                    <tr name="trQuestion" align="center" bgcolor="#2E4A62">
+                        <th height="40px">도움 생각</th>
+                        <th height="40px">모범 답안</th>
+                    </tr>
+                    <tr>
+                        <td><textarea type="text" name="hint"
+                                      placeholder="도움 생각을 작성해 주세요."></textarea></td>
+                        <td><textarea type="text" name="answer"
+                                      placeholder="모범 답안을 작성해 주세요."></textarea></td>
+                    </tr>
+                </table>
+                <table id="questionTable" border="1" bordercolor="gray" width="1000" align="center">
+                    <tr name="trQuestion" align="center" bgcolor="#2E4A62">
+                        <th height="40px">채점 준거</th>
+                    </tr>
+                    <tr>
+                        <td><textarea type="text" name="mark_text"
+                                      placeholder="채점 준거를 작성해 주세요."></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-12 add-del-btn">
+                <button type="button" id="add-btn" class="btn3">추가</button>
+                <button type="button" id="del-btn" class="btn3">삭제</button>
+            </div>
+            <!-- /.row -->
+            <div class="col-lg-2 btn-center">
+                <button id="make-btn" type="submit" class="w3-button w3-large w3-round w3-blue">문항
+                    생성 완료
+                </button>
+            </div>
         </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <!--            <h1 class="font-weight-light">문항생성</h1><br>-->
-            <p class="font-weight-bolder triangle-border left">
-                좋은 문항을 학생들이 학습할 수 있도록 공유해 주세요.<br>
-                문항 그리고 채점 준거별 모범 답안을 작성해 주세요.<br>
-                참고자료로 그림이나 사진 파일을 업로드 할 수 있습니다.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="col-7" style="float: none; margin: 50px auto;">
-            <form action="getBoardList.do" method="post" >
-                <span>문항 제목 : <input id="as_name" type="text" name="" placeholder="문항 제목을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span>
-                <span>학습 개념 : <input id="as_concept" type="text" name="" placeholder="학습 개념을 입력해 주세요." style="width:232px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; margin-bottom: 25px; text-align: center;"></span><br>
-                <span>문항 내용 : <textarea id="as_discription" style="width: 100%; height:150px; padding: 20px; border-style: solid; border-width: 1px; border-color: grey; margin-top: 20px; margin-bottom: 20px;" type="text" name="description" placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
-                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input style="margin-top: 20px;" type="file" name="file">
-            </form>
-        </div>
-        <div>
-<!--            <table border="1" bordercolor="gray" width ="1000" height="350" align = "center" style="margin-top: 50px;">-->
-<!--                <tr align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">-->
-<!--                    <td>번호</td>-->
-<!--                    <td>채점 준거</td>-->
-<!--                    <td>모범 답안</td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td style="text-align: center;">1</td>-->
-<!--                    <td><textarea style="width: 345px; height: 300px; padding: 20px;" type="text" name="" placeholder="   채점 준거를 작성해 주세요."></textarea></td>-->
-<!--                    <td><textarea style="width: 345px; height: 300px; padding: 20px; type="text" name="" placeholder="   모범 답안을 작성해 주세요."></textarea></td>-->
-<!--                </tr>-->
-<!--            </table>-->
-            <table id="questionTable" border="1" bordercolor="gray" width="1100" align = "center" style="margin-top: 50px;">
-                <tr name="trQuestion" align = "center" bgcolor="#2E4A62" style="font-weight: bold; color: white;">
-<!--                    <td width="50px;" height="40px;">번호</td>-->
-                    <th height="40px;">채점 준거</th>
-                    <th>모범 답안</th>
-                </tr>
-                <tr>
-<!--                    <td style="text-align: center;">1</td>-->
-                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="hint" placeholder="채점 준거를 작성해 주세요."></textarea></td>
-                    <td><textarea style="width: 100%; padding: 20px;" type="text" name="answer" placeholder="모범 답안을 작성해 주세요."></textarea></td>
-                </tr>
-            </table>
-        </div>
-        <button id="add-btn" class="btn3" style="margin-top: 50px; margin-right: 50px;">추가</button>
-        <button id="del-btn" class="btn3" style="margin-top: 50px;">삭제</button>
-    </div>
-    <!-- /.row -->
-    <div class="col-lg-2" style="float: none; margin: 50px auto;">
-        <button id="make-btn" type="submit" class="w3-button w3-large w3-round w3-blue" style="margin-top: 50px;">문항 생성 완료</button>
-    </div>
+    </form>
 </div>
 <!-- /.container -->
-
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}" style="display: block; margin: 0px auto;">
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
 
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-</body>
-
-</html>
+{% endblock %}

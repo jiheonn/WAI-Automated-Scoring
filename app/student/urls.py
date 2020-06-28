@@ -1,6 +1,8 @@
 from django.urls import path
-
 from . import views
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='student'),
@@ -10,7 +12,6 @@ urlpatterns = [
     path('Self/', views.Self, name='Self'),
     path('AI/AIques/', views.AIques, name='AIquestion'),
     path('Study/Studyques/', views.Studyques, name='Studyquestion'),
-    path('Study/Studyques2/', views.Studyques2, name='Studyquestion2'),
     path('Homework/Homeworkselect/Homeworkcode/Homeworkques/', views.Homeworkques, name='Homeworkquestion'),
     path('Self/Selfques/', views.Selfques, name='Selfquestion'),
     path('Self/Selfques/Selfdiag/', views.Selfdiag, name='Selfdiagnosis'),
@@ -26,6 +27,9 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('search_name/', views.search_name, name='search_name'),
     path('change_category/', views.change_category, name='change_category'),
+    path('change_category_self/', views.change_category_self, name='change_category_self'),
     path('check_code/', views.check_code, name='check_code'),
     path('check_ID/', views.check_ID, name='check_ID'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

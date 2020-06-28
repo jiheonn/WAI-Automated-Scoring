@@ -49,12 +49,6 @@
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
                 </li>
 <!--                <li class="nav-item">-->
@@ -88,21 +82,17 @@
         <div style="margin: 50px;">
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="80px">문항번호</th>
-                    <th width="400px">문항명</th>
-                    <th width="120px">학교분류</th>
-                    <th width="130px">과목</th>
-                    <th width="130px">등록자</th>
-                    <th width="180px">등록일자</th>
-                    <th width="80px">등록여부</th>
+                    <th width="120px">문항번호</th>
+                    <th width="450px">문항명</th>
+                    <th width="150px">등록자</th>
+                    <th width="210px">등록일자</th>
+                    <th width="110px">등록여부</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <td>{{ makequestion.make_question_id }}</td>
                     <td>{{ makequestion.question_name }}</td>
-                    <td> 드롭다운 제작 </td>
-                    <td> 드롭다운 제작 </td>
                     <td>{{ makequestion.teacher.teacher_name }}</td>
-                    <td> DB없음 제작필요함 </td>
+                    <td> {{ makequestion.made_date }} </td>
                     <td>{% if makequestion.check == 0 %}
                         미등록
                         {% else %}
@@ -117,21 +107,18 @@
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
-                    <td>문항의 모범답안 작성</td>
+                    <td>{{ makequestion.answer }}</td>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
                     <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
-                    <td>문제의 채점기준 명시</td>
+                    <td>{{ makequestion.hint }}</td>
                 </tr>
             </table>
             <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">인쇄하기</button>
-            </div>
-            <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button type="submit">다운로드</button>
-            </div>
-            <div class="button" style="float: right; margin: 20px auto; width: 100px">
                 <button type="submit" onclick="myFunction();">등록하기</button>
+            </div>
+            <div class="button" style="float: right; margin: 20px auto; width: 100px">
+                <button type="submit"">수정하기</button>
             </div>
         </div>
     </div>

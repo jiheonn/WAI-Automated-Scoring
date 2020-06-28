@@ -57,18 +57,21 @@
     <div class="row my-5">
 
         <table class="w3-table-all w3-centered" style="text-center table-layout:fixed;">
+            <form action="{% url 'Homeworkcheck' %}" method="get" >
             <tr class="w3-indigo">
+                <input type="hidden" class="w3-btn w3-round w3-blue" name="student_id" value="{{ rel.solve.student_id }}" id="{{ rel.solve.student_id }}">
+<!--                <th>{{ rel.student_id }}</th>-->
               <th>제목</th>
               <th>제출 기한</th>
               <th>제출 완료 날짜</th>
             </tr>
-            {% for data in rel %}
-        <form action="{% url 'Homeworkcheck' %}" method="get" >
+
+                {% for data in rel %}
                 <tr>
                     <td>
-                        <a href="{% url 'Homeworkcheck' %}"name="assignment_title" value="{{ data.assignment.assignment_title }}" id="{{ data.assignment.assignment_title }}">
+                        <a href="{% url 'Homeworkcheck' %}"name="assignment_id" value="{{ data.assignment.assignment_id }}" id="{{ data.assignment.assignment_id }}">
                             {{data.assignment.assignment_title}}</a>
-                        <input type="hidden" class="w3-btn w3-round w3-blue" name="student_id" value="{{ data.solve.student_id }}" id="{{ data.solve.student_id }}">
+
                     </td>
                     <td>{{data.assignment.end_date}}</td>
                     <td>{{data.solve.modified_date}}</td>

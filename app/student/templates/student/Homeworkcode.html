@@ -57,8 +57,8 @@
     <!-- Content Row -->
     <br>
     <center>
-            <div class="w3-container">
-                <form action="getBoardList.do" method="post" >
+        <div class="w3-container">
+            <form action="{% url 'Homeworkquestion' %}" method="get" >
                     <table style="text-align: center; width:600px; height:160px;">
                         <tr>
                             <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
@@ -66,14 +66,36 @@
                         <tr>
                             <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
                         </tr>
+                        <tr>
+                            <td><input id="student_name" type="text" name="student_name" placeholder="이름을 입력하세요." style="width:280px; height: 50px;"></td>
+                        </tr>
                     </table>
-                </form>
-            </div>
-        <br><br>
-        <a onclick="CodeAlert()" style="cursor:pointer">
-        <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
-        </a>
-        <br><br>
+<!--                </form>-->
+<!--            </div>-->
+                    <br><br>
+            <!--        <a onclick="AIAlert()" style="cursor:pointer">-->
+                    <a onclick="CodeAlert()" style="cursor:pointer">
+                    <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
+                    </a>
+                    <br><br>
+            </form>
+
+            <script type="text/javascript" language="javascript">
+                function CodeAlert() {
+                    var code_num = document.getElementById("code_num").value
+                    var ID_num = document.getElementById("ID_num").value
+                    var student_name = document.getElementById("student_name").value
+                    var AImsg = confirm("입력하신 코드와 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nCODE : "
+                    + code_num + "\nID : "+ ID_num + "\n이름 : "+student_name);
+                     if ( AImsg == true) {
+                         return true;
+                     }else{
+                         return false;
+                     }
+                }
+            </script>
+
+        </div>
     </center>
     <!-- /.row -->
 

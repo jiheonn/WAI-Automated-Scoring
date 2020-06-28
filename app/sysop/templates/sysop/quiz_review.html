@@ -60,12 +60,6 @@
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ques_review' %}">평가연습검토</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_download' %}">데이터다운로드</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'notice' %}">게시판</a>
                 </li>
                 <!--                <li class="nav-item">-->
@@ -114,7 +108,7 @@
                     <td> {{ item.make_question_id }}</td>
                     <td> {{ item.question_name }}</td>
                     <td> {{ item.teacher.teacher_name }}</td>
-                    <td> DB없음 제작필요함</td>
+                    <td> {{ item.made_date }}</td>
                     <td>{% if item.check == 0 %}
                         미등록
                         {% else %}
@@ -149,7 +143,7 @@
         <!--                    <td>{{ item.make_question_id }}</td>-->
         <!--                    <td><a href="{% url 'detailed_review' %}" style="color: black">{{ item.question_name }}</a></td>-->
         <!--                    <td>{{ item.teacher.teacher_name }}</td>-->
-        <!--                    <td>2020년 5월 10일</td>-->
+        <!--                    <td>{{ item.made_date }}</td>-->
         <!--                    <td>{% if item.check == 0 %}-->
         <!--                        미등록-->
         <!--                         {% else %}-->

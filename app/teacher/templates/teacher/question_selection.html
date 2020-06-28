@@ -1,400 +1,42 @@
+{% extends 'teacher/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ko">
+{% block content %}
 
-<head>
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <title>WA3i</title>
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+<!-- search -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+<link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
+<link href="{% static 'teacher/css/question_selection.css' %}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-    <!-- search -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
-    <style type="text/css">
-        #login-menu ul {
-            background-color: #343a40 !important;
-            display: none; /* 평상시에는 서브메뉴가 안보이게 하기 */
-            height: auto;
-            padding: 0px;
-            margin: 0px;
-            border: 0px;
-            position: absolute;
-            width: 100px;
-            z-index: 200;
-        }
-
-        #login-menu:hover ul {
-            display: block; /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-        }
-
-        #login-menu:hover ul li {
-            text-align: center;
-        }
-
-        /*.box { margin: 50px auto; width: 500px; }*/
-
-        /* custom checkbox */
-        .dft-chk {
-            display: inline-block;
-        }
-
-        .dft-chk + .dft-chk {
-            margin-left: 15px;
-        }
-
-        .ctm-check {
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-            vertical-align: middle;
-            *display: inline;
-            *zoom: 1
-        }
-
-        .ctm-check input {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            opacity: 0;
-            filter: alpha(opacity=0);
-        }
-
-        .ctm-check label {
-            display: inline-block;
-            height: 20px;
-            padding-right: 10px;
-            font-size: 12px;
-            line-height: 1.6em;
-            line-height: 19px \9
-        }
-
-        .ctm-check label i {
-            display: inline-block;
-            float: left;
-            width: 14px;
-            height: 14px;
-            margin: 2px 5px 0 0;
-            background: url('http://cfile23.uf.tistory.com/image/23689442562748E40C3309') no-repeat 0 0;
-        }
-
-        .ctm-check.checked label i {
-            background-position: 0 -14px
-        }
-
-        .form-control-borderless {
-            border: none;
-        }
-
-        .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-            border: none;
-            outline: none;
-            box-shadow: none;
-        }
-
-        * {
-            font-size: 16px;
-            font-family: Consolas, sans-serif;
-        }
-    </style>
-    <script>
-        jQuery(function ($) {
-            /* Checkbox  */
-            var checkBox = $('.ctm-check');
-            var addClassCheckBox = function ($input) {
-                if ($input.prop('checked')) {
-                    $input.parent().addClass('checked');
-                } else {
-                    $input.parent().removeClass('checked');
-                }
-            };
-            checkBox.on('change', 'input', function () {
-                addClassCheckBox($(this));
-            })
-        });
-        $(document).ready(function () {
-            $('#copy').click(function () {
-                var copy_code = prompt("복사할 시험지의 코드를 입력해 주세요.");
-                $.ajax({
-                    url: '/teacher/assignment_copy/',
-                    data: {copy_code: copy_code},
-                    success: function (data) {
-                        var copy_data = data.copy_data;
-                        var num = copy_data.length;
-                        if (num == 0) {
-                            if (copy_code) {
-                                alert('시험지가 존재하지 않습니다. 코드를 다시 확인해 주세요.');
-                            }
-                        } else {
-                            for (var i = 0; i < num; i++) {
-                                var assignment_type = copy_data[i].assignment_type;
-                                var assignment_title = copy_data[i].assignment_title;
-                                var question_id = copy_data[i].question_id;
-                                $('#evaluation_type').val(assignment_type).prop("selected", true);
-                                $('#as_name').val(assignment_title);
-                                $('input:checkbox[id=' + question_id + ']').prop("checked", true);
-                            }
-                        }
-                        jQuery(function ($) {
-                            /* Checkbox  */
-                            var checkBox = $('.ctm-check');
-                            var addClassCheckBox = function ($input) {
-                                if ($input.prop('checked')) {
-                                    $input.parent().addClass('checked');
-                                } else {
-                                    $input.parent().removeClass('checked');
-                                }
-                            };
-                            checkBox.on('change', 'input', function () {
-                                addClassCheckBox($(this));
-                            })
-                        });
-                    }
-                })
-            })
-        });
-        $(document).ready(function () {
-            $('#input_text').keyup(function () {
-                if ($(this).val().length > $(this).attr('maxlength')) {
-                    alert('입력 제한 길이를 초과하였습니다.');
-                    $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
-                }
-            });
-        });
-        $(document).ready(function () {
-            $('#code_num').keyup(function () {
-                if ($(this).val().length > $(this).attr('maxlength')) {
-                    alert('최대 8자리 입력을 초과하였습니다.');
-                    $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
-                }
-            });
-        });
-        $(document).ready(function () {
-            $('#make-submit').click(function () {
-                var code_num = $('#code_num').val();
-                var as_name = $('#as_name').val();
-                var type = $('#evaluation_type option:selected').val();
-                var check_num = $('input:checked').length;
-                var st_date = $('#start-date').val();
-                var en_date = $('#end-date').val();
-                var result = confirm("코드 : " + code_num + "\n시험지 제목 : " + as_name + "\n타입 : " + type + "\n문항 수 : " + check_num + "\n시작날짜 : " + st_date + " 종료날짜 : " + en_date + "\n\n입력한 정보로 생성하겠습니까?");
-                if (result) {
-                    alert('문항 선택이 완료되었습니다.');
-                    // location.href="/teacher/question_selection/";
-                }
-            });
-        });
-        $(document).ready(function () {
-            $('#code_generate').click(function () {
-                var text = "";
-                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-                for (var i = 0; i < 8; i++)
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-                $('#code_num').val(text);
-            });
-        });
-        $(document).ready(function () {
-            $('#search').click(function () {
-                var user_input = $('#user_input').val();
-                $.ajax({
-                    url: '/teacher/question_search/',
-                    data: {user_input: user_input},
-                    success: function (data) {
-                        var search_data = data.search_data;
-                        var num = search_data.length;
-                        if (num == 0) {
-                            alert('검색 결과가 존재하지 않습니다.');
-                        } else {
-                            $("div").remove("#question_list");
-                            $("#category_option").after('<div id="question_list" class="row" style="margin-top: 50px;">' + '</div>');
-                            for (var i = 0; i < num; i++) {
-                                $("#question_list").append(
-                                    '<div class="col-md-3 mb-5">' +
-                                    '<div class="card h-100" align="center">' +
-                                    '<div class="card-body">' +
-                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-                                    '/static/' +
-                                    search_data[i].question_image +
-                                    '">' +
-                                    '</div>' +
-                                    '<span class="card-footer ctm-check">' +
-                                    '<input type="checkbox" id="' +
-                                    search_data[i].question_id +
-                                    '" name="question" value="' +
-                                    search_data[i].question_id +
-                                    '">' +
-                                    '<label for="' +
-                                    search_data[i].question_id +
-                                    '"><i></i>' +
-                                    search_data[i].question_name +
-                                    '</label>' +
-                                    '</span>' +
-                                    '</div>' +
-                                    '</div>'
-                                )
-                            }
-                        }
-                        jQuery(function ($) {
-                            /* Checkbox  */
-                            var checkBox = $('.ctm-check');
-                            var addClassCheckBox = function ($input) {
-                                if ($input.prop('checked')) {
-                                    $input.parent().addClass('checked');
-                                } else {
-                                    $input.parent().removeClass('checked');
-                                }
-                            };
-                            checkBox.on('change', 'input', function () {
-                                addClassCheckBox($(this));
-                            })
-                        });
-                    }
-                });
-            });
-        });
-        $(document).ready(function () {
-            $('#category_option').change(function () {
-                var option = $("#category_option option:selected").val();
-                $.ajax({
-                    url: '/teacher/change_category/',
-                    data: {option: option},
-                    success: function (data) {
-                        var option_data = data.option_data;
-                        var num = option_data.length;
-                        $("div").remove("#question_list");
-                        $("#category_option").after('<div id="question_list" class="row" style="margin-top: 50px;">' + '</div>');
-                        for (var i = 0; i < num; i++) {
-                            $("#question_list").append(
-                                '<div class="col-md-3 mb-5">' +
-                                '<div class="card h-100" align="center">' +
-                                '<div class="card-body">' +
-                                '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-                                '/static/' +
-                                option_data[i].question_image +
-                                '">' +
-                                '</div>' +
-                                '<span class="card-footer ctm-check">' +
-                                '<input type="checkbox" id="' +
-                                option_data[i].question_id +
-                                '" name="question" value="' +
-                                option_data[i].question_id +
-                                '">' +
-                                '<label for="' +
-                                option_data[i].question_id +
-                                '"><i></i>' +
-                                option_data[i].question_name +
-                                '</label>' +
-                                '</span>' +
-                                '</div>' +
-                                '</div>'
-                            )
-
-                        }
-                        jQuery(function ($) {
-                            /* Checkbox  */
-                            var checkBox = $('.ctm-check');
-                            var addClassCheckBox = function ($input) {
-                                if ($input.prop('checked')) {
-                                    $input.parent().addClass('checked');
-                                } else {
-                                    $input.parent().removeClass('checked');
-                                }
-                            };
-                            checkBox.on('change', 'input', function () {
-                                addClassCheckBox($(this));
-                            })
-                        });
-                    }
-                })
-            })
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'teacher' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto" id="menubar">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
-                            class="fa fa-user fa-fw"></i> User </a>
-                    <ul>
-                        <li><a class="nav-link" href="#">로그인</a></li>
-                        <li><a class="nav-link" href="#">회원가입</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+{% if messages %}
+{% for message in messages %}
+<input id="message" type="hidden" value="{{ message }}">
+{% endfor %}
+{% endif %}
 
 <!-- Page Content -->
 <div class="container">
-    <form action="{% url 'question_selection' %}" method="GET">
-
+    <form action="{% url 'question_selection_save' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="path" value="{{ request.path }}">
+        <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
         <!-- Heading Row -->
         <div class="row justify-content-center my-5">
             <div class="col-lg-2">
@@ -409,30 +51,25 @@
             </div>
             <!-- /.col-md-4 -->
 
-            <div class="col-lg-3" style="float: none; margin: 50px auto;">
-                <button type="submit" class="w3-button w3-large w3-round w3-blue" id="copy">기존 시험지 복사하기</button>
+            <div class="col-lg-3 sct-center">
+                <button type="button" class="w3-button w3-large w3-round w3-blue" id="copy">기존 시험지 복사하기</button>
             </div>
 
-            <div style="margin: 50px;">
+            <div class="sct-margin">
                 <select id="evaluation_type" name="evaluation_type">
                     <option value="선택없음" selected="selected">선택</option>
                     <option value="학습평가">학습평가</option>
                     <option value="숙제하기">숙제하기</option>
                 </select>
                 <p></p>
-                <input id="code_num" type="text" name="code_num" placeholder="코드 생성 버튼을 클릭해 주세요." maxlength="8"
-                       style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center; margin-bottom: 10px;">
-                <a id="code_generate" class="w3-button w3-large w3-round w3-blue" style="margin-left: 20px;">생성</a><br>
-                <input type="text" id="as_name" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요."
-                       style="width:280px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; padding: 10px; margin-bottom: 10px;">
-                <span>&nbsp학년 : <input type="text" name="grade"
-                                       style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
-                <span>반 : <input type="text" name="class"
-                                 style="width:78px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
-                <span>시작날짜 : <input type="date" id="start-date" name="start-date"
-                                    style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span>
-                <span>종료날짜 : <input type="date" id="end-date" name="end-date"
-                                    style="width:187px; height: 50px; border-style: solid; border-width: 1px; margin-top: 10px; border-color: gray; text-align: center;"></span><br>
+                <input id="code_num" type="text" name="code_num" placeholder="코드 생성 버튼을 클릭해 주세요." maxlength="8">
+                <a id="code_generate" class="w3-button w3-large w3-round w3-blue">생성</a><br>
+                <input type="text" id="as_name" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요.">
+                <span class="spn-margin">&nbsp학년 : <input class="sct-input sct-ipt-top20" type="text"
+                                                          name="grade"></span>
+                <span class="spn-margin">반 : <input class="sct-input sct-ipt-top10" type="text" name="class"></span><br>
+                <span>시작날짜 : <input type="date" id="start-date" name="start-date"></span>
+                <span class="span-left">종료날짜 : <input type="date" id="end-date" name="end-date"></span><br>
             </div>
             <div class="container">
                 <br/>
@@ -463,13 +100,12 @@
                 </div>
             </div>
 
-            <div id="category" class="col-12" style="margin: 50px;">
+            <div id="category" class="col-12 sct-margin">
                 <select id="category_option" name="category">
                     <option value="select" selected="selected">카테고리</option>
-                    <option value="국어">국어</option>
-                    <option value="수학">수학</option>
-                    <option value="사회">사회</option>
-                    <option value="과학">과학</option>
+                    {% for data in category_data %}
+                    <option value="{{ data.category_name }}">{{ data.category_name }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -478,7 +114,7 @@
                 <div class="col-md-3 mb-5">
                     <div class="card h-100" align="center">
                         <div class="card-body">
-                            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static data.image %}">
+                            <img class="img-fluid rounded mb-4 mb-lg-0 question-img" src="{{ data.image.url }}">
                         </div>
                         <span class="card-footer ctm-check">
                             <input type="checkbox" id="{{ data.question_id }}" name="question"
@@ -492,27 +128,14 @@
             </div>
         </div>
         <!-- /.row -->
-        <div class="col-lg-2" style="float: none; margin: 50px auto;">
+        <div class="col-lg-2 btn-center">
             <button id="make-submit" type="submit" class="w3-button w3-large w3-round w3-blue">문항 선택 완료</button>
         </div>
     </form>
 </div>
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'teacher/images/cooperation.png' %}"
-     style="display: block; margin: 0px auto;">
-<!-- /.container -->
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
 
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-</body>
-
-</html>
+{% endblock %}

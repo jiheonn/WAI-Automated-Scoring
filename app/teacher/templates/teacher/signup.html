@@ -20,33 +20,34 @@
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
-<!-- Page Content -->
+{% if messages %}
+{% for message in messages %}
+<input id="message" type="hidden" value="{{ message }}">
+{% endfor %}
+{% endif %}
+
 <div class="container">
+    <h2>회원가입</h2><br>
 
-    <!-- Heading Row -->
-    <div class="row justify-content-center my-5">
-        <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                 height="120" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">
-                분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성해 주세요.
-                입력 형식은 텍스트로 부탁드립니다.</p>
-        </div>
-        <!-- /.col-md-4 -->
-    </div>
-    <!-- /.row -->
-    <div class="col-7 text-box">
-        <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
-    </div>
-    <div class="col-lg-3 btn-center">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">Bigram Tree 결과 보기</button>
-    </div>
-
+    <form action="{% url 'signup' %}" method="POST">
+        {% csrf_token %}
+        <p>아이디</p>
+        <input class="input-box" name="username" type="text"><span class="input-text">학교 이메일을 사용해 주세요.</span>
+        <p>비밀번호</p>
+        <input class="input-box" name="password1" type="password">
+        <p>비밀번호 확인</p>
+        <input class="input-box" name="password2" type="password">
+        <p>성</p>
+        <input class="input-box" name="last_name" type="text">
+        <p>이름</p>
+        <input class="input-box" name="first_name" type="text">
+        <p>학교 이름</p>
+        <input class="input-box" name="school" type="text"><br><br>
+        <input name="teacher_id" type="hidden" value="{{ teacher_id }}">
+        <input type="submit" class="btn btn-primary" value="sign up">
+    </form>
 </div>
-<!-- /.container -->
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
