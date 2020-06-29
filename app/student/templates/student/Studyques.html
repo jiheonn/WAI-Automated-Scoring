@@ -16,17 +16,17 @@
     //             }
     //         });
     //     });
-
-    $(document).ready(function () {
-        $('#submit_btn').click(function () {
-            var q_table = document.getElementById('ques_table');
-            var q_id = document.getElementById('q_id');
-            if (q_id in q_table) {
-                // $('#t_id').empty();
-            }
-
-        });
-    });
+    //
+    // $(document).ready(function () {
+    //     $('#submit_btn').click(function () {
+    //         var q_table = document.getElementById('ques_table');
+    //         var q_id = document.getElementById('q_id');
+    //         if (q_id in q_table) {
+    //             // $('#t_id').empty();
+    //         }
+    //
+    //     });
+    // });
 
 </script>
 <!-- Navigation -->
@@ -83,73 +83,114 @@
     <!-- /.row -->
 
 
-<!--    <form action="." method="get">-->
-    <div class="row">
-        <div class="col-lg-3">
-            <table class="w3-table-all w3-centered" id="ques_table">
-                <tr class="w3-indigo">
-                    <th>학습 목록</th>
-                </tr>
-                {% for d in data %}
-                <tr id="t_id">
-                    <td>
-                        <form action="{% url 'Studyquestion' %}" method="GET">
-<!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
-                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                    value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
-                                {{d.question.question_name}}
-                            </button>
-                            <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+    <form action="{% url 'Studyquestion' %}" method="GET">
+        <div class="row">
+            <div class="col-lg-3">
+<!--                테이블 수정 전-->
+<!--                <table class="w3-table-all w3-centered" id="ques_table">-->
+<!--                    <th class="w3-indigo">-->
+<!--                        학습 목록-->
+<!--                    </th>-->
+<!--                    <th class="w3-indigo">-->
+<!--                        완료-->
+<!--                    </th>-->
+
+<!--                    <tr id="t_id">-->
+<!--                        {% for d in data %}-->
+<!--                        <td>-->
+<!--&lt;!&ndash;                            <form action="{% url 'Studyquestion' %}" method="GET">&ndash;&gt;-->
+<!--    &lt;!&ndash;                           {{d.question.question_id}} 대신 {{d.question.question_name}}임&ndash;&gt;-->
+<!--                                <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"-->
+<!--                                        value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">-->
+<!--                                    {{d.question.question_name}}-->
+<!--                                </button>-->
+<!--                                &lt;!&ndash;                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </form>&ndash;&gt;-->
+<!--                        </td>-->
+<!--                        {% endfor %}-->
+<!--                        {% for done in done_list %}-->
+<!--                        <td>-->
+<!--                            {{done}}-->
+<!--                        </td>-->
+<!--                        {% endfor %}-->
+<!--                    </tr>-->
+
+<!--                </table>-->
+<!--                테이블 수정 후-->
+                <table class="w3-table-all w3-centered" id="ques_table">
+                    <th class="w3-indigo">
+                        학습 목록
+                    </th>
+                    {% for d in data %}
+                    <tr id="t_id">
+                        <td>
+<!--                            <form action="{% url 'Studyquestion' %}" method="GET">-->
+    <!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
+                                <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
+                                        value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
+                                    {{d.question.question_name}}
+                                </button>
+                                <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
+<!--                            </form>-->
+                        </td>
+                    </tr>
+                        {% endfor %}
+                    <th class="w3-indigo">
+                        완료
+                    </th>
+                    {% for done in done_list %}
+                    <tr>
+                        <td>
+                            {{done}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
 
 
 
-        <!--문항 작성-->
-        <div class="col-lg-9">
-            <h2 class="mt-4" id="q_name">{{f.question.question_name}}</h2>
-            <hr>
+            <!--문항 작성-->
+            <div class="col-lg-9">
+                <h2 class="mt-4" id="q_name">{{f.question.question_name}}</h2>
+                <hr>
 
-            <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
-            <hr>
+                <!-- Preview Image -->
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
+                <hr>
 
-            <!-- Post Content -->
-            <p>{{f.question.discription}}
-            </p>
-            <hr>
+                <!-- Post Content -->
+                <p>{{f.question.discription}}
+                </p>
+                <hr>
 
-            <!-- Comments Form -->
-            <div class="card my-4">
-                <input type="hidden" name="q_no" value="1" />
-                <h5 class="card-header">생각을 적어보세요:</h5>
-                <div class="card-body">
-                    <form>
+                <!-- Comments Form -->
+                <div class="card my-4">
+                    <h5 class="card-header">생각을 적어보세요:</h5>
+                    <div class="card-body">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+<!--                            <form action="{% url 'Studyquestion' %}" method="GET">-->
+                                <input type="hidden" name="student_info" id ="student_info" value="{{student_id}}">
+                                <textarea class="form-control" rows="3" id="ques_ans"></textarea>
+<!--                            </form>-->
                         </div>
-                    </form>
-                    <div class="col-md-10">
-                        <table width="600">
-                            <td>
-                                <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.');" style="cursor:pointer">
-                                    <button type="submit" id="submit_btn" class="w3-btn w3-round w3-blue">제출하기</button>
-                                </a>
-                            </td>
-                            <td>
-        <!--                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>-->
-                            </td>
-                        </table>
-                    </div>
-              </div>
-        </div>
+                        <div class="col-md-10">
+                            <table width="600">
+                                <td>
+                                    <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.');" style="cursor:pointer">
+                                        <button type="submit" id="submit_btn" class="w3-btn w3-round w3-blue">제출하기</button>
+                                    </a>
+                                </td>
+                                <td>
+            <!--                            <a href="{% url 'Study' %}" class="w3-button w3-small w3-round w3-grey">< 이전</a>-->
+                                </td>
+                            </table>
+                        </div>
+                  </div>
+            </div>
 
+        </div>
     </div>
-</div>
-<!--    </form>-->
+    </form>
 </div>
 {% endblock %}

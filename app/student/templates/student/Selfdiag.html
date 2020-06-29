@@ -38,6 +38,7 @@
 <!-- Page Content -->
 <div class="container">
 
+    <form action="{% url 'Selfgrade' %}" method="get">
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
@@ -88,7 +89,9 @@
             </div>
 
             <div id="myans" class="w3-container w3-border city">
-                <div class="w3-section" id="ques_ans">{{ques_ans}}</div>
+                <div class="w3-section">
+                    <input type="hidden" name="ques_ans" value="{{ ques_ans }}" id="ques_ans">{{ ques_ans }}
+                </div>
             </div>
 
             <div id="ans" class="w3-container w3-border city" style="display:none">
@@ -113,8 +116,7 @@
         }
         </script>
     </div>
-
-    <form action="{% url 'Self' %}" method="get">
+<!---->
         <!-- Content Row -->
         <div class="row my-5">
 <!--            <form action="{% url 'Selfdiagnosis' %}" method="get">-->
@@ -140,36 +142,14 @@
             </div>
             <div class="col-lg-2">
 <!--                <button type="submit" class="w3-btn w3-round w3-indigo w3-display-bottomright" name="question" value="{{ data.make_question.make_question_id }},{{ data.self_id }}">-->
-                <a onclick="if(confirm('계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n' + score_list)==true) {document.location.href = '{% url 'Self' %}';} else{return false;}"
-                style="cursor:pointer">
+<!--                <a onclick="if(confirm('계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n' + score_list)==true) {document.location.href = '{% url 'Self' %}';} else{return false;}"-->
+<!--                style="cursor:pointer">-->
                     <button id="sub_score" type="submit" class="w3-btn w3-round w3-indigo w3-display-bottomleft w3-margin-bottom">
                         점수 계산하기
                     </button>
-                </a>
+<!--                </a>-->
             </div>
-
-<!--            <script type="text/javascript" language="javascript">-->
-<!--                $(document).ready(function () {-->
-<!--                    $('#sub_score').change(function () {-->
-<!--                        $.ajax({-->
-<!--                            url: '/student/Selfdiag/',-->
-<!--                            data: {},-->
-<!--                            success: function (data) {-->
-<!--                                if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n" + data['score_list']) == true) {-->
-<!--                                    document.location.href = '{% url '-->
-<!--                                    Self-->
-<!--                                    ' %}';-->
-<!--                                } else {-->
-<!--                                    return false;-->
-<!--                                }-->
-<!--                            }-->
-<!--                        });-->
-<!--                    })-->
-<!--                })-->
-<!--            </script>-->
-<!--            </form>-->
         </div>
-    </form>
 
 
 
@@ -197,6 +177,7 @@
     </div>
 
 
+    </form>
 </div>
 <!-- /.container -->
 

@@ -25,27 +25,6 @@
    // // document.getElementById("result").innerHTML = tm_result[choice];
    //  }
    //  }
-
-
-    calc.addEventListener('click', sumToVariable)
-
-    var sum;
-
-    function sumUp() {
-      let sum = [...document.querySelectorAll('input[type=radio]:checked')]
-        .reduce(
-          (acc, val) => acc + Number(val.value)
-          , 0
-        )
-      result.textContent = sum;
-      return sum;
-      alert(sum);
-    }
-
-    function sumToVariable() {
-      sum = sumUp();
-      console.log(sum);
-    }
 </script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -90,8 +69,8 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">자신의 부족한 점을 상기해보며 스스로 평가해 봅시다.</p>
+        <div class="col-lg-3">
+            <p class="font-weight-bolder triangle-border left">자가채점 결과입니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
@@ -99,46 +78,19 @@
     <!-- /.row -->
 
     <!-- Content Row -->
-    <div class="card text-white bg-secondary my-5 py-4">
-        <div class="card-body">
-            <h5 class="text-white m-0 text-center">점수 계산하기</h5>
+    <div class="w3-center">
+        <div class="w3-center w3-section w3-panel w3-dark w3-topbar w3-bottombar w3-border w3-padding-64">
+            <h3 class="w3-text-gray">이번 문항에 대한 채점 결과는</h3>
+            <h1><b class="w3-text-black">{{sum_s}}    </b>점입니다.</h1>
         </div>
+        <a href="{% url 'Self' %}">
+            <button type="submit" class="w3-btn w3-round w3-indigo w3-large w3-margin-bottom">
+                다른 문제 더 풀기
+            </button>
+        </a>
     </div>
+    <!--    /.row-->
 
-    <form action="{% url 'Selfgrade' %}" method="GET">
-    <!-- Content Row -->
-    <div class="row my-5">
-        <table class="w3-table-all w3-centered">
-            <tr class="w3-indigo">
-              <th>평가 기준</th>
-              <th>예</th>
-              <th>아니오</th>
-            </tr>
-
-            {% for d in data %}
-            <tr>
-              <td>{{d.mark_text}}</td>
-              <td><input type="radio" name="{{d.mark_id}}" data-col="1" value="1"></td>
-              <td><input type="radio" name="{{d.mark_id}}" data-col="2" value="0"></td>
-            </tr>
-            {% endfor %}
-
-        </table>
-    </div>
-
-    <div class="row my-5">
-        <div class="col-lg-12">
-            <a onclick="ScoreAlert()" style="cursor:pointer">
-                <button type="submit" id ="clac" class="w3-btn w3-round w3-indigo w3-display-bottomright w3-margin-bottom">점수 계산하기</button>
-            </a>
-            <a href="{% url 'Selfdiagnosis' %}">
-                <button type="submit" class="w3-btn w3-round w3-grey w3-display-bottomleft w3-margin-bottom">< 이전</button>
-            </a>
-            <br>
-        </div>
-    </div>
-    <!-- /.row -->
-</form>
 </div>
 <!-- /.container -->
 

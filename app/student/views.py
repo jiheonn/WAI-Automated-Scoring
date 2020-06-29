@@ -65,23 +65,20 @@ def AIdiag(request):
         'school': school,
         'gender': gender,
     }
-    # return render(request, 'student/AIdiag.html', context)
 
     # 나의 답 DB에 저장
     # ssd = StudySolveData.objects.select_related('question').filter(question__question_id=question_id)
     try:
         study_solve_data = StudySolveData(
-                           question_id=question_id,
-                           school=request.GET['category_school'],
-                           gender=request.GET['category_gender'],
-                           response=ques_ans,
-                           score=0,
-                           submit_date=now_date
-                                          )
+            question_id=question_id,
+            school=request.GET['category_school'],
+            gender=request.GET['category_gender'],
+            response=ques_ans,
+            score=0,
+            submit_date=now_date
+        )
         print(study_solve_data)
         study_solve_data.save()
-
-        # return HttpResponseRedirect(request.GET['path'])
 
     except:
         study_solve_data = None
@@ -100,21 +97,25 @@ def Studyques(request):
     try:
         # study페이지에서 숙제 코드 가져오기
         assignment_id = request.GET['code_num']
-        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id).filter(assignment__type="학습평가")
-        print(data.values)
-        f = data.first()
+        student_id = request.GET['ID_num']
+        student_name = request.GET['student_name']
+
+        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id).filter(
+            assignment__type="학습평가")
+        f = data[0]
 
         # 코드가 db에 없으면 원상복귀
-        if f == None:
+        if (f == None) or (student_id == "") or (student_name == ""):
             context = {
             }
             return render(request, 'student/Study.html', context)
 
-        context = {
-            'data': data,
-            'f': f
-        }
-        return render(request, 'student/Studyques.html', context)
+        # context = {
+        #     'data': data,
+        #     'f': f,
+        #     'done_list': done_list
+        # }
+        # return render(request, 'student/Studyques.html', context)
 
     except:
         try:
@@ -124,19 +125,78 @@ def Studyques(request):
             assignment_id = question_info[1]
 
             data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
-            f = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)[0]
+            key = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
+            f = key[0]
 
-            context = {
-                'data': data,
-                'f': f
-            }
-            return render(request, 'student/Studyques.html', context)
         except:
-            context = {
-                'data': data,
-                'f': f
-            }
-            return render(request, 'student/Studyques.html', context)
+            pass
+
+
+    # 문항 학습 완료여부 판단
+    test_list = []
+    done_list = []
+    for a in data:
+        as_qurel_id = a.as_qurel_id
+        ttt = Solve.objects.filter(as_qurel_id=as_qurel_id)
+        test_list.append(ttt)
+    for i in test_list:
+        if i.values('as_qurel_id'):
+            done = "O"
+        else:
+            done = "X"
+        done_list.append(done)
+
+    now = datetime.datetime.now()
+    now_date = now.strftime('%Y-%m-%d')
+    # 나의 답 DB에 저장
+    try:
+        solve_data = Solve(
+            student_id=student_id,
+            submit_date=now_date,
+            response=request.GET['ques_ans'],
+            score=0,
+            as_querl_id=as_qurel_id,
+            student_name=student_name
+        )
+        solve_data.save()
+
+    except:
+        solve_data = None
+
+    context = {
+        'data': data,
+        'f': f,
+        'done_list': done_list
+    }
+    return render(request, 'student/Studyques.html', context)
+
+        # except:
+        #     context = {
+        #         'data': data,
+        #         'f': f
+        #     }
+
+        # finally:
+        #     print(request.GET['ques_ans'])
+        # question_id = f.question_id
+        # key = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
+        # as_qurel_id = key.values('as_qurel_id')[0]['as_qurel_id']
+        #
+        # # 나의 답 DB에 저장
+        # try:
+        #     solve_data = Solve(
+        #         student_id=student_id,
+        #         submit_date=now_date,
+        #         response=request.GET['ques_ans'],
+        #         score=0,
+        #         as_querl_id=as_qurel_id,
+        #         student_name=student_name
+        #     )
+        #     solve_data.save()
+        #
+        # except:
+        #     solve_data = None
+        # return render(request, 'student/Studyques.html', context)
 
 
 def Homework(request):
@@ -165,13 +225,9 @@ def Homeworkques(request):
         student_id = request.GET['ID_num']
         student_name = request.GET['student_name']
 
-        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id).filter(assignment__type="숙제하기")
+        data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id).filter(
+            assignment__type="숙제하기")
         f = data.first()
-
-        print("hi")
-        # 완료여부 테스트
-        stu_info = Solve.objects.prefetch_related('assignment_question_rel')
-        print(stu_info.query)
 
         # 코드가 db에 없으면 원상복귀
         if (f == None) or (student_id == "") or (student_name == ""):
@@ -179,14 +235,13 @@ def Homeworkques(request):
             }
             return render(request, 'student/Homeworkcode.html', context)
 
-
-        context = {
-            'student_id': student_id,
-            'data': data,
-            'f': f,
-            'student_name': student_name
-        }
-        return render(request, 'student/Homeworkques.html', context)
+        # context = {
+        #     'student_id': student_id,
+        #     'data': data,
+        #     'f': f,
+        #     'student_name': student_name,
+        # }
+        # return render(request, 'student/Homeworkques.html', context)
 
     except:
         try:
@@ -200,21 +255,38 @@ def Homeworkques(request):
             data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
             f = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)[0]
 
-            context = {
-                'student_id': student_id,
-                'data': data,
-                'f': f,
-                # 'student_name': student_name
-            }
-            return render(request, 'student/Homeworkques.html', context)
+            # context = {
+            #     'student_id': student_id,
+            #     'data': data,
+            #     'f': f
+            #     # 'student_name': student_name
+            # }
+            # return render(request, 'student/Homeworkques.html', context)
         except:
-            context = {
-                'student_id': student_id,
-                'data': data,
-                'f': f,
-                # 'student_name': student_name
-            }
-            return render(request, 'student/Homeworkques.html', context)
+            pass
+
+    # 문항 학습 완료여부 판단
+    test_list = []
+    done_list = []
+    for a in data:
+        as_qurel_id = a.as_qurel_id
+        ttt = Solve.objects.filter(as_qurel_id=as_qurel_id)
+        test_list.append(ttt)
+    for i in test_list:
+        if i.values('as_qurel_id'):
+            done = "O"
+        else:
+            done = "X"
+        done_list.append(done)
+
+    context = {
+        'student_id': student_id,
+        'data': data,
+        'f': f,
+        'done_list': done_list,
+        'student_name': student_name
+    }
+    return render(request, 'student/Homeworkques.html', context)
 
 
 def Homeworkdiag(request):
@@ -311,27 +383,14 @@ def Homeworkcode(request):
 
 
 def Self(request):
-    # try:
-        qs = MakeQuestion.objects.all()
-        # category = Category.objects.all()
+    qs = MakeQuestion.objects.all()
+    # category = Category.objects.all()
 
-        # media 경로 불러오기
-        # makequestion.photo = request.FILES['image']
-
-
-        context = {
-            'qs': qs,
-            # 'category': category,
-        }
-        return render(request, 'student/Self.html', context)
-    # except:
-    #     try:
-    #         score_list = request.GET.getlist('score')
-    #         print(score_list + "hi")
-    #     except:
-    #         print("nope")
-    #     context = {'score_list': score_list}
-    #     return render(request, 'student/Selfdiagnosis.html', context)
+    context = {
+        'qs': qs,
+        # 'category': category,
+    }
+    return render(request, 'student/Self.html', context)
 
 
 def Selfques(request):
@@ -349,9 +408,6 @@ def Selfdiag(request):
         make_question_id = request.GET['question']
         ques_ans = request.GET['ques_ans']
 
-        # now = datetime.datetime.now()
-        # now_date = now.strftime('%Y-%m-%d')
-
         key = SelfSolveData.objects.select_related('make_question').filter(make_question_id=make_question_id)
         data = key[0]
 
@@ -367,57 +423,42 @@ def Selfdiag(request):
     except:
         try:
             score_list = request.GET.getlist('score')
-            print(score_list+"hi")
+            print(score_list + "hi")
         except:
             print("no")
-        context={'score_list': score_list}
-
-    # 나의 답 DB에 저장
-    # try:
-    #     self_solve_data = SelfSolveData(
-    #         make_question_id=make_question_id,
-    #         response=ques_ans,
-    #         score=0,
-    #         submit_date=now_date
-    #     )
-    #     self_solve_data.save()
-    #
-    #     # return HttpResponseRedirect(request.GET['path'])
-    #
-    # except:
-    #     self_solve_data = None
-    #     context = {
-    #         'data': data,
-    #         'ques_ans': ques_ans,
-    #         'mark': mark
-    #     }
+        context = {'score_list': score_list}
         return render(request, 'student/Selfdiag.html', context)
 
 
 def Selfgrade(request):
     make_question_id = request.GET['question_id']
+    ques_ans = request.GET['ques_ans']
+    score_list = request.GET.getlist('score')
 
-    data = Mark.objects.select_related('make_question').filter(make_question_id=make_question_id)
+    # 점수 합산
+    sum_s = 0
+    for i in score_list:
+        sum_s += int(i)
 
+    now = datetime.datetime.now()
+    now_date = now.strftime('%Y-%m-%d')
 
     context = {
-        'data': data
+        'sum_s': sum_s
     }
-    # return render(request, 'student/Selfgrade.html', context)
 
-    # 채점결과 DB에 저장
-    # try:
-    #     score_data = SelfSolveData(
-    #         self_id=request.GET['self_id'],
-    #         score=score
-    #     )
-    #     print(score_data)
-    #     score_data.save()
-    #
-    #     # return HttpResponseRedirect(request.GET['path'])
-    #
-    # except:
-    #     score_data = None
+    # 나의 답 DB에 저장
+    try:
+        self_solve_data = SelfSolveData(
+            make_question_id=make_question_id,
+            response=ques_ans,
+            score=sum_s,
+            submit_date=now_date
+        )
+        self_solve_data.save()
+
+    except:
+        self_solve_data = None
 
     return render(request, 'student/Selfgrade.html', context)
 

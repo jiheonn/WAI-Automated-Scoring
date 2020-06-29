@@ -66,14 +66,12 @@
     <!-- Content Row -->
     <div class="row">
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <table class="w3-table-all w3-centered" id="ques_table">
                 <th class="w3-indigo">
                     학습 목록
                 </th>
-                <th class="w3-indigo">
-                    완료
-                </th>
+
                 {% for d in data %}
                 <tr id="t_id">
                     <td>
@@ -86,8 +84,15 @@
                             <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
                         </form>
                     </td>
+                </tr>
+                {% endfor %}
+                <th class="w3-indigo">
+                    완료
+                </th>
+                {% for done in done_list %}
+                <tr>
                     <td>
-
+                        {{done}}
                     </td>
                 </tr>
                 {% endfor %}
@@ -95,7 +100,7 @@
         </div>
 
       <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-9">
 
             <!-- Title -->
             <form action="{% url 'Homeworkdiagnosis' %}" method="GET">
