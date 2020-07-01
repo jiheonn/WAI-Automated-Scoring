@@ -18,8 +18,10 @@ find . -path "*/migrations/*.pyc"  -delete
 python manage.py flush --no-input
 python manage.py makemigrations 
 python manage.py makemigrations mainpage
+python manage.py makemigrations teacher
 python manage.py migrate
 python manage.py loaddata init_mainpage.json
+python manage.py loaddata init_teacher.json
 python manage.py collectstatic --no-input --clear
 
 exec "$@"
