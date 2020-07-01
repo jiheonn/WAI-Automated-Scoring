@@ -16,7 +16,7 @@ data_list = ['sample_data/wa3i_sample_data - teacher.csv',
 
 app_name = "mainpage"
 
-with sqlite3.connect('../wa3i/db.sqlite3') as conn:
+with sqlite3.connect('../app/db.sqlite3') as conn:
     cur = conn.cursor()
     for i in data_list:
         df = pd.read_csv(i, index_col=False)
