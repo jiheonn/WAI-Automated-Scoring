@@ -3,15 +3,17 @@
 ## Project Objective
 - 학생과 선생님을 위한 AI 서술형 채점 시스템 개발
 
-## Project Period
-
-- 2020.03 ~ 2020.11
+## Docker run command
+- 처음 개발용 서버를 docker로 구성하기 위하여 아래와 같은 명령어를 입력한다.
+```bash
+docker-compose up --build web db
+```
+- docker build가 종료되면 새로운 `선생님` 계정을 가입하여 테스트를 실시한다. 
 
 ## Project rules
+- Commit는 최소기능 단위를 쪼개서 하나의 commit 으로 `squash`한후 `PR`한다.
+- 하나의 기능 단위는 ISSUE로 생성되면 PR을 통해 하나이상의 ISSUE를 제거한다.
 
-- (충돌방지를 위해) 작업 시작 전 master repository에서 pull 한 뒤 시작
-- (충돌방지를 위해) 작업 완료 후 master repository에 pull request 요청
-- 커밋 메시지는 최대한 자세하게
 
 ## Development Environment
 
