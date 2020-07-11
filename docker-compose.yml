@@ -3,12 +3,12 @@ version: '3.7'
 services:
   web:
     build: ./app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8435
     image: wa3i_web:latest
     volumes:
       - ./app/:/usr/src/app/
     ports:
-      - 8000:8000
+      - 8435:8435
     env_file:
       - ./.env.dev
     depends_on:
@@ -21,6 +21,14 @@ services:
       - POSTGRES_USER=teamlab
       - POSTGRES_PASSWORD=teamlab_password
       - POSTGRES_DB=wa3i_dev
+  sentence-analysis:
+    build: ./sentence-analysis
+    command: python server.py
+    ports:
+      - 5252:5252
+    volumes:
+      - ./sentence-analysis/:/usr/src/app/
+    
 
 volumes:
   wa3i_postgres_data: 
