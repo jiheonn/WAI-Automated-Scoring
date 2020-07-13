@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>WA3i</title>
+
+    {% block css %}
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+{% block content %}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'sysop' %}">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'sysop' %}">홈
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">admin 님</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'sysop_logout' %}">로그아웃</a>
+                    </div>
+                </li>
+            </ul>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+{% endblock %}
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+
+{% block script %}
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% endblock %}
+</body>
+
+</html>
