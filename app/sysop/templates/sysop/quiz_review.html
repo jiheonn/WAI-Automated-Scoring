@@ -1,40 +1,25 @@
+{% extends 'sysop/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block css %}
 
-<head>
+<!--datatable source-->
+<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <title>WA3i</title>
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <!--datatable source-->
-    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
+{% endblock %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
-
-</head>
-
-<body>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#quiz_table').DataTable();
-    });
-</script>
-
+{% block content %}
+{% if user.is_authenticated %}
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -46,25 +31,27 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'sysop' %}">홈</a>
+                    <a class="nav-link" href="{% url 'sysop' %}">홈
+                        <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토
-                        <span class="sr-only">(current)</span>
-                    </a>
+                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'notice' %}">게시판</a>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">admin 님</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'sysop_logout' %}">로그아웃</a>
+                    </div>
                 </li>
-                <!--                <li class="nav-item">-->
-                <!--                    <a class="nav-link" href="#">연구진</a>-->
-                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -128,51 +115,26 @@
                 </tbody>
             </table>
         </div>
-
-        <!--        <div style="margin: 50px;">-->
-        <!--            <table style="text-align: center;">-->
-        <!--                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">-->
-        <!--                    <th width="80px">문항번호</th>-->
-        <!--                    <th width="400px">문항명</th>-->
-        <!--                    <th width="100px">등록자</th>-->
-        <!--                    <th width="130px">등록일자</th>-->
-        <!--                    <th width="80px">등록여부</th>-->
-        <!--                </tr>-->
-        <!--                {% for item in makequestion %}-->
-        <!--                <tr style="border: 1px solid #d6d6d6;">-->
-        <!--                    <td>{{ item.make_question_id }}</td>-->
-        <!--                    <td><a href="{% url 'detailed_review' %}" style="color: black">{{ item.question_name }}</a></td>-->
-        <!--                    <td>{{ item.teacher.teacher_name }}</td>-->
-        <!--                    <td>{{ item.made_date }}</td>-->
-        <!--                    <td>{% if item.check == 0 %}-->
-        <!--                        미등록-->
-        <!--                         {% else %}-->
-        <!--                        등록-->
-        <!--                        {% endif%}</td>-->
-        <!--                </tr>-->
-        <!--                {% endfor %}-->
-        <!--            </table>-->
-        <!--        </div>-->
     </div>
     <!-- /.row -->
-
-
 </div>
 <!-- /.container -->
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
      style="display: block; margin: 0px auto;">
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
+
+{% else %}
+<script>
+    document.location.href = "{% url 'sysop_login' %}";
+</script>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
 
 <!-- Bootstrap core JavaScript -->
 <!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'sysop/vendor/jquery/datatable.js' %}"></script>
 
-</body>
-
-</html>
+{% endblock %}
