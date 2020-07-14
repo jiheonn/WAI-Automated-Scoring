@@ -11,13 +11,8 @@ def get_tokenized_words(sentences):
     twitter = Okt()
     word_count = Counter()
     pos = twitter.pos(sentences, norm=True, stem=True)
-    tokenized = [word for word, tag in pos if tag in tags and len(word) >1 and word not in spamWords]
+    tokenized = [word for word, tag in pos if tag in tags and len(word) > 1 and word not in spamWords]
     word_count.update(tokenized)
-    return tokenized, word_count.most_common(1)[0][0]
-
-
-if __name__ == "__main__":
-    result, most_common_word = get_tokenized_words("건전지를 많이 사용한다. 전류를 더 많이 흘려보낸다. 건전지가 많이 있다. 전류가 존재한다. 모르겠다.")
-    print(result)
-    print(most_common_word)
-    
+    # the most frequent word in the counter.
+    most_common, _ = word_count.most_common()[0] 
+    return tokenized, most_common

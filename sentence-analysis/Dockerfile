@@ -21,15 +21,8 @@ RUN pip install django-cors-headers
 RUN pip install gevent
 RUN pip install gevent-websocket
 
-
-
-# copy entrypoint.sh
-#COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
-
 # copy project
 COPY . /usr/src/app/
 
-# run entrypoint.sh
-# ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 EXPOSE 5252
 ENTRYPOINT ["python", "/usr/src/app/server.py"]
