@@ -1,29 +1,65 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.http import HttpResponse
 from mainpage.models import *
-from django.http import JsonResponse
 from mainpage.models import *
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the polls index.")
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
-def index(request):
+@method_decorator(csrf_exempt)
+def sysop_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.username == "admin":
+                login(request, user)
+                return render(request, "sysop/home.html")
+            else:
+                messages.error(request, '선생님은 관리자페이지에 접속하실 수 없습니다.')
+                return render(request, "sysop/sysop_login.html")
+        else:
+            messages.error(request, '아이디 또는 비밀번호가 일치하지 않습니다.')
+            return render(request, "sysop/sysop_login.html")
+
+    return render(request, "sysop/sysop_login.html")
+
+# 로그아웃 함수
+def sysop_logout(request):
+    logout(request)
+    return redirect("sysop_login")
+
+def home(request):
     context = {
     }
-    return render(request, 'sysop/index.html', context)
+    return render(request, 'sysop/home.html', context)
+
 
 def teacher_data(request):
+    teacher = Teacher.objects.all()
+    context = {'teacher':teacher}
+    return render(request, 'sysop/teacher_data.html', context)
+
+def change_approve_0_to_1(request):
     teacher_id = request.GET.get('teacher_id')
-    # print(teacher)
-    if teacher_id == None:
-        teacher = Teacher.objects.all()
-    else:
-        teacher_info = Teacher.objects.get(teacher_id=teacher_id)
-        teacher_info.approve = 1
-        teacher_info.save()
-        teacher = Teacher.objects.all()
+    teacher_info = Teacher.objects.get(teacher_id=teacher_id)
+    teacher_info.approve = 1
+    teacher_info.save()
+    teacher = Teacher.objects.all()
+
+    context = {'teacher':teacher}
+    return render(request, 'sysop/teacher_data.html', context)
+
+def change_approve_1_to_0(request):
+    teacher_id = request.GET.get('teacher_id')
+    teacher_info = Teacher.objects.get(teacher_id=teacher_id)
+    teacher_info.approve = 0
+    teacher_info.save()
+    teacher = Teacher.objects.all()
 
     context = {'teacher':teacher}
     return render(request, 'sysop/teacher_data.html', context)

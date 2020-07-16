@@ -1,0 +1,145 @@
+{% extends 'sysop/base.html' %}
+{% load static %}
+
+{% block css %}
+
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css"
+      href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<link rel="stylesheet" type="text/css"
+      href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+<!-- ./login -->
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'sysop' %}">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto" id="sysop-menubar">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop' %}">홈
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <!--    <div class="row align-content-center my-5">-->
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
+                 src="{% static 'mainpage/image/logo.png' %}" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-6">
+            <p class="font-weight-bolder triangle-border left">
+                인공지능 서술형 자동평가 WA3I에 오신 것을 환영합니다!<br>
+                이곳은 관리자 전용 페이지입니다. <br>
+                선생님과 학생은 돌아가기 버튼을 눌러주세요</p>
+        </div>
+    </div>
+
+
+</div>
+
+<section class="container">
+
+    <div class="row justify-content-center">
+        <a href="{% url 'home' %}" class="btn btn-primary btn-sm">첫 페이지로 돌아가기</a>
+    </div>
+
+    <div class="row justify-content-center my-5">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 login-center">
+            <form action="{% url 'sysop_login' %}" method="POST" class="login100-form validate-form">
+                {% csrf_token %}
+                <span class="login100-form-title p-b-33">
+						Login
+					</span>
+
+                <div class="wrap-input100 validate-input" data-validate="이메일을 입력해 주세요.">
+                    <input class="input100" type="text" name="username" placeholder="ID">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="wrap-input100 rs1 validate-input" data-validate="비밀번호를 입력해 주세요.">
+                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="container-login100-form-btn m-t-20">
+                    <button type="submit" class="login100-form-btn">
+                        Sign in
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#sysop-menubar li a').click(function () {
+            var msg = '로그인을 하셔야  이용이 가능합니다. 먼저 로그인을 해주세요.';
+            alert(msg);
+        });
+    });
+
+
+</script>
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert('{{ message }}');
+</script>
+{% endfor %}
+{% endif %}
+
+{% endblock %}

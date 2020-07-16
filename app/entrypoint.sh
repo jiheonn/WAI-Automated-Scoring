@@ -23,5 +23,6 @@ python manage.py migrate
 python manage.py loaddata init_mainpage.json
 python manage.py loaddata init_teacher.json
 python manage.py collectstatic --no-input --clear
+echo "from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin', 'ljhljh0125@gmail.com', 'teamlab')" | python manage.py shell
 
 exec "$@"
