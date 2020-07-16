@@ -21,6 +21,15 @@ services:
       - POSTGRES_USER=teamlab
       - POSTGRES_PASSWORD=teamlab_password
       - POSTGRES_DB=wa3i_dev
-
+  sentence-analysis:
+    build: ./sentence-analysis
+    command: flask run 
+    ports:
+      - 5252:5252
+    env_file:
+      - ./.env.sentence_api
+    volumes:
+      - ./sentence-analysis/:/usr/src/app/
+    
 volumes:
   wa3i_postgres_data: 
