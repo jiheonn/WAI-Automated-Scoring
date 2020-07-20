@@ -19,7 +19,9 @@
 {% endblock %}
 
 {% block content %}
+
 {% if user.is_authenticated %}
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -71,22 +73,36 @@
         <div class="col-lg-5">
             <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                선생님들께서 등록하신 문항들입니다.<br>
-                문항을 검토하거나 학생모드의 스스로 평가하기에 등록하실 수 있습니다!
+                학생 페이지, 스스로평가에 업로드되는 문항들입니다.<br><br>
+
+                1. 기존의 문항을 등록할 수 있습니다. <br>
+                2. 기존의 문항을 등록 취소할 수 있습니다. <br>
+                3. 기존의 문항을 수정할 수 있습니다. <br>
+                4. 새로운 문항을 추가할 수 있습니다. <br>
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
         <div class="container">
+
+            <div class="row justify-content-center">
+                <form action="{% url 'write_quiz' %}">
+                    <button style="width:100%" class="btn btn-outline-success">
+                        신규문항 작성하기
+                    </button>
+                </form>
+            </div>
+
             <table style="text-align: center" id="quiz_table" class="display" style="width:100%">
                 <thead>
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th>문항번호</th>
                     <th>문항명</th>
                     <th>등록자</th>
-                    <th>등록일자</th>
+                    <th>최초등록일자</th>
                     <th>등록여부</th>
                     <th>등록하기</th>
+                    <th>수정하기</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,20 +112,37 @@
                     <td> {{ item.question_name }}</td>
                     <td> {{ item.teacher.teacher_name }}</td>
                     <td> {{ item.made_date }}</td>
-                    <td>{% if item.check == 0 %}
+                    <td>
+                        {% if item.upload_check == 0 %}
                         미등록
                         {% else %}
                         등록
                         {% endif%}
                     </td>
-                    <form action="{% url 'detailed_review' %}" method="GET">
-                        <td>
-                            <button type="submit" class="w3-btn w3-round w3-blue" name="question_id"
-                                    value="{{ item.make_question_id }}">
-                                등록하기
+                    <td>
+                        {% if item.upload_check == 0 %}
+                        <form name="change_approve_ok" action="{% url 'change_approve_0_to_1' %}" method="get">
+                            <button type="submit" class="upload-self-ok btn btn-outline-primary" name="make_question_id"
+                                    value="{{ item.make_question_id }}"> 등록하기
                             </button>
-                        </td>
-                    </form>
+                        </form>
+                        {% else %}
+                        <form name="change_approve_cancel" action="{% url 'change_approve_1_to_0' %}" method="get">
+                            <button type="submit" class="upload-self-cancel btn btn-outline-danger"
+                                    name="make_question_id"
+                                    value="{{ item.make_question_id }}"> 취소하기
+                            </button>
+                        </form>
+                        {% endif%}
+                    </td>
+                    <td>
+                        <form action="{% url 'detailed_review' %}" method="GET">
+                            <button type="submit" class="btn btn-outline-info" name="question_id"
+                                    value="{{ item.make_question_id }}">
+                                자세히보기
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -135,6 +168,7 @@
 <!-- Bootstrap core JavaScript -->
 <!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'sysop/vendor/jquery/datatable.js' %}"></script>
+<script src="{% static 'sysop/function/check.again.js' %}"></script>
+<script src="{% static 'sysop/function/datatable.js' %}"></script>
 
 {% endblock %}

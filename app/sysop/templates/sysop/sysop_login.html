@@ -11,21 +11,6 @@
 <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-<!-- login -->
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/bootstrap/css/bootstrap.min.css' %}">
-<link rel="stylesheet" type="text/css"
-      href="{% static 'teacher/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<link rel="stylesheet" type="text/css"
-      href="{% static 'teacher/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animate/animate.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/css-hamburgers/hamburgers.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/animsition/css/animsition.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/select2/select2.min.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/vendor/daterangepicker/daterangepicker.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/util.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-<!-- ./login -->
-
 {% endblock %}
 
 {% block content %}
@@ -56,6 +41,12 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">admin 님</a>-->
+<!--                    <div class="dropdown-menu">-->
+<!--                        <a class="dropdown-item" href="{% url 'sysop_login' %}">로그인 하기</a>-->
+<!--                    </div>-->
+<!--                </li>-->
             </ul>
         </div>
     </div>
@@ -90,31 +81,19 @@
     </div>
 
     <div class="row justify-content-center my-5">
-        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 login-center">
+        <div class="login">
+            <h4>Login to admin page</h4>
             <form action="{% url 'sysop_login' %}" method="POST" class="login100-form validate-form">
                 {% csrf_token %}
-                <span class="login100-form-title p-b-33">
-						Login
-					</span>
-
-                <div class="wrap-input100 validate-input" data-validate="이메일을 입력해 주세요.">
-                    <input class="input100" type="text" name="username" placeholder="ID">
-                    <span class="focus-input100-1"></span>
-                    <span class="focus-input100-2"></span>
-                </div>
-
-                <div class="wrap-input100 rs1 validate-input" data-validate="비밀번호를 입력해 주세요.">
-                    <input class="input100" type="password" name="password" placeholder="Password">
-                    <span class="focus-input100-1"></span>
-                    <span class="focus-input100-2"></span>
-                </div>
-
-                <div class="container-login100-form-btn m-t-20">
-                    <button type="submit" class="login100-form-btn">
-                        Sign in
-                    </button>
-                </div>
-
+                <p><input type="text" name="username" id="userId" placeholder="ID"></p>
+                <p><input type="password" name="password" placeholder="Password"></p>
+                <p class="remember_me">
+                    <label>
+                        <input type="checkbox" name="remember_me" id="remember_me">
+                        Remember ID on this computer
+                    </label>
+                </p>
+                <p class="submit"><input type="submit" name="commit" value="Login"></p>
             </form>
         </div>
     </div>
@@ -123,6 +102,8 @@
 
 {% block script %}
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+
+<script src="{% static 'sysop/function/login.cookie.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script>
     $(document).ready(function () {
@@ -134,12 +115,5 @@
 
 
 </script>
-{% if messages %}
-{% for message in messages %}
-<script>
-    alert('{{ message }}');
-</script>
-{% endfor %}
-{% endif %}
 
 {% endblock %}

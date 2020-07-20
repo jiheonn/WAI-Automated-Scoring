@@ -1,6 +1,16 @@
 [
   {
     "model": "mainpage.teacher",
+    "pk": 0,
+    "fields": {
+      "teacher_name": "admin",
+      "school": "admin",
+      "email": "ljhljh0125@gmail.com",
+      "password": "teamlab",
+      "approve": 1
+    }
+  },  {
+    "model": "mainpage.teacher",
     "pk": 1,
     "fields": {
       "teacher_name": "\ud64d\uae38\ub3d91",

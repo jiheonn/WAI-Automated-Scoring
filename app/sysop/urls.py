@@ -18,10 +18,20 @@ urlpatterns = [
         name="change_approve_1_to_0",
     ),
     path("quiz_review/", views.quiz_review, name="quiz_review"),
+    path(
+        "change_self_question_info/",
+        views.change_self_question_info,
+        name="change_self_question_info",
+    ),
+    path("write_quiz/", views.write_quiz, name="write_quiz"),
+    path(
+        "create_self_question/",
+        views.create_self_question,
+        name="create_self_question",
+    ),
     path("quiz_produce/", views.quiz_produce, name="quiz_produce"),
     path("notice/", views.notice, name="notice"),
     path("detailed_review/", views.detailed_review, name="detailed_review"),
     path("detailed_quiz/", views.detailed_quiz, name="detailed_quiz"),
-    path("write_quiz/", views.write_quiz, name="write_quiz"),
     path("ques_detail/", views.ques_detail, name="ques_detail"),
 ]

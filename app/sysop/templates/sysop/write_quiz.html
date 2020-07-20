@@ -1,28 +1,23 @@
+{% extends 'sysop/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block css %}
 
-<head>
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-    <title>WA3i</title>
+<link href="{% static 'sysop/css/basic.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+{% block content %}
 
-</head>
-
-<body>
+{% if user.is_authenticated %}
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -35,21 +30,26 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'sysop' %}">홈</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>32
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성
+                    <a class="nav-link" href="{% url 'sysop' %}">홈
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">admin 님</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'sysop_logout' %}">로그아웃</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -59,100 +59,108 @@
 <!-- Page Content -->
 <div class="container">
 
-    <!-- Heading Row -->
-<!--    <div class="row align-content-center my-5">-->
     <div class="row justify-content-center my-5">
+
         <div class="col-lg-2">
-            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" alt="">
+            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
+                 src="{% static 'mainpage/image/logo.png' %}" alt="">
         </div>
+
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-<!--            <h1 class="font-weight-light">Welcome</h1>-->
+            <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                신규 문항을 생성하실 수 있는 페이지입니다.
+                학생 페이지, 스스로평가에 업로드할 문항 입니다. <br><br>
+
+                1. 문항명과 문항내용을 작성해주세요. <br>
+                2. 문항과 관련된 사진을 업로드해주세요. <br>
+                3. 모범답안과 힌트를 작성해주세요 . <br>
+                4. 채점준거를 작성해주세요.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
+
         <!-- /.col-md-4 -->
-        <div style="margin: 50px;">
-            <table style="text-align: center;">
-                <thead>
-                    <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                        <th width="400px">문항명</th>
-                        <th width="135px">학교분류</th>
-                        <th width="130px">과목</th>                  
+    </div>
+
+    <div class="row justify-content-center">
+        <form name="change_self_question_form" action="{% url 'quiz_review' %}">
+            <button style="width:100%" class="btn btn-outline-success">
+                뒤로가기
+            </button>
+        </form>
+    </div>
+
+    <form action="{% url 'create_self_question' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
+        <!--        <input type="hidden" name="path" value="{{ request.path }}">-->
+        <!-- Heading Row -->
+        <div class="row justify-content-center my-5">
+
+            <div class="col-7 sct-center">
+                <span>문항 제목 : <input id="as_name" type="text" name="question_name" placeholder="문항 제목을 입력해 주세요."></span><br>
+                <span>문항 내용 : <textarea id="as_discription"
+                                        type="text" name="discription"
+                                        placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
+                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input type="file"
+                                                                           name="image">
+            </div>
+            <div class="col-11">
+                <table border="1" bordercolor="gray" width="1000" align="center" id="hint-answer-table">
+                    <tr name="trQuestion" align="center" bgcolor="#2E4A62">
+                        <th height="40px">모범 답안</th>
+                        <th height="40px">힌트</th>
                     </tr>
-                </thead>
-                <tbody>
-                {% for item in category %}
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td><input type="text" name="q_name" size="80px"></td>
-                    <td>
-                        <select name="evaluation_type">
-                            <option value="total" selected="selected">전체</option>
-                            <option value="disapprove">초등학교</option>
-                            <option value="approve">중학교</option>
-                            <option value="approve">고등학교</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select name="evaluation_type">
-                            <option value="total" selected="selected">전체</option>
-                            <option value="disapprove">{{ item.category_name }}</option>
-                        </select>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            </table><br>
-            <table>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">문제</th>
-                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   문제를 작성해 주세요."></textarea></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">모범답안</th>
-                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   모범 답안을 작성해 주세요."></textarea></td>
-                </tr>
-                <tr style="border: 1px solid #d6d6d6;">
-                    <th style="border: 1px solid #d6d6d6; text-align: center; background-color: #343a40; color: white;">채점기준</th>
-                    <td><textarea style="width: 800px; height: 300px; line-height: 50px;" type="text" name="" placeholder="   채점 기준을 작성해 주세요."></textarea></td>
-                </tr>
-            </table>
-            <div class="button" style="float: right; margin: 20px auto; width: 100px">
-                <button onclick="myFunction();" type="submit">등록하기</button>
+                    <tr>
+                        <td><textarea type="text" name="answer"
+                                      placeholder="모범 답안을 작성해 주세요."></textarea></td>
+                        <td><textarea type="text" name="hint"
+                                      placeholder="힌트를 작성해 주세요."></textarea></td>
+                    </tr>
+                </table>
+                <table id="questionTable" border="1" bordercolor="gray" width="1000" align="center">
+                    <tr name="trQuestion" align="center" bgcolor="#2E4A62">
+                        <th height="40px">채점 준거</th>
+                    </tr>
+                    <tr>
+                        <td><textarea type="text" name="mark_text"
+                                      placeholder="채점 준거를 작성해 주세요."></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-12 add-del-btn btn-center">
+                <button type="button" id="add-btn" class="btn3">추가</button>
+                <button type="button" id="del-btn" class="btn3">삭제</button>
+            </div>
+            <!-- /.row -->
+            <div class="col-lg-4 btn-center">
+                <button style="width:100%" type="submit" class="btn btn-primary">
+                    문항 생성 완료
+                </button>
             </div>
         </div>
-    </div>
-    <!-- /.row -->
-
-
+    </form>
 </div>
 <!-- /.container -->
-<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}" style="display: block; margin: 0px auto;">
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-</footer>
+
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
+     style="display: block; margin: 0px auto;">
+
+{% else %}
+<script>
+    document.location.href = "{% url 'sysop_login' %}";
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block script %}
 
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'sysop/function/function.btn.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script>
-    function myFunction() {
-        if(confirm("신규문항으로 등록하시겠습니까?")) {
-            alert("저장하였습니다.");
-        }else {
-            alert("취소되었습니다.");
-        }
-    }
-</script>
 
-
-</body>
-
-</html>
-
+{% endblock %}

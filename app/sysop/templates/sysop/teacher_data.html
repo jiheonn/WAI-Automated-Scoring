@@ -71,8 +71,10 @@
         </div>
         <div class="col-lg-5">
             <p class="font-weight-bolder triangle-border left">
-                신규가입하신 선생님들 명단입니다.<br>
-                조회를 하고 싶은 명단을 선택하실 수 있습니다!
+                선생님 페이지에서 가입하신 선생님 명단입니다. <br><br>
+
+                1. 신규선생님을 승인할 수 있습니다. <br>
+                2. 승인된 선생님을 승인 취소할 수 있습니다. <br>
             </p>
         </div>
         <br><br>
@@ -139,7 +141,7 @@
 {% block script %}
 
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'sysop/vendor/jquery/teacher_data.js' %}"></script>
-<script src="{% static 'sysop/vendor/jquery/datatable.js' %}"></script>
+<script src="{% static 'sysop/function/check.again.js' %}"></script>
+<script src="{% static 'sysop/function/datatable.js' %}"></script>
 
 {% endblock %}
