@@ -14,7 +14,7 @@ urlpatterns = [
     path('Study/Studyques/', views.Studyques, name='Studyquestion'),
     path('Homework/Homeworkselect/Homeworkcode/Homeworkques/', views.Homeworkques, name='Homeworkquestion'),
     path('Self/Selfques/', views.Selfques, name='Selfquestion'),
-    path('Self/Selfques/Selfdiag/', views.Selfdiag, name='Selfdiagnosis'),
+    path('Self/Selfques/Selfdiag/', views.self_diagnosis_view, name='Selfdiagnosis'),
     path('Self/Selfques/Selfdiag/Selfgrade/', views.Selfgrade, name='Selfgrade'),
     path('Homework/Homeworkselect/Homeworkcode/Homeworkques/Homeworkdiag/', views.Homeworkdiag,
          name='Homeworkdiagnosis'),

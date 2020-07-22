@@ -45,12 +45,14 @@ def AIdiag(request):
     now = datetime.datetime.now()
     now_date = now.strftime('%Y-%m-%d')
 
-    try:
-        re_school = request.GET['category_school']
-        re_gender = request.GET['category_gender']
+    # 학교,성별 이미지 출력
+    re_school = request.GET.get('category_school')
+    re_gender = request.GET.get('category_gender')
+
+    if (re_school != "") and (re_gender != ""):
         school = f'/staticfiles/student/school_gender_img/{re_school}.png'
         gender = f'/staticfiles/student/school_gender_img/{re_gender}.png'
-    except:
+    else:
         school = ""
         gender = ""
 
@@ -133,7 +135,6 @@ def Studyques(request):
         except:
             pass
 
-
     # 문항 학습 완료여부 판단
     test_list = []
     done_list = []
@@ -150,6 +151,7 @@ def Studyques(request):
 
     now = datetime.datetime.now()
     now_date = now.strftime('%Y-%m-%d')
+
     # 나의 답 DB에 저장
     try:
         solve_data = Solve(
@@ -172,52 +174,39 @@ def Studyques(request):
     }
     return render(request, 'student/Studyques.html', context)
 
-        # except:
-        #     context = {
-        #         'data': data,
-        #         'f': f
-        #     }
+    # except:
+    #     context = {
+    #         'data': data,
+    #         'f': f
+    #     }
 
-        # finally:
-        #     print(request.GET['ques_ans'])
-        # question_id = f.question_id
-        # key = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
-        # as_qurel_id = key.values('as_qurel_id')[0]['as_qurel_id']
-        #
-        # # 나의 답 DB에 저장
-        # try:
-        #     solve_data = Solve(
-        #         student_id=student_id,
-        #         submit_date=now_date,
-        #         response=request.GET['ques_ans'],
-        #         score=0,
-        #         as_querl_id=as_qurel_id,
-        #         student_name=student_name
-        #     )
-        #     solve_data.save()
-        #
-        # except:
-        #     solve_data = None
-        # return render(request, 'student/Studyques.html', context)
+    # finally:
+    #     print(request.GET['ques_ans'])
+    # question_id = f.question_id
+    # key = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
+    # as_qurel_id = key.values('as_qurel_id')[0]['as_qurel_id']
+    #
+    # # 나의 답 DB에 저장
+    # try:
+    #     solve_data = Solve(
+    #         student_id=student_id,
+    #         submit_date=now_date,
+    #         response=request.GET['ques_ans'],
+    #         score=0,
+    #         as_querl_id=as_qurel_id,
+    #         student_name=student_name
+    #     )
+    #     solve_data.save()
+    #
+    # except:
+    #     solve_data = None
+    # return render(request, 'student/Studyques.html', context)
 
 
 def Homework(request):
     context = {
     }
     return render(request, 'student/Homework.html', context)
-
-
-# def Homeworkques(request):
-#     data = Question.objects.first()
-#
-#     # 학습목록 출력 테스트
-#     # assignment_id = request.GET['code_num']
-#     # data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id).first()
-#
-#     context = {
-#         'data': data
-#     }
-#     return render(request, 'student/Homeworkques.html', context)
 
 
 def Homeworkques(request):
@@ -405,13 +394,14 @@ def Selfques(request):
     return render(request, 'student/Selfques.html', context)
 
 
-def Selfdiag(request):
+def self_diagnosis_view(request):
     try:
         make_question_id = int(request.GET['question'])
         ques_ans = request.GET['ques_ans']
 
         mark = Mark.objects.select_related('make_question').filter(make_question_id=make_question_id)
-        data = mark[0]
+        data = mark.first()
+        print(data)
 
         context = {
             'data': data,
