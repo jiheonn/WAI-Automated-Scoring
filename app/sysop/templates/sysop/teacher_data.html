@@ -16,6 +16,10 @@
 <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -42,10 +46,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -106,13 +110,13 @@
                     </td>
                     <td>
                         {% if item.approve == 0 %}
-                        <form name="change_approve_ok" action="{% url 'change_approve_0_to_1' %}" method="get">
+                        <form name="change_approve_ok" action="{% url 'zero_to_one' %}" method="get">
                             <button type="submit" class="approve-ok btn btn-outline-primary" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 승인하기
                             </button>
                         </form>
                         {% else %}
-                        <form name="change_approve_cancel" action="{% url 'change_approve_1_to_0' %}" method="get">
+                        <form name="change_approve_cancel" action="{% url 'one_to_zero' %}" method="get">
                             <button type="submit" class="approve-cancel btn btn-outline-danger" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 취소하기
                             </button>
