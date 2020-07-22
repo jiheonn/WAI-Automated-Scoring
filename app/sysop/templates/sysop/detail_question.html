@@ -34,6 +34,10 @@
 <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -58,11 +62,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -97,10 +101,10 @@
                 문제를 수정할 수 있는 페이지 입니다. <br><br>
 
                 1. 문항명을 수정할 수 있습니다. <br>
-                2. 문항설명을 수정할 수 있습니다. <br>
+                2. 카테고리, 배운개념을 수정할 수 있습니다. <br>
+                2. 문항내용을 수정할 수 있습니다. <br>
                 3. 모범답안을 수정할 수 있습니다. <br>
-                4. 힌트를 수정할 수 있습니다. <br>
-                5. 채점준거들을 수정할 수 있습니다.
+                4. 힌트를 수정할 수 있습니다.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -109,7 +113,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <form name="change_self_question_form" action="{% url 'quiz_review' %}">
+        <form action="{% url 'question' %}">
             <button style="width:100%" class="btn btn-outline-success">
                 뒤로가기
             </button>
@@ -121,54 +125,70 @@
         <div>
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="120px">문항번호</th>
-                    <th width="450px">문항명</th>
-                    <th width="150px">등록자</th>
-                    <th width="210px">등록일자</th>
-                    <th width="110px">등록여부</th>
+                    <th width="220px">문항번호</th>
+                    <th width="600px">문항명</th>
+                    <th width="220px">등록일자</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td>{{ makequestion.make_question_id }}</td>
-                    <td>{{ makequestion.question_name }}</td>
-                    <td>{{ makequestion.teacher.teacher_name }}</td>
-                    <td> {{ makequestion.made_date }}</td>
-                    <td>
-                        {% if makequestion.upload_check == 0 %}
-                        미등록
-                        {% else %}
-                        등록
-                        {% endif%}
-                    </td>
+                    <td>{{ question.question_id }}</td>
+                    <td>{{ question.question_name }}</td>
+                    <td> {{ question.made_date }}</td>
                 </tr>
             </table>
             <br>
 
-            <form action="{% url 'change_self_question_info' %}">
-                <input type="hidden" name="self_question_id" value="{{ makequestion.make_question_id }}">
-                <!--                        <div class="col-7 sct-center">-->
+            <form name="change_question_form" action="{% url 'change_question_info' %}">
+                <input type="hidden" name="question_id" value="{{ question.question_id }}">
+
                 <span>문항제목 :
-                    <input class="input-box" type="text" style="width:100%" name="self_question_name"
-                           value="{{ makequestion.question_name }}">
+                    <input class="input-box" type="text" style="width:100%" name="question_name"
+                           value="{{ question.question_name }}">
             </span><br>
+                <div class="row">
+
+                    <div id="category" class="col-lg-4">
+
+                    <span>카테고리 :
+                    <select class="input-box form-control form-control-a" name="question_category_id">
+                        <option disabled>카테고리</option>
+                        {% for category_data in category %}
+                        {% if category_data.category_id == question.category_id %}
+                        <!--                    <option selected="selected" value="{{ data.category_name }}">{{ category_data.category_name }}</option>-->
+                        <option selected="selected" value="{{ category_data.category_id }}">{{ category_data.category_name }}
+                        </option>
+                        {% else %}
+
+                        <option value="{{ category_data.category_id }}">{{ category_data.category_name }}</option>
+                        {% endif %}
+
+                        {% endfor %}
+                    </select>
+                      </span>
+                    </div>
+
+                    <div class="col-lg-8">
+                    <span>배운개념 :
+                    <input class="input-box" type="text" style="width:100%" name="question_concept"
+                           value="{{ question.ques_concept }}">
+                    </span>
+                    </div>
+
+                </div>
+
                 <span>문항내용 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="self_question_discription">{{ makequestion.discription }}</textarea>
+                              name="question_discription">{{ question.discription }}</textarea>
             </span><br>
                 <span>모범답안 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="self_question_answer">{{ makequestion.answer }}</textarea>
+                              name="question_answer">{{ question.answer }}</textarea>
             </span><br>
                 <span>힌트 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="self_question_hint">{{ makequestion.hint }}</textarea>
+                              name="question_hint">{{ question.hint }}</textarea>
             </span><br>
-                <span>채점준거 :
-                    {% for text in mark_list %}
-                    <textarea class="textarea-box" type="text" style="width:100%" id="mark_{{text.mark_id}}"
-                              name="self_question_mark">{{ text.mark_text }}</textarea>
-                    {% endfor %}
-            </span><br>
-                <button style="width:100%" type="submit" class="change_self_question btn btn-primary">
+
+                <button style="width:100%" type="submit" class="change_question btn btn-primary">
                     저장하기
                 </button>
             </form>

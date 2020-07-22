@@ -16,6 +16,10 @@
 <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -40,11 +44,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -73,12 +77,10 @@
         <div class="col-lg-5">
             <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                학생 페이지, 스스로평가에 업로드되는 문항들입니다.<br><br>
+                학생페이지, 평가연습에 업로드되는 문항들입니다.<br><br>
 
-                1. 기존의 문항을 등록할 수 있습니다. <br>
-                2. 기존의 문항을 등록 취소할 수 있습니다. <br>
-                3. 기존의 문항을 수정할 수 있습니다. <br>
-                4. 새로운 문항을 추가할 수 있습니다. <br>
+                1. 새로운 문항을 추가할 수 있습니다. <br>
+                2. 기존의 문항을 수정할 수 있습니다. <br>
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -86,7 +88,7 @@
         <div class="container">
 
             <div class="row justify-content-center">
-                <form action="{% url 'write_quiz' %}">
+                <form action="{% url 'make_question' %}">
                     <button style="width:100%" class="btn btn-outline-success">
                         신규문항 작성하기
                     </button>
@@ -98,47 +100,20 @@
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th>문항번호</th>
                     <th>문항명</th>
-                    <th>등록자</th>
                     <th>최초등록일자</th>
-                    <th>등록여부</th>
-                    <th>등록하기</th>
                     <th>수정하기</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in makequestion %}
+                {% for item in question %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td> {{ item.make_question_id }}</td>
-                    <td> {{ item.question_name }}</td>
-                    <td> {{ item.teacher.teacher_name }}</td>
+                    <td> {{ item.question_id }}</td>
+                    <td> {{ item.question_name }}</a></td>
                     <td> {{ item.made_date }}</td>
                     <td>
-                        {% if item.upload_check == 0 %}
-                        미등록
-                        {% else %}
-                        등록
-                        {% endif%}
-                    </td>
-                    <td>
-                        {% if item.upload_check == 0 %}
-                        <form name="change_approve_ok" action="{% url 'change_approve_0_to_1' %}" method="get">
-                            <button type="submit" class="upload-self-ok btn btn-outline-primary" name="make_question_id"
-                                    value="{{ item.make_question_id }}"> 등록하기
-                            </button>
-                        </form>
-                        {% else %}
-                        <form name="change_approve_cancel" action="{% url 'change_approve_1_to_0' %}" method="get">
-                            <button type="submit" class="upload-self-cancel btn btn-outline-danger"
-                                    name="make_question_id"
-                                    value="{{ item.make_question_id }}"> 취소하기
-                            </button>
-                        </form>
-                        {% endif%}
-                    </td>
-                    <td>
-                        <form action="{% url 'detailed_review' %}" method="GET">
+                        <form action="{% url 'detail_question' %}" method="GET">
                             <button type="submit" class="btn btn-outline-info" name="question_id"
-                                    value="{{ item.make_question_id }}">
+                                    value="{{ item.question_id }}">
                                 자세히보기
                             </button>
                         </form>
@@ -151,6 +126,8 @@
     </div>
     <!-- /.row -->
 </div>
+
+
 <!-- /.container -->
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
      style="display: block; margin: 0px auto;">
@@ -164,11 +141,14 @@
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#quiz_table').DataTable();
+    });
+</script>
 
 <!-- Bootstrap core JavaScript -->
 <!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'sysop/function/check.again.js' %}"></script>
-<script src="{% static 'sysop/function/datatable.js' %}"></script>
 
 {% endblock %}

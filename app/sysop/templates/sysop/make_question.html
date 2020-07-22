@@ -13,6 +13,10 @@
 
 <link href="{% static 'sysop/css/basic.css' %}" rel="stylesheet">
 
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -37,11 +41,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -70,12 +74,11 @@
         <div class="col-lg-5">
             <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                학생 페이지, 스스로평가에 업로드할 문항 입니다. <br><br>
+                학생페이지, 평가연습에 업로드할 문항 입니다. <br><br>
 
-                1. 문항명과 문항내용을 작성해주세요. <br>
-                2. 문항과 관련된 사진을 업로드해주세요. <br>
+                1. 문항명, 카테고리, 배우는개념을 간단하게 작성해주세요. <br>
+                2. 문항내용과 문항 관련 사진을 업로드해주세요. <br>
                 3. 모범답안과 힌트를 작성해주세요 . <br>
-                4. 채점준거를 작성해주세요.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -84,14 +87,14 @@
     </div>
 
     <div class="row justify-content-center">
-        <form name="change_self_question_form" action="{% url 'quiz_review' %}">
+        <form action="{% url 'question' %}">
             <button style="width:100%" class="btn btn-outline-success">
                 뒤로가기
             </button>
         </form>
     </div>
 
-    <form action="{% url 'create_self_question' %}" method="POST" enctype="multipart/form-data">
+    <form name="create_question_form" action="{% url 'create_question' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
         <!--        <input type="hidden" name="path" value="{{ request.path }}">-->
@@ -100,8 +103,27 @@
 
             <div class="col-7 sct-center">
                 <span>문항 제목 : <input id="as_name" type="text" name="question_name" placeholder="문항 제목을 입력해 주세요."></span><br>
+                <div class="row">
+
+                    <div id="category" class="col-lg-4">
+                        <br>
+                        <select class="input-box form-control form-control-a" name="question_category_id">
+                            <option selected="selected" disabled>카테고리</option>
+                            {% for category_data in category %}
+                            <option value="{{ category_data.category_id }}">{{ category_data.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <input id="as_name" class="input-box" type="text" style="width:100%" name="question_concept"
+                               placeholder="배우는 개념을 간단하게 작성해주세요."
+                               value="{{ question.ques_concept }}">
+                    </div>
+
+                </div>
                 <span>문항 내용 : <textarea id="as_discription"
-                                        type="text" name="discription"
+                                        type="text" name="question_discription"
                                         placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
                 <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input type="file"
                                                                            name="image">
@@ -113,27 +135,14 @@
                         <th height="40px">힌트</th>
                     </tr>
                     <tr>
-                        <td><textarea type="text" name="answer"
+                        <td><textarea type="text" name="question_answer"
                                       placeholder="모범 답안을 작성해 주세요."></textarea></td>
-                        <td><textarea type="text" name="hint"
+                        <td><textarea type="text" name="question_hint"
                                       placeholder="힌트를 작성해 주세요."></textarea></td>
                     </tr>
                 </table>
-                <table id="questionTable" border="1" bordercolor="gray" width="1000" align="center">
-                    <tr name="trQuestion" align="center" bgcolor="#2E4A62">
-                        <th height="40px">채점 준거</th>
-                    </tr>
-                    <tr>
-                        <td><textarea type="text" name="mark_text"
-                                      placeholder="채점 준거를 작성해 주세요."></textarea></td>
-                    </tr>
-                </table>
+
             </div>
-            <div class="col-12 add-del-btn btn-center">
-                <button type="button" id="add-btn" class="btn3">추가</button>
-                <button type="button" id="del-btn" class="btn3">삭제</button>
-            </div>
-            <!-- /.row -->
             <div class="col-lg-4 btn-center">
                 <button style="width:100%" type="submit" class="btn btn-primary">
                     문항 생성 완료

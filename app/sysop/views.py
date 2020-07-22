@@ -11,8 +11,76 @@ from django.utils.decorators import method_decorator
 
 import datetime
 
-APPROVED = 0
+APPROVED_ALLOW = 1
+APPROVED_DENY = 0
 
+
+# 관리자 홈 페이지
+def home(request):
+    context = {}
+    return render(request, "sysop/home.html", context)
+
+
+# 신규교사정보 페이지
+def teacher_data(request):
+    teacher = Teacher.objects.all()
+    context = {"teacher": teacher}
+    return render(request, "sysop/teacher_data.html", context)
+
+
+# 문항검토 페이지
+def quiz(request):
+    makequestion = MakeQuestion.objects.all()
+    context = {"makequestion": makequestion}
+    return render(request, "sysop/quiz.html", context)
+
+
+# 문항검토 자세히보기 페이지
+def detail_quiz(request):
+    question_id = request.GET["question_id"]
+    makequestion = MakeQuestion.objects.select_related("teacher").filter(
+        make_question_id=question_id
+    ).first()
+    mark_list = Mark.objects.select_related("make_question").filter(
+        make_question_id=question_id
+    )
+    context = {"makequestion": makequestion, "mark_list": mark_list}
+    return render(request, "sysop/detail_quiz.html", context)
+
+
+# 문항검토 신규문항 생성 페이지
+def make_quiz(request):
+    context = {}
+    return render(request, "sysop/make_quiz.html", context)
+
+
+# 문항생성 페이지
+def question(request):
+    question = Question.objects.all()
+    context = {"question": question}
+    return render(request, "sysop/question.html", context)
+
+
+# 문항생성 자세히보기 페이지
+def detail_question(request):
+    question_id = request.GET["question_id"]
+    question = Question.objects.filter(question_id=question_id).first()
+    category = Category.objects.all()
+
+    context = {"question": question,
+               "category": category}
+    return render(request, "sysop/detail_question.html", context)
+
+
+# 문항검토 신규문항 생성 페이지
+def make_question(request):
+    category = Category.objects.all()
+
+    context = {"category": category, }
+    return render(request, "sysop/make_question.html", context)
+
+
+# 로그인 함수
 @method_decorator(csrf_exempt)
 def sysop_login(request):
     if request.method == "POST":
@@ -39,22 +107,12 @@ def sysop_logout(request):
     return redirect("sysop_login")
 
 
-def home(request):
-    context = {}
-    return render(request, "sysop/home.html", context)
-
-
-def teacher_data(request):
-    teacher = Teacher.objects.all()
-    context = {"teacher": teacher}
-    return render(request, "sysop/teacher_data.html", context)
-
-
-def change_approve_0_to_1(request):
+# 등록하기 함수
+def zero_to_one(request):
     if request.method == "GET" and "teacher_id" in request.GET:
         teacher_id = request.GET.get("teacher_id")
         teacher_info = Teacher.objects.get(teacher_id=teacher_id)
-        teacher_info.approve = 1
+        teacher_info.approve = APPROVED_ALLOW
         teacher_info.save()
         teacher = Teacher.objects.all()
 
@@ -64,19 +122,20 @@ def change_approve_0_to_1(request):
     elif request.method == "GET" and "make_question_id" in request.GET:
         make_question_id = request.GET.get("make_question_id")
         make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
-        make_question_info.upload_check = 1 #TODO : Use meaningful name
+        make_question_info.upload_check = APPROVED_ALLOW
         make_question_info.save()
         make_question = MakeQuestion.objects.all()
 
         context = {"makequestion": make_question}
-        return render(request, "sysop/quiz_review.html", context)
+        return render(request, "sysop/quiz.html", context)
 
-#TODO Rename function : change_approve_1_to_0 --> one_to_zero
-def change_approve_1_to_0(request):
+
+# 취소하기 함수
+def one_to_zero(request):
     if request.method == "GET" and "teacher_id" in request.GET:
         teacher_id = request.GET.get("teacher_id")
         teacher_info = Teacher.objects.get(teacher_id=teacher_id)
-        teacher_info.approve = APPROVED #TODO : Use meaningful name
+        teacher_info.approve = APPROVED_DENY
         teacher_info.save()
         teacher = Teacher.objects.all()
 
@@ -86,33 +145,91 @@ def change_approve_1_to_0(request):
     elif request.method == "GET" and "make_question_id" in request.GET:
         make_question_id = request.GET.get("make_question_id")
         make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
-        make_question_info.upload_check = 0 #TODO : Use meaningful name
+        make_question_info.upload_check = APPROVED_DENY
         make_question_info.save()
         make_question = MakeQuestion.objects.all()
 
         context = {"makequestion": make_question}
-        return render(request, "sysop/quiz_review.html", context)
+        return render(request, "sysop/quiz.html", context)
 
 
-def quiz_review(request):
-    makequestion = MakeQuestion.objects.all()
-    context = {"makequestion": makequestion}
-    return render(request, "sysop/quiz_review.html", context)
+# 문항검토 신규문항 생성 함수
+def create_quiz(request):
+    now = datetime.datetime.now()
+    now_date = now.strftime("%Y-%m-%d")
+
+    try:
+        TEACHER_ADMIN = 0
+
+        image_number = MakeQuestion.objects.all().last().make_question_id + 1
+        image = request.FILES["image"]
+        image.name = str(image_number) + "_" + image.name
+
+        make_question_data = MakeQuestion(
+            teacher=Teacher.objects.get(teacher_id=TEACHER_ADMIN),
+            question_name=request.POST["question_name"],
+            discription=request.POST["discription"],
+            answer=request.POST["answer"],
+            image=image,
+            hint=request.POST["hint"],
+            made_date=now_date,
+            upload_check=APPROVED_DENY,
+        )
+
+        make_question_data.save()
+        mark_list = request.POST.getlist("mark_text")
+
+        # MakeQuestion Table 과 연결된 Mark Table 데이터 추가
+        for mark_text in mark_list:
+            mark_change_data = Mark(mark_text=mark_text, make_question_id=make_question_data.make_question_id)
+            mark_change_data.save()
+
+        messages.success(request, "성공적으로 등록되었습니다.")
+
+        return redirect("make_quiz")
+
+    except:
+        messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
+
+        return redirect("make_quiz")
 
 
-def detailed_review(request):
-    question_id = request.GET["question_id"]
-    makequestion = MakeQuestion.objects.select_related("teacher").filter(
-        make_question_id=question_id
-    )[0] #TODO : What is the meaning of the [0] -> make function or menaningful index
-    mark_list = Mark.objects.select_related("make_question").filter(
-        make_question_id=question_id
-    )
-    context = {"makequestion": makequestion, "mark_list": mark_list}
-    return render(request, "sysop/detailed_review.html", context)
+# 문항생성 신규문항 생성 함수
+def create_question(request):
+    now = datetime.datetime.now()
+    now_date = now.strftime("%Y-%m-%d")
+
+    image_number = MakeQuestion.objects.all().last().make_question_id + 1
+    image = request.FILES["image"]
+    image.name = str(image_number) + "_" + image.name
+
+    try:
+        question_data = Question(
+            category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
+            model_id=1,
+            question_name=request.POST["question_name"],
+            discription=request.POST["question_discription"],
+            answer=request.POST["question_answer"],
+            image=image,
+            hint=request.POST["question_hint"],
+            made_date=now_date,
+            qr_code="qr_code/image/qr_code.png",
+            ques_concept=request.POST["question_concept"],
+        )
+        question_data.save()
+
+        messages.success(request, "성공적으로 등록되었습니다.")
+
+        return redirect("make_question")
+
+    except:
+        messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
+
+        return redirect("make_question")
 
 
-def change_self_question_info(request):
+# 문항검토 수정 함수
+def change_quiz_info(request):
     self_question_id = request.GET.get("self_question_id")
     self_question_info = MakeQuestion.objects.get(make_question_id=self_question_id)
     self_question_info.question_name = request.GET.get("self_question_name")
@@ -126,92 +243,36 @@ def change_self_question_info(request):
         make_question_id=self_question_id
     )
 
-    # TODO: What are i and j? --> Use meaningful variable name
-    for i, j in zip(mark_text_list, mark_data_list):
-        mark_data = Mark.objects.get(mark_id=j.mark_id)
-        mark_data.mark_text = i
-        mark_data.save()
+    for mark_text, mark_data in zip(mark_text_list, mark_data_list):
+        mark_change_data = Mark.objects.get(mark_id=mark_data.mark_id)
+        mark_change_data.mark_text = mark_text
+        mark_change_data.save()
 
     makequestion = MakeQuestion.objects.select_related("teacher").filter(
         make_question_id=self_question_id
-    )[0] # TODO
+    ).first()
     mark_list = Mark.objects.select_related("make_question").filter(
         make_question_id=self_question_id
     )
     context = {"makequestion": makequestion, "mark_list": mark_list}
-    return render(request, "sysop/detailed_review.html", context)
+    return render(request, "sysop/detail_quiz.html", context)
 
 
-def write_quiz(request):
-    context = {}
-    return render(request, "sysop/write_quiz.html", context)
-
-
-def create_self_question(request):
-    now = datetime.datetime.now()
-    now_date = now.strftime("%Y-%m-%d")
-
-    try:
-        teacher_id = 0 #TODO: why 0? TEACHER_ADMIN = 0
-        make_question_data = MakeQuestion(
-            teacher=Teacher.objects.get(teacher_id=teacher_id),
-            question_name=request.POST["question_name"],
-            discription=request.POST["discription"],
-            answer=request.POST["answer"],
-            image=request.FILES["image"],
-            hint=request.POST["hint"],
-            made_date=now_date,
-            upload_check=0, #TODO : use meaningful variable
-        )
-        make_question_data.save()
-
-        mark_list = request.POST.getlist("mark_text")
-        temp = MakeQuestion.objects.get(hint=request.POST["hint"], made_date=now_date)
-        # MakeQuestion Table 과 연결된 Mark Table 데이터 추가
-        for i in mark_list:
-            mark_data = Mark(mark_text=i, make_question_id=temp.make_question_id)
-            mark_data.save()
-
-        messages.success(request, "성공적으로 등록되었습니다.")
-
-        return redirect("write_quiz")
-
-    except:
-        messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
-
-        return redirect("write_quiz")
-
-
-def quiz_produce(request):
-    question = Question.objects.select_related()
-    context = {"question": question}
-    return render(request, "sysop/quiz_produce.html", context)
-
-
-def notice(request):
-    context = {}
-    return render(request, "sysop/notice.html", context)
-
-
-def detailed_quiz(request):
+# 문항생성 정보 수정 함수
+def change_question_info(request):
     question_id = request.GET.get("question_id")
-    question = []
-    for i in question_id:
-        question = Question.objects.select_related("category").filter(question_id=i)[0]
-    context = {"question": question}
-    return render(request, "sysop/detailed_quiz.html", context)
+    question_info = Question.objects.get(question_id=question_id)
+    question_info.question_name = request.GET.get("question_name")
+    question_info.category = Category.objects.filter(category_id=request.GET.get("question_category_id")).first()
+    question_info.ques_concept = request.GET.get("question_concept")
+    question_info.discription = request.GET.get("question_discription")
+    question_info.answer = request.GET.get("question_answer")
+    question_info.hint = request.GET.get("question_hint")
+    question_info.save()
 
+    question = Question.objects.filter(question_id=question_id).first()
+    category = Category.objects.all()
 
-def ques_review(request):
-    question = Question.objects.select_related()
-    context = {"question": question}
-    return render(request, "sysop/ques_review.html", context)
-
-
-def ques_detail(request):
-    question_id = request.GET.get("question_id")
-    question = []
-    for i in question_id:
-        question = Question.objects.select_related("category").filter(question_id=i)[0]
-    context = {"question": question}
-    return render(request, "sysop/ques_detail.html", context)
+    context = {"question": question,
+               "category": category}
+    return render(request, "sysop/detail_question.html", context)
