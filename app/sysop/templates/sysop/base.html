@@ -22,6 +22,10 @@
     <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
     <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
+    <!-- login -->
+    <link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
     {% endblock %}
 
 </head>
@@ -49,10 +53,10 @@
                     <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_review' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz_produce' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
