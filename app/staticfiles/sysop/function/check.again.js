@@ -71,16 +71,23 @@ $(".upload-self-cancel").on('click', function () {
 });
 
 $(".change_self_question").on('click', function () {
-    let currentTd = $(this);
-    let currentRow = currentTd.closest("tr");
-    let td1 = currentRow.find("td:eq(1)").text();
-    let td2 = currentRow.find("td:eq(2)").text();
-    let td3 = currentRow.find("td:eq(3)").text();
     const data = '확인 선택시' + '\n' +
         '수정된 내용으로 문제가 변경됩니다.' + '\n' +
         '문제 정보를 변경하시겠습니까?';
     if (confirm(data) == true) {    //확인
         document.change_self_question_form.submit();
+    } else {   //취소
+        return false;
+    }
+    // currentTd.text("승인");
+});
+
+$(".change_question").on('click', function () {
+    const data = '확인 선택시' + '\n' +
+        '수정된 내용으로 문제가 변경됩니다.' + '\n' +
+        '문제 정보를 변경하시겠습니까?';
+    if (confirm(data) == true) {    //확인
+        document.change_question_form.submit();
     } else {   //취소
         return false;
     }
