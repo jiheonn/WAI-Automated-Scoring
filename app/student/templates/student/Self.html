@@ -168,7 +168,6 @@
 
     <!-- Content Row -->
     <form action="{% url 'Selfquestion' %}" method="get">
-        {% csrf_token %}
         <div id="whole_card" class="row my-5">
             <div id="question_list" class="row">
                 {% for data in qs %}
