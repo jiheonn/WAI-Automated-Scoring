@@ -46,8 +46,10 @@ def AIdiag(request):
     now_date = now.strftime('%Y-%m-%d')
 
     try:
-        school = "/static/student/school_gender_img/" + request.GET['category_school'] + ".png"
-        gender = "/static/student/school_gender_img/" + request.GET['category_gender'] + ".png"
+        re_school = request.GET['category_school']
+        re_gender = request.GET['category_gender']
+        school = f'/staticfiles/student/school_gender_img/{re_school}.png'
+        gender = f'/staticfiles/student/school_gender_img/{re_gender}.png'
     except:
         school = ""
         gender = ""
@@ -405,13 +407,11 @@ def Selfques(request):
 
 def Selfdiag(request):
     try:
-        make_question_id = request.GET['question']
+        make_question_id = int(request.GET['question'])
         ques_ans = request.GET['ques_ans']
 
-        key = SelfSolveData.objects.select_related('make_question').filter(make_question_id=make_question_id)
-        data = key[0]
-
         mark = Mark.objects.select_related('make_question').filter(make_question_id=make_question_id)
+        data = mark[0]
 
         context = {
             'data': data,
