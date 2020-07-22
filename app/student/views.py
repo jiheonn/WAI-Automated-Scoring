@@ -17,7 +17,7 @@ def index(request):
     }
     return render(request, 'student/index.html', context)
 
-
+#TODO : 함수명은 대문자를 쓰지 않습니다. 수정 필요
 def AI(request):
     qs = Question.objects.all()
     category = Category.objects.all()
@@ -29,6 +29,7 @@ def AI(request):
     return render(request, 'student/AI.html', context)
 
 
+#TODO : 함수명은 대문자를 쓰지 않습니다. 수정 필요
 def AIques(request):
     question_id = int(request.GET['question_id'])
     data = Question.objects.filter(question_id=question_id)[0]
@@ -38,6 +39,7 @@ def AIques(request):
     return render(request, 'student/AIques.html', context)
 
 
+#TODO : 함수명은 대문자를 쓰지 않습니다. 수정 필요
 def AIdiag(request):
     question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
@@ -52,15 +54,17 @@ def AIdiag(request):
     if (re_school != "") and (re_gender != ""):
         school = f'/staticfiles/student/school_gender_img/{re_school}.png'
         gender = f'/staticfiles/student/school_gender_img/{re_gender}.png'
-    else:
+    else: 
         school = ""
         gender = ""
 
+    # TODO: 불명확한 변수 이름, 더 명확한 변수명을 사용하세요
     key = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
-    data = key[0]
+    data = key[0] #TODO : 남들이 알아볼 수 있는 쉬운 이름으로 작성하세요
 
+    # TODO: 불명확한 변수 이름, 더 명확한 변수명을 사용하세요
     # solve테이블과 question테이블 조인
-    as_qurel_id = key.values('as_qurel_id')[0]['as_qurel_id']
+    as_qurel_id = key.values('as_qurel_id')[0]['as_qurel_id'] #TODO : 함수화를 시켜주세요
     da = Solve.objects.prefetch_related('assignment_question_rel').filter(as_qurel_id=as_qurel_id)
 
     context = {
@@ -72,15 +76,17 @@ def AIdiag(request):
 
     # 나의 답 DB에 저장
     # ssd = StudySolveData.objects.select_related('question').filter(question__question_id=question_id)
+    # TODO : 이미 받아온 값을 한 번더 받아오지 마세요
     try:
         study_solve_data = StudySolveData(
             question_id=question_id,
             school=request.GET['category_school'],
             gender=request.GET['category_gender'],
             response=ques_ans,
-            score=0,
+            score=0, #TODO : 초기값이라면 대문자로 상수를 만들어서 의미를 부여하세요.
             submit_date=now_date
         )
+        # TODO :  필요없는 프린트문은 삭제하세요
         print(study_solve_data)
         study_solve_data.save()
 
@@ -89,14 +95,13 @@ def AIdiag(request):
 
     return render(request, 'student/AIdiag.html', context)
 
-
+# TODO : 함수명을 확인하세요
 def Study(request):
     context = {
-
     }
     return render(request, 'student/Study.html', context)
 
-
+# TODO : 함수명을 확인하세요
 def Studyques(request):
     try:
         # study페이지에서 숙제 코드 가져오기
@@ -113,7 +118,7 @@ def Studyques(request):
             context = {
             }
             return render(request, 'student/Study.html', context)
-
+        # TODO : 쓰지않는 주석문은 제거하세요
         # context = {
         #     'data': data,
         #     'f': f,
@@ -121,6 +126,7 @@ def Studyques(request):
         # }
         # return render(request, 'student/Studyques.html', context)
 
+    # TODO : try except 구문을 쓸 때는 다시한번 고려해주세요
     except:
         try:
             # id로 문항 불러오기
@@ -133,11 +139,13 @@ def Studyques(request):
             f = key[0]
 
         except:
-            pass
+            pass #TODO : 의미없는 pass는 쓰지마세요
+        
 
     # 문항 학습 완료여부 판단
     test_list = []
     done_list = []
+    # TODO: 변수명의 a 또는 b 처럼 의미없는 알파벳을 쓰지마세요
     for a in data:
         as_qurel_id = a.as_qurel_id
         ttt = Solve.objects.filter(as_qurel_id=as_qurel_id)
@@ -174,6 +182,7 @@ def Studyques(request):
     }
     return render(request, 'student/Studyques.html', context)
 
+    # TODO : 삭제
     # except:
     #     context = {
     #         'data': data,
@@ -202,13 +211,13 @@ def Studyques(request):
     #     solve_data = None
     # return render(request, 'student/Studyques.html', context)
 
-
+# TODO : 함수명 확인
 def Homework(request):
     context = {
     }
     return render(request, 'student/Homework.html', context)
 
-
+# TODO : 함수명 확인
 def Homeworkques(request):
     try:
         # Homeworkques페이지에서 숙제 코드 가져오기
@@ -221,11 +230,13 @@ def Homeworkques(request):
         f = data.first()
 
         # 코드가 db에 없으면 원상복귀
+        # TODO : 복잡한 if 문 함수로 변환을 해주세요
         if (f == None) or (student_id == "") or (student_name == ""):
             context = {
             }
             return render(request, 'student/Homeworkcode.html', context)
 
+        # TODO :  의미없는 주석은 삭제
         # context = {
         #     'student_id': student_id,
         #     'data': data,
@@ -257,6 +268,7 @@ def Homeworkques(request):
             pass
 
     # 문항 학습 완료여부 판단
+    # TODO : 똑같은 코드를 copy & paste 했다면 코드의 중복을 제거할 수 있도록 고민해주세요
     test_list = []
     done_list = []
     for a in data:
@@ -279,7 +291,7 @@ def Homeworkques(request):
     }
     return render(request, 'student/Homeworkques.html', context)
 
-
+# TODO : 함수명을 확인해주세요 
 def Homeworkdiag(request):
     question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
