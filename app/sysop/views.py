@@ -276,3 +276,23 @@ def change_question_info(request):
     context = {"question": question,
                "category": category}
     return render(request, "sysop/detail_question.html", context)
+
+def delete_question(request):
+    question_id = request.GET.get("question_id")
+    question_info = Question.objects.get(question_id=question_id)
+    rel_info_list = AssignmentQuestionRel.objects.filter(question=question_id)
+    keyword_info = Keyword.objects.filter(question=question_id)
+    study_solve_info = StudySolveData.objects.filter(question=question_id)
+
+    for rel_info in rel_info_list:
+        solve_info = Solve.objects.filter(as_qurel=rel_info.as_qurel_id)
+        solve_info.delete()
+
+    rel_info_list.delete()
+    keyword_info.delete()
+    study_solve_info.delete()
+    question_info.delete()
+
+    question = Question.objects.all()
+    context = {"question": question}
+    return render(request, "sysop/question.html", context)
