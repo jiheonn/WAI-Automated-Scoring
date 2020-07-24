@@ -163,9 +163,9 @@ def create_quiz(request):
     try:
         TEACHER_ADMIN = 0
 
-        image_number = MakeQuestion.objects.all().last().make_question_id + 1
+        id_number = MakeQuestion.objects.all().last().make_question_id + 1
         image = request.FILES["image"]
-        image.name = str(image_number) + "_" + image.name
+        image.name = str(id_number) + "_" + image.name
 
         make_question_data = MakeQuestion(
             teacher=Teacher.objects.get(teacher_id=TEACHER_ADMIN),
@@ -201,14 +201,14 @@ def create_question(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    image_number = MakeQuestion.objects.all().last().make_question_id + 1
+    id_number = MakeQuestion.objects.all().last().make_question_id + 1
     image = request.FILES["image"]
-    image.name = str(image_number) + "_" + image.name
+    image.name = str(id_number) + "_" + image.name
 
     try:
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
-            model_id=1,
+            model_id=id_number,
             question_name=request.POST["question_name"],
             discription=request.POST["question_discription"],
             answer=request.POST["question_answer"],
@@ -234,23 +234,24 @@ def create_question(request):
 def change_quiz_info(request):
     self_question_id = request.POST["self_question_id"]
 
-    image = request.FILES["image"]
-    image.name = self_question_id + "_" + image.name
-
     self_question_info = MakeQuestion.objects.get(make_question_id=self_question_id)
 
     # 이미지가 없는 경우 패스, 이미지가 있는 경우 이름변경
     try:
+        image = request.FILES["image"]
+        image.name = self_question_id + "_" + image.name
+
         initial_path = self_question_info.image.path
         new_path = settings.MEDIA_ROOT + image.name
         os.rename(initial_path, new_path)
+
+        self_question_info.image = image
     except:
         pass
 
     self_question_info.question_name = request.POST["self_question_name"]
     self_question_info.discription = request.POST["self_question_discription"]
     self_question_info.answer = request.POST["self_question_answer"]
-    self_question_info.image = image
     self_question_info.hint = request.POST["self_question_hint"]
     self_question_info.save()
 
@@ -277,16 +278,19 @@ def change_quiz_info(request):
 # 문항생성 정보 수정 함수
 def change_question_info(request):
     question_id = request.POST["question_id"]
-    image = request.FILES["image"]
-    image.name = question_id + "_" + image.name
 
     question_info = Question.objects.get(question_id=question_id)
 
     # 이미지가 없는 경우 패스, 이미지가 있는 경우 이름변경
     try:
+        image = request.FILES["image"]
+        image.name = question_id + "_" + image.name
+
         initial_path = question_info.image.path
         new_path = settings.MEDIA_ROOT + image.name
         os.rename(initial_path, new_path)
+
+        question_info.image = image
     except:
         pass
 
@@ -295,7 +299,6 @@ def change_question_info(request):
     question_info.ques_concept = request.POST["question_concept"]
     question_info.discription = request.POST["question_discription"]
     question_info.answer = request.POST["question_answer"]
-    question_info.image = image
     question_info.hint = request.POST["question_hint"]
     question_info.save()
 
