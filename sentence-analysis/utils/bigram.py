@@ -25,7 +25,6 @@ spamWords = set(
     ]
 )
 
-
 def get_tokenized_words(sentences):
     twitter = Okt()
     word_count = Counter()
@@ -37,5 +36,5 @@ def get_tokenized_words(sentences):
     ]
     word_count.update(tokenized)
     # the most frequent word in the counter.
-    most_common, _ = word_count.most_common()[0]
-    return tokenized, most_common
+    most_common, frequency = word_count.most_common()[0]
+    return tokenized, most_common, frequency

@@ -7,42 +7,63 @@
 <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
 <!-- Custom styles for this template -->
+
 <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
-
 <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
+<link href="{% static 'teacher/css/bigram_tree.css' %}" rel="stylesheet">
 
 <!-- Page Content -->
 <div class="container">
-
-    <!-- Heading Row -->
-    <div class="row justify-content-center my-5">
-        <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                 height="120" alt="">
+    <div id="input-page">
+        <!-- Heading Row -->
+        <div class="row justify-content-center my-5">
+            <div class="col-lg-2">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                    height="120" alt="">
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-5">
+                <p class="font-weight-bolder triangle-border left">
+                    분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성해 주세요.
+                    가급적 완전한 문장의 형태로 작성해주시기 바랍니다.
+                    문장의 수가 너무 적으면 트리가 그려지지 않을 수 있어요.
+                    입력 형식은 텍스트로 부탁드립니다. </p>
+            </div>
+            <!-- /.col-md-4 -->
         </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <p class="font-weight-bolder triangle-border left">
-                분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성해 주세요.
-                입력 형식은 텍스트로 부탁드립니다.</p>
+        <!-- /.row -->
+        <div class="col-7 text-box">
+            <textarea id="input-textarea" type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
         </div>
-        <!-- /.col-md-4 -->
+        <div class="col-lg-3 btn-center">
+            <button id="input-submitbutton" type="submit" class="w3-button w3-large w3-round w3-blue">Bigram Tree 결과 보기</button>
+        </div>
     </div>
-    <!-- /.row -->
-    <div class="col-7 text-box">
-        <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
-    </div>
-    <div class="col-lg-3 btn-center">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">Bigram Tree 결과 보기</button>
+    <div id="bigramtree">
+      <div id="header">
+        <div class="wrapper">
+          <div id="back"><b><a href="/teacher/bigram_tree/">처음으로</a></b></div>
+          <form id="form-source">
+            <input type="text" id="source" placeholder="">
+          </form>
+          <form id="form">
+            <input type="text" id="keyword" placeholder="Keyword…">
+            <label for="reverse" style="font-size: small"><input id="reverse" type="checkbox"> 뒤집어 보기 </label>
+          </form>
+        </div>
+      </div>
+      <div id="instruction">
+        중심 키워드로 설정하려면 Shift와 마우스 왼쪽 클릭을 동시에 하세요.
+      </div>
+      <div id="vis"></div>
+      <div id="text"></div>
+      <div id="heat"></div>
     </div>
 
 </div>
@@ -51,5 +72,8 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/d3/d3.min.js' %}"></script>
+<script src="{% static 'teacher/js/bigramtree.js' %}"></script>
+
 
 {% endblock %}
