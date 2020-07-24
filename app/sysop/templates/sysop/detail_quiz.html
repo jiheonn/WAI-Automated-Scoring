@@ -24,6 +24,16 @@
         margin-top: 20px;
         margin-bottom: 20px;
     }
+
+    .box {
+        display: none;
+        width: 100%;
+    }
+
+    button:hover + .box, .box:hover {
+        display: block;
+        position: relative;
+        z-index: 100;
 </style>
 
 <!-- Bootstrap core CSS -->
@@ -146,10 +156,17 @@
                 </tr>
             </table>
             <br>
-
-            <form name="change_self_question_form" action="{% url 'change_quiz_info' %}">
+            <button class="btn btn-secondary">현재사진 미리보기</button>
+            <div class="box">
+                <img src="/media/{{makequestion.image}}" alt="이미지가 없습니다" width="300px" height=auto>
+            </div>
+            <form name="change_self_question_form" action="{% url 'change_quiz_info' %}" method="POST"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
                 <input type="hidden" name="self_question_id" value="{{ makequestion.make_question_id }}">
-                <!--                        <div class="col-7 sct-center">-->
+                <strong>사진을 수정할 경우 새로운 사진파일을 업로드해 주세요.</strong>
+                <input type="file" name="image">
+                <br>
                 <span>문항제목 :
                     <input class="input-box" type="text" style="width:100%" name="self_question_name"
                            value="{{ makequestion.question_name }}">

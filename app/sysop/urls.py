@@ -40,4 +40,9 @@ urlpatterns = [
         views.change_question_info,
         name="change_question_info"
     ),
+    path(
+        "delete_question/",
+        views.delete_question,
+        name="delete_question"
+    ),
 ]

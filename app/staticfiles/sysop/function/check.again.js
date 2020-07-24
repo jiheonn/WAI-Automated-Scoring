@@ -72,7 +72,7 @@ $(".upload-self-cancel").on('click', function () {
 
 $(".change_self_question").on('click', function () {
     const data = '확인 선택시' + '\n' +
-        '수정된 내용으로 문제가 변경됩니다.' + '\n' +
+        '수정된 내용으로 문제가 변경됩니다.' + '\n\n' +
         '문제 정보를 변경하시겠습니까?';
     if (confirm(data) == true) {    //확인
         document.change_self_question_form.submit();
@@ -84,10 +84,29 @@ $(".change_self_question").on('click', function () {
 
 $(".change_question").on('click', function () {
     const data = '확인 선택시' + '\n' +
-        '수정된 내용으로 문제가 변경됩니다.' + '\n' +
+        '수정된 내용으로 문제가 변경됩니다.' + '\n\n' +
         '문제 정보를 변경하시겠습니까?';
     if (confirm(data) == true) {    //확인
         document.change_question_form.submit();
+    } else {   //취소
+        return false;
+    }
+    // currentTd.text("승인");
+});
+
+$(".delete_question_btn").on('click', function () {
+    let currentTd = $(this);
+    let currentRow = currentTd.closest("tr");
+    let td1 = currentRow.find("td:eq(1)").text();
+    let td2 = currentRow.find("td:eq(2)").text();
+    let td3 = currentRow.find("td:eq(3)").text();
+    const data = '확인 선택시' + '\n' +
+        '문항명 : ' + td1 + '\n' +
+        '최초등록일자 : ' + td2 + '\n\n' +
+        '해당 문항이 삭제되며\n' +
+        '문항 관련된 데이터가 모두 삭제됩니다.';
+    if (confirm(data) == true) {    //확인
+        document.delete_question_form.submit();
     } else {   //취소
         return false;
     }
