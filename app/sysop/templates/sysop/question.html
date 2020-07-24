@@ -81,6 +81,7 @@
 
                 1. 새로운 문항을 추가할 수 있습니다. <br>
                 2. 기존의 문항을 수정할 수 있습니다. <br>
+                3. 기존의 문항을 삭제할 수 있습니다. <br>
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -101,15 +102,24 @@
                     <th>문항번호</th>
                     <th>문항명</th>
                     <th>최초등록일자</th>
+                    <th>삭제하기</th>
                     <th>수정하기</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for item in question %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td> {{ item.question_id }}</td>
+                    <td> {{ forloop.counter }} </td>
                     <td> {{ item.question_name }}</a></td>
                     <td> {{ item.made_date }}</td>
+                    <td>
+                        <form name="delete_question_form" action="{% url 'delete_question' %}" method="GET">
+                            <button type="submit" class="delete_question_btn btn btn-outline-danger" name="question_id"
+                                    value="{{ item.question_id }}">
+                                삭제하기
+                            </button>
+                        </form>
+                    </td>
                     <td>
                         <form action="{% url 'detail_question' %}" method="GET">
                             <button type="submit" class="btn btn-outline-info" name="question_id"
@@ -150,5 +160,6 @@
 <!-- Bootstrap core JavaScript -->
 <!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'sysop/function/check.again.js' %}"></script>
 
 {% endblock %}
