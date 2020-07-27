@@ -57,7 +57,7 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
-        <p class="font-weight-bolder triangle-border left">문제를 잘 읽고 여러분의 생각을 설명해 보세요.</p>
+        <p class="font-weight-bolder triangle-border left">문제를 잘 읽고 여러분의 생각을 설명해 보세요.</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -72,10 +72,13 @@
                     학습 목록
                 </th>
 
-                {% for d in data %}
+                {% for d in join_aqr_q %}
                 <tr id="t_id">
                     <td>
                         <form action="{% url 'Homeworkquestion' %}" method="GET">
+                            <input type="hidden" name="ID_num" value="{{student_id}}">
+                            <input type="hidden" name="student_name" value="{{student_name}}">
+                            <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
 <!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
                             <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
                                     value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
@@ -104,22 +107,21 @@
 
             <!-- Title -->
             <form action="{% url 'Homeworkdiagnosis' %}" method="GET">
-<!--                {% csrf_token %}-->
                 <input type="hidden" name="student_id" id ="student_id" value="{{student_id}}">
                 <input type="hidden" name="student_name" id ="student_name" value="{{student_name}}">
             <!-- Title -->
-                <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{f.question.question_id}}"
-                                                   id="{{f.question.question_id}}">{{f.question.question_name}}</h2>
+                <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{first_data.question.question_id}}"
+                                                   id="{{first_data.question.question_id}}">{{first_data.question.question_name}}</h2>
 
                 <hr>
 
                 <!-- Preview Image -->
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ first_data.question.image.url }}">
 
                 <hr>
 
                 <!-- Post Content -->
-                <p>{{f.question.discription}}
+                <p>{{first_data.question.discription}}
                 </p>
 
                 <hr>
@@ -152,7 +154,3 @@
 <!-- /.container -->
 
 {% endblock %}
-
-
-
-

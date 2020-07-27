@@ -5,46 +5,44 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", views.index, name="student"),
-    path("AI/", views.AI, name="AI"),
-    path("Study/", views.Study, name="Study"),
-    path("Homework/", views.Homework, name="Homework"),
-    path("Self/", views.Self, name="Self"),
-    path("AI/AIques/", views.AIques, name="AIquestion"),
-    path("Study/Studyques/", views.Studyques, name="Studyquestion"),
+    path("", views.good_ex, name="student"),
+    path("AI/", views.ai, name="AI"),
+    path("AI/AIques/", views.ai_question, name="AIquestion"),
+    path("AI/AIques/AIdiag/", views.ai_diagnosis, name="AIdiagnosis"),
+    path("Study/", views.study_evaluate, name="Study"),
+    path("Study/Studyques/", views.study_evaluate_question, name="Studyquestion"),
+    path("Homeworkselect/", views.homework_do_check_select, name="Homeworkselect"),
+    path("Homework/", views.homework_check_id, name="Homework"),
     path(
-        "Homework/Homeworkselect/Homeworkcode/Homeworkques/",
-        views.Homeworkques,
-        name="Homeworkquestion",
-    ),
-    path("Self/Selfques/", views.Selfques, name="Selfquestion"),
-    path("Self/Selfques/Selfdiag/", views.self_diagnosis_view, name="Selfdiagnosis"),
-    path("Self/Selfques/Selfdiag/Selfgrade/", views.Selfgrade, name="Selfgrade"),
-    path(
-        "Homework/Homeworkselect/Homeworkcode/Homeworkques/Homeworkdiag/",
-        views.Homeworkdiag,
-        name="Homeworkdiagnosis",
-    ),
-    path("AI/AIques/AIdiag/", views.AIdiag, name="AIdiagnosis"),
-    path("Homeworkselect/", views.Homeworkselect, name="Homeworkselect"),
-    path(
-        "Homeworkselect/Homework/Homeworklist/", views.Homeworklist, name="Homeworklist"
+        "Homeworkselect/Homework/Homeworklist/", views.homework_check_list, name="Homeworklist"
     ),
     path(
         "Homeworkselect/Homework/Homeworklist/Homeworkcheck/",
-        views.Homeworkcheck,
+        views.homework_check_homework,
         name="Homeworkcheck",
     ),
-    path("Homeworkselect/Homeworkcode/", views.Homeworkcode, name="Homeworkcode"),
-    path("Notice/", views.Notice, name="Notice"),
-    path("search/", views.search, name="search"),
-    path("search_name/", views.search_name, name="search_name"),
-    path("change_category/", views.change_category, name="change_category"),
+    path("Homeworkselect/Homeworkcode/", views.homework_do_code, name="Homeworkcode"),
     path(
-        "change_category_self/", views.change_category_self, name="change_category_self"
+        "Homework/Homeworkselect/Homeworkcode/Homeworkques/",
+        views.homework_do_question,
+        name="Homeworkquestion",
     ),
-    path("check_code/", views.check_code, name="check_code"),
-    path("check_ID/", views.check_ID, name="check_ID"),
+    path(
+        "Homework/Homeworkselect/Homeworkcode/Homeworkques/Homeworkdiag/",
+        views.homework_do_diagnosis,
+        name="Homeworkdiagnosis",
+    ),
+    path("Self/", views.self, name="Self"),
+    path("Self/Selfques/", views.self_question, name="Selfquestion"),
+    path("Self/Selfques/Selfdiag/", views.self_diagnosis, name="Selfdiagnosis"),
+    path("Self/Selfques/Selfdiag/Selfgrade/", views.self_grade_score, name="Selfgrade"),
+    path("Notice/", views.notice, name="Notice"),
+    path("search/", views.search_keyword, name="search"),
+    path("search_name/", views.search_name, name="search_name"),
+    path("change_category/", views.change_category_ai, name="change_category"),
+    # path(
+    #     "change_category_self/", views.change_category_self, name="change_category_self"
+    # ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
