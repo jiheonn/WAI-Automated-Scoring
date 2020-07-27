@@ -16,7 +16,7 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습
+                    <a class="nav-link" href="{% url 'STU_evaluate_exercise' %}">평가연습
                     </a>
                 </li>
                 <li class="nav-item">
@@ -56,7 +56,7 @@
     <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4">
         <div class="card-body">
-            <a class="w3-btn w3-small w3-light-grey" href="{% url 'AI' %}">전체문항</a>
+            <a class="w3-btn w3-small w3-light-grey" href="{% url 'STU_evaluate_exercise' %}">전체문항</a>
             <h5 class="text-white m-0 text-center">문제 풀기</h5>
 
         </div>
@@ -69,7 +69,7 @@
         <!-- Post Content Column -->
         <div class="col-lg-12">
             <!-- Comments Form -->
-            <form action="{% url 'AIdiagnosis' %}" method="GET">
+            <form action="{% url 'STU_evaluate_exercise_diagnosis' %}" method="GET">
             <!-- Title -->
                 <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{ data.question_id }}"
                                                    id="{{ data.question_id }}">{{data.question_name}}</h2>
@@ -96,7 +96,7 @@
                         <div class="col-md-10">
                             <table>
                                 <td>
-                                    <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'AIdiagnosis' %}'"
+                                    <a onclick="alert('제출이 완료되었습니다.\n피드백을 확인하러 가볼까요?'); document.location.href='{% url 'STU_evaluate_exercise_diagnosis' %}'"
                                        style="cursor:pointer">
                                         <button type="submit" class="w3-btn w3-round w3-blue" id="bt">제출하기</button>
                                     </a>
