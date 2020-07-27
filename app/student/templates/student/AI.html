@@ -123,7 +123,7 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-3">
-            <p class="font-weight-bolder triangle-border left">학습할 문항을 선택하세요. 
+            <p class="font-weight-bolder triangle-border left">학습할 문항을 선택하세요.
             </p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
@@ -163,7 +163,6 @@
 
     <!-- Content Row -->
     <form action="{% url 'AIquestion' %}" method="get">
-        {% csrf_token %}
         <div id="whole_card" class="row my-5">
             <div id="question_list" class="row">
                 {% for data in qs %}

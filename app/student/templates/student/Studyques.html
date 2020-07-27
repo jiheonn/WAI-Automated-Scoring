@@ -76,52 +76,19 @@
             <p class="font-weight-bolder triangle-border left">선생님이 선택한 문항입니다.<br>
                 성실하게 응답해주세요.
             </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-
     <form action="{% url 'Studyquestion' %}" method="GET">
         <div class="row">
             <div class="col-lg-3">
-<!--                테이블 수정 전-->
-<!--                <table class="w3-table-all w3-centered" id="ques_table">-->
-<!--                    <th class="w3-indigo">-->
-<!--                        학습 목록-->
-<!--                    </th>-->
-<!--                    <th class="w3-indigo">-->
-<!--                        완료-->
-<!--                    </th>-->
-
-<!--                    <tr id="t_id">-->
-<!--                        {% for d in data %}-->
-<!--                        <td>-->
-<!--&lt;!&ndash;                            <form action="{% url 'Studyquestion' %}" method="GET">&ndash;&gt;-->
-<!--    &lt;!&ndash;                           {{d.question.question_id}} 대신 {{d.question.question_name}}임&ndash;&gt;-->
-<!--                                <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"-->
-<!--                                        value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">-->
-<!--                                    {{d.question.question_name}}-->
-<!--                                </button>-->
-<!--                                &lt;!&ndash;                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </form>&ndash;&gt;-->
-<!--                        </td>-->
-<!--                        {% endfor %}-->
-<!--                        {% for done in done_list %}-->
-<!--                        <td>-->
-<!--                            {{done}}-->
-<!--                        </td>-->
-<!--                        {% endfor %}-->
-<!--                    </tr>-->
-
-<!--                </table>-->
-<!--                테이블 수정 후-->
                 <table class="w3-table-all w3-centered" id="ques_table">
                     <th class="w3-indigo">
                         학습 목록
                     </th>
-                    {% for d in data %}
+                    {% for d in join_aqr_q %}
                     <tr id="t_id">
                         <td>
 <!--                            <form action="{% url 'Studyquestion' %}" method="GET">-->
@@ -130,7 +97,6 @@
                                         value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
                                     {{d.question.question_name}}
                                 </button>
-                                <!--                        <a href="{% url 'Studyquestion' %}">{{d.question.question_name}}</a>-->
 <!--                            </form>-->
                         </td>
                     </tr>
@@ -148,31 +114,26 @@
                 </table>
             </div>
 
-
-
             <!--문항 작성-->
             <div class="col-lg-9">
-                <h2 class="mt-4" id="q_name">{{f.question.question_name}}</h2>
+                <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
+                <h2 class="mt-4" id="q_name">{{first_data.question.question_name}}</h2>
                 <hr>
-
                 <!-- Preview Image -->
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ f.question.image.url }}">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ first_data.question.image.url }}">
                 <hr>
-
                 <!-- Post Content -->
-                <p>{{f.question.discription}}
+                <p>{{first_data.question.discription}}
                 </p>
                 <hr>
-
                 <!-- Comments Form -->
                 <div class="card my-4">
                     <h5 class="card-header">생각을 적어보세요:</h5>
                     <div class="card-body">
                         <div class="form-group">
-<!--                            <form action="{% url 'Studyquestion' %}" method="GET">-->
-                                <input type="hidden" name="student_info" id ="student_info" value="{{student_id}}">
-                                <textarea class="form-control" rows="3" id="ques_ans"></textarea>
-<!--                            </form>-->
+                            <input type="hidden" name="ID_num" value="{{student_id}}">
+                            <input type="hidden" name="student_name" value="{{student_name}}">
+                            <textarea class="form-control" rows="3" id="ques_ans"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table width="600">
