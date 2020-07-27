@@ -42,13 +42,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_data' %}">신규교사정보</a>
+                    <a class="nav-link" href="{% url 'SYS_view_teacher_data' %}">신규교사정보</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'quiz' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'SYS_view_quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'question' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'SYS_view_question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -89,7 +89,7 @@
         <div class="container">
 
             <div class="row justify-content-center">
-                <form action="{% url 'make_question' %}">
+                <form action="{% url 'SYS_make_question' %}">
                     <button style="width:100%" class="btn btn-outline-success">
                         신규문항 작성하기
                     </button>
@@ -113,7 +113,7 @@
                     <td> {{ item.question_name }}</a></td>
                     <td> {{ item.made_date }}</td>
                     <td>
-                        <form name="delete_question_form" action="{% url 'delete_question' %}" method="GET">
+                        <form name="delete_question_form" action="{% url 'SYS_delete_question' %}" method="GET">
                             <button type="submit" class="delete_question_btn btn btn-outline-danger" name="question_id"
                                     value="{{ item.question_id }}">
                                 삭제하기
@@ -121,7 +121,7 @@
                         </form>
                     </td>
                     <td>
-                        <form action="{% url 'detail_question' %}" method="GET">
+                        <form action="{% url 'SYS_detail_question' %}" method="GET">
                             <button type="submit" class="btn btn-outline-info" name="question_id"
                                     value="{{ item.question_id }}">
                                 자세히보기
