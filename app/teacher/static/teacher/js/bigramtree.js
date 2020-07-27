@@ -506,20 +506,24 @@ d3.select(window).on("keydown.hover", hoverKey).on("keyup.hover", hoverKey).on("
   $.ajax({
     url : api_server + '/get-tokenized',
     data : context,
-    success: function(data) {
-        console.log(data);
-        input_text = data.tokenized.join(' ');
-        most_common = data.most_common;
-        frequency = data.frequency;
-        if ( frequency <= 1 ) { alert('최소한 두 번 이상 반복되는 단어가 있어야 합니다.'); return; }
-        $('#input-page').css("display", "none");
-        $('#bigramtree').css("display", "block");
-        document.getElementById("input-textarea").value = "";
-        url({
-          source: 'custom',
-          prefix: most_common
-          }, !0), change(input_text);
-    },
+    success: function(response) {
+        if ( response.id == "get-tokenized" ) {
+          input_text = response.data.tokenized.join(' ');
+          most_common = response.data.most_common;
+          frequency = response.data.frequency;
+          if ( frequency <= 1 ) { alert('최소한 두 번 이상 반복되는 단어가 있어야 합니다.'); return; }
+          $('#input-page').css("display", "none");
+          $('#bigramtree').css("display", "block");
+          document.getElementById("input-textarea").value = "";
+          url({
+            source: 'custom',
+            prefix: most_common
+            }, !0), change(input_text);
+        } else {
+          alert('처리할 수 있는 단어가 존재하지 않습니다. 보편적으로 사용하는 문장을 넣어 주세요.');
+          return;
+        }
+    }, error: function(e) { return; },
   });
 });
 

@@ -27,16 +27,31 @@ def get_tokenized():
     print(f"[INPUT] raw_sentence : {raw_sentence}")
     result, most_common_word, frequency = bigram.get_tokenized_words(raw_sentence)
     context = {
-        "tokenized": result,
-        "most_common": most_common_word,
-        "frequency": frequency,
+        "id": "get-tokenized",
+        "data": {
+            "tokenized": result,
+            "most_common": most_common_word,
+            "frequency": frequency,
+        },
     }
     return context
+
+
+@app.errorhandler(Exception)
+@cross_origin()
+def handling_exception(e):
+    sa_logger.error('Exception: %s', (e))
+    context = {
+        "id": "error",
+    }
+    return context
+
 
 @app.after_request
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
