@@ -29,19 +29,20 @@ urlpatterns = [
     # 숙제하기 페이지
     path("do_homework_by_code/", views.do_homework_by_code, name="student_do_homework_by_code"),
     path(
-        "do_homework_question/",
+        "do_homework/question/",
         views.do_homework_question,
         name="student_do_homework_question",
     ),
     path(
-        "do_homework_question/do_homework_diagnosis/",
+        "do_homework/question/diagnosis/",
         views.do_homework_diagnosis,
         name="student_do_homework_diagnosis",
     ),
-    path("Self/", views.self, name="Self"),
-    path("Self/Selfques/", views.self_question, name="Selfquestion"),
-    path("Self/Selfques/Selfdiag/", views.self_diagnosis, name="Selfdiagnosis"),
-    path("Self/Selfques/Selfdiag/Selfgrade/", views.self_grade_score, name="Selfgrade"),
+    # 스스로 평가 페이지
+    path("evaluate_self/", views.evaluate_self, name="student_evaluate_self"),
+    path("evaluate_self/question/", views.evaluate_self_question, name="student_evaluate_self_question"),
+    path("evaluate_self/question/diagnosis/", views.evaluate_self_diagnosis, name="student_evaluate_self_diagnosis"),
+    path("evaluate_self/question/diagnosis/score/", views.evaluate_self_score, name="student_evaluate_self_score"),
     path("Notice/", views.notice, name="Notice"),
     path("search/", views.search_keyword, name="search"),
     path("search_name/", views.search_name, name="search_name"),

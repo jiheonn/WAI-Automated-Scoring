@@ -16,16 +16,16 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기</a>
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가
+                    <a class="nav-link" href="{% url 'student_evaluate_self' %}">스스로 평가
                     </a>
                 </li>
                 <li class="nav-item">
@@ -66,7 +66,7 @@
 
     <!-- Content Row -->
     <div class="row">
-    <form action="{% url 'Selfdiagnosis' %}" method="GET">
+    <form action="{% url 'student_evaluate_self_diagnosis' %}" method="GET">
       <!-- Post Content Column -->
       <div class="col-lg-12">
           <input type="hidden" class="w3-btn w3-round w3-blue" name="question" value="{{ data.make_question_id }}"
@@ -91,9 +91,7 @@
                     <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
                   </div>
                     <div class="col-lg-6">
-<!--                        <a href="{% url 'Selfdiagnosis' %}">-->
                             <button type="submit" class="w3-btn w3-round w3-indigo">스스로 평가하기</button>
-<!--                        </a>-->
                         <br>
                     </div>
                 </form>

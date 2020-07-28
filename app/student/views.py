@@ -361,7 +361,7 @@ def do_homework_diagnosis(request):
 
 
 # 스스로 평가하기 페이지
-def self(request):
+def evaluate_self(request):
     qs = MakeQuestion.objects.all()
     # category = Category.objects.all()
 
@@ -373,7 +373,7 @@ def self(request):
 
 
 # 스스로 평가하기 문항 페이지
-def self_question(request):
+def evaluate_self_question(request):
     make_question_id = int(request.GET['make_question_id'])
     data = MakeQuestion.objects.filter(make_question_id=make_question_id)[0]
 
@@ -384,7 +384,7 @@ def self_question(request):
 
 
 # 스스로 평가하기 문항 피드백 및 자가채점 계산 페이지
-def self_diagnosis(request):
+def evaluate_self_diagnosis(request):
     make_question_id = int(request.GET['question'])
     ques_ans = request.GET['ques_ans']
 
@@ -405,7 +405,7 @@ def self_diagnosis(request):
 
 
 # 스스로 평가하기 자가채점 결과 페이지
-def self_grade_score(request):
+def evaluate_self_score(request):
     make_question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
     score_list = request.GET.getlist('score')
