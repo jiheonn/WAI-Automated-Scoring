@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_socketio import SocketIO
+from flask_cors import CORS, cross_origin
 from utils import bigram
 
 import argparse
@@ -7,7 +7,7 @@ import logging
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "qvm"
-socketio = SocketIO(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 sa_logger = logging.getLogger("sentence-analysis")
 sa_logger.setLevel(logging.INFO)
@@ -19,18 +19,38 @@ stream_handler.setFormatter(logger_format)
 sa_logger.addHandler(stream_handler)
 
 
-@app.route("/get-tokenized", methods=["POST"])
+@app.route("/get-tokenized/", methods=["GET"])
+@cross_origin()
 def get_tokenized():
     sa_logger.info("get-tokenized")
-    requested_data = request.get_json()
-    raw_sentence = requested_data["raw_sentence"]
+    raw_sentence = request.args.get('raw_sentence')
     print(f"[INPUT] raw_sentence : {raw_sentence}")
-    result, most_common_word = bigram.get_tokenized_words(raw_sentence)
+    result, most_common_word, frequency = bigram.get_tokenized_words(raw_sentence)
     context = {
-        "tokenized": result,
-        "most_common": most_common_word,
+        "id": "get-tokenized",
+        "data": {
+            "tokenized": result,
+            "most_common": most_common_word,
+            "frequency": frequency,
+        },
     }
     return context
+
+
+@app.errorhandler(Exception)
+@cross_origin()
+def handling_exception(e):
+    sa_logger.error('Exception: %s', (e))
+    context = {
+        "id": "error",
+    }
+    return context
+
+
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 if __name__ == "__main__":
@@ -40,4 +60,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     sa_logger.info("Start Sentence-Analysis Server.")
-    socketio.run(app, host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True)
