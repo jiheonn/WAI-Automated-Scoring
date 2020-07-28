@@ -14,26 +14,29 @@ urlpatterns = [
     # 학습평가 페이지
     path("study_evaluate/", views.study_evaluate, name="student_study_evaluate"),
     path("study_evaluate/question/", views.study_evaluate_question, name="student_study_evaluate_question"),
-    path("Homeworkselect/", views.homework_do_check_select, name="Homeworkselect"),
-    path("Homework/", views.homework_check_id, name="Homework"),
+    # 숙제하기, 숙제 조회 중 선택 페이지
+    path("select_homework/", views.select_homework, name="student_select_homework"),
+    # 숙제 조회 페이지
+    path("check_homework_by_id/", views.check_homework_by_id, name="student_check_homework_by_id"),
     path(
-        "Homeworkselect/Homework/Homeworklist/", views.homework_check_list, name="Homeworklist"
+        "check_homework_list/", views.check_homework_list, name="student_check_homework_list"
     ),
     path(
-        "Homeworkselect/Homework/Homeworklist/Homeworkcheck/",
-        views.homework_check_homework,
-        name="Homeworkcheck",
+        "check_homework_list/check_homework_question",
+        views.check_homework_question,
+        name="student_check_homework_question",
     ),
-    path("Homeworkselect/Homeworkcode/", views.homework_do_code, name="Homeworkcode"),
+    # 숙제하기 페이지
+    path("do_homework_by_code/", views.do_homework_by_code, name="student_do_homework_by_code"),
     path(
-        "Homework/Homeworkselect/Homeworkcode/Homeworkques/",
-        views.homework_do_question,
-        name="Homeworkquestion",
+        "do_homework_question/",
+        views.do_homework_question,
+        name="student_do_homework_question",
     ),
     path(
-        "Homework/Homeworkselect/Homeworkcode/Homeworkques/Homeworkdiag/",
-        views.homework_do_diagnosis,
-        name="Homeworkdiagnosis",
+        "do_homework_question/do_homework_diagnosis/",
+        views.do_homework_diagnosis,
+        name="student_do_homework_diagnosis",
     ),
     path("Self/", views.self, name="Self"),
     path("Self/Selfques/", views.self_question, name="Selfquestion"),

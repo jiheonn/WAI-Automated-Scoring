@@ -196,21 +196,21 @@ def get_question_by_id(question_info):
 
 
 # 숙제하기와 숙제조회 선택 페이지
-def homework_do_check_select(request):
+def select_homework(request):
     context = {
     }
     return render(request, 'student/Homeworkselect.html', context)
 
 
 # 숙제조회 id 입력 페이지
-def homework_check_id(request):
+def check_homework_by_id(request):
     context = {
     }
     return render(request, 'student/Homework.html', context)
 
 
 # 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트)
-def homework_check_list(request):
+def check_homework_list(request):
     # question_info = request.GET['question_name'].split(',')
     # question_name = question_info[0]
     # assignment_id = question_info[1]
@@ -234,7 +234,7 @@ def homework_check_list(request):
 
 
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
-def homework_check_homework(request):
+def check_homework_question(request):
     student_id = int(request.GET['student_id'])
     # assignment_title = request.GET['assignment_id']
     # print(assignment_title.values())
@@ -253,14 +253,14 @@ def homework_check_homework(request):
 
 
 # 숙제하기 코드입력 페이지
-def homework_do_code(request):
+def do_homework_by_code(request):
     context = {
     }
     return render(request, 'student/Homeworkcode.html', context)
 
 
 # 숙제하기 문항 페이지
-def homework_do_question(request):
+def do_homework_question(request):
     # try:
     #     # Homeworkques 페이지에서 숙제 코드 가져오기
     #     assignment_id = request.GET['code_num']
@@ -325,7 +325,7 @@ def homework_do_question(request):
 
 
 # 숙제하기 문항 피드백 페이지
-def homework_do_diagnosis(request):
+def do_homework_diagnosis(request):
     question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
     student_id = request.GET['student_id']
