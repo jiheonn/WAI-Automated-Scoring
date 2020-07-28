@@ -7,11 +7,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     # 좋은 설명 페이지
     path("", views.good_explain, name="student"),
-    path("AI/", views.ai, name="AI"),
-    path("AI/AIques/", views.ai_question, name="AIquestion"),
-    path("AI/AIques/AIdiag/", views.ai_diagnosis, name="AIdiagnosis"),
-    path("Study/", views.study_evaluate, name="Study"),
-    path("Study/Studyques/", views.study_evaluate_question, name="Studyquestion"),
+    # 평가연습 페이지
+    path("evaluate_exercise/", views.evaluate_exercise, name="student_evaluate_exercise"),
+    path("evaluate_exercise/question/", views.evaluate_exercise_question, name="student_evaluate_exercise_question"),
+    path("evaluate_exercise/question/diagnosis/", views.evaluate_exercise_diagnosis, name="student_evaluate_exercise_diagnosis"),
+    # 학습평가 페이지
+    path("study_evaluate/", views.study_evaluate, name="student_study_evaluate"),
+    path("study_evaluate/question/", views.study_evaluate_question, name="student_study_evaluate_question"),
     path("Homeworkselect/", views.homework_do_check_select, name="Homeworkselect"),
     path("Homework/", views.homework_check_id, name="Homework"),
     path(

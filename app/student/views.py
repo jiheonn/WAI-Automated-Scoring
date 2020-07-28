@@ -23,7 +23,7 @@ def good_explain(request):
 
 
 # 평가연습
-def ai(request):
+def evaluate_exercise(request):
     qs = Question.objects.all()
     category = Category.objects.all()
 
@@ -35,7 +35,7 @@ def ai(request):
 
 
 # 평가연습 문항 페이지
-def ai_question(request):
+def evaluate_exercise_question(request):
     question_id = int(request.GET['question_id'])
     data = Question.objects.filter(question_id=question_id).first()
     context = {
@@ -45,7 +45,7 @@ def ai_question(request):
 
 
 # 평가연습 피드백 페이지
-def ai_diagnosis(request):
+def evaluate_exercise_diagnosis(request):
     question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
 
