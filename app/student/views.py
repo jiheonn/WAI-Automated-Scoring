@@ -9,23 +9,21 @@ from django.db.models import Q
 import datetime
 import json
 
-# TODO : import 세분화하
 from mainpage.models import Question, SelfSolveData, AssignmentQuestionRel, Keyword, Solve, Assignment, MakeQuestion, \
     Category, StudySolveData, Mark
 
 INIT_SCORE = 0
 
 
-# TODO : 함수명 구체적으로 바꾸기
 # 좋은 설명
-def good_ex(request):
+def good_explain(request):
     context = {
     }
-    return render(request, 'student/index.html', context)
+    return render(request, 'student/good_explain.html', context)
 
 
 # 평가연습
-def evaluate_exercise(request):
+def ai(request):
     qs = Question.objects.all()
     category = Category.objects.all()
 
@@ -33,21 +31,21 @@ def evaluate_exercise(request):
         'qs': qs,
         'category': category
     }
-    return render(request, 'student/evaluate_exercise.html', context)
+    return render(request, 'student/AI.html', context)
 
 
 # 평가연습 문항 페이지
-def evaluate_exercise_question(request):
+def ai_question(request):
     question_id = int(request.GET['question_id'])
     data = Question.objects.filter(question_id=question_id).first()
     context = {
         'data': data
     }
-    return render(request, 'student/evaluate_exercise_question.html', context)
+    return render(request, 'student/AIques.html', context)
 
 
 # 평가연습 피드백 페이지
-def evaluate_exercise_diagnosis(request):
+def ai_diagnosis(request):
     question_id = request.GET['question_id']
     ques_ans = request.GET['ques_ans']
 
@@ -65,7 +63,6 @@ def evaluate_exercise_diagnosis(request):
         school = ""
         gender = ""
 
-    # TODO : 변수명 바꾸기
     join_aqr_q = AssignmentQuestionRel.objects.select_related('question').filter(question__question_id=question_id)
     data = join_aqr_q.first()
 
@@ -91,7 +88,7 @@ def evaluate_exercise_diagnosis(request):
     except:
         study_solve_data = None
 
-    return render(request, 'student/evaluate_exercise_diagnosis.html', context)
+    return render(request, 'student/AIdiag.html', context)
 
 
 # 학습평가 코드 입력 페이지
