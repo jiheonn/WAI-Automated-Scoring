@@ -482,7 +482,7 @@ def search_name(request):
 
 
 # 평가연습의 카테고리 선택
-def change_category_ai(request):
+def change_category_evaluate_exercise(request):
     category_option = request.GET['option']
 
     if category_option == 'select':

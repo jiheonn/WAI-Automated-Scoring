@@ -45,9 +45,10 @@ urlpatterns = [
     path("evaluate_self/question/diagnosis/score/", views.evaluate_self_score, name="student_evaluate_self_score"),
     # 게시판 페이지
     path("notice/", views.notice, name="student_notice"),
+    # 함수
     path("search/", views.search_keyword, name="search"),
     path("search_name/", views.search_name, name="search_name"),
-    path("change_category/", views.change_category_ai, name="change_category"),
+    path("change_category/", views.change_category_evaluate_exercise, name="change_category"),
     # path(
     #     "change_category_self/", views.change_category_self, name="change_category_self"
     # ),
