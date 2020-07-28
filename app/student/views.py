@@ -31,7 +31,7 @@ def evaluate_exercise(request):
         'qs': qs,
         'category': category
     }
-    return render(request, 'student/AI.html', context)
+    return render(request, 'student/evaluate_exercise.html', context)
 
 
 # 평가연습 문항 페이지
@@ -41,7 +41,7 @@ def evaluate_exercise_question(request):
     context = {
         'data': data
     }
-    return render(request, 'student/AIques.html', context)
+    return render(request, 'student/evaluate_exercise_question.html', context)
 
 
 # 평가연습 피드백 페이지
@@ -88,14 +88,14 @@ def evaluate_exercise_diagnosis(request):
     except:
         study_solve_data = None
 
-    return render(request, 'student/AIdiag.html', context)
+    return render(request, 'student/evaluate_exercise_diagnosis.html', context)
 
 
 # 학습평가 코드 입력 페이지
 def study_evaluate(request):
     context = {
     }
-    return render(request, 'student/Study.html', context)
+    return render(request, 'student/study_evaluate.html', context)
 
 
 # 학습평가 문항 페이지
@@ -125,7 +125,7 @@ def study_evaluate_question(request):
     if is_in_db(first_data, student_id, student_name):
         context = {
         }
-        return render(request, 'student/Study.html', context)
+        return render(request, 'student/study_evaluate.html', context)
 
     # 학습 완료 목록
     done_list = is_completed(join_aqr_q)
@@ -155,7 +155,7 @@ def study_evaluate_question(request):
         'first_data': first_data,
         'done_list': done_list
     }
-    return render(request, 'student/Studyques.html', context)
+    return render(request, 'student/study_evaluate_question.html', context)
 
     # data => join_aqr_q
     # f => first_data
@@ -199,14 +199,14 @@ def get_question_by_id(question_info):
 def select_homework(request):
     context = {
     }
-    return render(request, 'student/Homeworkselect.html', context)
+    return render(request, 'student/select_homework.html', context)
 
 
 # 숙제조회 id 입력 페이지
 def check_homework_by_id(request):
     context = {
     }
-    return render(request, 'student/Homework.html', context)
+    return render(request, 'student/check_homework_by_id.html', context)
 
 
 # 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트)
@@ -230,7 +230,7 @@ def check_homework_list(request):
         # 'da':da,
         're': re
     }
-    return render(request, 'student/Homeworklist.html', context)
+    return render(request, 'student/check_homework_list.html', context)
 
 
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
@@ -249,14 +249,14 @@ def check_homework_question(request):
     context = {
         'data': data
     }
-    return render(request, 'student/Homeworkcheck.html', context)
+    return render(request, 'student/check_homework_question.html', context)
 
 
 # 숙제하기 코드입력 페이지
 def do_homework_by_code(request):
     context = {
     }
-    return render(request, 'student/Homeworkcode.html', context)
+    return render(request, 'student/do_homework_by_code.html', context)
 
 
 # 숙제하기 문항 페이지
@@ -276,7 +276,7 @@ def do_homework_question(request):
     #     if is_in_db(first_data, student_id, student_name):
     #         context = {
     #         }
-    #         return render(request, 'student/Homeworkcode.html', context)
+    #         return render(request, 'student/do_homework_by_code.html', context)
     #
     # except:
     #     # id로 문항 불러오기
@@ -310,7 +310,7 @@ def do_homework_question(request):
     if is_in_db(first_data, student_id, student_name):
         context = {
         }
-        return render(request, 'student/Homeworkcode.html', context)
+        return render(request, 'student/do_homework_by_code.html', context)
 
     done_list = is_completed(join_aqr_q)
 
@@ -321,7 +321,7 @@ def do_homework_question(request):
         'done_list': done_list,
         'student_name': student_name
     }
-    return render(request, 'student/Homeworkques.html', context)
+    return render(request, 'student/do_homework_question.html', context)
 
 
 # 숙제하기 문항 피드백 페이지
@@ -357,7 +357,7 @@ def do_homework_diagnosis(request):
     except:
         solve_data = None
 
-    return render(request, 'student/Homeworkdiag.html', context)
+    return render(request, 'student/do_homework_diagnosis.html', context)
 
 
 # 스스로 평가하기 페이지
@@ -369,7 +369,7 @@ def evaluate_self(request):
         'qs': qs,
         # 'category': category,
     }
-    return render(request, 'student/Self.html', context)
+    return render(request, 'student/evaluate_self.html', context)
 
 
 # 스스로 평가하기 문항 페이지
@@ -380,7 +380,7 @@ def evaluate_self_question(request):
     context = {
         'data': data
     }
-    return render(request, 'student/Selfques.html', context)
+    return render(request, 'student/evaluate_self_question.html', context)
 
 
 # 스스로 평가하기 문항 피드백 및 자가채점 계산 페이지
@@ -401,7 +401,7 @@ def evaluate_self_diagnosis(request):
         'mark': mark,
         'score_list': score_list
     }
-    return render(request, 'student/Selfdiag.html', context)
+    return render(request, 'student/evaluate_self_diagnosis.html', context)
 
 
 # 스스로 평가하기 자가채점 결과 페이지
@@ -435,14 +435,14 @@ def evaluate_self_score(request):
     except:
         self_solve_data = None
 
-    return render(request, 'student/Selfgrade.html', context)
+    return render(request, 'student/evaluate_self_score.html', context)
 
 
 # 게시판 페이지
 def notice(request):
     context = {
     }
-    return render(request, 'student/Notice.html', context)
+    return render(request, 'student/notice.html', context)
 
 
 # 평가연습의 키워드로 문항 검색하기
