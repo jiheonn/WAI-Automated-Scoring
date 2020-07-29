@@ -42,14 +42,14 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'SYS_view_teacher_data' %}">신규교사정보
+                    <a class="nav-link" href="{% url 'sysop_view_teacher_data' %}">신규교사정보
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_quiz' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'sysop_view_quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_question' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -110,13 +110,13 @@
                     </td>
                     <td>
                         {% if item.approve == 0 %}
-                        <form name="change_approve_ok" action="{% url 'SYS_zero_to_one' %}" method="get">
+                        <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_teacher_approve' %}" method="get">
                             <button type="submit" class="approve-ok btn btn-outline-primary" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 승인하기
                             </button>
                         </form>
                         {% else %}
-                        <form name="change_approve_cancel" action="{% url 'SYS_one_to_zero' %}" method="get">
+                        <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_teacher_approve' %}" method="get">
                             <button type="submit" class="approve-cancel btn btn-outline-danger" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 취소하기
                             </button>

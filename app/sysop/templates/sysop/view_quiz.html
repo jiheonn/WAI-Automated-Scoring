@@ -42,13 +42,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_teacher_data' %}">신규교사정보</a>
+                    <a class="nav-link" href="{% url 'sysop_view_teacher_data' %}">신규교사정보</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'SYS_view_quiz' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'sysop_view_quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_question' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -90,7 +90,7 @@
         <div class="container">
 
             <div class="row justify-content-center">
-                <form action="{% url 'SYS_make_quiz' %}">
+                <form action="{% url 'sysop_make_quiz' %}">
                     <button style="width:100%" class="btn btn-outline-success">
                         신규문항 작성하기
                     </button>
@@ -125,13 +125,13 @@
                     </td>
                     <td>
                         {% if item.upload_check == 0 %}
-                        <form name="change_approve_ok" action="{% url 'SYS_zero_to_one' %}" method="get">
+                        <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_quiz' %}" method="get">
                             <button type="submit" class="upload-self-ok btn btn-outline-primary" name="make_question_id"
                                     value="{{ item.make_question_id }}"> 등록하기
                             </button>
                         </form>
                         {% else %}
-                        <form name="change_approve_cancel" action="{% url 'SYS_one_to_zero' %}" method="get">
+                        <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_quiz' %}" method="get">
                             <button type="submit" class="upload-self-cancel btn btn-outline-danger"
                                     name="make_question_id"
                                     value="{{ item.make_question_id }}"> 취소하기
@@ -140,7 +140,7 @@
                         {% endif%}
                     </td>
                     <td>
-                        <form action="{% url 'SYS_detail_quiz' %}" method="GET">
+                        <form action="{% url 'sysop_detail_quiz' %}" method="GET">
                             <button type="submit" class="btn btn-outline-info" name="question_id"
                                     value="{{ item.make_question_id }}">
                                 자세히보기
