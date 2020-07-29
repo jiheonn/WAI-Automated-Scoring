@@ -362,7 +362,7 @@ def signup_view(request):
                                        school=request.POST['school'],
                                        email=request.POST['username'],
                                        password=request.POST['password1'],
-                                       approve=1ç)
+                                       approve=0)
 
                 teacher_data.save()
 
