@@ -70,13 +70,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_teacher_data' %}">신규교사정보</a>
+                    <a class="nav-link" href="{% url 'sysop_view_teacher_data' %}">신규교사정보</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'SYS_view_quiz' %}">문항검토</a>
+                    <a class="nav-link" href="{% url 'sysop_view_quiz' %}">문항검토</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'SYS_view_question' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -123,7 +123,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <form action="{% url 'SYS_view_quiz' %}">
+        <form action="{% url 'sysop_view_quiz' %}">
             <button style="width:100%" class="btn btn-outline-success">
                 뒤로가기
             </button>
@@ -160,7 +160,7 @@
             <div class="box">
                 <img src="/media/{{makequestion.image}}" alt="이미지가 없습니다" width="300px" height=auto>
             </div>
-            <form name="change_self_question_form" action="{% url 'SYS_change_quiz_info' %}" method="POST"
+            <form name="change_self_question_form" action="{% url 'sysop_change_quiz_info' %}" method="POST"
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="self_question_id" value="{{ makequestion.make_question_id }}">

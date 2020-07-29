@@ -9,11 +9,9 @@ from django.contrib import messages
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.utils.datastructures import MultiValueDictKeyError
 from django.conf import settings
 
 import datetime
-import os
 
 APPROVED_ALLOW = 1
 APPROVED_DENY = 0
@@ -110,50 +108,52 @@ def sysop_logout(request):
     return redirect("sysop_login")
 
 
-# 등록하기 함수
-def zero_to_one(request):
-    if request.method == "GET" and "teacher_id" in request.GET:
-        teacher_id = request.GET.get("teacher_id")
-        teacher_info = Teacher.objects.get(teacher_id=teacher_id)
-        teacher_info.approve = APPROVED_ALLOW
-        teacher_info.save()
-        teacher = Teacher.objects.all()
+# 선생님 승인 함수
+def deny_to_allow_teacher_approve(request):
+    teacher_id = request.GET.get("teacher_id")
+    teacher_info = Teacher.objects.get(teacher_id=teacher_id)
+    teacher_info.approve = APPROVED_ALLOW
+    teacher_info.save()
+    teacher = Teacher.objects.all()
 
-        context = {"teacher": teacher}
-        return render(request, "sysop/view_teacher_data.html", context)
-
-    elif request.method == "GET" and "make_question_id" in request.GET:
-        make_question_id = request.GET.get("make_question_id")
-        make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
-        make_question_info.upload_check = APPROVED_ALLOW
-        make_question_info.save()
-        make_question = MakeQuestion.objects.all()
-
-        context = {"makequestion": make_question}
-        return render(request, "sysop/view_quiz.html", context)
+    context = {"teacher": teacher}
+    return render(request, "sysop/view_teacher_data.html", context)
 
 
-# 취소하기 함수
-def one_to_zero(request):
-    if request.method == "GET" and "teacher_id" in request.GET:
-        teacher_id = request.GET.get("teacher_id")
-        teacher_info = Teacher.objects.get(teacher_id=teacher_id)
-        teacher_info.approve = APPROVED_DENY
-        teacher_info.save()
-        teacher = Teacher.objects.all()
+# 선생님 승인취소 함수
+def allow_to_deny_teacher_approve(request):
+    teacher_id = request.GET.get("teacher_id")
+    teacher_info = Teacher.objects.get(teacher_id=teacher_id)
+    teacher_info.approve = APPROVED_DENY
+    teacher_info.save()
+    teacher = Teacher.objects.all()
 
-        context = {"teacher": teacher}
-        return render(request, "sysop/view_teacher_data.html", context)
+    context = {"teacher": teacher}
+    return render(request, "sysop/view_teacher_data.html", context)
 
-    elif request.method == "GET" and "make_question_id" in request.GET:
-        make_question_id = request.GET.get("make_question_id")
-        make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
-        make_question_info.upload_check = APPROVED_DENY
-        make_question_info.save()
-        make_question = MakeQuestion.objects.all()
 
-        context = {"makequestion": make_question}
-        return render(request, "sysop/view_quiz.html", context)
+# 문항검토 등록 함수
+def deny_to_allow_quiz(request):
+    make_question_id = request.GET.get("make_question_id")
+    make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
+    make_question_info.upload_check = APPROVED_ALLOW
+    make_question_info.save()
+    make_question = MakeQuestion.objects.all()
+
+    context = {"makequestion": make_question}
+    return render(request, "sysop/view_quiz.html", context)
+
+
+# 문항검토 등록취소 함수
+def allow_to_deny_quiz(request):
+    make_question_id = request.GET.get("make_question_id")
+    make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
+    make_question_info.upload_check = APPROVED_DENY
+    make_question_info.save()
+    make_question = MakeQuestion.objects.all()
+
+    context = {"makequestion": make_question}
+    return render(request, "sysop/view_quiz.html", context)
 
 
 # 문항검토 신규문항 생성 함수
@@ -189,12 +189,12 @@ def create_quiz(request):
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
-        return redirect("SYS_make_quiz")
+        return redirect("sysop_make_quiz")
 
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-        return redirect("SYS_make_quiz")
+        return redirect("sysop_make_quiz")
 
 
 # 문항생성 신규문항 생성 함수
@@ -223,12 +223,12 @@ def create_question(request):
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
-        return redirect("SYS_make_question")
+        return redirect("sysop_make_question")
 
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-        return redirect("SYS_make_question")
+        return redirect("sysop_make_question")
 
 
 # 문항검토 수정 함수
@@ -242,12 +242,10 @@ def change_quiz_info(request):
 
     # 이미지가 없는 경우 패스
     # 이미지가 있는 경우 새로 저장
-    try:
-        image = request.FILES["image"]
+    image = request.FILES.get('image', False)
+    if bool(image) == True:
         image.name = self_question_id + "_" + now_date + "_" + image.name
         self_question_info.image = image
-    except MultiValueDictKeyError:
-        pass
 
     self_question_info.question_name = request.POST["self_question_name"]
     self_question_info.discription = request.POST["self_question_discription"]
@@ -286,12 +284,10 @@ def change_question_info(request):
 
     # 이미지가 없는 경우 패스
     # 이미지가 있는 경우 새로 저장
-    try:
-        image = request.FILES["image"]
+    image = request.FILES.get('image', False)
+    if bool(image) == True:
         image.name = question_id + "_" + now_date + "_" + image.name
         question_info.image = image
-    except MultiValueDictKeyError:
-        pass
 
     question_info.question_name = request.POST["question_name"]
     question_info.category = Category.objects.filter(category_id=request.POST["question_category_id"]).first()
