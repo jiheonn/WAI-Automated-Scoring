@@ -4,7 +4,7 @@
 <script type="text/javascript" language="javascript">
     // function ScoreAlert() {
     //      if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {
-    //          document.location.href='{% url 'Self' %}';
+    //          document.location.href='{% url 'student_evaluate_by_self' %}';
     //      }else{
     //          return false;
     //      }
@@ -19,7 +19,7 @@
    //      alert(tm_result[choice])
    //      // alert(tm_result[choice].reduce(function (accumulator, currentValue) {return accumulator + currentValue;}, 0))
    //      if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : " +tm_result[choice] + "점\n") == true) {
-   //           document.location.href='{% url 'Self' %}';
+   //           document.location.href='{% url 'student_evaluate_by_self' %}';
    //       }else{
    //           return false;
    // // document.getElementById("result").innerHTML = tm_result[choice];
@@ -40,20 +40,19 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기</a>
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가
-                    </a>
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -83,7 +82,7 @@
             <h3 class="w3-text-gray">이번 문항에 대한 채점 결과는</h3>
             <h1><b class="w3-text-black">{{sum_s}}    </b>점입니다.</h1>
         </div>
-        <a href="{% url 'Self' %}">
+        <a href="{% url 'student_evaluate_by_self' %}">
             <button type="submit" class="w3-btn w3-round w3-indigo w3-large w3-margin-bottom">
                 다른 문제 더 풀기
             </button>

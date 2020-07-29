@@ -65,7 +65,7 @@
               success: function (data) {
                 console.log(data['overlap']);
                 if (data['overlap'] == "pass") {
-                  document.location.href='{% url 'Homeworkquestion' %}';
+                  document.location.href='{% url 'student_do_homework_question' %}';
                 } else {
                 alert("코드를 다시 확인하세요.");
 <!--                  return false;-->
@@ -87,7 +87,7 @@
           success: function (data) {
             console.log(data['overlap']);
             if (data['overlap'] == "pass") {
-              document.location.href='{% url 'Homeworklist' %}';
+              document.location.href='{% url 'student_check_homework_list' %}';
             } else {
               alert("코드와 ID를 다시 확인하세요.");
             }

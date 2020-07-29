@@ -16,20 +16,20 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -56,8 +56,8 @@
     <!-- Content Row -->
     <div class="row my-5">
 
-        <table class="w3-table-all w3-centered" style="text-center table-layout:fixed;">
-            <form action="{% url 'Homeworkcheck' %}" method="get" >
+        <table class="w3-table-all w3-centered" style="text-align:center; table-layout:fixed;">
+            <form action="{% url 'student_check_homework_question' %}" method="get" >
             <tr class="w3-indigo">
                 <input type="hidden" class="w3-btn w3-round w3-blue" name="student_id" value="{{ rel.solve.student_id }}" id="{{ rel.solve.student_id }}">
 <!--                <th>{{ rel.student_id }}</th>-->
@@ -69,7 +69,7 @@
                 {% for data in rel %}
                 <tr>
                     <td>
-                        <a href="{% url 'Homeworkcheck' %}"name="assignment_id" value="{{ data.assignment.assignment_id }}" id="{{ data.assignment.assignment_id }}">
+                        <a href="{% url 'student_check_homework_question' %}"name="assignment_id" value="{{ data.assignment.assignment_id }}" id="{{ data.assignment.assignment_id }}">
                             {{data.assignment.assignment_title}}</a>
 
                     </td>
@@ -80,7 +80,7 @@
             </form>
         </table>
 
-        <a href="{% url 'Homeworkselect' %}">
+        <a href="{% url 'student_select_homework' %}">
             <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
         </a>
 

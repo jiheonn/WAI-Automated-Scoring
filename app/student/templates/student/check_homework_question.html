@@ -16,20 +16,20 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -45,8 +45,9 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-3">
-            <p class="font-weight-bolder triangle-border left">자신의 ID를 입력하세요.</p>
+        <div class="col-lg-4">
+            <p class="font-weight-bolder triangle-border left">해당 주차 숙제 내역입니다.<br>
+                첨삭 전 답안을 수정할 수 있습니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
@@ -54,24 +55,27 @@
     <!-- /.row -->
 
     <!-- Content Row -->
-    <br>
-    <center>
-        <div class="w3-container">
-            <form action="{% url 'Homeworklist' %}" method="get" >
-                <table style="text-align: center; width:600px; height:80px;">
-                    <tr>
-                        <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                    </tr>
-                </table>
+    <div class="row my-5">
+        <table class="w3-table-all w3-centered" style="text-align:center; table-layout:fixed;">
+            <tr class="w3-indigo">
+              <th>문항명</th>
+              <th>최종 수정날짜</th>
+                <th>최종 점수</th>
+            </tr>
+            {% for data in data %}
+            <tr>
+              <td>{{data.question.question_name}}</td>
+              <td>{{data.solve.modified_date}}</td>
+              <td>{{data.solve.score}}</td>
+            </tr>
+            {% endfor %}
+        </table>
 
-                <br><br>
-                <a onclick="IDAlert()" style="cursor:pointer">
-                    <button type="submit" class="w3-button w3-large w3-round w3-blue w3-margin-bottom">완료</button>
-                </a>
-                <br><br>
-            </form>
-        </div>
-    </center>
+        <a href="{% url 'student_check_homework_list' %}">
+            <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
+        </a>
+    </div>
+
     <!-- /.row -->
 
 

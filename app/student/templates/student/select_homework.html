@@ -16,20 +16,20 @@
                     <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'AI' %}">평가연습</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Study' %}">학습평가</a>
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Homeworkselect' %}">숙제하기
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Self' %}">스스로 평가</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
                 </li>
             </ul>
         </div>
@@ -57,29 +57,15 @@
 
     <!-- Content Row -->
     <br>
-<!--    <center>-->
-            <div class="w3-container w3-center">
-                <div class="w3-bar">
-<!--                    <table class="table" style="text-align: center; width:600px; height:160px;">-->
-<!--                        <tr>-->
-<!--                        <a href="{% url 'Homeworkcode' %}">-->
-                            <button onclick="location.href='{% url "Homeworkcode" %}'" type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-right">숙제하기</button>
-<!--                        </a>-->
-<!--                        <a href="{% url 'Homework' %}">-->
-                            <button onclick="location.href='{% url "Homework" %}'" type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-left">숙제 조회</button>
-<!--                        </a>-->
-<!--                    </tr>-->
-<!--                    </table>-->
-                </div>
-            </div>
-        <br><br>
-<!--        <a href="{% url 'Homeworkselect' %}">-->
-<!--        <button type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>-->
-<!--        </a>-->
-        <br><br>
-<!--    </center>-->
+    <div class="w3-container w3-center">
+        <div class="w3-bar">
+                    <button onclick="location.href='{% url "student_do_homework_by_code" %}'" type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-right">숙제하기</button>
+                    <button onclick="location.href='{% url "student_check_homework_by_id" %}'" type="submit" class="w3-button w3-xxxlarge w3-round w3-indigo w3-padding-large w3-margin-left">숙제 조회</button>
+        </div>
+    </div>
+    <br><br>
+    <br><br>
     <!-- /.row -->
-
 
 </div>
 <!-- /.container -->
