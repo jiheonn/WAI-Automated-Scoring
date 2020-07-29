@@ -80,7 +80,7 @@
 
         <div class="col-lg-4">
             <div class="row justify-content-center">
-                <a href="{% url 'SYS_view_teacher_data' %}" class="btn btn-info btn-lg py-4">신규교사정보</a>
+                <a href="{% url 'sysop_view_teacher_data' %}" class="btn btn-info btn-lg py-4">신규교사정보</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
@@ -96,7 +96,7 @@
 
         <div class="col-lg-4">
             <div class="row justify-content-center">
-                <a href="{% url 'SYS_view_quiz' %}" class="btn btn-info btn-lg py-4">문항검토</a>
+                <a href="{% url 'sysop_view_quiz' %}" class="btn btn-info btn-lg py-4">문항검토</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
@@ -113,7 +113,7 @@
 
         <div class="col-lg-4">
             <div class="row justify-content-center">
-                <a href="{% url 'SYS_view_question' %}" class="btn btn-info btn-lg py-4">문항생성</a>
+                <a href="{% url 'sysop_view_question' %}" class="btn btn-info btn-lg py-4">문항생성</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
@@ -127,15 +127,6 @@
             </div>
         </div>
     </div>
-    <!--    <div class="row justify-content-lg-start my-5">-->
-    <!--​-->
-    <!--        <a href="{% url 'SYS_view_quiz' %}" class="btn btn-info btn-lg">문항검토 기능</a>-->
-    <!--    </div>-->
-    <!--    <div class="row justify-content-lg-start my-5">-->
-    <!--​-->
-    <!--        <a href="{% url 'SYS_view_question' %}" class="btn btn-info btn-lg">문항생성 기능</a>-->
-
-    <!--    </div>-->
 </div>
 <!-- /.container -->
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
