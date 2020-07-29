@@ -105,7 +105,7 @@
                     <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'student_evaluate_self' %}">스스로 평가</a>
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
@@ -166,7 +166,7 @@
     </div>
 
     <!-- Content Row -->
-    <form action="{% url 'student_evaluate_self_question' %}" method="get">
+    <form action="{% url 'student_evaluate_by_self_question' %}" method="get">
         <div id="whole_card" class="row my-5">
             <div id="question_list" class="row">
                 {% for data in qs %}
