@@ -326,7 +326,13 @@ def login_view(request):
         password = request.POST["password"]
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
+            queryset = Teacher.objects.filter(email=username)
+            for teacher_information in queryset:
+                is_approve = teacher_information.approve
+                if is_approve:
+                    login(request, user)
+                else:
+                    messages.error(request, '관리자의 승인이 필요합니다.')
         else:
             messages.error(request, '아이디 또는 비밀번호가 일치하지 않습니다.')
 
@@ -356,7 +362,7 @@ def signup_view(request):
                                        school=request.POST['school'],
                                        email=request.POST['username'],
                                        password=request.POST['password1'],
-                                       approve=0)
+                                       approve=False)
 
                 teacher_data.save()
 
