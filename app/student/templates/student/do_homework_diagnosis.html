@@ -127,7 +127,7 @@
             <a onclick="alert('제출이 완료되었습니다.'); document.location.href='{% url 'student_do_homework_question' %}'" style="cursor:pointer">
                 <button type="submit" class="w3-btn w3-round w3-indigo w3-display-bottomright w3-margin-bottom">다음 문제 ></button>
             </a>
-            <a href="{% url 'student_do_homework_question' %}">
+            <a href="{% url 'student_do_homework_question' %}" onclick='history.go(-1); return false;'>
                 <button type="submit" class="w3-btn w3-round w3-grey w3-display-bottomleft w3-margin-bottom">< 다시 설명하기</button>
             </a>
             <br>
