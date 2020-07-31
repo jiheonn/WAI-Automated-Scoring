@@ -32,6 +32,12 @@ def question_selection(request):
     return render(request, "teacher/question_selection.html", context)
 
 
+# 날짜 형식에 맞게 생성
+def created_date(date):
+    result = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+    return result
+
+
 # 문항선택 > 문항선택완료 버튼 클릭 시  Assignment Table DB 저장
 def question_selection_save(request):
     now = datetime.datetime.now()
@@ -39,18 +45,14 @@ def question_selection_save(request):
 
     try:
         teacher_id = int(request.POST["teacher_id"])
-        select_code_list = request.POST.getlist("question")
+        selected_question_list = request.POST.getlist("question")
         assignment_data = Assignment(
             assignment_id=request.POST["code_num"],
             teacher=Teacher.objects.get(teacher_id=teacher_id),
             assignment_title=request.POST["question-title"],
             type=request.POST["evaluation_type"],
-            start_date=datetime.datetime.strptime(
-                request.POST["start-date"], "%Y-%m-%d"
-            ).date(),
-            end_date=datetime.datetime.strptime(
-                request.POST["end-date"], "%Y-%m-%d"
-            ).date(),
+            start_date=created_date(request.POST["start-date"]),
+            end_date=created_date(request.POST["end-date"]),
             made_date=now_date,
             grade=int(request.POST["grade"]),
             school_class=int(request.POST["class"]),
@@ -58,9 +60,9 @@ def question_selection_save(request):
         assignment_data.save()
 
         # Assignment Table 과 연결된 AssignmentQuestionRel Table 에 데이터 추가
-        for i in select_code_list:
+        for question_id in selected_question_list:
             assignment_question_rel_data = AssignmentQuestionRel(
-                question_id=int(i), assignment_id=request.POST["code_num"]
+                question_id=int(question_id), assignment_id=request.POST["code_num"]
             )
 
             assignment_question_rel_data.save()
