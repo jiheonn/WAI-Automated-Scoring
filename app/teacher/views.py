@@ -135,19 +135,21 @@ def view_result_detail(request):
             student_data["student_score"]
         )
 
-    try:
-        total_score = 0  # 총 점수
-        total_progress = 0  # 총 진행률
-        for j in result.values():
-            total_score += j["student_score"]
-            if len(j["student_response"]) >= 1:
-                count = len(j["student_response"])
-                j["student_progress"] = round(count / count_question * 100)
-            total_progress += j["student_progress"]
+    total_score = 0  # 총 점수
+    total_progress = 0  # 총 진행률
+    all_avg = 0  # 전체 학생 평균 점수
+    all_progress = 0  # 전체 학생 평균 진행률
+    for j in result.values():
+        total_score += j["student_score"]
+        if len(j["student_response"]) >= 1:
+            count = len(j["student_response"])
+            j["student_progress"] = round(count / count_question * 100)
+        total_progress += j["student_progress"]
+
+    if all_avg and all_progress:
         all_avg = round(total_score / len(result.values()), 2)  # 전체 학생 평균 점수
         all_progress = round(total_progress / len(result.values()))  # 전체 학생 평균 진행률
-
-    except ZeroDivisionError:
+    else:
         all_avg = 0
         all_progress = 0
 
