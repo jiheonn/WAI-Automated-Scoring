@@ -106,22 +106,28 @@ def view_result_detail(request):
     # 따라서 하나의 student_id(=result key 값)에 여러 해당하는 데이터의 삽입이 필요합니다. (중복 해결)
     # ex) {12345678: {'student_name': '가나다', 'student_response': ['~~~', '~~~', '~~~']}}
     result = {}
-    for i in solve_queryset:
+    for solve_information in solve_queryset:
         solve_question_data = {}
-        if i.student_id in result:
-            result[i.student_id]["student_id"] = i.student_id
-            result[i.student_id]["student_score"].append(int(i.score))
-            result[i.student_id]["student_response"].append(i.response)
+        if solve_information.student_id in result:
+            result[solve_information.student_id][
+                "student_id"
+            ] = solve_information.student_id
+            result[solve_information.student_id]["student_score"].append(
+                int(solve_information.score)
+            )
+            result[solve_information.student_id]["student_response"].append(
+                solve_information.response
+            )
         else:
             solve_question_data["student_progress"] = []
             solve_question_data["student_score"] = []
             solve_question_data["student_response"] = []
-            solve_question_data["student_id"] = i.student_id
-            solve_question_data["student_name"] = i.student_name
-            solve_question_data["student_score"].append(int(i.score))
-            solve_question_data["student_response"].append(i.response)
+            solve_question_data["student_id"] = solve_information.student_id
+            solve_question_data["student_name"] = solve_information.student_name
+            solve_question_data["student_score"].append(int(solve_information.score))
+            solve_question_data["student_response"].append(solve_information.response)
 
-            result[i.student_id] = solve_question_data
+            result[solve_information.student_id] = solve_question_data
 
     for student_id in result:  # 한 학생의 평균 점수 구하기
         student_data = result[student_id]
