@@ -16,9 +16,11 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
+
+<script src="{% static 'teacher/js/teacher.js' %}"></script>
 
 <!-- Page Content -->
 <div class="container">
@@ -27,7 +29,7 @@
     <div class="row justify-content-center my-5">
         <div class="col-lg-2">
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                 height="120" alt="">
+                height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
@@ -35,7 +37,7 @@
             <p class="font-weight-bolder triangle-border left">
                 주제를 분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성하고,
                 '토픽 모델링' 알고리즘을 선택해 주세요.<br>
-                입력 형식은 텍스트로 부탁드립니다.</p>
+                파일을 업로드 후 토픽 개수를 입력하여<br>실행 버튼을 누르면 분석이 진행됩니다.</p>
             <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
@@ -48,12 +50,23 @@
         </select>
     </div>
     <!-- /.row -->
-    <div class="col-7 text-box">
+    <!-- <div class="col-7 text-box">
         <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
+    </div> -->
+    <div class="col-8 section-center">
+        <form action="" method="POST" onsubmit="return isInspected()">
+            {% csrf_token %}
+            <strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.</strong><input type="file" accept=".csv, .excel"
+                name="responded_student_file">
+            <input id="topic_count" class="topic-count-input" type="text" name="topic-count" maxlength="2"
+                placeholder="토픽 개수를 입력해 주세요. (2~50)">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">실행</button>
+        </form>
     </div>
-    <div class="col-lg-2 btn-center">
+
+    <!-- <div class="col-lg-2 btn-center">
         <button type="submit" class="w3-button w3-large w3-round w3-blue">분석 결과 보기</button>
-    </div>
+    </div> -->
 </div>
 <!-- /.container -->
 
