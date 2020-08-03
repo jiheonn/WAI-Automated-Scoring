@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from utils import bigram
+from utils import bigram, topic_modeling
 
 import argparse
 import logging
@@ -19,11 +19,11 @@ stream_handler.setFormatter(logger_format)
 sa_logger.addHandler(stream_handler)
 
 
-@app.route("/get-tokenized/", methods=["GET"])
+@app.route("/get-tokenized/", methods=["POST"])
 @cross_origin()
 def get_tokenized():
     sa_logger.info("get-tokenized")
-    raw_sentence = request.args.get('raw_sentence')
+    raw_sentence = request.form['raw_sentence']
     print(f"[INPUT] raw_sentence : {raw_sentence}")
     result, most_common_word, frequency = bigram.get_tokenized_words(raw_sentence)
     context = {
@@ -37,6 +37,21 @@ def get_tokenized():
     return context
 
 
+@app.route("/get-topic-modeling/", methods=["POST"])
+@cross_origin()
+def analyze_response():
+    sa_logger.info("get-topic-modeling")
+    file_storage = request.files['file']
+    print("topic_number : ", request.form['num_topic'])
+    res = topic_modeling.analyze_csv(file_storage)
+    context = {
+        "id": "analyze-response",
+        "data": {
+            "df": res.to_string(),
+        },
+    }
+    return context
+
 @app.errorhandler(Exception)
 @cross_origin()
 def handling_exception(e):
@@ -45,7 +60,6 @@ def handling_exception(e):
         "id": "error",
     }
     return context
-
 
 @app.after_request
 def add_header(response):

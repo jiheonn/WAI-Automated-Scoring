@@ -302,13 +302,3 @@ var message = $('#message').val();
 if (message.length) {
     alert(message);
 }
-
-function isInspected() {
-    var topic_count = document.getElementById("topic_count").value;
-    if (topic_count > 50) {
-        alert("토픽 개수는 최대 50개까지 입력이 가능합니다.");
-        return false
-    } else {
-        return true
-    }
-}
