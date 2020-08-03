@@ -18,10 +18,6 @@ import json
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
 
-# 홈 화면 view 함수
-def index(request):
-    return render(request, "teacher/index.html")
-
 
 # 문항선택 화면 view 함수
 def question_selection(request):
@@ -72,7 +68,7 @@ def question_selection_save(request):
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-    return redirect("teacher_question_selecion")
+    return redirect("teacher_question_selection")
 
 
 # 결과보기 화면 view 함수
