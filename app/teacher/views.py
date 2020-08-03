@@ -12,7 +12,7 @@ import random
 import json
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
+# from django.http import HttpResponse, HttpResponseRedirect
 
 
 # def index(request):
@@ -69,12 +69,10 @@ def question_selection_save(request):
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
-        return HttpResponseRedirect(request.POST["path"])
-
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-        return HttpResponseRedirect(request.POST["path"])
+    return redirect("teacher_question_selecion")
 
 
 # 결과보기 화면 view 함수
