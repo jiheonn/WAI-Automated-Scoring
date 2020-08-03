@@ -28,7 +28,7 @@
 
 <!-- Page Content -->
 <div class="container">
-    <form action="{% url 'make_question_save' %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'teacher_make_question_save' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
 <!--        <input type="hidden" name="path" value="{{ request.path }}">-->
