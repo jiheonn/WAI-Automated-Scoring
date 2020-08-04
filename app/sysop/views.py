@@ -2,14 +2,12 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from mainpage.models import *
-from mainpage.models import *
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.conf import settings
 
 import datetime
 
@@ -89,7 +87,7 @@ def sysop_login(request):
         password = request.POST["password"]
         user = authenticate(username=username, password=password)
         if user is not None:
-            if user.username == "admin":
+            if user.is_staff:
                 login(request, user)
                 return render(request, "sysop/home.html")
             else:
