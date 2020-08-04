@@ -112,8 +112,8 @@ def study_evaluate_question(request):
 
     join_aqr_q = (
         AssignmentQuestionRel.objects.select_related("question")
-        .filter(assignment_id=assignment_id)
-        .filter(assignment__type="학습평가")
+            .filter(assignment_id=assignment_id)
+            .filter(assignment__type="학습평가")
     )
 
     # id로 문항 불러오기
@@ -219,50 +219,58 @@ def check_homework_by_id(request):
 
 # 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트)
 def check_homework_list(request):
-    # question_info = request.GET['question_name'].split(',')
-    # question_name = question_info[0]
-    # assignment_id = question_info[1]
-    # data = AssignmentQuestionRel.objects.select_related('question').filter(assignment_id=assignment_id)
-    # f = AssignmentQuestionRel.objects.select_related('question').filter(question__question_name=question_name)[0]
     student_id = int(request.GET["ID_num"])
-    # rel = AssignmentQuestionRel.objects.select_related('assignment', 'solve').filter(solve__student_id=student_id)
 
     # 테스트
-    re = Solve.objects.prefetch_related("assignment_question_rel").filter(
+    re = Solve.objects.select_related("as_qurel").filter(
         student_id=student_id
     )
+
     d = re.values("as_qurel_id")[0]["as_qurel_id"]
-    print(d)
     rel = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
         as_qurel_id=d
     )
 
     context = {
         "rel": rel,
-        # 'da':da,
         "re": re,
+        "student_id": student_id
     }
     return render(request, "student/check_homework_list.html", context)
 
 
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
 def check_homework_question(request):
-    student_id = int(request.GET["student_id"])
+    student_id = int(request.GET.get("student_id"))
+    assignment_id = request.GET.get('assignment_id')
+    print(student_id, assignment_id)
     # assignment_title = request.GET['assignment_id']
     # print(assignment_title.values())
     # data = AssignmentQuestionRel.objects.select_related('assignment', 'question', 'solve').filter(solve__student_id=student_id)
 
     # 테스트
-    re = Solve.objects.prefetch_related("assignment_question_rel").filter(
-        student_id=student_id
-    )
-    d = re.values("as_qurel_id")[0]["as_qurel_id"]
-    print(d)
-    data = AssignmentQuestionRel.objects.prefetch_related(
-        "assignment", "question"
-    ).filter(as_qurel_id=d)
+    # re = Solve.objects.prefetch_related("assignment_question_rel").filter(
+    #     student_id=student_id
+    # )
+    # as_qurel_id = re.values("as_qurel_id")[0]["as_qurel_id"]
+    # print(d)
+    # data = AssignmentQuestionRel.objects.prefetch_related(
+    #     "assignment", "question"
+    # ).filter(assignment_id=assignment_id)
 
-    context = {"data": data}
+    # 테스트
+    data = AssignmentQuestionRel.objects.select_related("assignment").filter(assignment_id=assignment_id)
+    dd = AssignmentQuestionRel.objects.select_related("assignment").filter(assignment_id=assignment_id)[0].as_qurel_id
+
+    # test_list=[]
+    # for i in range(len(test)):
+    #     test_list.append(test[i]["as_qurel_id"])
+    # print(test_list)
+
+
+    context = {
+        "data": data
+               }
     return render(request, "student/check_homework_question.html", context)
 
 
@@ -305,8 +313,8 @@ def do_homework_question(request):
 
     join_aqr_q = (
         AssignmentQuestionRel.objects.select_related("question")
-        .filter(assignment_id=assignment_id)
-        .filter(assignment__type="숙제하기")
+            .filter(assignment_id=assignment_id)
+            .filter(assignment__type="숙제하기")
     )
 
     # id로 문항 불러오기
@@ -463,9 +471,9 @@ def search_keyword(request):
     user_input = request.GET["user_input"]
     key_data = (
         Keyword.objects.select_related("question")
-        .filter(keyword_name__icontains=user_input)
-        .values_list("question_id", flat=True)
-        .distinct()
+            .filter(keyword_name__icontains=user_input)
+            .values_list("question_id", flat=True)
+            .distinct()
     )
     k_datas = Question.objects.filter(pk__in=key_data)
 
@@ -480,8 +488,8 @@ def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
         MakeQuestion.objects.filter(question_name__icontains=name_input)
-        .values_list("make_question_id", flat=True)
-        .distinct()
+            .values_list("make_question_id", flat=True)
+            .distinct()
     )
     n_datas = MakeQuestion.objects.filter(pk__in=name_data)
 
@@ -524,7 +532,6 @@ def search_card_result(datas):
         data_dict["question_image"] = data.image.name
         list_data.append(data_dict)
     return list_data
-
 
 # def change_category_self(request):
 #     category_option = request.GET['option']
