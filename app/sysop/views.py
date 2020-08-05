@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from mainpage.models import *
+from mainpage.models import Teacher, MakeQuestion, Question, Category, Mark, AssignmentQuestionRel, Keyword, \
+    StudySolveData, Solve
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -13,6 +14,7 @@ import datetime
 
 APPROVED_ALLOW = 1
 APPROVED_DENY = 0
+
 
 # 관리자 홈 페이지
 def home(request):
@@ -301,6 +303,7 @@ def change_question_info(request):
     context = {"question": question,
                "category": category}
     return render(request, "sysop/detail_question.html", context)
+
 
 def delete_question(request):
     question_id = request.GET.get("question_id")
