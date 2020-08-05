@@ -6,7 +6,7 @@
 <!--datatable source-->
 <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css" />
 
 
 <!-- Bootstrap core CSS -->
@@ -22,7 +22,7 @@
 <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
@@ -47,7 +47,7 @@
     <div class="row justify-content-center my-5">
         <div class="col-lg-2">
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                 height="120" alt="">
+                height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
@@ -57,7 +57,7 @@
         </div>
         <!-- /.col-md-4 -->
     </div>
-    <form action="{% url 'chart' %}" method="POST">
+    <form action="{% url 'teacher_chart' %}" method="POST">
         {% csrf_token %}
         {% for data in result %}
         <input type="hidden" name="student_name" value="{{ data.student_name }}">
@@ -65,43 +65,42 @@
         {% endfor %}
 
         <div style="margin-bottom: 100px;">
-            <table border="1" bordercolor="gray" width="1200" height="100" align="center"
-                   class="display">
+            <table border="1" bordercolor="gray" width="1200" height="100" align="center" class="display">
                 <thead>
-                <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
-                    <td>제목</td>
-                    <td>타입</td>
-                    <td>코드</td>
-                    <td>기간</td>
-                    <td>학년</td>
-                    <td class="class-box-width">반</td>
-                    <td>문항수</td>
-                    <td>전체 평균점수</td>
-                    <td>평균 진행률(%)</td>
-                    <td>결과 저장</td>
-                    <td>더보기</td>
-                </tr>
+                    <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
+                        <td>제목</td>
+                        <td>타입</td>
+                        <td>코드</td>
+                        <td>기간</td>
+                        <td>학년</td>
+                        <td class="class-box-width">반</td>
+                        <td>문항수</td>
+                        <td>전체 평균점수</td>
+                        <td>평균 진행률(%)</td>
+                        <td>결과 저장</td>
+                        <td>더보기</td>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for data in assignment_data|slice:":1" %}
-                <tr align="center">
-                    <td>{{ data.assignment_title }}</td>
-                    <td>{{ data.type }}</td>
-                    <td>{{ data.assignment_id }}</td>
-                    <td>{{ data.start_date }} ~<br> {{ data.end_date }}</td>
-                    <td>{{ data.grade }}</td>
-                    <td>{{ data.school_class }}</td>
-                    <td>{{ question_count }}</td>
-                    <td>{{ all_avg }}</td>
-                    <td>{{ all_pgs }}</td>
-                    <td>
-                        <button type="button" class="btn21" onclick="tableToExcel('asi_info')">다운로드</button>
-                    </td>
-                    <td>
-                        <button type="submit" class="btn21">더보기</button>
-                    </td>
-                </tr>
-                {% endfor %}
+                    {% for data in assignment_data|slice:":1" %}
+                    <tr align="center">
+                        <td>{{ data.assignment_title }}</td>
+                        <td>{{ data.type }}</td>
+                        <td>{{ data.assignment_id }}</td>
+                        <td>{{ data.start_date }} ~<br> {{ data.end_date }}</td>
+                        <td>{{ data.grade }}</td>
+                        <td>{{ data.school_class }}</td>
+                        <td>{{ question_count }}</td>
+                        <td>{{ all_avg }}</td>
+                        <td>{{ all_pgs }}</td>
+                        <td>
+                            <button type="button" class="btn21" onclick="tableToExcel('asi_info')">다운로드</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn21">더보기</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -109,46 +108,37 @@
         <div>
             <table id="asi_info" class="display" width="1200">
                 <thead>
-                <tr class="asi_info_tr">
-                    <th width="90">학생ID</th>
-                    <th width="70">학생이름</th>
-                    <th width="70">평균점수</th>
-                    <th width="80">진행률(%)</th>
-                    <th>학생응답</th>
-                </tr>
+                    <tr class="asi_info_tr">
+                        <th width="90">학생ID</th>
+                        <th width="70">학생이름</th>
+                        <th width="70">평균점수</th>
+                        <th width="80">진행률(%)</th>
+                        <th>학생응답</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for data in result %}
-                <tr id="asi_tr" align="center">
-                    <td>{{ data.student_id }}</td>
-                    <td>{{ data.student_name }}</td>
-                    <td>{{ data.student_score }}</td>
-                    <td>{{ data.student_progress}}</td>
-                    <td style="text-align: left;">
-                        {% for i in data.student_response %}
-                        <br>
-                        {{ i }}
-                        <br><br>
-                        {% endfor %}
-                    </td>
-                </tr>
-                {% endfor %}
+                    {% for data in result %}
+                    <tr id="asi_tr" align="center">
+                        <td>{{ data.student_id }}</td>
+                        <td>{{ data.student_name }}</td>
+                        <td>{{ data.student_score }}</td>
+                        <td>{{ data.student_progress}}</td>
+                        <td style="text-align: left;">
+                            {% for i in data.student_response %}
+                            <br>
+                            {{ i }}
+                            <br><br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </form>
 
     <!-- /.row -->
-<!--    <div class="col-lg-0 btn-center">-->
-<!--        <form action="{% url 'view_result' %}">-->
-<!--            <button type="submit" class="w3-button w3-large w3-round w3-blue btn21">이전</button>-->
-<!--        </form>-->
-<!--    </div>-->
 </div>
 <!-- /.container -->
-
-<!-- Bootstrap core JavaScript -->
-<!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
-<!--<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>-->
 
 {% endblock %}

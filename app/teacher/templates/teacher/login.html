@@ -36,7 +36,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'login' %}">WA3I</a>
+        <a class="navbar-brand" href="{% url 'teacher_login' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,30 +44,30 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto" id="menubar">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'login' %}">홈
+                    <a class="nav-link" href="{% url 'teacher_login' %}">홈
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
+                    <a class="nav-link" href="{% url 'teacher_question_selection' %}">문항선택</a>
                 </li>
                 <li id="view_result" class="nav-item">
-                    <a class="nav-link" href="{% url 'view_result' %}">결과보기</a>
+                    <a class="nav-link" href="{% url 'teacher_view_result' %}">결과보기</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
+                    <a class="nav-link" href="{% url 'teacher_make_question' %}">문항생성</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
+                    <a class="nav-link" href="{% url 'teacher_bigram_tree' %}">Bigram Tree</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
+                    <a class="nav-link" href="{% url 'teacher_topic_analysis' %}">주제분석</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
+                    <a class="nav-link" href="{% url 'teacher_response_analysis' %}">응답분석</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
+                    <a class="nav-link" href="{% url 'teacher_qr_code' %}">QR코드</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
@@ -78,7 +78,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
                             class="fa fa-user fa-fw"></i> {{ user.last_name }}{{ user.first_name }} 님</a>
                     <ul>
-                        <li><a class="nav-link" href="{% url 'logout' %}">로그아웃</a></li>
+                        <li><a class="nav-link" href="{% url 'teacher_logout' %}">로그아웃</a></li>
                     </ul>
                 </li>
             </ul>
@@ -156,7 +156,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'login' %}">WA3I</a>
+        <a class="navbar-brand" href="{% url 'teacher_login' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -198,8 +198,8 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown"><i
                             class="fa fa-user fa-fw"></i> User </a>
                     <ul>
-                        <li><a class="nav-link" href="{% url 'login' %}">로그인</a></li>
-                        <li><a class="nav-link" href="{% url 'signup' %}">회원가입</a></li>
+                        <li><a class="nav-link" href="{% url 'teacher_login' %}">로그인</a></li>
+                        <li><a class="nav-link" href="{% url 'teacher_signup' %}">회원가입</a></li>
                     </ul>
                 </li>
             </ul>
@@ -262,7 +262,7 @@
 							Create an account?
 						</span>
 
-                    <a href="{% url 'signup' %}" class="txt2 hov1">
+                    <a href="{% url 'teacher_signup' %}" class="txt2 hov1">
                         Sign up
                     </a>
                 </div>

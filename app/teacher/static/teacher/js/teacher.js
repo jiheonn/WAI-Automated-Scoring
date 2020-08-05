@@ -104,6 +104,7 @@ $(document).ready(function () {
                         $('#evaluation_type').val(assignment_type).prop("selected", true);
                         $('#as_name').val(assignment_title);
                         $('input:checkbox[id=' + question_id + ']').prop("checked", true);
+                        $('#' + copy_data[i].question_id).addClass("checked");
                     }
                 }
                 jQuery(function ($) {
