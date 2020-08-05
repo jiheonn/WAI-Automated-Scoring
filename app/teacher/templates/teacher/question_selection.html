@@ -33,9 +33,8 @@
 
 <!-- Page Content -->
 <div class="container">
-    <form action="{% url 'question_selection_save' %}" method="POST">
+    <form action="{% url 'teacher_question_selection_save' %}" method="POST">
         {% csrf_token %}
-        <input type="hidden" name="path" value="{{ request.path }}">
         <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
         <!-- Heading Row -->
         <div class="row justify-content-center my-5">

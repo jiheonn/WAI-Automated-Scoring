@@ -24,124 +24,125 @@
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">WA3I</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'home' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'introduce' %}">소개</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'handbook' %}">활용가이드</a>
-                </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">연구진</a>-->
-<!--                </li>-->
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- Page Content -->
-<div class="container">
-
-    <!-- Heading Row -->
-<!--    <div class="row align-content-center my-5">-->
-    <div class="row justify-content-center my-5">
-        <div class="col-lg-2">
-            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-<!--            <h1 class="font-weight-light">Welcome</h1>-->
-            <p class="font-weight-bolder triangle-border left">
-                안녕하세요! <br>
-                저는 인공지능 서술형 자동평가에 와이 선생님입니다<br>
-                사용자를 선택해주세요.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
-        </div>
-        <!-- /.col-md-4 -->
-    </div>
-    <!-- /.row -->
-
-    <!-- Call to Action Well -->
-    <div class="card text-white main-card my-5 py-4 text-center">
-        <div class="card-body">
-            <p class="text-white m-0">
-                If you can dream it, <br>
-                you can do it. <br>
-                당신이 어떤 것이든 꿈을 꿀 수 있다면, 그 꿈을 실현시키는 것 또한 가능합니다. <br> <br>
-                Walt Disney</p>
-        </div>
-    </div>
-
-    <!-- Content Row -->
-    <div class="row">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">학생</h2>
-                    <p class="card-text">학생페이지로 이동합니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">홈
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'introduce' %}">소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'handbook' %}">활용가이드</a>
+                    </li>
+                    <!--                <li class="nav-item">-->
+                    <!--                    <a class="nav-link" href="#">연구진</a>-->
+                    <!--                </li>-->
+                </ul>
             </div>
         </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h2 class="card-title">선생님</h2>
-                    <p class="card-text">선생님페이지로 이동합니다.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-sm">More Info</a>
-                </div>
-            </div>
-        </div>
-              <!-- /.col-md-4 -->
-              <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                  <div class="card-body">
-                    <h2 class="card-title">관리자</h2>
-                    <p class="card-text">관리자페이지로 이동합니다.</p>
-                  </div>
-                  <div class="card-footer">
-                    <a href="{% url 'sysop' %}" class="btn btn-primary btn-sm">More Info</a>
-                  </div>
-                </div>
-              </div>
-              <!-- /.col-md-4 -->
+    </nav>
 
-    </div>
-    <!-- /.row -->
-
-</div>
-<!-- /.container -->
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
+    <!-- Page Content -->
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+
+        <!-- Heading Row -->
+        <!--    <div class="row align-content-center my-5">-->
+        <div class="row justify-content-center my-5">
+            <div class="col-lg-2">
+                <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
+                    src="{% static 'mainpage/image/logo.png' %}" alt="">
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-5">
+                <!--            <h1 class="font-weight-light">Welcome</h1>-->
+                <p class="font-weight-bolder triangle-border left">
+                    안녕하세요! <br>
+                    저는 인공지능 서술형 자동평가에 와이 선생님입니다<br>
+                    사용자를 선택해주세요.</p>
+                <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Call to Action Well -->
+        <div class="card text-white main-card my-5 py-4 text-center">
+            <div class="card-body">
+                <p class="text-white m-0">
+                    If you can dream it, <br>
+                    you can do it. <br>
+                    당신이 어떤 것이든 꿈을 꿀 수 있다면, 그 꿈을 실현시키는 것 또한 가능합니다. <br> <br>
+                    Walt Disney</p>
+            </div>
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">학생</h2>
+                        <p class="card-text">학생페이지로 이동합니다.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'student' %}" class="btn btn-primary btn-sm">More Info</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">선생님</h2>
+                        <p class="card-text">선생님페이지로 이동합니다.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'teacher_login' %}" class="btn btn-primary btn-sm">More Info</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="card-title">관리자</h2>
+                        <p class="card-text">관리자페이지로 이동합니다.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'sysop' %}" class="btn btn-primary btn-sm">More Info</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-md-4 -->
+
+        </div>
+        <!-- /.row -->
+
     </div>
     <!-- /.container -->
-</footer>
 
-<!-- Bootstrap core JavaScript -->
-<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
 
