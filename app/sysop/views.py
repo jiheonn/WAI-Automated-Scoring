@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from mainpage.models import Teacher, MakeQuestion, Question, Category, Mark, AssignmentQuestionRel, Keyword, \
-    StudySolveData, Solve
+    StudySolveData, Solve, Notice
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -79,6 +79,29 @@ def make_question(request):
 
     context = {"category": category, }
     return render(request, "sysop/make_question.html", context)
+
+
+# 공지사항 페이지
+def view_notice(request):
+    notice = Notice.objects.all()
+
+    context = {"notice": notice, }
+    return render(request, "sysop/view_notice.html", context)
+
+
+# 공지사항 자세히보기 페이지
+def detail_notice(request):
+    notice_id = request.GET["notice_id"]
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+
+    context = {"notice": notice, }
+    return render(request, "sysop/detail_notice.html", context)
+
+
+# 공지사항 생성 페이지
+def make_notice(request):
+    context = {}
+    return render(request, "sysop/make_notice.html", context)
 
 
 # 로그인 함수
@@ -202,11 +225,11 @@ def create_question(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    id_number = MakeQuestion.objects.all().last().make_question_id + 1
-    image = request.FILES["image"]
-    image.name = str(id_number) + "_" + image.name
-
     try:
+        id_number = MakeQuestion.objects.all().last().make_question_id + 1
+        image = request.FILES["image"]
+        image.name = str(id_number) + "_" + image.name
+
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
             model_id=id_number,
@@ -229,6 +252,30 @@ def create_question(request):
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
         return redirect("sysop_make_question")
+
+
+# 공지사항 생성 함수
+def create_notice(request):
+    now = datetime.datetime.now()
+    now_date = now.strftime("%Y-%m-%d")
+
+    try:
+        print(request.POST["notice_content"])
+        notice_data = Notice(
+            notice_name = request.POST["notice_name"],
+            notice_content = request.POST["notice_content"],
+            made_date = now_date
+        )
+        notice_data.save()
+
+        messages.success(request, "성공적으로 등록되었습니다.")
+
+        return redirect("sysop_make_notice")
+
+    except:
+        messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
+
+        return redirect("sysop_make_notice")
 
 
 # 문항검토 수정 함수
@@ -305,6 +352,23 @@ def change_question_info(request):
     return render(request, "sysop/detail_question.html", context)
 
 
+# 공지사항 정보 수정 함수
+def change_notice_info(request):
+    notice_id = request.POST["notice_id"]
+
+    notice_info = Notice.objects.get(notice_id=notice_id)
+
+    notice_info.notice_name = request.POST["notice_name"]
+    notice_info.notice_content = request.POST["notice_content"]
+    notice_info.save()
+
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+
+    context = {"notice": notice, }
+    return render(request, "sysop/detail_notice.html", context)
+
+
+# 문항생성 정보 삭제 함수
 def delete_question(request):
     question_id = request.GET.get("question_id")
     question_info = Question.objects.get(question_id=question_id)
@@ -324,3 +388,14 @@ def delete_question(request):
     question = Question.objects.all()
     context = {"question": question}
     return render(request, "sysop/view_question.html", context)
+
+
+# 공지사항 정보 삭제 함수
+def delete_notice(request):
+    notice_id = request.GET.get("notice_id")
+    notice_info = Notice.objects.get(notice_id=notice_id)
+    notice_info.delete()
+
+    notice = Notice.objects.all()
+    context = {"notice": notice}
+    return render(request, "sysop/view_notice.html", context)
