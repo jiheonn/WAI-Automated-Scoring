@@ -43,6 +43,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_notice' %}">공지사항</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -78,50 +81,66 @@
 
     <div class="row justify-content-center my-5">
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row justify-content-center">
                 <a href="{% url 'sysop_view_teacher_data' %}" class="btn btn-info btn-lg py-4">신규교사정보</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
                     <p class="text-black-50 m-0">
-                        &nbsp;&nbsp;&nbsp;&nbsp; ▷ 신규교사정보 <br><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 1. 신규선생님을 승인할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 2. 승인된 선생님을 승인 취소할 수 있습니다.<br>
+                        ▷ 교사정보 관리 <br><br>
+                        1. 신규선생님 승인 기능<br>
+                        2. 승인된 선생님 승인취소 기능<br>
                         <br><br>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row justify-content-center">
                 <a href="{% url 'sysop_view_quiz' %}" class="btn btn-info btn-lg py-4">문항검토</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
                     <p class="text-black-50 m-0">
-                        &nbsp;&nbsp;&nbsp;&nbsp; ▷ 문항검토 : 학생페이지, 스스로평가에 업로드 <br><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 1. 기존의 문항을 등록할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 2. 기존의 문항을 등록취소할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 3. 기존의 문항을 수정할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 4. 새로운 문항을 추가할 수 있습니다.<br>
+                        ▷ 스스로평가 문항 관리<br><br>
+                        1. 기존의 문항 등록 기능<br>
+                        2. 기존의 문항 등록취소 기능<br>
+                        3. 기존의 문항 수정 기능<br>
+                        4. 새로운 문항 추가 기능<br>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row justify-content-center">
                 <a href="{% url 'sysop_view_question' %}" class="btn btn-info btn-lg py-4">문항생성</a>
             </div>
             <div class="card text-white main-introduce-card my-5 py-4 text-left">
                 <div class="card-body">
                     <p class="text-black-50 m-0">
-                        &nbsp;&nbsp;&nbsp;&nbsp; ▷ 문항생성 : 학생페이지, 평가연습에 업로드 <br><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 1. 새로운 문항을 추가할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 2. 기존의 문항을 수정할 수 있습니다.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; 3. 기존의 문항을 삭제할 수 있습니다.<br>
+                        ▷ 평가연습 문항 관리<br><br>
+                        1. 새로운 문항 추가 기능<br>
+                        2. 기존의 문항 수정 기능<br>
+                        3. 기존의 문항 삭제 기능<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="row justify-content-center">
+                <a href="{% url 'sysop_view_notice' %}" class="btn btn-info btn-lg py-4">공지사항</a>
+            </div>
+            <div class="card text-white main-introduce-card my-5 py-4 text-left">
+                <div class="card-body">
+                    <p class="text-black-50 m-0">
+                        ▷ 공지사항 관리<br><br>
+                        1. 새로운 공지사항 추가 기능<br>
+                        2. 등록된 공지사항 수정 기능<br>
+                        3. 등록된 공지사항 삭제 기능<br>
                     </p>
                 </div>
             </div>
