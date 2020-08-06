@@ -221,15 +221,35 @@ def check_homework_by_id(request):
 def check_homework_list(request):
     student_id = int(request.GET["ID_num"])
 
-    # 테스트
+    # 테스트 order_by submit date
     re = Solve.objects.select_related("as_qurel").filter(
         student_id=student_id
-    )
+    ).values("as_qurel_id", "solve_id")
+    print(re)
 
     d = re.values("as_qurel_id")[0]["as_qurel_id"]
     rel = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
         as_qurel_id=d
     )
+    assignment_list = list(re)
+    print(assignment_list)
+
+    # solve_assignment_pair = {}
+    # for as_qurel_id, solve_id in re:
+    #     if as_qurel_id not in solve_assignment_pair:
+    #         solve_assignment_pair[as_qurel_id] = solve_id
+
+    # solve_assignment_pair = {}
+    # for assingment_id, solve_id in re:
+    #    if assingment_id not in solve_assignment_pair:
+    #         solve_assignment_pair[assingment_id] = solve_id
+    #
+    # solve_assignment_pair = {assignment_id: sovle_id}
+    # assignment_list = get_assignment_list(re)
+    #
+    # for assignment in assignment_list:
+    #     solve_id = solve_assignment_pair[assignmnet_id]
+    #     submit_date = get_submit_data(solve_id)
 
     context = {
         "rel": rel,
@@ -238,39 +258,31 @@ def check_homework_list(request):
     }
     return render(request, "student/check_homework_list.html", context)
 
-
+from itertools import chain
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
 def check_homework_question(request):
     student_id = int(request.GET.get("student_id"))
     assignment_id = request.GET.get('assignment_id')
-    print(student_id, assignment_id)
-    # assignment_title = request.GET['assignment_id']
-    # print(assignment_title.values())
-    # data = AssignmentQuestionRel.objects.select_related('assignment', 'question', 'solve').filter(solve__student_id=student_id)
 
-    # 테스트
-    # re = Solve.objects.prefetch_related("assignment_question_rel").filter(
-    #     student_id=student_id
-    # )
-    # as_qurel_id = re.values("as_qurel_id")[0]["as_qurel_id"]
-    # print(d)
-    # data = AssignmentQuestionRel.objects.prefetch_related(
-    #     "assignment", "question"
-    # ).filter(assignment_id=assignment_id)
+    join_q_aqr_id = Question.objects.select_related("assignment_question_rel").filter(
+        assignmentquestionrel__assignment_id=assignment_id).values_list("assignmentquestionrel", flat=True)
+    join_s_aqr_id = Solve.objects.select_related("assignment_question_rel").filter(
+        student_id=student_id
+    ).values_list("as_qurel_id", flat=True)
 
-    # 테스트
-    data = AssignmentQuestionRel.objects.select_related("assignment").filter(assignment_id=assignment_id)
-    dd = AssignmentQuestionRel.objects.select_related("assignment").filter(assignment_id=assignment_id)[0].as_qurel_id
+    result_list = []
+    for aqr_id in join_q_aqr_id:
+        if aqr_id in join_s_aqr_id:
+            join_q_aqr_values = Question.objects.select_related("assignment_question_rel").filter(assignmentquestionrel=aqr_id).values("assignmentquestionrel","question_id","question_name")
+            join_s_aqr_values = Solve.objects.select_related("assignment_question_rel").filter(as_qurel_id=aqr_id).values("as_qurel_id", "solve_id","submit_date","score")
+            result = list(chain(join_q_aqr_values, join_s_aqr_values))
 
-    # test_list=[]
-    # for i in range(len(test)):
-    #     test_list.append(test[i]["as_qurel_id"])
-    # print(test_list)
-
+            result[0].update(result[1])
+            result_list.append(result[0])
 
     context = {
-        "data": data
-               }
+        "result_list": result_list
+    }
     return render(request, "student/check_homework_question.html", context)
 
 
