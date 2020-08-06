@@ -1,0 +1,136 @@
+{% extends 'sysop/base.html' %}
+{% load static %}
+
+{% block css %}
+
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+
+<link href="{% static 'sysop/css/basic.css' %}" rel="stylesheet">
+
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sysop/css/util.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'sysop' %}">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop' %}">홈
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_teacher_data' %}">신규교사정보</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_quiz' %}">문항검토</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'sysop_view_notice' %}">공지사항</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">admin 님</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'sysop_logout' %}">로그아웃</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row justify-content-center my-5">
+
+        <div class="col-lg-2">
+            <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
+                 src="{% static 'mainpage/image/logo.png' %}" alt="">
+        </div>
+
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5">
+            <!--            <h1 class="font-weight-light">Welcome</h1>-->
+            <p class="font-weight-bolder triangle-border left">
+                학생, 선생님 페이지에 업로드할 공지사항 입니다.<br><br>
+
+                1. 공지사항 제목을 작성해주세요. <br>
+                2. 공지사항 내용을 작성해주세요. <br>
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <form action="{% url 'sysop_view_notice' %}">
+            <button style="width:100%" class="btn btn-outline-success">
+                뒤로가기
+            </button>
+        </form>
+    </div>
+
+    <form name="create_notice_form" action="{% url 'sysop_create_notice' %}" method="POST"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row justify-content-center my-6">
+            <div class="col-8 sct-center">
+                <span>공지사항 제목 : <input style="width:100%" id="as_name" type="text" name="notice_name"
+                                       placeholder="공지사항 제목을 입력해 주세요."></span><br>
+                <span>공지사항 내용 : <textarea id="as_discription"
+                                          type="text" name="notice_content"
+                                          placeholder="공지사항 내용을 작성해 주세요."></textarea></span>
+            </div>
+        </div>
+        <div class="col-lg-7 btn-center">
+            <button style="width:100%" type="submit" class="btn btn-primary">
+                공지사항 생성 완료
+            </button>
+        </div>
+    </form>
+</div>
+<!-- /.container -->
+
+<img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
+     style="display: block; margin: 0px auto;">
+
+{% else %}
+<script>
+    document.location.href = "{% url 'sysop_login' %}";
+</script>
+{% endif %}
+
+{% endblock %}
+
+
+{% block script %}
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'sysop/function/function.btn.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% endblock %}
