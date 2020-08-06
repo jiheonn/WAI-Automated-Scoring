@@ -26,5 +26,6 @@ python manage.py collectstatic --no-input --clear
 echo "from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin1', 'admin1@gmail.com', 'teamlab')" | python manage.py shell
 echo "from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin2', 'admin2@gmail.com', 'teamlab')" | python manage.py shell
 echo "from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin3', 'admin3@gmail.com', 'teamlab')" | python manage.py shell
+echo "from teacher.models import User; user = User.objects.create_user(username='hong1@naver.com', password='1431'); user.last_name='홍'; user.first_name='길동1'; user.teacher_id='1'; user.save()" | python manage.py shell
 
 exec "$@"
