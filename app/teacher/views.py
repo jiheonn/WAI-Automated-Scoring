@@ -168,6 +168,10 @@ def make_question_save(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
+    id_number = MakeQuestion.objects.all().last().make_question_id + 1
+    image = request.FILES["image"]
+    image.name = str(id_number) + "_" + image.name
+
     try:
         teacher_id = int(request.POST["teacher_id"])
         make_question_data = MakeQuestion(
@@ -175,7 +179,7 @@ def make_question_save(request):
             question_name=request.POST["question_name"],
             discription=request.POST["discription"],
             answer=request.POST["answer"],
-            image=request.FILES["image"],
+            image=image,
             hint=request.POST["hint"],
             made_date=now_date,
             upload_check=0,
