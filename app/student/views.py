@@ -8,6 +8,7 @@ import q as q
 from django.db.models import Q
 import datetime
 import json
+from itertools import chain
 
 from mainpage.models import (
     Question,
@@ -112,8 +113,8 @@ def study_evaluate_question(request):
 
     join_aqr_q = (
         AssignmentQuestionRel.objects.select_related("question")
-            .filter(assignment_id=assignment_id)
-            .filter(assignment__type="학습평가")
+        .filter(assignment_id=assignment_id)
+        .filter(assignment__type="학습평가")
     )
 
     # id로 문항 불러오기
@@ -222,9 +223,11 @@ def check_homework_list(request):
     student_id = int(request.GET["ID_num"])
 
     # 테스트 order_by submit date
-    re = Solve.objects.select_related("as_qurel").filter(
-        student_id=student_id
-    ).values("as_qurel_id", "solve_id")
+    re = (
+        Solve.objects.select_related("as_qurel")
+        .filter(student_id=student_id)
+        .values("as_qurel_id", "solve_id")
+    )
     print(re)
 
     d = re.values("as_qurel_id")[0]["as_qurel_id"]
@@ -251,30 +254,41 @@ def check_homework_list(request):
     #     solve_id = solve_assignment_pair[assignmnet_id]
     #     submit_date = get_submit_data(solve_id)
 
-    context = {
-        "rel": rel,
-        "re": re,
-        "student_id": student_id
-    }
+    context = {"rel": rel, "re": re, "student_id": student_id}
     return render(request, "student/check_homework_list.html", context)
 
-from itertools import chain
+
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
 def check_homework_question(request):
     student_id = int(request.GET.get("student_id"))
-    assignment_id = request.GET.get('assignment_id')
+    assignment_id = request.GET.get("assignment_id")
 
-    join_q_aqr_id = Question.objects.select_related("assignment_question_rel").filter(
-        assignmentquestionrel__assignment_id=assignment_id).values_list("assignmentquestionrel", flat=True)
-    join_s_aqr_id = Solve.objects.select_related("assignment_question_rel").filter(
-        student_id=student_id
-    ).values_list("as_qurel_id", flat=True)
+    join_q_aqr_id = (
+        Question.objects.select_related("assignment_question_rel")
+        .filter(assignmentquestionrel__assignment_id=assignment_id)
+        .values_list("assignmentquestionrel", flat=True)
+    )
+    join_s_aqr_id = (
+        Solve.objects.select_related("assignment_question_rel")
+        .filter(student_id=student_id)
+        .values_list("as_qurel_id", flat=True)
+    )
 
     result_list = []
     for aqr_id in join_q_aqr_id:
         if aqr_id in join_s_aqr_id:
-            join_q_aqr_values = Question.objects.select_related("assignment_question_rel").filter(assignmentquestionrel=aqr_id).values("assignmentquestionrel","question_id","question_name")
-            join_s_aqr_values = Solve.objects.select_related("assignment_question_rel").filter(as_qurel_id=aqr_id).values("as_qurel_id", "solve_id","submit_date","score","student_name")
+            join_q_aqr_values = (
+                Question.objects.select_related("assignment_question_rel")
+                .filter(assignmentquestionrel=aqr_id)
+                .values("assignmentquestionrel", "question_id", "question_name")
+            )
+            join_s_aqr_values = (
+                Solve.objects.select_related("assignment_question_rel")
+                .filter(as_qurel_id=aqr_id)
+                .values(
+                    "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
+                )
+            )
             result = list(chain(join_q_aqr_values, join_s_aqr_values))
 
             result[0].update(result[1])
@@ -283,7 +297,7 @@ def check_homework_question(request):
     context = {
         "result_list": result_list,
         "assignment_id": assignment_id,
-        "student_id": student_id
+        "student_id": student_id,
     }
     return render(request, "student/check_homework_question.html", context)
 
@@ -327,8 +341,8 @@ def do_homework_question(request):
 
     join_aqr_q = (
         AssignmentQuestionRel.objects.select_related("question")
-            .filter(assignment_id=assignment_id)
-            .filter(assignment__type="숙제하기")
+        .filter(assignment_id=assignment_id)
+        .filter(assignment__type="숙제하기")
     )
 
     # id로 문항 불러오기
@@ -485,9 +499,9 @@ def search_keyword(request):
     user_input = request.GET["user_input"]
     key_data = (
         Keyword.objects.select_related("question")
-            .filter(keyword_name__icontains=user_input)
-            .values_list("question_id", flat=True)
-            .distinct()
+        .filter(keyword_name__icontains=user_input)
+        .values_list("question_id", flat=True)
+        .distinct()
     )
     k_datas = Question.objects.filter(pk__in=key_data)
 
@@ -502,8 +516,8 @@ def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
         MakeQuestion.objects.filter(question_name__icontains=name_input)
-            .values_list("make_question_id", flat=True)
-            .distinct()
+        .values_list("make_question_id", flat=True)
+        .distinct()
     )
     n_datas = MakeQuestion.objects.filter(pk__in=name_data)
 
@@ -546,6 +560,7 @@ def search_card_result(datas):
         data_dict["question_image"] = data.image.name
         list_data.append(data_dict)
     return list_data
+
 
 # def change_category_self(request):
 #     category_option = request.GET['option']
