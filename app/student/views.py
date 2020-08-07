@@ -222,39 +222,17 @@ def check_homework_by_id(request):
 def check_homework_list(request):
     student_id = int(request.GET["ID_num"])
 
-    # 테스트 order_by submit date
-    re = (
+    join_solve_aqr = (
         Solve.objects.select_related("as_qurel")
         .filter(student_id=student_id)
         .values("as_qurel_id", "solve_id")
     )
-    print(re)
-
-    d = re.values("as_qurel_id")[0]["as_qurel_id"]
-    rel = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
-        as_qurel_id=d
+    as_qurel_id = join_solve_aqr.values("as_qurel_id")[0]["as_qurel_id"]
+    join_aqr_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
+        as_qurel_id=as_qurel_id
     )
-    assignment_list = list(re)
-    print(assignment_list)
 
-    # solve_assignment_pair = {}
-    # for as_qurel_id, solve_id in re:
-    #     if as_qurel_id not in solve_assignment_pair:
-    #         solve_assignment_pair[as_qurel_id] = solve_id
-
-    # solve_assignment_pair = {}
-    # for assingment_id, solve_id in re:
-    #    if assingment_id not in solve_assignment_pair:
-    #         solve_assignment_pair[assingment_id] = solve_id
-    #
-    # solve_assignment_pair = {assignment_id: sovle_id}
-    # assignment_list = get_assignment_list(re)
-    #
-    # for assignment in assignment_list:
-    #     solve_id = solve_assignment_pair[assignmnet_id]
-    #     submit_date = get_submit_data(solve_id)
-
-    context = {"rel": rel, "re": re, "student_id": student_id}
+    context = {"join_aqr_assignment": join_aqr_assignment, "student_id": student_id}
     return render(request, "student/check_homework_list.html", context)
 
 

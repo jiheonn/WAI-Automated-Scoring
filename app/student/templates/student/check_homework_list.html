@@ -62,10 +62,9 @@
                 <tr class="w3-indigo">
                     <th>제목</th>
                     <th>제출 기한</th>
-                    <th>제출 완료 날짜</th>
                 </tr>
 
-                {% for data in rel %}
+                {% for data in join_aqr_assignment %}
                 <tr>
                     <td>
                         <button type="submit" name="assignment_id" class="btn btn-outline-primary w3-border-0" value="{{ data.assignment.assignment_id }}">
@@ -73,7 +72,6 @@
                         </button>
                     </td>
                     <td>{{data.assignment.end_date}}</td>
-                    <td>{{data.solve.modified_date}}</td>
                 </tr>
             {% endfor %}
             </form>
