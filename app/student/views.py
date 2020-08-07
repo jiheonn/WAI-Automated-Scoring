@@ -274,14 +274,16 @@ def check_homework_question(request):
     for aqr_id in join_q_aqr_id:
         if aqr_id in join_s_aqr_id:
             join_q_aqr_values = Question.objects.select_related("assignment_question_rel").filter(assignmentquestionrel=aqr_id).values("assignmentquestionrel","question_id","question_name")
-            join_s_aqr_values = Solve.objects.select_related("assignment_question_rel").filter(as_qurel_id=aqr_id).values("as_qurel_id", "solve_id","submit_date","score")
+            join_s_aqr_values = Solve.objects.select_related("assignment_question_rel").filter(as_qurel_id=aqr_id).values("as_qurel_id", "solve_id","submit_date","score","student_name")
             result = list(chain(join_q_aqr_values, join_s_aqr_values))
 
             result[0].update(result[1])
             result_list.append(result[0])
 
     context = {
-        "result_list": result_list
+        "result_list": result_list,
+        "assignment_id": assignment_id,
+        "student_id": student_id
     }
     return render(request, "student/check_homework_question.html", context)
 

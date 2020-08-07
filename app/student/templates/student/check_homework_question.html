@@ -66,8 +66,8 @@
                   <form action="{% url 'student_do_homework_question' %}" method="get">
                       <input type="hidden" name="ID_num" value="{{ student_id }}">
                       <input type="hidden" name="code_num" value="{{ assignment_id }}">
-                      <input type="hidden" name="student_name" value="{{ student_name }}">
-                      <button type="submit" class="btn btn-outline-primary w3-border-0" name="question_id" value="{{ data.question_id }}">
+                      <input type="hidden" name="student_name" value="{{ data.student_name }}">
+                      <button type="submit" class="btn btn-outline-primary w3-border-0" name="question_id" value="{{ data.question_id }},{{ assignment_id }}">
                             {{data.question_name}}
                       </button>
                   </form>
