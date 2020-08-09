@@ -51,6 +51,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_notice' %}">공지사항</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -110,13 +113,15 @@
                     </td>
                     <td>
                         {% if item.approve == 0 %}
-                        <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_teacher_approve' %}" method="get">
+                        <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_teacher_approve' %}"
+                              method="get">
                             <button type="submit" class="approve-ok btn btn-outline-primary" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 승인하기
                             </button>
                         </form>
                         {% else %}
-                        <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_teacher_approve' %}" method="get">
+                        <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_teacher_approve' %}"
+                              method="get">
                             <button type="submit" class="approve-cancel btn btn-outline-danger" name="teacher_id"
                                     value="{{ item.teacher_id }}"> 취소하기
                             </button>

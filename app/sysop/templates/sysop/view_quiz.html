@@ -50,6 +50,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sysop_view_notice' %}">공지사항</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -97,7 +100,7 @@
                 </form>
             </div>
 
-            <table style="text-align: center" id="quiz_table" class="display" style="width:100%">
+            <table style="text-align: center" id="quiz-table" class="display" style="width:100%">
                 <thead>
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
                     <th>문항번호</th>
@@ -112,7 +115,7 @@
                 <tbody>
                 {% for item in makequestion %}
                 <tr style="border: 1px solid #d6d6d6;">
-                    <td> {{ item.make_question_id }} </td>
+                    <td> {{ item.make_question_id }}</td>
                     <td> {{ item.question_name }}</td>
                     <td> {{ item.teacher.teacher_name }}</td>
                     <td> {{ item.made_date }}</td>
