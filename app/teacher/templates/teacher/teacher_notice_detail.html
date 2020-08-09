@@ -1,0 +1,80 @@
+{% extends 'teacher/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Bootstrap core CSS -->
+<link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+<link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <div class="row justify-content-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                height="120" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5">
+            <p class="font-weight-bolder triangle-border left">
+                WA3I의 공지사항을 확인할 수 있습니다.</p>
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <div class="row justify-content-center">
+        <form action="{% url 'teacher_notice' %}">
+            <button style="width:100%" class="w3-button w3-large w3-round w3-blue">
+                뒤로가기
+            </button>
+        </form>
+    </div>
+
+    <div class="row justify-content-center my-5">
+        <div>
+            <table style="text-align: center;">
+                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
+                    <th width="600px">제목</th>
+                    <th width="440px">등록일자</th>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ notice.notice_name }}</td>
+                    <td>{{ notice.made_date }}</td>
+                </tr>
+            </table>
+            <br><br><br>
+            <span>공지사항 제목 :
+                <input id="notice_title" type="text" style="width:100%;" name="notice_name"
+                    value="{{ notice.notice_name }}" disabled />
+            </span>
+            <br><br><br>
+            <span>공지사항 내용 :
+                <textarea id="notice_description" class="textarea-box" type="text" style="width:100%;"
+                    name="notice_content" disabled />{{ notice.notice_content }}</textarea>
+            </span>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% endblock %}
