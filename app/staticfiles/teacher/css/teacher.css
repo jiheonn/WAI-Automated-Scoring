@@ -319,3 +319,16 @@ textarea {
     margin-left: 20px;
     color: gray;
 }
+
+.section-center {
+    float: none; margin: 0 auto;
+}
+
+.topic-count-input {
+    border: 1px solid gray;
+    width: 250px;
+    height: 44px;
+    text-align: center;
+    margin-right: 20px;
+    margin: 50px 10px 50px 50px;
+}
