@@ -19,20 +19,23 @@ APPROVED_DENY = 0
 # 관리자 홈 페이지
 def home(request):
     context = {}
+
     return render(request, "sysop/home.html", context)
 
 
 # 신규교사정보 페이지
 def view_teacher_data(request):
-    teacher = Teacher.objects.all()
-    context = {"teacher": teacher}
+    all_teacher = Teacher.objects.all()
+    context = {"teacher": all_teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
 # 문항검토 페이지
 def view_quiz(request):
-    makequestion = MakeQuestion.objects.all()
-    context = {"makequestion": makequestion}
+    all_makequestion = MakeQuestion.objects.all()
+    context = {"makequestion": all_makequestion}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -46,19 +49,22 @@ def detail_quiz(request):
         make_question_id=question_id
     )
     context = {"makequestion": makequestion, "mark_list": mark_list}
+
     return render(request, "sysop/detail_quiz.html", context)
 
 
 # 문항검토 신규문항 생성 페이지
 def make_quiz(request):
     context = {}
+
     return render(request, "sysop/make_quiz.html", context)
 
 
 # 문항생성 페이지
 def view_question(request):
-    question = Question.objects.all()
-    context = {"question": question}
+    all_question = Question.objects.all()
+    context = {"question": all_question}
+
     return render(request, "sysop/view_question.html", context)
 
 
@@ -66,26 +72,29 @@ def view_question(request):
 def detail_question(request):
     question_id = request.GET["question_id"]
     question = Question.objects.filter(question_id=question_id).first()
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
     context = {"question": question,
-               "category": category}
+               "category": all_category}
+
     return render(request, "sysop/detail_question.html", context)
 
 
 # 문항검토 신규문항 생성 페이지
 def make_question(request):
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
-    context = {"category": category, }
+    context = {"category": all_category}
+
     return render(request, "sysop/make_question.html", context)
 
 
 # 공지사항 페이지
 def view_notice(request):
-    notice = Notice.objects.all()
+    all_notice = Notice.objects.all()
 
-    context = {"notice": notice, }
+    context = {"notice": all_notice}
+
     return render(request, "sysop/view_notice.html", context)
 
 
@@ -94,13 +103,15 @@ def detail_notice(request):
     notice_id = request.GET["notice_id"]
     notice = Notice.objects.filter(notice_id=notice_id).first()
 
-    context = {"notice": notice, }
+    context = {"notice": notice}
+
     return render(request, "sysop/detail_notice.html", context)
 
 
 # 공지사항 생성 페이지
 def make_notice(request):
     context = {}
+
     return render(request, "sysop/make_notice.html", context)
 
 
@@ -128,6 +139,7 @@ def sysop_login(request):
 # 로그아웃 함수
 def sysop_logout(request):
     logout(request)
+
     return redirect("sysop_login")
 
 
@@ -140,6 +152,7 @@ def deny_to_allow_teacher_approve(request):
     teacher = Teacher.objects.all()
 
     context = {"teacher": teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
@@ -152,6 +165,7 @@ def allow_to_deny_teacher_approve(request):
     teacher = Teacher.objects.all()
 
     context = {"teacher": teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
@@ -161,9 +175,10 @@ def deny_to_allow_quiz(request):
     make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
     make_question_info.upload_check = APPROVED_ALLOW
     make_question_info.save()
-    make_question = MakeQuestion.objects.all()
+    all_make_question = MakeQuestion.objects.all()
 
-    context = {"makequestion": make_question}
+    context = {"makequestion": all_make_question}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -173,9 +188,10 @@ def allow_to_deny_quiz(request):
     make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
     make_question_info.upload_check = APPROVED_DENY
     make_question_info.save()
-    make_question = MakeQuestion.objects.all()
+    all_make_question = MakeQuestion.objects.all()
 
-    context = {"makequestion": make_question}
+    context = {"makequestion": all_make_question}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -262,9 +278,9 @@ def create_notice(request):
     try:
         print(request.POST["notice_content"])
         notice_data = Notice(
-            notice_name = request.POST["notice_name"],
-            notice_content = request.POST["notice_content"],
-            made_date = now_date
+            notice_name=request.POST["notice_name"],
+            notice_content=request.POST["notice_content"],
+            made_date=now_date
         )
         notice_data.save()
 
@@ -317,6 +333,7 @@ def change_quiz_info(request):
         make_question_id=self_question_id
     )
     context = {"makequestion": makequestion, "mark_list": mark_list}
+
     return render(request, "sysop/detail_quiz.html", context)
 
 
@@ -345,10 +362,11 @@ def change_question_info(request):
     question_info.save()
 
     question = Question.objects.filter(question_id=question_id).first()
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
     context = {"question": question,
-               "category": category}
+               "category": all_category}
+
     return render(request, "sysop/detail_question.html", context)
 
 
@@ -365,6 +383,7 @@ def change_notice_info(request):
     notice = Notice.objects.filter(notice_id=notice_id).first()
 
     context = {"notice": notice, }
+
     return render(request, "sysop/detail_notice.html", context)
 
 
@@ -385,8 +404,9 @@ def delete_question(request):
     study_solve_info.delete()
     question_info.delete()
 
-    question = Question.objects.all()
-    context = {"question": question}
+    all_question = Question.objects.all()
+    context = {"question": all_question}
+
     return render(request, "sysop/view_question.html", context)
 
 
@@ -396,6 +416,7 @@ def delete_notice(request):
     notice_info = Notice.objects.get(notice_id=notice_id)
     notice_info.delete()
 
-    notice = Notice.objects.all()
-    context = {"notice": notice}
+    all_notice = Notice.objects.all()
+    context = {"notice": all_notice}
+
     return render(request, "sysop/view_notice.html", context)
