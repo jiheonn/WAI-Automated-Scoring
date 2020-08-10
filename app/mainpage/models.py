@@ -102,6 +102,7 @@ class Solve(models.Model):
 
 class Notice(models.Model):
     notice_id = models.AutoField(primary_key=True, auto_created=True)
+    notice_target = models.CharField(max_length=50)
     notice_name = models.CharField(max_length=100)
     notice_content = models.TextField()
     made_date = models.DateField()
