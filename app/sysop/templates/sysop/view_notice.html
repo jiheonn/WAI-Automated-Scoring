@@ -100,6 +100,7 @@
                 <thead>
                 <tr style="background-color: #343a40; color: white;">
                     <th>번호</th>
+                    <th>대상</th>
                     <th>제목</th>
                     <th>날짜</th>
                     <th>삭제하기</th>
@@ -110,6 +111,7 @@
                 {% for notice_value in notice %}
                 <tr style="border: 1px solid #d6d6d6;">
                     <td> {{ forloop.counter }}</td>
+                    <td> {{ notice_value.notice_target }}</td>
                     <td style="text-align: left;"> {{ notice_value.notice_name }}</td>
                     <td> {{ notice_value.made_date }}</td>
                     <td>

@@ -79,6 +79,7 @@
             <p class="font-weight-bolder triangle-border left">
                 학생, 선생님 페이지에 업로드할 공지사항 입니다.<br><br>
 
+                1. 공지사항 대상을 선택해주세요. <br>
                 1. 공지사항 제목을 작성해주세요. <br>
                 2. 공지사항 내용을 작성해주세요. <br>
             </p>
@@ -96,6 +97,18 @@
     <form name="create_notice_form" action="{% url 'sysop_create_notice' %}" method="POST"
           enctype="multipart/form-data">
         {% csrf_token %}
+        <div class="row justify-content-center">
+            <div id="target" class="col-lg-4">
+                <br>
+                <select class="input-box form-control form-control-a" name="notice_target">
+                    <option selected="selected" disabled>공지사항 대상</option>
+                    <option value="공통">공통</option>
+                    <option value="학생">학생</option>
+                    <option value="선생님">선생님</option>
+                    <option value="관리자">관리자</option>
+                </select>
+            </div>
+        </div>
         <div class="row justify-content-center my-6">
             <div class="col-8 sct-center">
                 <span>공지사항 제목 : <input style="width:100%" id="as_name" type="text" name="notice_name"
