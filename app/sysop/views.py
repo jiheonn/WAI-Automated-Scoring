@@ -102,8 +102,9 @@ def view_notice(request):
 def detail_notice(request):
     notice_id = request.GET["notice_id"]
     notice = Notice.objects.filter(notice_id=notice_id).first()
-
-    context = {"notice": notice}
+    notice_target_list = ["공통", "학생", "선생님", "관리자"]
+    context = {"notice": notice,
+               "notice_target_list": notice_target_list}
 
     return render(request, "sysop/detail_notice.html", context)
 
@@ -276,8 +277,8 @@ def create_notice(request):
     now_date = now.strftime("%Y-%m-%d")
 
     try:
-        print(request.POST["notice_content"])
         notice_data = Notice(
+            notice_target=request.POST["notice_target"],
             notice_name=request.POST["notice_name"],
             notice_content=request.POST["notice_content"],
             made_date=now_date
@@ -376,13 +377,16 @@ def change_notice_info(request):
 
     notice_info = Notice.objects.get(notice_id=notice_id)
 
+    notice_info.notice_target = request.POST["notice_target"]
     notice_info.notice_name = request.POST["notice_name"]
     notice_info.notice_content = request.POST["notice_content"]
     notice_info.save()
 
     notice = Notice.objects.filter(notice_id=notice_id).first()
+    notice_target_list = ["공통", "학생", "선생님", "관리자"]
 
-    context = {"notice": notice, }
+    context = {"notice": notice,
+               "notice_target_list": notice_target_list}
 
     return render(request, "sysop/detail_notice.html", context)
 
