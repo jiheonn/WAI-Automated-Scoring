@@ -222,17 +222,17 @@ def check_homework_by_id(request):
 def check_homework_list(request):
     student_id = int(request.GET["ID_num"])
 
-    join_solve_assignmentquesrel = (
+    join_by_assignment_id = (
         Solve.objects.select_related("as_qurel")
         .filter(student_id=student_id)
         .values("as_qurel_id", "solve_id")
     )
-    as_qurel_id = join_solve_assignmentquesrel.values("as_qurel_id")[0]["as_qurel_id"]
-    join_assignmentquesrel_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
+    as_qurel_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
+    join_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
         as_qurel_id=as_qurel_id
     )
 
-    context = {"join_assignmentquesrel_assignment": join_assignmentquesrel_assignment, "student_id": student_id}
+    context = {"join_assignment": join_assignment, "student_id": student_id}
     return render(request, "student/check_homework_list.html", context)
 
 
@@ -241,33 +241,33 @@ def check_homework_question(request):
     student_id = int(request.GET.get("student_id"))
     assignment_id = request.GET.get("assignment_id")
 
-    join_question_assignmentquesrel_id = (
+    join_by_assignment_id = (
         Question.objects.select_related("assignment_question_rel")
         .filter(assignmentquestionrel__assignment_id=assignment_id)
         .values_list("assignmentquestionrel", flat=True)
     )
-    join_solve_assignmentquesrel_id = (
+    join_by_student_id = (
         Solve.objects.select_related("assignment_question_rel")
         .filter(student_id=student_id)
         .values_list("as_qurel_id", flat=True)
     )
 
     result_list = []
-    for as_qurel_id in join_question_assignmentquesrel_id:
-        if as_qurel_id in join_solve_assignmentquesrel_id:
-            join_question_assignmentquesrel_values = (
+    for as_qurel_id in join_by_assignment_id:
+        if as_qurel_id in join_by_student_id:
+            values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
                 .filter(assignmentquestionrel=as_qurel_id)
                 .values("assignmentquestionrel", "question_id", "question_name")
             )
-            join_solve_assignmentquesrel_values = (
+            values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
                 .filter(as_qurel_id=as_qurel_id)
                 .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
             )
-            result = list(chain(join_question_assignmentquesrel_values, join_solve_assignmentquesrel_values))
+            result = list(chain(values_with_question, values_with_solve))
 
             result[0].update(result[1])
             result_list.append(result[0])
@@ -393,11 +393,9 @@ def do_homework_diagnosis(request):
 # 스스로 평가하기 페이지
 def evaluate_by_self(request):
     qs = MakeQuestion.objects.all()
-    # category = Category.objects.all()
 
     context = {
         "qs": qs,
-        # 'category': category,
     }
     return render(request, "student/evaluate_by_self.html", context)
 
@@ -481,9 +479,9 @@ def search_keyword(request):
         .values_list("question_id", flat=True)
         .distinct()
     )
-    key_datas = Question.objects.filter(pk__in=key_data)
+    keys = Question.objects.filter(pk__in=key_data)
 
-    search_data = search_card_result(key_datas)
+    search_data = search_card_result(keys)
 
     context = {"search_data": search_data}
     return JsonResponse(context)
@@ -497,14 +495,14 @@ def search_name(request):
         .values_list("make_question_id", flat=True)
         .distinct()
     )
-    name_datas = MakeQuestion.objects.filter(pk__in=name_data)
+    names = MakeQuestion.objects.filter(pk__in=name_data)
 
     search_data = []
-    for n_data in name_datas:
+    for name in names:
         search_data_dict = dict()
-        search_data_dict["make_question_id"] = n_data.make_question_id
-        search_data_dict["question_name"] = n_data.question_name
-        search_data_dict["question_image"] = n_data.image.name
+        search_data_dict["make_question_id"] = name.make_question_id
+        search_data_dict["question_name"] = name.question_name
+        search_data_dict["question_image"] = name.image.name
         search_data.append(search_data_dict)
 
     context = {"search_data": search_data}
@@ -516,13 +514,13 @@ def change_category_evaluate_exercise(request):
     category_option = request.GET["option"]
 
     if category_option == "select":
-        opt_datas = Question.objects.all()
+        options = Question.objects.all()
     else:
-        opt_datas = Question.objects.select_related("category").filter(
+        options = Question.objects.select_related("category").filter(
             category__category_name=category_option
         )
 
-    option_data = search_card_result(opt_datas)
+    option_data = search_card_result(options)
 
     context = {"option_data": option_data}
     return JsonResponse(context)
