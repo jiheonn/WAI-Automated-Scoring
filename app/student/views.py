@@ -314,7 +314,7 @@ def do_homework_question(request):
     student_id = request.GET["ID_num"]
     student_name = request.GET["student_name"]
 
-    join_aqr_q = (
+    join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="숙제하기")
@@ -326,22 +326,22 @@ def do_homework_question(request):
     # 학습목록을 선택한 경우
     if question_info is not None:
         question_info = question_info.split(",")
-        join_aqr_q = get_question_by_id(question_info)[0]
+        join_by_assignment_id = get_question_by_id(question_info)[0]
         first_data = get_question_by_id(question_info)[1]
     # 학습목록을 선택하지 않은 경우
     else:
-        first_data = join_aqr_q.first()
+        first_data = join_by_assignment_id.first()
 
     # 코드가 db에 없으면 원상복귀
     if is_in_db(first_data, student_id, student_name):
         context = {}
         return render(request, "student/do_homework_by_code.html", context)
 
-    done_list = is_completed(join_aqr_q)
+    done_list = is_completed(join_by_assignment_id)
 
     context = {
         "student_id": student_id,
-        "join_aqr_q": join_aqr_q,
+        "join_by_assignment_id": join_by_assignment_id,
         "first_data": first_data,
         "done_list": done_list,
         "student_name": student_name,
@@ -358,10 +358,10 @@ def do_homework_diagnosis(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    join_aqr_q = AssignmentQuestionRel.objects.select_related("question").filter(
+    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
         question__question_id=question_id
     )
-    data = join_aqr_q.first
+    data = join_by_question_id.first
 
     context = {
         "student_id": student_id,
