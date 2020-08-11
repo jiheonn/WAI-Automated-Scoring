@@ -223,9 +223,19 @@ def qr_code(request):
     return render(request, "teacher/QR_code.html", context)
 
 
-# 게시판 화면 view 함수
+# 공지사항 화면 view 함수
 def teacher_notice(request):
-    return render(request, "teacher/teacher_notice.html")
+    all_notice = Notice.objects.all()
+    context = {"notice": all_notice}
+    return render(request, "teacher/teacher_notice.html", context)
+
+
+# 공지사항 자세히보기 화면 view 함수
+def teacher_notice_detail(request):
+    notice_id = request.GET["selected_notice_id"]
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+    context = {"notice": notice}
+    return render(request, "teacher/teacher_notice_detail.html", context)
 
 
 # QR 코드 > 버튼 클릭 시 QR 코드 이미지 변경 함수

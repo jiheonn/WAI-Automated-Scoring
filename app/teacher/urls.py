@@ -42,4 +42,9 @@ urlpatterns = [
         views.make_question_save,
         name="teacher_make_question_save",
     ),
+    path(
+        "teacher_notice/teacher_notice_detail",
+        views.teacher_notice_detail,
+        name="teacher_notice_detail",
+    ),
 ]
