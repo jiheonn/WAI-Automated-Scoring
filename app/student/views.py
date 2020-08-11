@@ -58,20 +58,20 @@ def evaluate_exercise_diagnosis(request):
     now_date = now.strftime("%Y-%m-%d")
 
     # 학교,성별 이미지 출력
-    re_school = request.GET.get("category_school")
-    re_gender = request.GET.get("category_gender")
+    request_school = request.GET.get("category_school")
+    request_gender = request.GET.get("category_gender")
 
-    if (re_school != "") and (re_gender != ""):
+    if (request_school != "") and (request_gender != ""):
         school = f"/staticfiles/student/school_gender_img/{re_school}.png"
         gender = f"/staticfiles/student/school_gender_img/{re_gender}.png"
     else:
         school = ""
         gender = ""
 
-    join_aqr_q = AssignmentQuestionRel.objects.select_related("question").filter(
+    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
         question__question_id=question_id
     )
-    data = join_aqr_q.first()
+    data = join_by_question_id.first()
 
     context = {
         "data": data,
@@ -84,8 +84,8 @@ def evaluate_exercise_diagnosis(request):
     try:
         study_solve_data = StudySolveData(
             question_id=question_id,
-            school=re_school,
-            gender=re_gender,
+            school=request_school,
+            gender=request_gender,
             response=ques_ans,
             score=INIT_SCORE,
             submit_date=now_date,
@@ -111,7 +111,7 @@ def study_evaluate_question(request):
     student_id = request.GET.get("ID_num")
     student_name = request.GET.get("student_name")
 
-    join_aqr_q = (
+    join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="학습평가")
@@ -123,11 +123,11 @@ def study_evaluate_question(request):
     # 학습목록을 선택한 경우
     if question_info is not None:
         question_info = question_info.split(",")
-        join_aqr_q = get_question_by_id(question_info)[0]
+        join_by_assignment_id = get_question_by_id(question_info)[0]
         first_data = get_question_by_id(question_info)[1]
     # 학습목록을 선택하지 않은 경우
     else:
-        first_data = join_aqr_q.first()
+        first_data = join_by_assignment_id.first()
 
     # 코드가 db에 없으면 원상복귀
     if is_in_db(first_data, student_id, student_name):
@@ -135,7 +135,7 @@ def study_evaluate_question(request):
         return render(request, "student/study_evaluate.html", context)
 
     # 학습 완료 목록
-    done_list = is_completed(join_aqr_q)
+    done_list = is_completed(join_by_assignment_id)
 
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
@@ -158,14 +158,11 @@ def study_evaluate_question(request):
     context = {
         "student_id": student_id,
         "student_name": student_name,
-        "join_aqr_q": join_aqr_q,
+        "join_by_assignment_id": join_by_assignment_id,
         "first_data": first_data,
         "done_list": done_list,
     }
     return render(request, "student/study_evaluate_question.html", context)
-
-    # data => join_aqr_q
-    # f => first_data
 
 
 # 코드가 db에 있는지 없는지 판단, 학번,이름 기입 여부
@@ -174,14 +171,14 @@ def is_in_db(first_data, student_id, student_name):
 
 
 # 문항 학습 완료여부 판단
-def is_completed(join_aqr_q):
+def is_completed(join_by_assignment_id):
     test_list = []
     done_list = []
 
-    for join_data in join_aqr_q:
+    for join_data in join_by_assignment_id:
         as_qurel_id = join_data.as_qurel_id
-        join_aq_id = Solve.objects.filter(as_qurel_id=as_qurel_id)
-        test_list.append(join_aq_id)
+        solve_data = Solve.objects.filter(as_qurel_id=as_qurel_id)
+        test_list.append(solve_data)
     for test_data in test_list:
         if test_data.values("as_qurel_id"):
             done = "O"
@@ -196,14 +193,14 @@ def get_question_by_id(question_info):
     question_id = int(question_info[0])
     assignment_id = question_info[1]
 
-    join_aqr_q = AssignmentQuestionRel.objects.select_related("question").filter(
+    join_by_assignment_id = AssignmentQuestionRel.objects.select_related("question").filter(
         assignment_id=assignment_id
     )
-    join_aqr_q_id = AssignmentQuestionRel.objects.select_related("question").filter(
+    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
         question__question_id=question_id
     )
-    first_data = join_aqr_q_id[0]
-    return join_aqr_q, first_data
+    first_data = join_by_question_id[0]
+    return join_by_assignment_id, first_data
 
 
 # 숙제하기와 숙제조회 선택 페이지
@@ -479,9 +476,9 @@ def search_keyword(request):
         .values_list("question_id", flat=True)
         .distinct()
     )
-    keys = Question.objects.filter(pk__in=key_data)
+    keys_of_question = Question.objects.filter(pk__in=key_data)
 
-    search_data = search_card_result(keys)
+    search_data = search_card_result(keys_of_question)
 
     context = {"search_data": search_data}
     return JsonResponse(context)
@@ -495,10 +492,10 @@ def search_name(request):
         .values_list("make_question_id", flat=True)
         .distinct()
     )
-    names = MakeQuestion.objects.filter(pk__in=name_data)
+    names_of_makequestion = MakeQuestion.objects.filter(pk__in=name_data)
 
     search_data = []
-    for name in names:
+    for name in names_of_makequestion:
         search_data_dict = dict()
         search_data_dict["make_question_id"] = name.make_question_id
         search_data_dict["question_name"] = name.question_name
@@ -514,13 +511,13 @@ def change_category_evaluate_exercise(request):
     category_option = request.GET["option"]
 
     if category_option == "select":
-        options = Question.objects.all()
+        options_of_question = Question.objects.all()
     else:
-        options = Question.objects.select_related("category").filter(
+        options_of_question = Question.objects.select_related("category").filter(
             category__category_name=category_option
         )
 
-    option_data = search_card_result(options)
+    option_data = search_card_result(options_of_question)
 
     context = {"option_data": option_data}
     return JsonResponse(context)
