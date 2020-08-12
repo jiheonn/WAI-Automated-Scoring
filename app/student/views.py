@@ -63,8 +63,8 @@ def evaluate_exercise_diagnosis(request):
     request_gender = request.GET.get("category_gender")
 
     if (request_school != "") and (request_gender != ""):
-        school = f"/staticfiles/student/school_gender_img/{re_school}.png"
-        gender = f"/staticfiles/student/school_gender_img/{re_gender}.png"
+        school = f"/staticfiles/student/school_gender_img/{request_school}.png"
+        gender = f"/staticfiles/student/school_gender_img/{request_gender}.png"
     else:
         school = ""
         gender = ""
@@ -543,8 +543,3 @@ def search_card_result(datas):
         data_dict["question_image"] = data.image.name
         list_data.append(data_dict)
     return list_data
-
-### 테스트
-# solve테이블과 question테이블 조인
-# as_qurel_id = join_aqr_q.values('as_qurel_id')[0]['as_qurel_id']
-# da = Solve.objects.prefetch_related('assignment_question_rel').filter(as_qurel_id=as_qurel_id)

@@ -49,7 +49,6 @@
             <p class="font-weight-bolder triangle-border left">선생님이 알려준 8자리 숫자와 자신의 ID를 입력하세요.<br>
                 평가 결과는 수업 시간에 선생님께서 알려주십니다.
             </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -60,26 +59,22 @@
     <center>
         <div class="w3-container">
             <form action="{% url 'student_study_evaluate_question' %}" method="get" >
-<!--                    {% csrf_token %}-->
-                    <table style="text-align: center; width:600px; height:160px;">
-                        <tr>
-                            <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td><input id="student_name" type="text" name="student_name" placeholder="이름을 입력하세요." style="width:280px; height: 50px;"></td>
-                        </tr>
-                    </table>
-<!--                </form>-->
-<!--            </div>-->
-                    <br><br>
-            <!--        <a onclick="AIAlert()" style="cursor:pointer">-->
-                    <a onclick="CodeAle()" style="cursor:pointer">
+                <table style="text-align: center; width:600px; height:160px;">
+                    <tr>
+                        <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="ID_num" type="text" name="ID_num" placeholder="ID를 입력하세요." style="width:280px; height: 50px;"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="student_name" type="text" name="student_name" placeholder="이름을 입력하세요." style="width:280px; height: 50px;"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <a onclick="CodeAle()" style="cursor:pointer">
                     <button id="sub_btn" type="submit" class="w3-button w3-large w3-round w3-blue">완료</button>
-                    </a>
-                    <br><br>
+                </a>
+                <br><br>
             </form>
 
             <script type="text/javascript" language="javascript">
@@ -95,7 +90,6 @@
                      }
                 }
             </script>
-
 
         </div>
     </center>

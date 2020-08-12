@@ -3,80 +3,80 @@
 {% block content %}
 <script type="text/javascript" language="javascript">
     $(document).ready(function () {
-            $('#search').click(function () {
-                var user_input = $('#user_input').val();
-                 $.ajax({
-                    url: '/student/search/',
-                    data: {user_input: user_input},
-                    success: function (data) {
-                        var search_data = data.search_data;
-                        var num = search_data.length;
-                        if ( num == 0 ) {
-                            alert('검색 결과가 존재하지 않습니다.');
-                        } else {
-                            $("div").remove("#question_list");
-                            $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
-                            for (var i = 0; i < num; i++) {
-                                $("#question_list").append(
-                                    '<div class="col-md-3 mb-5">' +
-                                    '<div class="card h-100" align="center">' +
-                                    '<div class="card-body">' +
-                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-                                    '/media/' +
-                                    search_data[i].question_image +
-                                    '" style="width:auto; height:100%;">' +
-                                    '</div>' +
-                                    '<span class="card-footer">' +
-                                    '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
-                                    search_data[i].question_id  +
-                                    '">' +
-                                    search_data[i].question_name +
-                                    '</button>' +
-                                    '</span>' +
-                                    '</div>' +
-                                    '</div>'
-                                )}
-                        }}
+        $('#search').click(function () {
+            var user_input = $('#user_input').val();
+             $.ajax({
+                url: '/student/search/',
+                data: {user_input: user_input},
+                success: function (data) {
+                    var search_data = data.search_data;
+                    var num = search_data.length;
+                    if ( num == 0 ) {
+                        alert('검색 결과가 존재하지 않습니다.');
+                    } else {
+                        $("div").remove("#question_list");
+                        $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
+                        for (var i = 0; i < num; i++) {
+                            $("#question_list").append(
+                                '<div class="col-md-3 mb-5">' +
+                                '<div class="card h-100" align="center">' +
+                                '<div class="card-body">' +
+                                '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                                '/media/' +
+                                search_data[i].question_image +
+                                '" style="width:auto; height:100%;">' +
+                                '</div>' +
+                                '<span class="card-footer">' +
+                                '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
+                                search_data[i].question_id  +
+                                '">' +
+                                search_data[i].question_name +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</div>'
+                            )}
+                    }}
                  });
             });
         });
     <!--검색카테고리-->
-            $(document).ready(function () {
-            $('#category_option').change(function () {
-                var option = $("#category_option option:selected").val();
-                $.ajax({
-                    url: '/student/change_category/',
-                    data: {option: option},
-                    success: function (data) {
-                        var option_data = data.option_data;
-                        var num = option_data.length;
-                        $("div").remove("#question_list");
-                        $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
-                            for (var i = 0; i < num; i++) {
-                                $("#question_list").append(
-                                    '<div class="col-md-3 mb-5">' +
-                                    '<div class="card h-100" align="center">' +
-                                    '<div class="card-body">' +
-                                    '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-                                    '/media/' +
-                                    option_data[i].question_image +
-                                    '" style="width:auto; height:100%;">' +
-                                    '</div>' +
-                                    '<span class="card-footer">' +
-                                    '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
-                                    option_data[i].question_id  +
-                                    '">' +
-                                    option_data[i].question_name +
-                                    '</button>' +
-                                    '</span>' +
-                                    '</div>' +
-                                    '</div>'
-                                )
-                            }
-                        }
-                    });
-                });
+    $(document).ready(function () {
+    $('#category_option').change(function () {
+        var option = $("#category_option option:selected").val();
+        $.ajax({
+            url: '/student/change_category/',
+            data: {option: option},
+            success: function (data) {
+                var option_data = data.option_data;
+                var num = option_data.length;
+                $("div").remove("#question_list");
+                $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
+                    for (var i = 0; i < num; i++) {
+                        $("#question_list").append(
+                            '<div class="col-md-3 mb-5">' +
+                            '<div class="card h-100" align="center">' +
+                            '<div class="card-body">' +
+                            '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
+                            '/media/' +
+                            option_data[i].question_image +
+                            '" style="width:auto; height:100%;">' +
+                            '</div>' +
+                            '<span class="card-footer">' +
+                            '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
+                            option_data[i].question_id  +
+                            '">' +
+                            option_data[i].question_name +
+                            '</button>' +
+                            '</span>' +
+                            '</div>' +
+                            '</div>'
+                        )
+                    }
+                }
             });
+        });
+    });
 </script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -123,9 +123,7 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-3">
-            <p class="font-weight-bolder triangle-border left">학습할 문항을 선택하세요.
-            </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+            <p class="font-weight-bolder triangle-border left">학습할 문항을 선택하세요.</p>
         </div>
         <!-- /.col-md-4 -->
 
@@ -149,10 +147,8 @@
             </div>
         </div>
 
-
     </div>
     <!-- /.row -->
-
 
     <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4 text-center">

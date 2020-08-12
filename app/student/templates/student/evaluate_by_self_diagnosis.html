@@ -38,7 +38,6 @@
 <!-- Page Content -->
 <div class="container">
 
-
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
@@ -53,14 +52,12 @@
     </div>
     <!-- /.row -->
 
-
     <!-- Content Row -->
     <div class="card text-white bg-secondary my-5 py-4">
         <div class="card-body">
             <h5 class="text-white m-0 text-center">스스로 평가하기</h5>
         </div>
     </div>
-
 
     <!-- Content Row -->
     <div class="row my-5">
@@ -117,7 +114,6 @@
         }
         </script>
     </div>
-<!---->
 
     <form action="{% url 'student_evaluate_by_self_score' %}" method="get">
         <input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{ data.make_question_id }}">

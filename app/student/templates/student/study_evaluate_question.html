@@ -64,12 +64,10 @@
                     {% for data in join_by_assignment_id %}
                     <tr id="t_id">
                         <td>
-    <!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
-                                <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                        value="{{data.question.question_id}},{{data.assignment_id}}" id="q_id">
-                                    {{data.question.question_name}}
-                                </button>
-<!--                            </form>-->
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
+                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="q_id">
+                                {{data.question.question_name}}
+                            </button>
                         </td>
                     </tr>
                         {% endfor %}

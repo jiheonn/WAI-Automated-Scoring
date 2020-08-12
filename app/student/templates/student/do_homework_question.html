@@ -1,18 +1,7 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
-<script>
-    $(document).ready(function () {
-        $('#submit_btn').click(function () {
-            var q_table = document.getElementById('ques_table');
-            var q_id = document.getElementById('q_id');
-            if (q_id in q_table) {
-                // $('#t_id').empty();
-            }
 
-        });
-    });
-</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -71,7 +60,6 @@
                 <th class="w3-indigo">
                     학습 목록
                 </th>
-
                 {% for data in join_by_assignment_id %}
                 <tr id="t_id">
                     <td>
