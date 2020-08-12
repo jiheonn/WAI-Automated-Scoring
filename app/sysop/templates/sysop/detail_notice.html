@@ -115,8 +115,9 @@
             <p class="font-weight-bolder triangle-border left">
                 학생, 선생님 페이지에 업로드할 공지사항 입니다.<br><br>
 
-                1. 공지사항 제목을 수정할 수 있습니다. <br>
-                2. 공지사항 내용을 수정할 수 있습니다. <br>
+                1. 공지사항 대상을 수정할 수 있습니다. <br>
+                2. 공지사항 제목을 수정할 수 있습니다. <br>
+                3. 공지사항 내용을 수정할 수 있습니다. <br>
             </p>
         </div>
     </div>
@@ -134,10 +135,14 @@
         <div>
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
+                    <th width="100px">번호</th>
+                    <th width="200px">대상</th>
                     <th width="600px">제목</th>
-                    <th width="440px">등록일자</th>
+                    <th width="240px">등록일자</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ notice.notice_id }}</td>
+                    <td>{{ notice.notice_target }}</td>
                     <td>{{ notice.notice_name }}</td>
                     <td>{{ notice.made_date }}</td>
                 </tr>
@@ -146,6 +151,19 @@
             <form name="change_notice_form" action="{% url 'sysop_change_notice_info' %}" method="POST"
                   enctype="multipart/form-data">
                 {% csrf_token %}
+                <span>공지사항 대상 :
+                <div id="target" class="col-lg-4">
+                    <select class="input-box form-control form-control-a" name="notice_target">
+                        {% for notice_target in notice_target_list %}
+                            {% if notice_target == notice.notice_target %}
+                                <option selected="selected" value="{{ notice_target }}">{{ notice_target }}</option>
+                            {% else %}
+                                <option value="{{ notice_target }}">{{ notice_target }}</option>
+                            {% endif%}
+                        {% endfor %}
+                    </select>
+                </div>
+                    </span>
                 <input type="hidden" name="notice_id" value="{{ notice.notice_id }}">
                 <span>공지사항 제목 :
                     <input class="input-box" type="text" style="width:100%" name="notice_name"
