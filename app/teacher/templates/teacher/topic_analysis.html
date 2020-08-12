@@ -19,6 +19,7 @@
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
+<link href="{% static 'teacher/css/topic_analysis.css' %}" rel="stylesheet">
 
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="{% static 'teacher/js/teacher.js' %}"></script>
@@ -52,26 +53,21 @@
             </select>
         </div>
         <!-- /.row -->
-        <!-- <div class="col-7 text-box">
-            <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
-        </div> -->
         <div class="col-8 section-center">
             <div>
                 {% csrf_token %}
-                <label for="responded_student_file"><strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.</strong></label>
+                <label for="responded_student_file">
+                    <strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.<br>
+                            엑셀 첫 시트와 첫 열만 분석이 가능합니다.</strong></label>
                 <input id="topic-modeling-file" type="file" accept=".csv, .xlsx" name="responded_student_file">
             </div>
             <div>
-                <label for="topic_count">토픽 개수를 입력해 주세요. (2 ~ 20) 사이의 정수</label>
-                <input id="topic_count" class="topic-count-input" type="number" name="topic-count" maxlength="2" min="2" max="50"
-                    placeholder="토픽 개수 입력 (2~20)">
+                <label for="topic_count">토픽 개수를 입력해 주세요. (2 ~ 10) 사이의 정수</label>
+                <input id="topic_count" class="topic-count-input" type="number" name="topic-count" maxlength="2" min="2" max="10"
+                    placeholder="토픽 개수 입력 (2~10)">
                 <button id="topic-modeling-submit-btn" type="submit" class="w3-button w3-large w3-round w3-blue">실행</button>
             </div>
         </div>
-
-        <!-- <div class="col-lg-2 btn-center">
-            <button type="submit" class="w3-button w3-large w3-round w3-blue">분석 결과 보기</button>
-        </div> -->
     </div>
     <div id="topic-modeling">
         <div id="vis-tmtable"></div>

@@ -19,6 +19,7 @@ stream_handler.setFormatter(logger_format)
 sa_logger.addHandler(stream_handler)
 
 
+# Bigram Tree 분석
 @app.route("/get-tokenized/", methods=["POST"])
 @cross_origin()
 def get_tokenized():
@@ -37,20 +38,33 @@ def get_tokenized():
     return context
 
 
-@app.route("/get-topic-modeling/", methods=["POST"])
+# 주제분석
+@app.route("/get-topic-analysis/", methods=["POST"])
 @cross_origin()
-def analyze_response():
-    sa_logger.info("get-topic-modeling")
+def get_topic_analysis():
+    sa_logger.info("get-topic-analysis")
     file_storage = request.files['file']
-    print("topic_number : ", request.form['num_topic'])
-    res = topic_modeling.analyze_csv(file_storage)
+    extension = request.form['extension']
+    num_topic = int(request.form['num_topic'])
+
+    # 토픽 모델링 분석
+    topic_modeling_result, factorized_matrix_meta = topic_modeling.get_topic_modeling(file=file_storage, extension=extension, num_topic=num_topic)
+    if topic_modeling_result is None:
+        return "Wrong CSV format", 400
+
+    # T-SNE 분석
+    tsne_result = topic_modeling.get_tsne(factorized_matrix_meta)
+    
     context = {
-        "id": "analyze-response",
+        "id": "topic-analysis",
         "data": {
-            "df": res.to_string(),
+            "topics": topic_modeling_result,
+            "tsne": tsne_result,
         },
     }
+    file_storage.close()
     return context
+
 
 @app.errorhandler(Exception)
 @cross_origin()
@@ -60,6 +74,7 @@ def handling_exception(e):
         "id": "error",
     }
     return context
+
 
 @app.after_request
 def add_header(response):
