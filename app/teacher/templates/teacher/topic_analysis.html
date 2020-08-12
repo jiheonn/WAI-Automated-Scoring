@@ -12,7 +12,7 @@
 <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
@@ -26,52 +26,57 @@
 
 <!-- Page Content -->
 <div class="container">
+    <div id="input-page">
+        <!-- Heading Row -->
+        <div class="row justify-content-center my-5">
+            <div class="col-lg-2">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                    height="120" alt="">
+            </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-5">
+                <!--            <h1 class="font-weight-light">주제분석</h1><br>-->
+                <p class="font-weight-bolder triangle-border left">
+                    주제를 분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성하고,
+                    '토픽 모델링' 알고리즘을 선택해 주세요.<br>
+                    파일을 업로드 후 토픽 개수를 입력하여<br>실행 버튼을 누르면 분석이 진행됩니다.</p>
+                <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+            </div>
+            <!-- /.col-md-4 -->
+        </div>
+        <div class="col-lg-7 topic-opt">
+            <select name="evaluation_type">
+                <option value="select" selected="selected">토픽 모델링</option>
+                <option value="learning_evaluation">간단한 모델</option>
+                <option value="homework">복잡한 모델</option>
+            </select>
+        </div>
+        <!-- /.row -->
+        <!-- <div class="col-7 text-box">
+            <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
+        </div> -->
+        <div class="col-8 section-center">
+            <div>
+                {% csrf_token %}
+                <label for="responded_student_file"><strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.</strong></label>
+                <input id="topic-modeling-file" type="file" accept=".csv, .xlsx" name="responded_student_file">
+            </div>
+            <div>
+                <label for="topic_count">토픽 개수를 입력해 주세요. (2 ~ 20) 사이의 정수</label>
+                <input id="topic_count" class="topic-count-input" type="number" name="topic-count" maxlength="2" min="2" max="50"
+                    placeholder="토픽 개수 입력 (2~20)">
+                <button id="topic-modeling-submit-btn" type="submit" class="w3-button w3-large w3-round w3-blue">실행</button>
+            </div>
+        </div>
 
-    <!-- Heading Row -->
-    <div class="row justify-content-center my-5">
-        <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                height="120" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-5">
-            <!--            <h1 class="font-weight-light">주제분석</h1><br>-->
-            <p class="font-weight-bolder triangle-border left">
-                주제를 분석하고자 하는 학생들의 응답을 아래 입력 칸에 작성하고,
-                '토픽 모델링' 알고리즘을 선택해 주세요.<br>
-                파일을 업로드 후 토픽 개수를 입력하여<br>실행 버튼을 누르면 분석이 진행됩니다.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
-        </div>
-        <!-- /.col-md-4 -->
+        <!-- <div class="col-lg-2 btn-center">
+            <button type="submit" class="w3-button w3-large w3-round w3-blue">분석 결과 보기</button>
+        </div> -->
     </div>
-    <div class="col-lg-7 topic-opt">
-        <select name="evaluation_type">
-            <option value="select" selected="selected">토픽 모델링</option>
-            <option value="learning_evaluation">간단한 모델</option>
-            <option value="homework">복잡한 모델</option>
-        </select>
+    <div id="topic-modeling">
+        <div id="vis-tmtable"></div>
+        <div id="vis-tsne"></div>
     </div>
-    <!-- /.row -->
-    <!-- <div class="col-7 text-box">
-        <textarea type="text" name="" placeholder="   학생들의 응답 텍스트를 여기에 작성해 주세요."></textarea>
-    </div> -->
-    <div class="col-8 section-center">
-        <div>
-            {% csrf_token %}
-            <label for="responded_student_file"><strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.</strong></label>
-            <input id="topic-modeling-file" type="file" accept=".csv, .xlsx" name="responded_student_file">
-        </div>
-        <div>
-            <label for="topic_count">토픽 개수를 입력해 주세요. (2 ~ 50) 사이의 정수</label>
-            <input id="topic_count" class="topic-count-input" type="number" name="topic-count" maxlength="2" min="2" max="50"
-                placeholder="토픽 개수 입력 (2~50)">
-            <button id="topic-modeling-submit-btn" type="submit" class="w3-button w3-large w3-round w3-blue">실행</button>
-        </div>
-    </div>
-
-    <!-- <div class="col-lg-2 btn-center">
-        <button type="submit" class="w3-button w3-large w3-round w3-blue">분석 결과 보기</button>
-    </div> -->
 </div>
 <!-- /.container -->
 
