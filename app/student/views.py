@@ -21,6 +21,7 @@ from mainpage.models import (
     Category,
     StudySolveData,
     Mark,
+    Notice,
 )
 
 INIT_SCORE = 0
@@ -461,10 +462,19 @@ def evaluate_by_self_score(request):
     return render(request, "student/evaluate_by_self_score.html", context)
 
 
-# 게시판 페이지
-def notice(request):
-    context = {}
-    return render(request, "student/notice.html", context)
+# 공지사항 화면 view 함수
+def student_notice(request):
+    all_notice = Notice.objects.exclude(notice_target="선생님")
+    context = {"notice": all_notice}
+    return render(request, "student/student_notice.html", context)
+
+
+# 공지사항 자세히보기 화면 view 함수
+def student_notice_detail(request):
+    notice_id = request.GET["selected_notice_id"]
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+    context = {"notice": notice}
+    return render(request, "student/student_notice_detail.html", context)
 
 
 # 평가연습의 키워드로 문항 검색하기

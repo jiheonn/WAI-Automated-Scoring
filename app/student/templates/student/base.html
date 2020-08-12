@@ -2,8 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
     <head>
 
         <meta charset="utf-8">
@@ -22,13 +20,15 @@
         <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
         <script type="text/javascript" language="javascript">
-
             function IDAlert() {
                 var ID_num = document.getElementById("ID_num").value
                 var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + ID_num)
@@ -50,52 +50,7 @@
                      return false;
                  }
             }
-
-
-<!--코드만 성공-->
-            function checkcode(data) {
-            code_overlap_input = document.querySelector('input[id="code_num"]');
-
-            $.ajax({
-              url: '/student/check_code/',
-              data: {
-                'code_num': code_overlap_input.value
-              },
-              datatype: 'json',
-              success: function (data) {
-                console.log(data['overlap']);
-                if (data['overlap'] == "pass") {
-                  document.location.href='{% url 'student_do_homework_question' %}';
-                } else {
-                alert("코드를 다시 확인하세요.");
-<!--                  return false;-->
-                }
-              }
-            });
-          }
-
-<!--ID만-->
-    function checkID(ID_num) {
-        ID_overlap_input = document.querySelector('input[id="ID_num"]');
-
-        $.ajax({
-          url: '/student/check_ID/',
-          data: {
-            'ID_num': ID_overlap_input.value
-          },
-          datatype: 'json',
-          success: function (data) {
-            console.log(data['overlap']);
-            if (data['overlap'] == "pass") {
-              document.location.href='{% url 'student_check_homework_list' %}';
-            } else {
-              alert("코드와 ID를 다시 확인하세요.");
-            }
-          }
-        });
-      }
-    </script>
-
+        </script>
 
     </head>
     <body>

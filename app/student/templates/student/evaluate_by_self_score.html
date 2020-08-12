@@ -1,31 +1,6 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
-<script type="text/javascript" language="javascript">
-    // function ScoreAlert() {
-    //      if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : 2점\n") == true) {
-    //          document.location.href='{% url 'student_evaluate_by_self' %}';
-    //      }else{
-    //          return false;
-    //      }
-    // }
-
-   //  function ScoreAlert() {
-   //      const choice = document.querySelectorAll('input[type=radio]:checked').length;
-   //      const tm_result = {
-   //          0: 0,
-   //          1: 1
-   //      };
-   //      alert(tm_result[choice])
-   //      // alert(tm_result[choice].reduce(function (accumulator, currentValue) {return accumulator + currentValue;}, 0))
-   //      if (confirm("계산한 점수가 맞는지 확인해주세요.(예:1점, 아니오:0점)\n\n총 점수 : " +tm_result[choice] + "점\n") == true) {
-   //           document.location.href='{% url 'student_evaluate_by_self' %}';
-   //       }else{
-   //           return false;
-   // // document.getElementById("result").innerHTML = tm_result[choice];
-   //  }
-   //  }
-</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -52,7 +27,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
