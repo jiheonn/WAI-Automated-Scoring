@@ -38,19 +38,29 @@
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
+    <div class="justify-content-center my-5" id="keyword_btn">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+
+                <span class="input-group-text" id="basic-addon3">
+<!--                    "{{ request.scheme }}://{{ request.get_host }}"-->
+                해당 링크로 QR코드가 만들어집니다.
+                </span>
+            </div>
+
+            <input type="text" value="원하는문제를선택해주세요."
+                   class="form-control" id="qr_code_url" aria-describedby="basic-addon3">
+        </div>
+        <div class="col-7 sct-center" id="qrcode" style="width:100px; height:100px; margin-top:30px;"></div>
+    </div>
+
     <div class="row" id="keyword_btn">
-        <div class="col-md-8 qr-button">
+        <div class="col-md-10 qr-button">
             <form>
                 {% for data in question_data %}
-                <input class="qr-btn-font" type="button" value="{{ data.question_name }}">
+                <input id="{{ data.question_id }}" class="qr-btn-font" type="button" value="{{ data.question_name }}">
                 {% endfor %}
             </form>
-        </div>
-        <!-- /.container -->
-        <div class="col-md-2">
-            <p id="img_space" class="qr-code-img">
-                <img id="QR_code_img" src="{% static 'teacher/images/qr_code_img.png' %}">
-            </p>
         </div>
     </div>
 </div>
@@ -58,5 +68,19 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
+<script src="{% static 'teacher/js/qrcode.js' %}"></script>
+<script src="{% static 'teacher/js/qrcode.min.js' %}"></script>
+<script src="{% static 'teacher/js/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('.qr-btn-font').click(function () {
+            var basic_url_path = "/student/evaluate_exercise/question/?question_id=";
+            var question_id = $(this).attr('id');
+            $('#qr_code_url').val('{{ request.scheme }}://{{ request.get_host }}' + basic_url_path + question_id);
+            var e = $.Event("keyup", {keyCode: 13});
+            $('#qr_code_url').focus();
+            $('#qr_code_url').trigger(e);
+        });
+    });
+</script>
 {% endblock %}
