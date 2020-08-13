@@ -256,7 +256,6 @@ def create_question(request):
             image=image,
             hint=request.POST["question_hint"],
             made_date=now_date,
-            qr_code="qr_code/image/qr_code.png",
             ques_concept=request.POST["question_concept"],
         )
         question_data.save()
