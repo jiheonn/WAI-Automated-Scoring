@@ -114,8 +114,8 @@ def study_evaluate_question(request):
 
     join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
-        .filter(assignment_id=assignment_id)
-        .filter(assignment__type="학습평가")
+            .filter(assignment_id=assignment_id)
+            .filter(assignment__type="학습평가")
     )
 
     # id로 문항 불러오기
@@ -218,20 +218,42 @@ def check_homework_by_id(request):
 
 # 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트)
 def check_homework_list(request):
-    student_id = int(request.GET["ID_num"])
+    student_id = request.GET["ID_num"]
 
-    join_by_assignment_id = (
-        Solve.objects.select_related("as_qurel")
-        .filter(student_id=student_id)
-        .values("as_qurel_id", "solve_id")
-    )
-    as_qurel_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
-    join_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
-        as_qurel_id=as_qurel_id
-    )
+    # 학생 ID가 아무것도 입력되지 않음
+    if student_id is "":
+        context = {}
+        return render(request, "student/check_homework_by_id.html", context)
+    # 학생 ID가 DB에 존재하지 않음
+    elif is_student_id(student_id) is "":
+        result_id = is_student_id(student_id)
+        if is_in_db(1, result_id, 1):
+            context = {}
+            return render(request, "student/check_homework_by_id.html", context)
+    # 입력된 학생 ID가 DB에 존재하여 숙제 리스트 출력
+    else:
+        join_by_assignment_id = (
+            Solve.objects.select_related("as_qurel")
+                .filter(student_id=student_id)
+                .values("as_qurel_id", "solve_id")
+        )
+        as_qurel_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
+        join_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
+            as_qurel_id=as_qurel_id
+        )
 
     context = {"join_assignment": join_assignment, "student_id": student_id}
+
     return render(request, "student/check_homework_list.html", context)
+
+
+# 학생 ID가 DB에 존재하는지 확인
+def is_student_id(student_id):
+    result = Solve.objects.select_related("as_qurel").filter(student_id=student_id).values("student_id").first()
+    if result is None:
+        return ""
+    else:
+        return student_id
 
 
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
@@ -241,13 +263,13 @@ def check_homework_question(request):
 
     join_by_assignment_id = (
         Question.objects.select_related("assignment_question_rel")
-        .filter(assignmentquestionrel__assignment_id=assignment_id)
-        .values_list("assignmentquestionrel", flat=True)
+            .filter(assignmentquestionrel__assignment_id=assignment_id)
+            .values_list("assignmentquestionrel", flat=True)
     )
     join_by_student_id = (
         Solve.objects.select_related("assignment_question_rel")
-        .filter(student_id=student_id)
-        .values_list("as_qurel_id", flat=True)
+            .filter(student_id=student_id)
+            .values_list("as_qurel_id", flat=True)
     )
 
     result_list = []
@@ -255,13 +277,13 @@ def check_homework_question(request):
         if as_qurel_id in join_by_student_id:
             values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
-                .filter(assignmentquestionrel=as_qurel_id)
-                .values("assignmentquestionrel", "question_id", "question_name")
+                    .filter(assignmentquestionrel=as_qurel_id)
+                    .values("assignmentquestionrel", "question_id", "question_name")
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
-                .filter(as_qurel_id=as_qurel_id)
-                .values(
+                    .filter(as_qurel_id=as_qurel_id)
+                    .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
             )
@@ -293,8 +315,8 @@ def do_homework_question(request):
 
     join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
-        .filter(assignment_id=assignment_id)
-        .filter(assignment__type="숙제하기")
+            .filter(assignment_id=assignment_id)
+            .filter(assignment__type="숙제하기")
     )
 
     # id로 문항 불러오기
@@ -460,9 +482,9 @@ def search_keyword(request):
     user_input = request.GET["user_input"]
     key_data = (
         Keyword.objects.select_related("question")
-        .filter(keyword_name__icontains=user_input)
-        .values_list("question_id", flat=True)
-        .distinct()
+            .filter(keyword_name__icontains=user_input)
+            .values_list("question_id", flat=True)
+            .distinct()
     )
     keys_of_question = Question.objects.filter(pk__in=key_data)
 
@@ -477,8 +499,8 @@ def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
         MakeQuestion.objects.filter(question_name__icontains=name_input)
-        .values_list("make_question_id", flat=True)
-        .distinct()
+            .values_list("make_question_id", flat=True)
+            .distinct()
     )
     names_of_makequestion = MakeQuestion.objects.filter(pk__in=name_data)
 
