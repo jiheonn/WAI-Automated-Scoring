@@ -126,9 +126,11 @@ def study_evaluate_question(request):
         question_info = question_info.split(",")
         join_by_assignment_id = get_question_by_id(question_info)[0]
         first_data = get_question_by_id(question_info)[1]
+        as_qurel_id = get_question_by_id(question_info)[2]
     # 학습목록을 선택하지 않은 경우
     else:
         first_data = join_by_assignment_id.first()
+        as_qurel_id = first_data.as_qurel_id
 
     # 코드가 db에 없으면 원상복귀
     if is_in_db(first_data, student_id, student_name):
@@ -142,18 +144,17 @@ def study_evaluate_question(request):
     now_date = now.strftime("%Y-%m-%d")
 
     # 나의 답 DB에 저장
-    try:
+    if request.GET["ques_ans"] != "":
         solve_data = Solve(
+            as_qurel_id=as_qurel_id,
             student_id=student_id,
             submit_date=now_date,
             response=request.GET["ques_ans"],
             score=INIT_SCORE,
-            as_querl_id=as_qurel_id,
             student_name=student_name,
         )
         solve_data.save()
-
-    except:
+    else:
         solve_data = None
 
     context = {
@@ -200,8 +201,11 @@ def get_question_by_id(question_info):
     join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
         question__question_id=question_id
     )
+    as_qurel_id = AssignmentQuestionRel.objects.select_related("question").filter(
+        question__question_id=question_id, assignment_id=assignment_id
+    ).values("as_qurel_id")[0]["as_qurel_id"]
     first_data = join_by_question_id[0]
-    return join_by_assignment_id, first_data
+    return join_by_assignment_id, first_data, as_qurel_id
 
 
 # 숙제하기와 숙제조회 선택 페이지
