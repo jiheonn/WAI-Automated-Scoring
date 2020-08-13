@@ -130,12 +130,13 @@ def study_evaluate_question(request):
     # 학습목록을 선택하지 않은 경우
     else:
         first_data = join_by_assignment_id.first()
-        as_qurel_id = first_data.as_qurel_id
 
     # 코드가 db에 없으면 원상복귀
     if is_in_db(first_data, student_id, student_name):
         context = {}
         return render(request, "student/study_evaluate.html", context)
+
+    as_qurel_id = first_data.as_qurel_id
 
     # 학습 완료 목록
     done_list = is_completed(join_by_assignment_id)
@@ -144,17 +145,18 @@ def study_evaluate_question(request):
     now_date = now.strftime("%Y-%m-%d")
 
     # 나의 답 DB에 저장
-    if request.GET["ques_ans"] != "":
-        solve_data = Solve(
-            as_qurel_id=as_qurel_id,
-            student_id=student_id,
-            submit_date=now_date,
-            response=request.GET["ques_ans"],
-            score=INIT_SCORE,
-            student_name=student_name,
-        )
-        solve_data.save()
-    else:
+    try:
+        if request.GET["ques_ans"] != "":
+            solve_data = Solve(
+                as_qurel_id=as_qurel_id,
+                student_id=student_id,
+                submit_date=now_date,
+                response=request.GET["ques_ans"],
+                score=INIT_SCORE,
+                student_name=student_name,
+            )
+            solve_data.save()
+    except:
         solve_data = None
 
     context = {
