@@ -1,54 +1,52 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
-    <head>
+<html lang="ko">
+<head>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <title>WA3i</title>
+    <title>WA3i</title>
 
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-        <!-- Custom styles for this template -->
-        <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
-        <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
-        <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'mainpage/css/small-business.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/speech-bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'mainpage/css/basic.css' %}" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
 
-    </head>
-    <body>
+    {% block content %}
+    {% endblock %}
 
-        {% block content %}
-        {% endblock %}
+    <!-- Footer -->
+    <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" style="display: block; margin: 0px auto;">
+    <footer class="page-footer py-5 bg-dark">
+        <div class="container" align="center">
+            <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
+        </div>
+    </footer>
+    <!-- Footer -->
 
-        <!-- Footer -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/기관.png' %}" style="display: block; margin: 0px auto;">
-        <footer class="page-footer py-5 bg-dark">
-            <div class="container" align="center">
-                <p class="m-0 text-center text-white">Copyright &copy; WA3I</p>
-            </div>
-        </footer>
-        <!-- Footer -->
+    <!-- Bootstrap core JavaScript -->
+<!--    <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
+    <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'student/vendor/jquery/jquery.twbs-toggle-buttons.min.js' %}"></script>
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
-        <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'student/vendor/jquery/jquery.twbs-toggle-buttons.min.js' %}"></script>
-
-    </body>
+</body>
 
 </html>

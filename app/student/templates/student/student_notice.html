@@ -1,16 +1,16 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
+
 <!--datatable source-->
 <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
 <link href="{% static 'student/css/student.css' %}" rel="stylesheet">
 
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
-        $('#notice_info').DataTable(
-        );
+        $('#notice_table').DataTable();
     });
 </script>
 
@@ -67,7 +67,7 @@
     <!-- /.row -->
     <center>
         <form action="{% url 'student_notice_detail' %}" method="GET">
-            <table id="notice_info" class="display">
+            <table id="notice_table" class="display">
                 <thead>
                     <tr style="background-color: #343a40; color: white; text-align: center;">
                         <th>번호</th>
