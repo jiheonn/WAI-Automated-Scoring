@@ -365,7 +365,8 @@ def do_homework_diagnosis(request):
     join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
         question__question_id=question_id
     )
-    data = join_by_question_id.first
+    data = join_by_question_id.first()
+    as_qurel_id = data.as_qurel_id
 
     context = {
         "student_id": student_id,
@@ -375,18 +376,17 @@ def do_homework_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-    try:
+    if ques_ans != "":
         solve_data = Solve(
+            as_qurel_id=as_qurel_id,
             student_id=student_id,
             submit_date=now_date,
             response=ques_ans,
             score=INIT_SCORE,
-            as_querl_id=as_qurel_id,
-            student_name=request.GET["student_name"],
+            student_name=student_name,
         )
         solve_data.save()
-
-    except:
+    else:
         solve_data = None
 
     return render(request, "student/do_homework_diagnosis.html", context)
