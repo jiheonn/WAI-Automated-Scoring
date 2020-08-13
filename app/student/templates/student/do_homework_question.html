@@ -67,7 +67,6 @@
                             <input type="hidden" name="ID_num" value="{{student_id}}">
                             <input type="hidden" name="student_name" value="{{student_name}}">
                             <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
-<!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
                             <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
                                     value="{{data.question.question_id}},{{data.assignment_id}}" id="q_id">
                                 {{data.question.question_name}}
@@ -96,6 +95,7 @@
             <form action="{% url 'student_do_homework_diagnosis' %}" method="GET">
                 <input type="hidden" name="student_id" id ="student_id" value="{{student_id}}">
                 <input type="hidden" name="student_name" id ="student_name" value="{{student_name}}">
+                <input type="hidden" name="code_num" value="{{ first_data.assignment.assignment_id }}">
             <!-- Title -->
                 <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{first_data.question.question_id}}"
                                                    id="{{first_data.question.question_id}}">{{first_data.question.question_name}}</h2>

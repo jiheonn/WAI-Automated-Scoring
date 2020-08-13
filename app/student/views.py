@@ -286,30 +286,6 @@ def do_homework_by_code(request):
 
 # 숙제하기 문항 페이지
 def do_homework_question(request):
-    # try:
-    #     # Homeworkques 페이지에서 숙제 코드 가져오기
-    #     assignment_id = request.GET['code_num']
-    #     student_id = request.GET['ID_num']
-    #     student_name = request.GET['student_name']
-    #
-    #     join_aqr_q = AssignmentQuestionRel.objects.select_related('question').filter(
-    #         assignment_id=assignment_id).filter(
-    #         assignment__type="숙제하기")
-    #     first_data = join_aqr_q.first()
-    #
-    #     # 코드가 db에 없으면 원상복귀
-    #     if is_in_db(first_data, student_id, student_name):
-    #         context = {
-    #         }
-    #         return render(request, 'student/do_homework_by_code.html', context)
-    #
-    # except:
-    #     # id로 문항 불러오기
-    #     question_info = request.GET.get('question_id').split(',')
-    #
-    #     join_aqr_q = get_question_by_id(question_info)[0]
-    #     first_data = get_question_by_id(question_info)[1]
-
     # Homeworkques 페이지에서 숙제 코드 가져오기
     assignment_id = request.GET["code_num"]
     student_id = request.GET["ID_num"]
@@ -355,6 +331,7 @@ def do_homework_diagnosis(request):
     question_id = request.GET["question_id"]
     ques_ans = request.GET["ques_ans"]
     student_id = request.GET["student_id"]
+    student_name = request.GET["student_name"]
 
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
@@ -368,6 +345,7 @@ def do_homework_diagnosis(request):
         "student_id": student_id,
         "ques_ans": ques_ans,
         "data": data,
+        "student_name": student_name,
     }
 
     # 나의 답 DB에 저장
