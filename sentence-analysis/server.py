@@ -46,6 +46,7 @@ def get_topic_analysis():
     file_storage = request.files['file']
     extension = request.form['extension']
     num_topic = int(request.form['num_topic'])
+    version = request.form['version']
 
     # 토픽 모델링 분석
     topic_modeling_result, factorized_matrix_meta = topic_modeling.get_topic_modeling(file=file_storage, extension=extension, num_topic=num_topic)
@@ -53,7 +54,7 @@ def get_topic_analysis():
         return "Wrong CSV format", 400
 
     # T-SNE 분석
-    tsne_result = topic_modeling.get_tsne(factorized_matrix_meta)
+    tsne_result = topic_modeling.get_tsne(factorized_matrix_meta, version=version)
     
     context = {
         "id": "topic-analysis",
@@ -69,6 +70,7 @@ def get_topic_analysis():
 @app.errorhandler(Exception)
 @cross_origin()
 def handling_exception(e):
+    print(e)
     sa_logger.error('Exception: %s', (e))
     context = {
         "id": "error",

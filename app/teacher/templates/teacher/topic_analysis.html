@@ -57,8 +57,9 @@
             <div>
                 {% csrf_token %}
                 <label for="responded_student_file">
-                    <strong>학생들의 응답이 담긴 csv 형식 파일이나 excel 파일을 업로드 해주세요.<br>
-                            엑셀 첫 시트와 첫 열만 분석이 가능합니다.</strong></label>
+                    학생들의 응답이 담긴 csv 형식 파일이나 excel 파일 (.csv, .xlsx)을 업로드 해주세요.<br>
+                    <strong style='color:red'>엑셀 첫 번째 시트의 첫 번째 열만 분석이 가능</strong>합니다.<br>
+                    분석하는데 시간이 몇 분 소요될 수 있습니다.</label>
                 <input id="topic-modeling-file" type="file" accept=".csv, .xlsx" name="responded_student_file">
             </div>
             <div>
@@ -66,6 +67,7 @@
                 <input id="topic_count" class="topic-count-input" type="number" name="topic-count" maxlength="2" min="2" max="10"
                     placeholder="토픽 개수 입력 (2~10)">
                 <button id="topic-modeling-submit-btn" type="submit" class="w3-button w3-large w3-round w3-blue">실행</button>
+                <label><input type="checkbox" name="version"> 문장 중심으로 그래프 보기</label>
             </div>
         </div>
     </div>

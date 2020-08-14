@@ -1,4 +1,5 @@
 var api_server = 'http://' + document.domain + ':' + 5252;
+var version = 'keywords';
 
 function getTopicAnalysis() {
     var file = $("#topic-modeling-file")[0].files[0];
@@ -7,18 +8,34 @@ function getTopicAnalysis() {
         var extension = file.name.split('.').pop();
     } else {
         alert('파일을 업로드 해주세요.');
+        buttonReset();
         return;
     }
-    if (extension !== 'csv' && extension !== 'xlsx') { alert('csv 파일 또는 엑셀 파일로 올려주세요.'); return; }
+
+    if (extension !== 'csv' && extension !== 'xlsx') { 
+        alert('csv 파일 또는 엑셀 파일로 올려주세요.'); 
+        buttonReset(); 
+        return; 
+    }
+
     if (topic_count > 10 || topic_count < 2) {
         alert("토픽 개수는 최소 2개, 최대 10개까지 입력이 가능합니다.");
+        buttonReset();
         return false;
+    }
+
+    var isChecked = $('input:checkbox[name="version"]').is(":checked");
+    if (isChecked == true) {
+        version = 'sentences';
+    } else {
+        version = 'keywords';
     }
 
     var form_data = new FormData();
     form_data.append('file', file);
     form_data.append('num_topic', topic_count);
     form_data.append('extension', extension);
+    form_data.append('version', version);
     $.ajax({
         url: api_server + '/get-topic-analysis',
         type: 'POST',
@@ -26,9 +43,20 @@ function getTopicAnalysis() {
         processData: false,
         contentType: false,
         data: form_data,
+        tryCount: 0,
+        retryLimit : 10,
         success: function(response) {
             topicAnalysisResult(response.data);
-        }, error: function(e) { alert('파일의 형식이 알맞지 않습니다. 시트와 열은 첫째에만 있어야 합니다.'); return; },
+            buttonReset()
+        }, error: function(e) { 
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+                //try again
+                $.ajax(this);
+                return;
+            }   
+            buttonReset()
+            alert('파일의 형식이 알맞지 않습니다. 문장이 첫 번째 시트와 열에만 있어야 합니다.'); return; },
     });
 }
 
@@ -137,32 +165,42 @@ function visualizeTSNE(data) {
     // Define the div for the tooltip
     var div = d3.select("body").append("div")	
                 .attr("class", "tooltip")				
-                .style("opacity", 0);
+                .style("opacity", 0)
+                .style("width", function() {
+                    if (version == 'sentences') return '180px';
+                    else return '60px';
+                })
+                .style("height", function() {
+                    if (version == 'sentences') return '100px';
+                    else return '28px';
+                });
     
     // Highlight the topic that is hovered
     var highlight = function(d) {
         selected_topic = d.topic;
+        selected_color = d.color;
         selected_keyword = d.document;
 
         // default
         d3.selectAll(".dot")
             .transition()
             .duration(200)
-            .style("fill", "lightgrey")
             .attr("r", 3);
         
         // highlight selected topic
         d3.selectAll(".topic" + selected_topic)
             .transition()
             .duration(200)
-            .style("fill", color(selected_topic))
+            .style("fill", function(){
+                return selected_color;
+            })
             .attr("r", 7);
         
         // put up selected keyword as tooltip
         div.transition()
             .duration(200)
             .style("opacity", .9);
-        div.html(selected_keyword)
+        div.html((parseInt(selected_topic) + 1) + " : " + selected_keyword)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");	
     }
@@ -171,7 +209,6 @@ function visualizeTSNE(data) {
         d3.selectAll(".dot")
             .transition()
             .duration(500)
-            .style("fill", "lightgrey")
             .attr("r", 5);
         
         div.transition()
@@ -192,7 +229,7 @@ function visualizeTSNE(data) {
             .attr("cx", function(d) { return x(d.x) })
             .attr("cy", function(d) { return y(d.y) })
             .attr("r", 5)
-            .style("fill", function(d) { return color(d.topic) })
+            .style("fill", function(d) { return d.color; })
         .on("mouseover", highlight)
         .on("mouseleave", doNotHighlight);
 }
@@ -216,6 +253,20 @@ function JSObject2JSONArray(jsObject) {
     return jsonArray;
 }
 
+function buttonLoading() {
+    $('#topic-modeling-submit-btn').attr("disabled", true);
+    $('#topic-modeling-submit-btn').html( function() {
+        state = '<i class="fa fa-spinner fa-spin"></i> 로딩중';
+        return state;
+    });
+}
+
+function buttonReset() {
+    $('#topic-modeling-submit-btn').attr("disabled", false);
+    $('#topic-modeling-submit-btn').html("실행");
+}
+
 document.getElementById('topic-modeling-submit-btn').onclick = function() {
+    buttonLoading();
     getTopicAnalysis();
 };
