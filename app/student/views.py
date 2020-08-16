@@ -200,10 +200,10 @@ def check_homework_list(request):
             .filter(student_id=student_id)
             .values("as_qurel_id", "solve_id")
         )
-        as_qurel_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
+        assignment_question_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
         join_assignment = AssignmentQuestionRel.objects.prefetch_related(
             "assignment"
-        ).filter(as_qurel_id=as_qurel_id)
+        ).filter(as_qurel_id=assignment_question_id)
 
     context = {"join_assignment": join_assignment, "student_id": student_id}
 
@@ -227,16 +227,16 @@ def check_homework_question(request):
     )
 
     result_list = []
-    for as_qurel_id in join_by_assignment_id:
-        if as_qurel_id in join_by_student_id:
+    for assignment_question_id in join_by_assignment_id:
+        if assignment_question_id in join_by_student_id:
             values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
-                .filter(assignmentquestionrel=as_qurel_id)
+                .filter(assignmentquestionrel=assignment_question_id)
                 .values("assignmentquestionrel", "question_id", "question_name")
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
-                .filter(as_qurel_id=as_qurel_id)
+                .filter(as_qurel_id=assignment_question_id)
                 .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
