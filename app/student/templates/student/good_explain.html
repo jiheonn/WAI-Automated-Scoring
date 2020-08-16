@@ -13,8 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'student' %}">좋은 설명
-                    </a>
+                    <a class="nav-link" href="{% url 'student' %}">좋은 설명</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
@@ -29,7 +28,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -48,9 +47,7 @@
         <div class="col-lg-5">
             <h1 class="font-weight-light">Welcome</h1>
              <p class="font-weight-bolder triangle-border left">좋은 설명을 작성하는데 필요한 학습자료입니다.<br>
-            문제 풀이 전 학습합시다.
-            </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
+            문제 풀이 전 학습합시다.</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -58,9 +55,8 @@
 
     <!-- Call to Action Well -->
         <div class="card-body">
-
-                 <table class="table">
-                    <tbody>
+             <table class="table">
+                <tbody>
                     <tr>
                         <td>
                             <a href="{% static 'student/image/pdf.png' %}" download>
@@ -79,14 +75,10 @@
                         <td><a href="{% static 'student/image/pdf.png' %}" download>
                               <img src="{% static 'student/image/pdf.png' %}" alt="" width="60" height="50">창의성 키우기</a></td>
                     </tr>
-                    <tbody>
-                </table>
-
-
-
-            </div>
+                <tbody>
+            </table>
+        </div>
     </div>
-
 
 </div>
 <!-- /.container -->

@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -71,18 +71,18 @@
             <!-- Comments Form -->
             <form action="{% url 'student_evaluate_exercise_diagnosis' %}" method="GET">
             <!-- Title -->
-                <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{ data.question_id }}"
-                                                   id="{{ data.question_id }}">{{data.question_name}}</h2>
+                <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{ question_data.question_id }}"
+                                                   id="{{ question_data.question_id }}">{{question_data.question_name}}</h2>
 
                 <hr>
 
                 <!-- Preview Image -->
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ question_data.image.url }}">
 
                 <hr>
 
                 <!-- Post Content -->
-                <p>{{data.discription}}
+                <p>{{question_data.discription}}
                 </p>
 
                 <hr>
@@ -91,7 +91,7 @@
                     <h5 class="card-header">생각을 적어보세요:</h5>
                     <div class="card-body">
                         <div class="form-group">
-                            <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
+                            <textarea class="form-control" name='question_answer' rows="3" id="question_answer"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table>

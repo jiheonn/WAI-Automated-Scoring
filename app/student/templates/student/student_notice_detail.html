@@ -1,0 +1,97 @@
+{% extends 'student/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--datatable source-->
+<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css" />
+<link href="{% static 'student/css/student.css' %}" rel="stylesheet">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student' %}">좋은 설명
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_evaluate_exercise' %}">평가연습</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_study_evaluate' %}">학습평가</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_select_homework' %}">숙제하기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+        <div class="col-lg-2">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
+                height="120" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <p class="font-weight-bolder triangle-border left">
+                WA3I의 공지사항을 확인할 수 있습니다.</p>
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row justify-content-center my-5">
+        <div>
+            <table style="text-align: center;">
+                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
+                    <th width="600px">제목</th>
+                    <th width="440px">등록일자</th>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ notice.notice_name }}</td>
+                    <td>{{ notice.made_date }}</td>
+                </tr>
+            </table>
+            <br><br><br>
+            <span>공지사항 제목 :
+                <input id="notice_title" type="text" style="width:100%;" name="notice_name"
+                    value="{{ notice.notice_name }}" disabled />
+            </span>
+            <br><br><br>
+            <span>공지사항 내용 :
+                <textarea id="notice_description" class="textarea-box" type="text" style="width:100%;"
+                    name="notice_content" disabled />{{ notice.notice_content }}</textarea>
+            </span>
+        </div>
+    </div>
+    <div class="row justify-content-center my-5">
+        <form action="{% url 'student_notice' %}">
+            <button style="width:100%" class="w3-button w3-large w3-round w3-indigo">
+                뒤로가기
+            </button>
+        </form>
+    </div>
+
+</div>
+<!-- /.container -->
+
+{% endblock %}

@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -48,12 +48,10 @@
         <!-- /.col-lg-8 -->
         <div class="col-lg-3">
             <p class="font-weight-bolder triangle-border left">잘 설명했어요!</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
-
 
     <!-- Content Row -->
     <div class="card text-white bg-secondary my-5 py-4">
@@ -94,7 +92,7 @@
             </div>
 
             <div id="myans" class="w3-container w3-border city">
-                <div class="w3-section" id="ques_ans">{{ques_ans}}</div>
+                <div class="w3-section" id="question_answer">{{question_answer}}</div>
             </div>
 
             <div id="ans" class="w3-container w3-border city" style="display:none">
@@ -121,7 +119,6 @@
                 document.getElementById(cityName).style.display = "block";
                 evt.currentTarget.className += " w3-indigo";
             }
-
         </script>
     </div>
 
@@ -138,7 +135,6 @@
         </div>
     </div>
     <!--    </form>-->
-
 
 </div>
 <!-- /.container -->
