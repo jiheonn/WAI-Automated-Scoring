@@ -33,25 +33,25 @@ def good_explain(request):
 
 # 평가연습
 def evaluate_exercise(request):
-    qs = Question.objects.all()
+    question = Question.objects.all()
     category = Category.objects.all()
 
-    context = {"qs": qs, "category": category}
+    context = {"question": question, "category": category}
     return render(request, "student/evaluate_exercise.html", context)
 
 
 # 평가연습 문항 페이지
 def evaluate_exercise_question(request):
     question_id = int(request.GET["question_id"])
-    data = Question.objects.filter(question_id=question_id).first()
-    context = {"data": data}
+    question_data = Question.objects.filter(question_id=question_id).first()
+    context = {"question_data": question_data}
     return render(request, "student/evaluate_exercise_question.html", context)
 
 
 # 평가연습 피드백 페이지
 def evaluate_exercise_diagnosis(request):
     question_id = request.GET["question_id"]
-    ques_ans = request.GET["ques_ans"]
+    question_answer = request.GET["question_answer"]
 
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
@@ -74,7 +74,7 @@ def evaluate_exercise_diagnosis(request):
 
     context = {
         "data": data,
-        "ques_ans": ques_ans,
+        "question_answer": question_answer,
         "school": school,
         "gender": gender,
     }
@@ -85,7 +85,7 @@ def evaluate_exercise_diagnosis(request):
             question_id=question_id,
             school=request_school,
             gender=request_gender,
-            response=ques_ans,
+            response=question_answer,
             score=INIT_SCORE,
             submit_date=now_date,
         )
