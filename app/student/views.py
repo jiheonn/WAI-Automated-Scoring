@@ -174,15 +174,15 @@ def is_in_db(first_data, student_id, student_name):
 
 # 문항 학습 완료여부 판단
 def is_completed(join_by_assignment_id):
-    test_list = []
+    result_list = []
     done_list = []
 
     for join_data in join_by_assignment_id:
-        as_qurel_id = join_data.as_qurel_id
-        solve_data = Solve.objects.filter(as_qurel_id=as_qurel_id)
-        test_list.append(solve_data)
-    for test_data in test_list:
-        if test_data.values("as_qurel_id"):
+        assignment_question_id = join_data.as_qurel_id
+        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id)
+        result_list.append(solve_data)
+    for result_data in result_list:
+        if result_data.values("as_qurel_id"):
             done = "O"
         else:
             done = "X"
@@ -201,13 +201,13 @@ def get_question_by_id(question_info):
     join_by_question_id = AssignmentQuestionRel.objects.select_related(
         "question"
     ).filter(question__question_id=question_id)
-    as_qurel_id = (
+    join_by_assignment_id_question_id = (
         AssignmentQuestionRel.objects.select_related("question")
         .filter(question__question_id=question_id, assignment_id=assignment_id)
         .values("as_qurel_id")[0]["as_qurel_id"]
     )
     first_data = join_by_question_id[0]
-    return join_by_assignment_id, first_data, as_qurel_id
+    return join_by_assignment_id, first_data, join_by_assignment_id_question_id
 
 
 # 숙제하기와 숙제조회 선택 페이지
@@ -545,12 +545,12 @@ def change_category_evaluate_exercise(request):
 
 
 # 검색 결과 반환
-def search_card_result(datas):
+def search_card_result(data):
     list_data = []
-    for data in datas:
+    for result in data:
         data_dict = dict()
-        data_dict["question_id"] = data.question_id
-        data_dict["question_name"] = data.question_name
-        data_dict["question_image"] = data.image.name
+        data_dict["question_id"] = result.question_id
+        data_dict["question_name"] = result.question_name
+        data_dict["question_image"] = result.image.name
         list_data.append(data_dict)
     return list_data
