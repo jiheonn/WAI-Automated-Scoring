@@ -200,7 +200,9 @@ def check_homework_list(request):
             .filter(student_id=student_id)
             .values("as_qurel_id", "solve_id")
         )
-        assignment_question_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
+        assignment_question_id = join_by_assignment_id.values("as_qurel_id")[0][
+            "as_qurel_id"
+        ]
         join_assignment = AssignmentQuestionRel.objects.prefetch_related(
             "assignment"
         ).filter(as_qurel_id=assignment_question_id)
