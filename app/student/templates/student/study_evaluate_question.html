@@ -57,7 +57,7 @@
     <form action="{% url 'student_study_evaluate_question' %}" method="GET">
         <div class="row">
             <div class="col-lg-3">
-                <table class="w3-table-all w3-centered" id="ques_table">
+                <table class="w3-table-all w3-centered" id="question_table">
                     <th class="w3-indigo">
                         학습 목록
                     </th>
@@ -65,7 +65,7 @@
                     <tr id="t_id">
                         <td>
                             <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="q_id">
+                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="question_id">
                                 {{data.question.question_name}}
                             </button>
                         </td>
@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <input type="hidden" name="ID_num" value="{{student_id}}">
                             <input type="hidden" name="student_name" value="{{student_name}}">
-                            <textarea class="form-control" rows="3" name='ques_ans' id="ques_ans"></textarea>
+                            <textarea class="form-control" rows="3" name='question_answer' id="question_answer"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table width="600">

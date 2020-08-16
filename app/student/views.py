@@ -124,7 +124,7 @@ def study_evaluate_question(request):
         question_info = question_info.split(",")
         join_by_assignment_id = get_question_by_id(question_info)[0]
         first_data = get_question_by_id(question_info)[1]
-        as_qurel_id = get_question_by_id(question_info)[2]
+        assignment_question_id = get_question_by_id(question_info)[2]
     # 학습목록을 선택하지 않은 경우
     else:
         first_data = join_by_assignment_id.first()
@@ -134,7 +134,7 @@ def study_evaluate_question(request):
         context = {}
         return render(request, "student/study_evaluate.html", context)
 
-    as_qurel_id = first_data.as_qurel_id
+    assignment_question_id = first_data.as_qurel_id
 
     # 학습 완료 목록
     done_list = is_completed(join_by_assignment_id)
@@ -144,12 +144,12 @@ def study_evaluate_question(request):
 
     # 나의 답 DB에 저장
     try:
-        if request.GET["ques_ans"] != "":
+        if request.GET["question_answer"] != "":
             solve_data = Solve(
-                as_qurel_id=as_qurel_id,
+                as_qurel_id=assignment_question_id,
                 student_id=student_id,
                 submit_date=now_date,
-                response=request.GET["ques_ans"],
+                response=request.GET["question_answer"],
                 score=INIT_SCORE,
                 student_name=student_name,
             )
