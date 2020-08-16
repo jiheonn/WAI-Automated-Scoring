@@ -24,7 +24,7 @@
                                 '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
                                 '/media/' +
                                 search_data[i].question_image +
-                                '" style="width:auto; height:100%;">' +
+                                '" style="width:200px; height:200px;">' +
                                 '</div>' +
                                 '<span class="card-footer">' +
                                 '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
@@ -60,7 +60,7 @@
                             '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
                             '/media/' +
                             option_data[i].question_image +
-                            '" style="width:auto; height:100%;">' +
+                            '" style="width:200px; height:200px;">' +
                             '</div>' +
                             '<span class="card-footer">' +
                             '<button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="' +
@@ -166,10 +166,11 @@
                     <div class="card h-100" align="center">
                         <div class="card-body">
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}"
-                            style="width:auto; height:100%;">
+                            style="width:200px; height:200px;">
                         </div>
                         <span class="card-footer">
-                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="{{ data.question_id }}">{{ data.question_name }}
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id" value="{{ data.question_id }}">
+                                {{ data.question_name }}
                             </button>
                         </span>
                     </div>
