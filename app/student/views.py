@@ -167,49 +167,6 @@ def study_evaluate_question(request):
     return render(request, "student/study_evaluate_question.html", context)
 
 
-# 코드가 db에 있는지 없는지 판단, 학번,이름 기입 여부
-def is_in_db(first_data, student_id, student_name):
-    return (first_data == None) or (student_id == "") or (student_name == "")
-
-
-# 문항 학습 완료여부 판단
-def is_completed(join_by_assignment_id):
-    result_list = []
-    done_list = []
-
-    for join_data in join_by_assignment_id:
-        assignment_question_id = join_data.as_qurel_id
-        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id)
-        result_list.append(solve_data)
-    for result_data in result_list:
-        if result_data.values("as_qurel_id"):
-            done = "O"
-        else:
-            done = "X"
-        done_list.append(done)
-    return done_list
-
-
-# id로 문항 불러오기
-def get_question_by_id(question_info):
-    question_id = int(question_info[0])
-    assignment_id = question_info[1]
-
-    join_by_assignment_id = AssignmentQuestionRel.objects.select_related(
-        "question"
-    ).filter(assignment_id=assignment_id)
-    join_by_question_id = AssignmentQuestionRel.objects.select_related(
-        "question"
-    ).filter(question__question_id=question_id)
-    join_by_assignment_id_question_id = (
-        AssignmentQuestionRel.objects.select_related("question")
-        .filter(question__question_id=question_id, assignment_id=assignment_id)
-        .values("as_qurel_id")[0]["as_qurel_id"]
-    )
-    first_data = join_by_question_id[0]
-    return join_by_assignment_id, first_data, join_by_assignment_id_question_id
-
-
 # 숙제하기와 숙제조회 선택 페이지
 def select_homework(request):
     context = {}
@@ -251,20 +208,6 @@ def check_homework_list(request):
     context = {"join_assignment": join_assignment, "student_id": student_id}
 
     return render(request, "student/check_homework_list.html", context)
-
-
-# 학생 ID가 DB에 존재하는지 확인
-def is_student_id(student_id):
-    result = (
-        Solve.objects.select_related("as_qurel")
-        .filter(student_id=student_id)
-        .values("student_id")
-        .first()
-    )
-    if result is None:
-        return ""
-    else:
-        return student_id
 
 
 # 숙제조회 > 숙제리스트 > 숙제 문항 페이지
@@ -486,6 +429,63 @@ def student_notice_detail(request):
     notice = Notice.objects.filter(notice_id=notice_id).first()
     context = {"notice": notice}
     return render(request, "student/student_notice_detail.html", context)
+
+
+# 학생 ID가 DB에 존재하는지 확인
+def is_student_id(student_id):
+    result = (
+        Solve.objects.select_related("as_qurel")
+        .filter(student_id=student_id)
+        .values("student_id")
+        .first()
+    )
+    if result is None:
+        return ""
+    else:
+        return student_id
+
+
+# 코드가 db에 있는지 없는지 판단, 학번,이름 기입 여부
+def is_in_db(first_data, student_id, student_name):
+    return (first_data == None) or (student_id == "") or (student_name == "")
+
+
+# 문항 학습 완료여부 판단
+def is_completed(join_by_assignment_id):
+    result_list = []
+    done_list = []
+
+    for join_data in join_by_assignment_id:
+        assignment_question_id = join_data.as_qurel_id
+        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id)
+        result_list.append(solve_data)
+    for result_data in result_list:
+        if result_data.values("as_qurel_id"):
+            done = "O"
+        else:
+            done = "X"
+        done_list.append(done)
+    return done_list
+
+
+# id로 문항 불러오기
+def get_question_by_id(question_info):
+    question_id = int(question_info[0])
+    assignment_id = question_info[1]
+
+    join_by_assignment_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(assignment_id=assignment_id)
+    join_by_question_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(question__question_id=question_id)
+    join_by_assignment_id_question_id = (
+        AssignmentQuestionRel.objects.select_related("question")
+        .filter(question__question_id=question_id, assignment_id=assignment_id)
+        .values("as_qurel_id")[0]["as_qurel_id"]
+    )
+    first_data = join_by_question_id[0]
+    return join_by_assignment_id, first_data, join_by_assignment_id_question_id
 
 
 # 평가연습의 키워드로 문항 검색하기
