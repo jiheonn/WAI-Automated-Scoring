@@ -88,7 +88,7 @@
             <div id="myans" class="w3-container w3-border city">
                 <div class="w3-section">
 
-                    {{ ques_ans }}
+                    {{ question_answer }}
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
 
     <form action="{% url 'student_evaluate_by_self_score' %}" method="get">
         <input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{ data.make_question_id }}">
-        <input type="hidden" name="ques_ans" value="{{ ques_ans }}" id="ques_ans">
+        <input type="hidden" name="question_answer" value="{{ question_answer }}" id="question_answer">
         <!-- Content Row -->
         <div class="row my-5">
             <div class="col-lg-10">
@@ -128,10 +128,10 @@
                       <th>만족했어요</th>
                     </tr>
 
-                    {% for m in mark %}
+                    {% for check in mark %}
                     <tr>
-                      <td>{{m.mark_text}}</td>
-                      <td><input type="checkbox" id="{{m.mark_id}}" name="score" value="1"></td>
+                      <td>{{check.mark_text}}</td>
+                      <td><input type="checkbox" id="{{check.mark_id}}" name="score" value="1"></td>
                     </tr>
                     {% endfor %}
 

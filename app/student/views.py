@@ -344,10 +344,10 @@ def do_homework_diagnosis(request):
 
 # 스스로 평가하기 페이지
 def evaluate_by_self(request):
-    qs = MakeQuestion.objects.all()
+    make_question = MakeQuestion.objects.all()
 
     context = {
-        "qs": qs,
+        "make_question": make_question,
     }
     return render(request, "student/evaluate_by_self.html", context)
 
@@ -364,7 +364,7 @@ def evaluate_by_self_question(request):
 # 스스로 평가하기 문항 피드백 및 자가채점 계산 페이지
 def evaluate_by_self_diagnosis(request):
     make_question_id = int(request.GET["question"])
-    ques_ans = request.GET["ques_ans"]
+    question_answer = request.GET["question_answer"]
 
     # 채점 준거 출력
     mark = Mark.objects.select_related("make_question").filter(
@@ -377,7 +377,7 @@ def evaluate_by_self_diagnosis(request):
 
     context = {
         "data": data,
-        "ques_ans": ques_ans,
+        "question_answer": question_answer,
         "mark": mark,
         "score_list": score_list,
     }
@@ -387,25 +387,25 @@ def evaluate_by_self_diagnosis(request):
 # 스스로 평가하기 자가채점 결과 페이지
 def evaluate_by_self_score(request):
     make_question_id = request.GET["question_id"]
-    ques_ans = request.GET["ques_ans"]
+    question_answer = request.GET["question_answer"]
     score_list = request.GET.getlist("score")
 
     # 점수 합산
-    sum_s = 0
+    sum_score = 0
     for i in score_list:
-        sum_s += int(i)
+        sum_score += int(i)
 
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    context = {"sum_s": sum_s}
+    context = {"sum_score": sum_score}
 
     # 나의 답 DB에 저장
     try:
         self_solve_data = SelfSolveData(
             make_question_id=make_question_id,
-            response=ques_ans,
-            score=sum_s,
+            response=question_answer,
+            score=sum_score,
             submit_date=now_date,
         )
         self_solve_data.save()
