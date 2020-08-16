@@ -225,7 +225,7 @@ def qr_code(request):
 
 # 공지사항 화면 view 함수
 def teacher_notice(request):
-    all_notice = Notice.objects.all()
+    all_notice = Notice.objects.exclude(notice_target="학생")
     context = {"notice": all_notice}
     return render(request, "teacher/teacher_notice.html", context)
 
