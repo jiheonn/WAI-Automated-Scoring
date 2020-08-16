@@ -435,14 +435,19 @@ def student_notice_detail(request):
 
 # 학생 ID가 DB에 존재하는지 확인 함수
 def is_student_id(student_id):
+    # 학생 ID를 숫자로 받았는지 판별
+    if not student_id.isdigit():
+        return ""
     result = (
         Solve.objects.select_related("as_qurel")
         .filter(student_id=student_id)
         .values("student_id")
         .first()
     )
+    # 학생 ID가 DB에 없는 경우
     if result is None:
         return ""
+    # 학생 ID가 DB에 있는 경우
     else:
         return student_id
 
