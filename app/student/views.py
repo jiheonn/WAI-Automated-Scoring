@@ -25,13 +25,13 @@ from mainpage.models import Notice
 INIT_SCORE = 0
 
 
-# 좋은 설명
+# 좋은 설명 view 함수
 def good_explain(request):
     context = {}
     return render(request, "student/good_explain.html", context)
 
 
-# 평가연습
+# 평가연습 view 함수
 def evaluate_exercise(request):
     question = Question.objects.all()
     category = Category.objects.all()
@@ -40,7 +40,7 @@ def evaluate_exercise(request):
     return render(request, "student/evaluate_exercise.html", context)
 
 
-# 평가연습 문항 페이지
+# 평가연습 문항 페이지 view 함수
 def evaluate_exercise_question(request):
     question_id = int(request.GET["question_id"])
     question_data = Question.objects.filter(question_id=question_id).first()
@@ -48,7 +48,7 @@ def evaluate_exercise_question(request):
     return render(request, "student/evaluate_exercise_question.html", context)
 
 
-# 평가연습 피드백 페이지
+# 평가연습 피드백 페이지 view 함수
 def evaluate_exercise_diagnosis(request):
     question_id = request.GET["question_id"]
     question_answer = request.GET["question_answer"]
@@ -97,13 +97,13 @@ def evaluate_exercise_diagnosis(request):
     return render(request, "student/evaluate_exercise_diagnosis.html", context)
 
 
-# 학습평가 코드 입력 페이지
+# 학습평가 코드 입력 페이지 view 함수
 def study_evaluate(request):
     context = {}
     return render(request, "student/study_evaluate.html", context)
 
 
-# 학습평가 문항 페이지
+# 학습평가 문항 페이지 view 함수
 def study_evaluate_question(request):
     # study 페이지에서 숙제 코드 가져오기
     assignment_id = request.GET.get("code_num")
@@ -167,19 +167,19 @@ def study_evaluate_question(request):
     return render(request, "student/study_evaluate_question.html", context)
 
 
-# 숙제하기와 숙제조회 선택 페이지
+# 숙제하기와 숙제조회 선택 페이지 view 함수
 def select_homework(request):
     context = {}
     return render(request, "student/select_homework.html", context)
 
 
-# 숙제조회 id 입력 페이지
+# 숙제조회 id 입력 페이지 view 함수
 def check_homework_by_id(request):
     context = {}
     return render(request, "student/check_homework_by_id.html", context)
 
 
-# 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트)
+# 숙제조회 과거 숙제 리스트 출력 페이지 (숙제조회 > 숙제리스트) view 함수
 def check_homework_list(request):
     student_id = request.GET["ID_num"]
 
@@ -210,7 +210,7 @@ def check_homework_list(request):
     return render(request, "student/check_homework_list.html", context)
 
 
-# 숙제조회 > 숙제리스트 > 숙제 문항 페이지
+# 숙제조회 > 숙제리스트 > 숙제 문항 페이지 view 함수
 def check_homework_question(request):
     student_id = int(request.GET.get("student_id"))
     assignment_id = request.GET.get("assignment_id")
@@ -254,13 +254,13 @@ def check_homework_question(request):
     return render(request, "student/check_homework_question.html", context)
 
 
-# 숙제하기 코드입력 페이지
+# 숙제하기 코드입력 페이지 view 함수
 def do_homework_by_code(request):
     context = {}
     return render(request, "student/do_homework_by_code.html", context)
 
 
-# 숙제하기 문항 페이지
+# 숙제하기 문항 페이지 view 함수
 def do_homework_question(request):
     # Homeworkques 페이지에서 숙제 코드 가져오기
     assignment_id = request.GET["code_num"]
@@ -302,7 +302,7 @@ def do_homework_question(request):
     return render(request, "student/do_homework_question.html", context)
 
 
-# 숙제하기 문항 피드백 페이지
+# 숙제하기 문항 피드백 페이지 view 함수
 def do_homework_diagnosis(request):
     question_id = request.GET["question_id"]
     question_answer = request.GET["question_answer"]
@@ -342,7 +342,7 @@ def do_homework_diagnosis(request):
     return render(request, "student/do_homework_diagnosis.html", context)
 
 
-# 스스로 평가하기 페이지
+# 스스로 평가하기 페이지 view 함수
 def evaluate_by_self(request):
     make_question = MakeQuestion.objects.all()
 
@@ -352,7 +352,7 @@ def evaluate_by_self(request):
     return render(request, "student/evaluate_by_self.html", context)
 
 
-# 스스로 평가하기 문항 페이지
+# 스스로 평가하기 문항 페이지 view 함수
 def evaluate_by_self_question(request):
     make_question_id = int(request.GET["make_question_id"])
     data = MakeQuestion.objects.filter(make_question_id=make_question_id)[0]
@@ -361,7 +361,7 @@ def evaluate_by_self_question(request):
     return render(request, "student/evaluate_by_self_question.html", context)
 
 
-# 스스로 평가하기 문항 피드백 및 자가채점 계산 페이지
+# 스스로 평가하기 문항 피드백 및 자가채점 계산 페이지 view 함수
 def evaluate_by_self_diagnosis(request):
     make_question_id = int(request.GET["question"])
     question_answer = request.GET["question_answer"]
@@ -384,7 +384,7 @@ def evaluate_by_self_diagnosis(request):
     return render(request, "student/evaluate_by_self_diagnosis.html", context)
 
 
-# 스스로 평가하기 자가채점 결과 페이지
+# 스스로 평가하기 자가채점 결과 페이지 view 함수
 def evaluate_by_self_score(request):
     make_question_id = request.GET["question_id"]
     question_answer = request.GET["question_answer"]
@@ -431,7 +431,7 @@ def student_notice_detail(request):
     return render(request, "student/student_notice_detail.html", context)
 
 
-# 학생 ID가 DB에 존재하는지 확인
+# 학생 ID가 DB에 존재하는지 확인 함수
 def is_student_id(student_id):
     result = (
         Solve.objects.select_related("as_qurel")
@@ -445,12 +445,12 @@ def is_student_id(student_id):
         return student_id
 
 
-# 코드가 db에 있는지 없는지 판단, 학번,이름 기입 여부
+# 코드가 db에 있는지 없는지 판단, 학번,이름 기입 여부 함수
 def is_in_db(first_data, student_id, student_name):
     return (first_data == None) or (student_id == "") or (student_name == "")
 
 
-# 문항 학습 완료여부 판단
+# 문항 학습 완료여부 판단 함수
 def is_completed(join_by_assignment_id):
     result_list = []
     done_list = []
@@ -468,7 +468,7 @@ def is_completed(join_by_assignment_id):
     return done_list
 
 
-# id로 문항 불러오기
+# id로 문항 불러오기 함수
 def get_question_by_id(question_info):
     question_id = int(question_info[0])
     assignment_id = question_info[1]
@@ -488,7 +488,7 @@ def get_question_by_id(question_info):
     return join_by_assignment_id, first_data, join_by_assignment_id_question_id
 
 
-# 평가연습의 키워드로 문항 검색하기
+# 평가연습의 키워드로 문항 검색하기 함수
 def search_keyword(request):
     user_input = request.GET["user_input"]
     key_data = (
@@ -505,7 +505,7 @@ def search_keyword(request):
     return JsonResponse(context)
 
 
-# 스스로 평가하기의 문항명으로 문항 검색하기
+# 스스로 평가하기의 문항명으로 문항 검색하기 함수
 def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
@@ -527,7 +527,7 @@ def search_name(request):
     return JsonResponse(context)
 
 
-# 평가연습의 카테고리 선택
+# 평가연습의 카테고리 선택 함수
 def change_category_evaluate_exercise(request):
     category_option = request.GET["option"]
 
@@ -544,7 +544,7 @@ def change_category_evaluate_exercise(request):
     return JsonResponse(context)
 
 
-# 검색 결과 반환
+# 검색 결과 반환 함수
 def search_card_result(data):
     list_data = []
     for result in data:
