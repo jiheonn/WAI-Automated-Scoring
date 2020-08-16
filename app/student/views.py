@@ -10,19 +10,17 @@ import datetime
 import json
 from itertools import chain
 
-from mainpage.models import (
-    Question,
-    SelfSolveData,
-    AssignmentQuestionRel,
-    Keyword,
-    Solve,
-    Assignment,
-    MakeQuestion,
-    Category,
-    StudySolveData,
-    Mark,
-    Notice,
-)
+from mainpage.models import Question
+from mainpage.models import SelfSolveData
+from mainpage.models import AssignmentQuestionRel
+from mainpage.models import Keyword
+from mainpage.models import Solve
+from mainpage.models import Assignment
+from mainpage.models import MakeQuestion
+from mainpage.models import Category
+from mainpage.models import StudySolveData
+from mainpage.models import Mark
+from mainpage.models import Notice
 
 INIT_SCORE = 0
 
@@ -69,9 +67,9 @@ def evaluate_exercise_diagnosis(request):
         school = ""
         gender = ""
 
-    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
-        question__question_id=question_id
-    )
+    join_by_question_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(question__question_id=question_id)
     data = join_by_question_id.first()
 
     context = {
@@ -114,8 +112,8 @@ def study_evaluate_question(request):
 
     join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
-            .filter(assignment_id=assignment_id)
-            .filter(assignment__type="학습평가")
+        .filter(assignment_id=assignment_id)
+        .filter(assignment__type="학습평가")
     )
 
     # id로 문항 불러오기
@@ -197,15 +195,17 @@ def get_question_by_id(question_info):
     question_id = int(question_info[0])
     assignment_id = question_info[1]
 
-    join_by_assignment_id = AssignmentQuestionRel.objects.select_related("question").filter(
-        assignment_id=assignment_id
+    join_by_assignment_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(assignment_id=assignment_id)
+    join_by_question_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(question__question_id=question_id)
+    as_qurel_id = (
+        AssignmentQuestionRel.objects.select_related("question")
+        .filter(question__question_id=question_id, assignment_id=assignment_id)
+        .values("as_qurel_id")[0]["as_qurel_id"]
     )
-    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
-        question__question_id=question_id
-    )
-    as_qurel_id = AssignmentQuestionRel.objects.select_related("question").filter(
-        question__question_id=question_id, assignment_id=assignment_id
-    ).values("as_qurel_id")[0]["as_qurel_id"]
     first_data = join_by_question_id[0]
     return join_by_assignment_id, first_data, as_qurel_id
 
@@ -240,13 +240,13 @@ def check_homework_list(request):
     else:
         join_by_assignment_id = (
             Solve.objects.select_related("as_qurel")
-                .filter(student_id=student_id)
-                .values("as_qurel_id", "solve_id")
+            .filter(student_id=student_id)
+            .values("as_qurel_id", "solve_id")
         )
         as_qurel_id = join_by_assignment_id.values("as_qurel_id")[0]["as_qurel_id"]
-        join_assignment = AssignmentQuestionRel.objects.prefetch_related("assignment").filter(
-            as_qurel_id=as_qurel_id
-        )
+        join_assignment = AssignmentQuestionRel.objects.prefetch_related(
+            "assignment"
+        ).filter(as_qurel_id=as_qurel_id)
 
     context = {"join_assignment": join_assignment, "student_id": student_id}
 
@@ -255,7 +255,12 @@ def check_homework_list(request):
 
 # 학생 ID가 DB에 존재하는지 확인
 def is_student_id(student_id):
-    result = Solve.objects.select_related("as_qurel").filter(student_id=student_id).values("student_id").first()
+    result = (
+        Solve.objects.select_related("as_qurel")
+        .filter(student_id=student_id)
+        .values("student_id")
+        .first()
+    )
     if result is None:
         return ""
     else:
@@ -269,13 +274,13 @@ def check_homework_question(request):
 
     join_by_assignment_id = (
         Question.objects.select_related("assignment_question_rel")
-            .filter(assignmentquestionrel__assignment_id=assignment_id)
-            .values_list("assignmentquestionrel", flat=True)
+        .filter(assignmentquestionrel__assignment_id=assignment_id)
+        .values_list("assignmentquestionrel", flat=True)
     )
     join_by_student_id = (
         Solve.objects.select_related("assignment_question_rel")
-            .filter(student_id=student_id)
-            .values_list("as_qurel_id", flat=True)
+        .filter(student_id=student_id)
+        .values_list("as_qurel_id", flat=True)
     )
 
     result_list = []
@@ -283,13 +288,13 @@ def check_homework_question(request):
         if as_qurel_id in join_by_student_id:
             values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
-                    .filter(assignmentquestionrel=as_qurel_id)
-                    .values("assignmentquestionrel", "question_id", "question_name")
+                .filter(assignmentquestionrel=as_qurel_id)
+                .values("assignmentquestionrel", "question_id", "question_name")
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
-                    .filter(as_qurel_id=as_qurel_id)
-                    .values(
+                .filter(as_qurel_id=as_qurel_id)
+                .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
             )
@@ -321,8 +326,8 @@ def do_homework_question(request):
 
     join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
-            .filter(assignment_id=assignment_id)
-            .filter(assignment__type="숙제하기")
+        .filter(assignment_id=assignment_id)
+        .filter(assignment__type="숙제하기")
     )
 
     # id로 문항 불러오기
@@ -364,9 +369,9 @@ def do_homework_diagnosis(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    join_by_question_id = AssignmentQuestionRel.objects.select_related("question").filter(
-        question__question_id=question_id
-    )
+    join_by_question_id = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(question__question_id=question_id)
     data = join_by_question_id.first()
     as_qurel_id = data.as_qurel_id
 
@@ -488,9 +493,9 @@ def search_keyword(request):
     user_input = request.GET["user_input"]
     key_data = (
         Keyword.objects.select_related("question")
-            .filter(keyword_name__icontains=user_input)
-            .values_list("question_id", flat=True)
-            .distinct()
+        .filter(keyword_name__icontains=user_input)
+        .values_list("question_id", flat=True)
+        .distinct()
     )
     keys_of_question = Question.objects.filter(pk__in=key_data)
 
@@ -505,8 +510,8 @@ def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
         MakeQuestion.objects.filter(question_name__icontains=name_input)
-            .values_list("make_question_id", flat=True)
-            .distinct()
+        .values_list("make_question_id", flat=True)
+        .distinct()
     )
     names_of_makequestion = MakeQuestion.objects.filter(pk__in=name_data)
 
