@@ -56,7 +56,7 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <table class="w3-table-all w3-centered" id="ques_table">
+            <table class="w3-table-all w3-centered" id="question_table">
                 <th class="w3-indigo">
                     학습 목록
                 </th>
@@ -68,7 +68,7 @@
                             <input type="hidden" name="student_name" value="{{student_name}}">
                             <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
                             <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="q_id">
+                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="question_id">
                                 {{data.question.question_name}}
                             </button>
                         </form>
@@ -116,7 +116,7 @@
                     <h5 class="card-header">생각을 적어보세요:</h5>
                     <div class="card-body">
                         <div class="form-group">
-                            <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
+                            <textarea class="form-control" name='question_answer' rows="3" id="question_answer"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table>

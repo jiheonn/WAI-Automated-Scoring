@@ -305,7 +305,7 @@ def do_homework_question(request):
 # 숙제하기 문항 피드백 페이지
 def do_homework_diagnosis(request):
     question_id = request.GET["question_id"]
-    ques_ans = request.GET["ques_ans"]
+    question_answer = request.GET["question_answer"]
     student_id = request.GET["student_id"]
     student_name = request.GET["student_name"]
 
@@ -316,22 +316,22 @@ def do_homework_diagnosis(request):
         "question"
     ).filter(question__question_id=question_id)
     data = join_by_question_id.first()
-    as_qurel_id = data.as_qurel_id
+    assignment_question_id = data.as_qurel_id
 
     context = {
         "student_id": student_id,
-        "ques_ans": ques_ans,
+        "question_answer": question_answer,
         "data": data,
         "student_name": student_name,
     }
 
     # 나의 답 DB에 저장
-    if ques_ans != "":
+    if question_answer != "":
         solve_data = Solve(
-            as_qurel_id=as_qurel_id,
+            as_qurel_id=assignment_question_id,
             student_id=student_id,
             submit_date=now_date,
-            response=ques_ans,
+            response=question_answer,
             score=INIT_SCORE,
             student_name=student_name,
         )
