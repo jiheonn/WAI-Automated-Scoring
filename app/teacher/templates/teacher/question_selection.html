@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <!-- Bootstrap core CSS -->
 <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -135,5 +137,14 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% else %}
+
+<script>
+    alert('로그인을 하셔야 이용이 가능합니다. 먼저 로그인을 해주세요.');
+    document.location.href = "{% url 'teacher_login' %}";
+</script>
+
+{% endif %}
 
 {% endblock %}

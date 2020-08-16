@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <!-- Bootstrap core CSS -->
 <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -16,7 +18,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
@@ -35,7 +37,7 @@
         <div class="row justify-content-center my-5">
             <div class="col-lg-2">
                 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                     height="120" alt="">
+                    height="120" alt="">
             </div>
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
@@ -47,12 +49,11 @@
             <!-- /.col-md-4 -->
 
             <div class="col-7 sct-center">
-                <span>문항 제목 : <input id="as_name" type="text" name="question_name" placeholder="문항 제목을 입력해 주세요."></span><br>
-                <span>문항 내용 : <textarea id="as_discription"
-                                        type="text" name="discription"
-                                        placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
-                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input type="file"
-                                                                           name="image">
+                <span>문항 제목 : <input id="as_name" type="text" name="question_name"
+                        placeholder="문항 제목을 입력해 주세요."></span><br>
+                <span>문항 내용 : <textarea id="as_discription" type="text" name="discription"
+                        placeholder="문항 내용을 작성해 주세요."></textarea></span><br>
+                <strong>그림 또는 사진 파일은 아래의 버튼을 클릭하여 업로드해 주세요.</strong><input type="file" name="image">
             </div>
             <div class="col-11">
                 <table border="1" bordercolor="gray" width="1000" align="center" id="hint-answer-table">
@@ -61,10 +62,8 @@
                         <th height="40px">모범 답안</th>
                     </tr>
                     <tr>
-                        <td><textarea type="text" name="hint"
-                                      placeholder="도움 생각을 작성해 주세요."></textarea></td>
-                        <td><textarea type="text" name="answer"
-                                      placeholder="모범 답안을 작성해 주세요."></textarea></td>
+                        <td><textarea type="text" name="hint" placeholder="도움 생각을 작성해 주세요."></textarea></td>
+                        <td><textarea type="text" name="answer" placeholder="모범 답안을 작성해 주세요."></textarea></td>
                     </tr>
                 </table>
                 <table id="questionTable" border="1" bordercolor="gray" width="1000" align="center">
@@ -72,8 +71,7 @@
                         <th height="40px">채점 준거</th>
                     </tr>
                     <tr>
-                        <td><textarea type="text" name="mark_text"
-                                      placeholder="채점 준거를 작성해 주세요."></textarea></td>
+                        <td><textarea type="text" name="mark_text" placeholder="채점 준거를 작성해 주세요."></textarea></td>
                     </tr>
                 </table>
             </div>
@@ -95,5 +93,14 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% else %}
+
+<script>
+    alert('로그인을 하셔야 이용이 가능합니다. 먼저 로그인을 해주세요.');
+    document.location.href = "{% url 'teacher_login' %}";
+</script>
+
+{% endif %}
 
 {% endblock %}
