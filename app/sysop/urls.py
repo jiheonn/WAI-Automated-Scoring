@@ -15,6 +15,10 @@ urlpatterns = [
     path("view_question/", views.view_question, name="sysop_view_question"),
     path("detail_question/", views.detail_question, name="sysop_detail_question"),
     path("make_question/", views.make_question, name="sysop_make_question"),
+    # 공지사항 페이지
+    path("view_notice/", views.view_notice, name="sysop_view_notice"),
+    path("detail_notice/", views.detail_notice, name="sysop_detail_notice"),
+    path("make_notice/", views.make_notice, name="sysop_make_notice"),
     # 함수
     path("sysop_login/", views.sysop_login, name="sysop_login"),
     path("sysop_logout/", views.sysop_logout, name="sysop_logout"),
@@ -49,6 +53,11 @@ urlpatterns = [
         name="sysop_create_question"
     ),
     path(
+        "create_notice/",
+        views.create_notice,
+        name="sysop_create_notice"
+    ),
+    path(
         "change_quiz_info/",
         views.change_quiz_info,
         name="sysop_change_quiz_info"
@@ -59,8 +68,18 @@ urlpatterns = [
         name="sysop_change_question_info"
     ),
     path(
+        "change_notice_info/",
+        views.change_notice_info,
+        name="sysop_change_notice_info"
+    ),
+    path(
         "delete_question/",
         views.delete_question,
         name="sysop_delete_question"
+    ),
+    path(
+        "delete_notice/",
+        views.delete_notice,
+        name="sysop_delete_notice"
     ),
 ]

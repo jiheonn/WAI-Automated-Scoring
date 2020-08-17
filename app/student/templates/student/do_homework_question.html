@@ -1,18 +1,7 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
-<script>
-    $(document).ready(function () {
-        $('#submit_btn').click(function () {
-            var q_table = document.getElementById('ques_table');
-            var q_id = document.getElementById('q_id');
-            if (q_id in q_table) {
-                // $('#t_id').empty();
-            }
 
-        });
-    });
-</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -40,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -67,22 +56,20 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <table class="w3-table-all w3-centered" id="ques_table">
+            <table class="w3-table-all w3-centered" id="question_table">
                 <th class="w3-indigo">
                     학습 목록
                 </th>
-
-                {% for d in join_aqr_q %}
+                {% for data in join_by_assignment_id %}
                 <tr id="t_id">
                     <td>
                         <form action="{% url 'student_do_homework_question' %}" method="GET">
                             <input type="hidden" name="ID_num" value="{{student_id}}">
                             <input type="hidden" name="student_name" value="{{student_name}}">
                             <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
-<!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
                             <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                    value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
-                                {{d.question.question_name}}
+                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="question_id">
+                                {{data.question.question_name}}
                             </button>
                         </form>
                     </td>
@@ -108,7 +95,7 @@
             <form action="{% url 'student_do_homework_diagnosis' %}" method="GET">
                 <input type="hidden" name="student_id" id ="student_id" value="{{student_id}}">
                 <input type="hidden" name="student_name" id ="student_name" value="{{student_name}}">
-            <!-- Title -->
+                <input type="hidden" name="code_num" value="{{ first_data.assignment.assignment_id }}">
                 <h2 class="mt-4"><input type="hidden" class="w3-btn w3-round w3-blue" name="question_id" value="{{first_data.question.question_id}}"
                                                    id="{{first_data.question.question_id}}">{{first_data.question.question_name}}</h2>
 
@@ -129,7 +116,7 @@
                     <h5 class="card-header">생각을 적어보세요:</h5>
                     <div class="card-body">
                         <div class="form-group">
-                            <textarea class="form-control" name='ques_ans' rows="3" id="ques_ans"></textarea>
+                            <textarea class="form-control" name='question_answer' rows="3" id="question_answer"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table>

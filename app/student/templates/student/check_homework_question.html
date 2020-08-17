@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -38,7 +38,6 @@
 
 <!-- Page Content -->
 <div class="container">
-
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
@@ -47,8 +46,6 @@
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
             <p class="font-weight-bolder triangle-border left">해당 주차 숙제 내역입니다.<br>
-                첨삭 전 답안을 수정할 수 있습니다.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -60,24 +57,31 @@
             <tr class="w3-indigo">
               <th>문항명</th>
               <th>최종 수정날짜</th>
-                <th>최종 점수</th>
+              <th>최종 점수</th>
             </tr>
-            {% for data in data %}
+            {% for data in result_list %}
             <tr>
-              <td>{{data.question.question_name}}</td>
-              <td>{{data.solve.modified_date}}</td>
-              <td>{{data.solve.score}}</td>
+              <td>
+                  <form action="{% url 'student_do_homework_question' %}" method="get">
+                      <input type="hidden" name="ID_num" value="{{ student_id }}">
+                      <input type="hidden" name="code_num" value="{{ assignment_id }}">
+                      <input type="hidden" name="student_name" value="{{ data.student_name }}">
+                      <button type="submit" class="btn btn-outline-primary w3-border-0" name="question_id" value="{{ data.question_id }},{{ assignment_id }}">
+                            {{data.question_name}}
+                      </button>
+                  </form>
+              </td>
+              <td>{{data.submit_date}}</td>
+              <td>{{data.score}}</td>
             </tr>
             {% endfor %}
         </table>
 
-        <a href="{% url 'student_check_homework_list' %}">
+        <a href="{% url 'student_check_homework_list' %}" onclick='history.go(-1); return false;'>
             <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
         </a>
     </div>
-
     <!-- /.row -->
-
 
 </div>
 <!-- /.container -->

@@ -2,33 +2,6 @@
 {% load static %}
 {% block content %}
 
-<script>
-    // $(document).ready(function () {
-    //         $('#submit_btn').click(function () {
-    //             var q_table = document.getElementById('ques_table');
-    //             var q_le = $('#ques_table tr').length;
-    //             if(q_le >= 3){
-    //                 if (q_table.rows.length < 1) return;
-    //                 q_table.deleteRow(q_table.rows.length - 1);
-    //             }else{
-    //                 alert("문항을 모두 풀었습니다. 수고하셨습니다!");
-    //                 return false;
-    //             }
-    //         });
-    //     });
-    //
-    // $(document).ready(function () {
-    //     $('#submit_btn').click(function () {
-    //         var q_table = document.getElementById('ques_table');
-    //         var q_id = document.getElementById('q_id');
-    //         if (q_id in q_table) {
-    //             // $('#t_id').empty();
-    //         }
-    //
-    //     });
-    // });
-
-</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -56,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -84,19 +57,17 @@
     <form action="{% url 'student_study_evaluate_question' %}" method="GET">
         <div class="row">
             <div class="col-lg-3">
-                <table class="w3-table-all w3-centered" id="ques_table">
+                <table class="w3-table-all w3-centered" id="question_table">
                     <th class="w3-indigo">
                         학습 목록
                     </th>
-                    {% for d in join_aqr_q %}
+                    {% for data in join_by_assignment_id %}
                     <tr id="t_id">
                         <td>
-    <!--                           {{d.question.question_id}} 대신 {{d.question.question_name}}임-->
-                                <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
-                                        value="{{d.question.question_id}},{{d.assignment_id}}" id="q_id">
-                                    {{d.question.question_name}}
-                                </button>
-<!--                            </form>-->
+                            <button type="submit" class="w3-btn w3-round w3-dark" name="question_id"
+                                    value="{{data.question.question_id}},{{data.assignment_id}}" id="question_id">
+                                {{data.question.question_name}}
+                            </button>
                         </td>
                     </tr>
                         {% endfor %}
@@ -132,7 +103,7 @@
                         <div class="form-group">
                             <input type="hidden" name="ID_num" value="{{student_id}}">
                             <input type="hidden" name="student_name" value="{{student_name}}">
-                            <textarea class="form-control" rows="3" id="ques_ans"></textarea>
+                            <textarea class="form-control" rows="3" name='question_answer' id="question_answer"></textarea>
                         </div>
                         <div class="col-md-10">
                             <table width="600">
@@ -144,10 +115,10 @@
                             </table>
                         </div>
                   </div>
-            </div>
+                </div>
 
+            </div>
         </div>
-    </div>
     </form>
 </div>
 {% endblock %}

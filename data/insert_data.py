@@ -12,6 +12,7 @@ data_list = ['sample_data/wa3i_sample_data - teacher.csv',
              'sample_data/wa3i_sample_data - keyword.csv',
              'sample_data/wa3i_sample_data - assignmentquestionrel.csv',
              'sample_data/wa3i_sample_data - solve.csv',
+             'sample_data/wa3i_sample_data - notice.csv',
             ]
 
 app_name = "mainpage"

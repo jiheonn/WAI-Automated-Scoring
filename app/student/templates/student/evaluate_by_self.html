@@ -25,7 +25,7 @@
                                 '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
                                 '/media/' +
                                 search_data[i].question_image +
-                                '" style="width:auto; height:100%;">' +
+                                '" style="width:200px; height:200px;">' +
                                 '</div>' +
                                 '<span class="card-footer">' +
                                 '<button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id" value="' +
@@ -43,44 +43,6 @@
             });
         });
     });
-
-    <!--검색카테고리-->
-    // $(document).ready(function () {
-    // $('#category_option2').change(function () {
-    //     var option = $("#category_option2 option:selected").val();
-    //     $.ajax({
-    //         url: '/student/change_category_self/',
-    //         data: {option: option},
-    //         success: function (data) {
-    //             var option_data = data.option_data;
-    //             var num = option_data.length;
-    //             $("div").remove("#question_list");
-    //             $("#whole_card").after('<div id="question_list" class="row">' + '</div>');
-    //                 for (var i = 0; i < num; i++) {
-    //                     $("#question_list").append(
-    //                         '<div class="col-md-3 mb-5">' +
-    //                         '<div class="card h-100" align="center">' +
-    //                         '<div class="card-body">' +
-    //                         '<img class="img-fluid rounded mb-4 mb-lg-0" src="' +
-    //                         '/static/' +
-    //                         option_data[i].question_image +
-    //                         '" style="width:auto; height:100%;">' +
-    //                         '</div>' +
-    //                         '<span class="card-footer">' +
-    //                         '<button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id" value="' +
-    //                         option_data[i].make_question_id  +
-    //                         '">' +
-    //                         option_data[i].question_name +
-    //                         '</button>' +
-    //                         '</span>' +
-    //                         '</div>' +
-    //                         '</div>'
-    //                     )
-    //                 }
-    //             }
-    //         });
-    //     });
-    // });
 </script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -108,7 +70,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -128,7 +90,6 @@
         <div class="col-lg-3">
             <p class="font-weight-bolder triangle-border left">스스로 학습하고 평가하는 능력을 키우는 항목입니다.
             </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
 
@@ -140,23 +101,11 @@
                 <div class="col-auto">
                     <button id="search_name" class="w3-button w3-round w3-gray">검색</button>
                 </div>
-                <!--카테고리-->
-                <!--                <div id="category" class="col" style="left:10px">-->
-                <!--                    <select id="category_option2" name="category">-->
-                <!--                        <option value="select" selected="selected">카테고리</option>-->
-                <!--                        {% for data in category %}-->
-                <!--                        <option value="{{ data.category_name }}">{{ data.category_name }}</option>-->
-                <!--                        {% endfor %}-->
-                <!--                    </select>-->
-                <!--                </div>-->
-
             </div>
         </div>
 
-
     </div>
     <!-- /.row -->
-
 
     <!-- Call to Action Well -->
     <div class="card text-white bg-secondary my-5 py-4 text-center">
@@ -169,12 +118,12 @@
     <form action="{% url 'student_evaluate_by_self_question' %}" method="get">
         <div id="whole_card" class="row my-5">
             <div id="question_list" class="row">
-                {% for data in qs %}
+                {% for data in make_question %}
                 <div class="col-md-3 mb-5">
                     <div class="card h-100" align="center">
                         <div class="card-body">
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}"
-                                 style="width:auto; height:100%;">
+                                 style="width:200px; height:200px;">
                         </div>
                         <span class="card-footer">
                             <button type="submit" class="w3-btn w3-round w3-dark" name="make_question_id"

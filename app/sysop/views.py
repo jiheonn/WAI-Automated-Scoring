@@ -1,38 +1,41 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from mainpage.models import *
-from mainpage.models import *
+from mainpage.models import Teacher, MakeQuestion, Question, Category, Mark, AssignmentQuestionRel, Keyword, \
+    StudySolveData, Solve, Notice
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.conf import settings
 
 import datetime
 
 APPROVED_ALLOW = 1
 APPROVED_DENY = 0
 
+
 # 관리자 홈 페이지
 def home(request):
     context = {}
+
     return render(request, "sysop/home.html", context)
 
 
 # 신규교사정보 페이지
 def view_teacher_data(request):
-    teacher = Teacher.objects.all()
-    context = {"teacher": teacher}
+    all_teacher = Teacher.objects.all()
+    context = {"teacher": all_teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
 # 문항검토 페이지
 def view_quiz(request):
-    makequestion = MakeQuestion.objects.all()
-    context = {"makequestion": makequestion}
+    all_makequestion = MakeQuestion.objects.all()
+    context = {"makequestion": all_makequestion}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -46,19 +49,22 @@ def detail_quiz(request):
         make_question_id=question_id
     )
     context = {"makequestion": makequestion, "mark_list": mark_list}
+
     return render(request, "sysop/detail_quiz.html", context)
 
 
 # 문항검토 신규문항 생성 페이지
 def make_quiz(request):
     context = {}
+
     return render(request, "sysop/make_quiz.html", context)
 
 
 # 문항생성 페이지
 def view_question(request):
-    question = Question.objects.all()
-    context = {"question": question}
+    all_question = Question.objects.all()
+    context = {"question": all_question}
+
     return render(request, "sysop/view_question.html", context)
 
 
@@ -66,19 +72,48 @@ def view_question(request):
 def detail_question(request):
     question_id = request.GET["question_id"]
     question = Question.objects.filter(question_id=question_id).first()
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
     context = {"question": question,
-               "category": category}
+               "category": all_category}
+
     return render(request, "sysop/detail_question.html", context)
 
 
 # 문항검토 신규문항 생성 페이지
 def make_question(request):
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
-    context = {"category": category, }
+    context = {"category": all_category}
+
     return render(request, "sysop/make_question.html", context)
+
+
+# 공지사항 페이지
+def view_notice(request):
+    all_notice = Notice.objects.all()
+
+    context = {"notice": all_notice}
+
+    return render(request, "sysop/view_notice.html", context)
+
+
+# 공지사항 자세히보기 페이지
+def detail_notice(request):
+    notice_id = request.GET["notice_id"]
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+    notice_target_list = ["공통", "학생", "선생님", "관리자"]
+    context = {"notice": notice,
+               "notice_target_list": notice_target_list}
+
+    return render(request, "sysop/detail_notice.html", context)
+
+
+# 공지사항 생성 페이지
+def make_notice(request):
+    context = {}
+
+    return render(request, "sysop/make_notice.html", context)
 
 
 # 로그인 함수
@@ -89,7 +124,7 @@ def sysop_login(request):
         password = request.POST["password"]
         user = authenticate(username=username, password=password)
         if user is not None:
-            if user.username == "admin":
+            if user.is_staff:
                 login(request, user)
                 return render(request, "sysop/home.html")
             else:
@@ -105,6 +140,7 @@ def sysop_login(request):
 # 로그아웃 함수
 def sysop_logout(request):
     logout(request)
+
     return redirect("sysop_login")
 
 
@@ -117,6 +153,7 @@ def deny_to_allow_teacher_approve(request):
     teacher = Teacher.objects.all()
 
     context = {"teacher": teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
@@ -129,6 +166,7 @@ def allow_to_deny_teacher_approve(request):
     teacher = Teacher.objects.all()
 
     context = {"teacher": teacher}
+
     return render(request, "sysop/view_teacher_data.html", context)
 
 
@@ -138,9 +176,10 @@ def deny_to_allow_quiz(request):
     make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
     make_question_info.upload_check = APPROVED_ALLOW
     make_question_info.save()
-    make_question = MakeQuestion.objects.all()
+    all_make_question = MakeQuestion.objects.all()
 
-    context = {"makequestion": make_question}
+    context = {"makequestion": all_make_question}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -150,9 +189,10 @@ def allow_to_deny_quiz(request):
     make_question_info = MakeQuestion.objects.get(make_question_id=make_question_id)
     make_question_info.upload_check = APPROVED_DENY
     make_question_info.save()
-    make_question = MakeQuestion.objects.all()
+    all_make_question = MakeQuestion.objects.all()
 
-    context = {"makequestion": make_question}
+    context = {"makequestion": all_make_question}
+
     return render(request, "sysop/view_quiz.html", context)
 
 
@@ -202,11 +242,11 @@ def create_question(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
-    id_number = MakeQuestion.objects.all().last().make_question_id + 1
-    image = request.FILES["image"]
-    image.name = str(id_number) + "_" + image.name
-
     try:
+        id_number = MakeQuestion.objects.all().last().make_question_id + 1
+        image = request.FILES["image"]
+        image.name = str(id_number) + "_" + image.name
+
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
             model_id=id_number,
@@ -216,7 +256,6 @@ def create_question(request):
             image=image,
             hint=request.POST["question_hint"],
             made_date=now_date,
-            qr_code="qr_code/image/qr_code.png",
             ques_concept=request.POST["question_concept"],
         )
         question_data.save()
@@ -229,6 +268,30 @@ def create_question(request):
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
         return redirect("sysop_make_question")
+
+
+# 공지사항 생성 함수
+def create_notice(request):
+    now = datetime.datetime.now()
+    now_date = now.strftime("%Y-%m-%d")
+
+    try:
+        notice_data = Notice(
+            notice_target=request.POST["notice_target"],
+            notice_name=request.POST["notice_name"],
+            notice_content=request.POST["notice_content"],
+            made_date=now_date
+        )
+        notice_data.save()
+
+        messages.success(request, "성공적으로 등록되었습니다.")
+
+        return redirect("sysop_make_notice")
+
+    except:
+        messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
+
+        return redirect("sysop_make_notice")
 
 
 # 문항검토 수정 함수
@@ -270,6 +333,7 @@ def change_quiz_info(request):
         make_question_id=self_question_id
     )
     context = {"makequestion": makequestion, "mark_list": mark_list}
+
     return render(request, "sysop/detail_quiz.html", context)
 
 
@@ -298,12 +362,35 @@ def change_question_info(request):
     question_info.save()
 
     question = Question.objects.filter(question_id=question_id).first()
-    category = Category.objects.all()
+    all_category = Category.objects.all()
 
     context = {"question": question,
-               "category": category}
+               "category": all_category}
+
     return render(request, "sysop/detail_question.html", context)
 
+
+# 공지사항 정보 수정 함수
+def change_notice_info(request):
+    notice_id = request.POST["notice_id"]
+
+    notice_info = Notice.objects.get(notice_id=notice_id)
+
+    notice_info.notice_target = request.POST["notice_target"]
+    notice_info.notice_name = request.POST["notice_name"]
+    notice_info.notice_content = request.POST["notice_content"]
+    notice_info.save()
+
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+    notice_target_list = ["공통", "학생", "선생님", "관리자"]
+
+    context = {"notice": notice,
+               "notice_target_list": notice_target_list}
+
+    return render(request, "sysop/detail_notice.html", context)
+
+
+# 문항생성 정보 삭제 함수
 def delete_question(request):
     question_id = request.GET.get("question_id")
     question_info = Question.objects.get(question_id=question_id)
@@ -320,6 +407,19 @@ def delete_question(request):
     study_solve_info.delete()
     question_info.delete()
 
-    question = Question.objects.all()
-    context = {"question": question}
+    all_question = Question.objects.all()
+    context = {"question": all_question}
+
     return render(request, "sysop/view_question.html", context)
+
+
+# 공지사항 정보 삭제 함수
+def delete_notice(request):
+    notice_id = request.GET.get("notice_id")
+    notice_info = Notice.objects.get(notice_id=notice_id)
+    notice_info.delete()
+
+    all_notice = Notice.objects.all()
+    context = {"notice": all_notice}
+
+    return render(request, "sysop/view_notice.html", context)

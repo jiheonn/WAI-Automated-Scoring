@@ -79,8 +79,11 @@ urlpatterns = [
         views.evaluate_by_self_score,
         name="student_evaluate_by_self_score",
     ),
-    # 게시판 페이지
-    path("notice/", views.notice, name="student_notice"),
+    # 공지사항 페이지
+    path("student_notice/", views.student_notice, name="student_notice"),
+    path(
+        "student_notice/student_notice_detail/", views.student_notice_detail, name="student_notice_detail"
+    ),
     # 함수
     path("search/", views.search_keyword, name="search"),
     path("search_name/", views.search_name, name="search_name"),
@@ -89,9 +92,6 @@ urlpatterns = [
         views.change_category_evaluate_exercise,
         name="change_category",
     ),
-    # path(
-    #     "change_category_self/", views.change_category_self, name="change_category_self"
-    # ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

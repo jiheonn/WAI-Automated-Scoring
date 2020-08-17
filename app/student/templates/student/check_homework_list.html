@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -58,36 +58,29 @@
 
         <table class="w3-table-all w3-centered" style="text-align:center; table-layout:fixed;">
             <form action="{% url 'student_check_homework_question' %}" method="get" >
-            <tr class="w3-indigo">
-                <input type="hidden" class="w3-btn w3-round w3-blue" name="student_id" value="{{ rel.solve.student_id }}" id="{{ rel.solve.student_id }}">
-<!--                <th>{{ rel.student_id }}</th>-->
-              <th>제목</th>
-              <th>제출 기한</th>
-              <th>제출 완료 날짜</th>
-            </tr>
+                <input type="hidden" name="student_id" value="{{ student_id }}">
+                <tr class="w3-indigo">
+                    <th>제목</th>
+                    <th>제출 기한</th>
+                </tr>
 
-                {% for data in rel %}
+                {% for data in join_assignment %}
                 <tr>
                     <td>
-                        <a href="{% url 'student_check_homework_question' %}"name="assignment_id" value="{{ data.assignment.assignment_id }}" id="{{ data.assignment.assignment_id }}">
-                            {{data.assignment.assignment_title}}</a>
-
+                        <button type="submit" name="assignment_id" class="btn btn-outline-primary w3-border-0" value="{{ data.assignment.assignment_id }}">
+                            {{ data.assignment.assignment_title }}
+                        </button>
                     </td>
                     <td>{{data.assignment.end_date}}</td>
-                    <td>{{data.solve.modified_date}}</td>
                 </tr>
             {% endfor %}
             </form>
         </table>
-
         <a href="{% url 'student_select_homework' %}">
             <button type="submit" class="w3-btn w3-round w3-large w3-grey w3-section">< 이전</button>
         </a>
-
     </div>
-
     <!-- /.row -->
-
 
 </div>
 <!-- /.container -->

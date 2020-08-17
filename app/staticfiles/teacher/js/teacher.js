@@ -52,7 +52,7 @@ $(document).ready(function () {
         alert(question_name);
         $.ajax({
             url: '/teacher/change_qr_code/',
-            data: {question_name: question_name},
+            data: { question_name: question_name },
             success: function (data) {
                 var question_data = data.question_data;
                 var num = question_data.length;
@@ -88,7 +88,7 @@ $(document).ready(function () {
         var copy_code = prompt("복사할 시험지의 코드를 입력해 주세요.");
         $.ajax({
             url: '/teacher/assignment_copy/',
-            data: {copy_code: copy_code},
+            data: { copy_code: copy_code },
             success: function (data) {
                 var copy_data = data.copy_data;
                 var num = copy_data.length;
@@ -104,6 +104,7 @@ $(document).ready(function () {
                         $('#evaluation_type').val(assignment_type).prop("selected", true);
                         $('#as_name').val(assignment_title);
                         $('input:checkbox[id=' + question_id + ']').prop("checked", true);
+                        $('#' + copy_data[i].question_id).addClass("checked");
                     }
                 }
                 jQuery(function ($) {
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: '/teacher/code_generation/',
-            data: {text: text},
+            data: { text: text },
             success: function (data) {
                 $('#code_num').val(data.generation_code);
             }
@@ -182,7 +183,7 @@ $(document).ready(function () {
         var user_input = $('#user_input').val();
         $.ajax({
             url: '/teacher/question_search/',
-            data: {user_input: user_input},
+            data: { user_input: user_input },
             success: function (data) {
                 var search_data = data.search_data;
                 var num = search_data.length;
@@ -242,7 +243,7 @@ $(document).ready(function () {
         var option = $("#category_option option:selected").val();
         $.ajax({
             url: '/teacher/change_category/',
-            data: {option: option},
+            data: { option: option },
             success: function (data) {
                 var option_data = data.option_data;
                 var num = option_data.length;
@@ -301,4 +302,14 @@ $(document).ready(function () {
 var message = $('#message').val();
 if (message.length) {
     alert(message);
+}
+
+function isInspected() {
+    var topic_count = document.getElementById("topic_count").value;
+    if (topic_count > 50) {
+        alert("토픽 개수는 최대 50개까지 입력이 가능합니다.");
+        return false
+    } else {
+        return true
+    }
 }

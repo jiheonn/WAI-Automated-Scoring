@@ -12,15 +12,11 @@ import random
 import json
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
+# from django.http import HttpResponse, HttpResponseRedirect
 
 
 # def index(request):
 #     return HttpResponse("Hello, world. You're at the polls index.")
-
-# 홈 화면 view 함수
-def index(request):
-    return render(request, "teacher/index.html")
 
 
 # 문항선택 화면 view 함수
@@ -69,12 +65,10 @@ def question_selection_save(request):
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
-        return HttpResponseRedirect(request.POST["path"])
-
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-        return HttpResponseRedirect(request.POST["path"])
+    return redirect("teacher_question_selection")
 
 
 # 결과보기 화면 view 함수
@@ -174,6 +168,10 @@ def make_question_save(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
+    id_number = MakeQuestion.objects.all().last().make_question_id + 1
+    image = request.FILES["image"]
+    image.name = str(id_number) + "_" + image.name
+
     try:
         teacher_id = int(request.POST["teacher_id"])
         make_question_data = MakeQuestion(
@@ -181,7 +179,7 @@ def make_question_save(request):
             question_name=request.POST["question_name"],
             discription=request.POST["discription"],
             answer=request.POST["answer"],
-            image=request.FILES["image"],
+            image=image,
             hint=request.POST["hint"],
             made_date=now_date,
             upload_check=0,
@@ -197,12 +195,10 @@ def make_question_save(request):
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
-        return redirect("make_question")
-
     except:
         messages.error(request, "등록에 실패하였습니다. 다시 한번 확인해 주세요.")
 
-        return redirect("make_question")
+    return redirect("teacher_make_question")
 
 
 # Bigram Tree 화면 view 함수
@@ -227,9 +223,19 @@ def qr_code(request):
     return render(request, "teacher/QR_code.html", context)
 
 
-# 게시판 화면 view 함수
+# 공지사항 화면 view 함수
 def teacher_notice(request):
-    return render(request, "teacher/teacher_notice.html")
+    all_notice = Notice.objects.exclude(notice_target="학생")
+    context = {"notice": all_notice}
+    return render(request, "teacher/teacher_notice.html", context)
+
+
+# 공지사항 자세히보기 화면 view 함수
+def teacher_notice_detail(request):
+    notice_id = request.GET["selected_notice_id"]
+    notice = Notice.objects.filter(notice_id=notice_id).first()
+    context = {"notice": notice}
+    return render(request, "teacher/teacher_notice_detail.html", context)
 
 
 # QR 코드 > 버튼 클릭 시 QR 코드 이미지 변경 함수
@@ -354,7 +360,7 @@ def login_view(request):
 # 로그아웃 함수
 def logout_view(request):
     logout(request)
-    return redirect("login")
+    return redirect("teacher_login")
 
 
 # 회원가입 함수
@@ -385,11 +391,11 @@ def signup_view(request):
 
                 messages.success(request, "회원가입이 완료되었습니다.")
 
-                return redirect("login")
+                return redirect("teacher_login")
     except:
         messages.error(request, "비밀번호가 일치하지 않거나 중복된 이메일입니다.")
 
-        return redirect("signup")
+        return redirect("teacher_signup")
 
     return render(request, "teacher/signup.html", {"teacher_id": teacher_id})
 

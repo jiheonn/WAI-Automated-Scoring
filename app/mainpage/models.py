@@ -64,7 +64,6 @@ class Question(models.Model):
     image = models.ImageField(upload_to="question/image")
     hint = models.TextField()
     made_date = models.DateField()
-    qr_code = models.ImageField(upload_to="qr_code/image")  # Field name made lowercase.
     ques_concept = models.CharField(max_length=255)
 
 
@@ -98,3 +97,11 @@ class Solve(models.Model):
     response = models.TextField()
     score = models.DecimalField(max_digits=5, decimal_places=2)
     student_name = models.CharField(max_length=50, null=True)
+
+
+class Notice(models.Model):
+    notice_id = models.AutoField(primary_key=True, auto_created=True)
+    notice_target = models.CharField(max_length=50)
+    notice_name = models.CharField(max_length=100)
+    notice_content = models.TextField()
+    made_date = models.DateField()

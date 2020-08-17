@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 
@@ -37,104 +37,105 @@
     </script>
 
 </head>
+
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'login' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'teacher_login' %}">WA3I</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto" id="menubar">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">문항선택</a>
-                </li>
-                <li id="view_result" class="nav-item">
-                    <a class="nav-link">결과보기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">문항생성</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Bigram Tree</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">주제분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">응답분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">QR코드</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">게시판</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"><i
-                            class="fa fa-user fa-fw"></i> User </a>
-                    <ul>
-                        <li><a class="nav-link" href="{% url 'login' %}">로그인</a></li>
-                        <li><a class="nav-link" href="{% url 'signup' %}">회원가입</a></li>
-                    </ul>
-                </li>
-            </ul>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto" id="menubar">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'teacher_login' %}">홈
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">문항선택</a>
+                    </li>
+                    <li id="view_result" class="nav-item">
+                        <a class="nav-link">결과보기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">문항생성</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Bigram Tree</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">주제분석</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">응답분석</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">QR코드</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">공지사항</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" id="login-menu">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-fw"></i> User
+                        </a>
+                        <ul>
+                            <li><a class="nav-link" href="{% url 'teacher_login' %}">로그인</a></li>
+                            <li><a class="nav-link" href="{% url 'teacher_signup' %}">회원가입</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-{% if messages %}
-{% for message in messages %}
-<input id="message" type="hidden" value="{{ message }}">
-{% endfor %}
-{% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    <input id="message" type="hidden" value="{{ message }}">
+    {% endfor %}
+    {% endif %}
 
-<div class="container">
-    <h2>회원가입</h2><br>
-
-    <form action="{% url 'signup' %}" method="POST">
-        {% csrf_token %}
-        <p>아이디</p>
-        <input class="input-box" name="username" type="text"><span class="input-text">학교 이메일을 사용해 주세요.</span>
-        <p>비밀번호</p>
-        <input class="input-box" name="password1" type="password">
-        <p>비밀번호 확인</p>
-        <input class="input-box" name="password2" type="password">
-        <p>성</p>
-        <input class="input-box" name="last_name" type="text">
-        <p>이름</p>
-        <input class="input-box" name="first_name" type="text">
-        <p>학교 이름</p>
-        <input class="input-box" name="school" type="text"><br><br>
-        <input name="teacher_id" type="hidden" value="{{ teacher_id }}">
-        <input type="submit" class="btn btn-primary" value="sign up">
-    </form>
-</div>
-
-<img class="img-fluid rounded mb-4 mb-lg-0 cooper-img" src="{% static 'teacher/images/cooperation.png' %}">
-<!-- Footer -->
-
-<footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; WA3I 2020</p>
+        <h2>회원가입</h2><br>
+
+        <form action="{% url 'teacher_signup' %}" method="POST">
+            {% csrf_token %}
+            <p>아이디</p>
+            <input class="input-box" name="username" type="text"><span class="input-text">학교 이메일을 사용해 주세요.</span>
+            <p>비밀번호</p>
+            <input class="input-box" name="password1" type="password">
+            <p>비밀번호 확인</p>
+            <input class="input-box" name="password2" type="password">
+            <p>성</p>
+            <input class="input-box" name="last_name" type="text">
+            <p>이름</p>
+            <input class="input-box" name="first_name" type="text">
+            <p>학교 이름</p>
+            <input class="input-box" name="school" type="text"><br><br>
+            <input name="teacher_id" type="hidden" value="{{ teacher_id }}">
+            <input type="submit" class="btn btn-primary" value="sign up">
+        </form>
     </div>
-    <!-- /.container -->
-</footer>
 
-<script src="{% static 'teacher/js/teacher.js' %}"></script>
+    <img class="img-fluid rounded mb-4 mb-lg-0 cooper-img" src="{% static 'teacher/images/cooperation.png' %}">
+    <!-- Footer -->
 
-<!-- Bootstrap core JavaScript -->
-<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; WA3I 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <script src="{% static 'teacher/js/teacher.js' %}"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
 

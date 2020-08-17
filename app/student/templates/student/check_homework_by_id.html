@@ -29,7 +29,7 @@
                     <a class="nav-link" href="{% url 'student_evaluate_by_self' %}">스스로 평가</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_notice' %}">게시판</a>
+                    <a class="nav-link" href="{% url 'student_notice' %}">공지사항</a>
                 </li>
             </ul>
         </div>
@@ -70,10 +70,20 @@
                 </a>
                 <br><br>
             </form>
+            <script type="text/javascript" language="javascript">
+                function IDAlert() {
+                    var ID_num = document.getElementById("ID_num").value
+                    var msg = confirm("입력하신 아이디가 맞는지 확인해주세요.\n맞다면 <확인>을 눌러주세요.\n\nID : " + ID_num)
+                     if ( msg == true) {
+                         return true;
+                     }else{
+                         return false;
+                     }
+                }
+            </script>
         </div>
     </center>
     <!-- /.row -->
-
 
 </div>
 <!-- /.container -->

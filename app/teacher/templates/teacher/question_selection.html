@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <!-- Bootstrap core CSS -->
 <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -20,7 +22,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 <link href="{% static 'teacher/css/teacher.css' %}" rel="stylesheet">
 <link href="{% static 'teacher/css/question_selection.css' %}" rel="stylesheet">
@@ -33,15 +35,14 @@
 
 <!-- Page Content -->
 <div class="container">
-    <form action="{% url 'question_selection_save' %}" method="POST">
+    <form action="{% url 'teacher_question_selection_save' %}" method="POST">
         {% csrf_token %}
-        <input type="hidden" name="path" value="{{ request.path }}">
         <input type="hidden" name="teacher_id" value="{{ user.teacher_id }}">
         <!-- Heading Row -->
         <div class="row justify-content-center my-5">
             <div class="col-lg-2">
                 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120"
-                     height="120" alt="">
+                    height="120" alt="">
             </div>
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
@@ -66,13 +67,13 @@
                 <a id="code_generate" class="w3-button w3-large w3-round w3-blue">생성</a><br>
                 <input type="text" id="as_name" name="question-title" maxlength="36" placeholder="  시험지 제목을 입력해 주세요.">
                 <span class="spn-margin">&nbsp학년 : <input class="sct-input sct-ipt-top20" type="text"
-                                                          name="grade"></span>
+                        name="grade"></span>
                 <span class="spn-margin">반 : <input class="sct-input sct-ipt-top10" type="text" name="class"></span><br>
                 <span>시작날짜 : <input type="date" id="start-date" name="start-date"></span>
                 <span class="span-left">종료날짜 : <input type="date" id="end-date" name="end-date"></span><br>
             </div>
             <div class="container">
-                <br/>
+                <br />
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-10 col-lg-8">
                         <div class="card card-sm">
@@ -82,9 +83,8 @@
                                 </div>
                                 <!--end of col-->
                                 <div class="col">
-                                    <input id="user_input"
-                                           class="form-control form-control-lg form-control-borderless"
-                                           placeholder="키워드를 입력해 주세요.">
+                                    <input id="user_input" class="form-control form-control-lg form-control-borderless"
+                                        placeholder="키워드를 입력해 주세요.">
                                 </div>
                                 <!--end of col-->
                                 <div class="col-auto">
@@ -116,9 +116,9 @@
                         <div class="card-body">
                             <img class="img-fluid rounded mb-4 mb-lg-0 question-img" src="{{ data.image.url }}">
                         </div>
-                        <span class="card-footer ctm-check">
+                        <span id="{{ data.question_id }}" class="card-footer ctm-check">
                             <input type="checkbox" id="{{ data.question_id }}" name="question"
-                                   value="{{ data.question_id }}">
+                                value="{{ data.question_id }}">
                             <label for="{{ data.question_id }}"><i></i>{{ data.question_name }}</label>
                         </span>
                     </div>
@@ -137,5 +137,14 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% else %}
+
+<script>
+    alert('로그인을 하셔야 이용이 가능합니다. 먼저 로그인을 해주세요.');
+    document.location.href = "{% url 'teacher_login' %}";
+</script>
+
+{% endif %}
 
 {% endblock %}

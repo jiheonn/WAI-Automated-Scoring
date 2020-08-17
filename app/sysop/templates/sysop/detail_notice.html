@@ -2,11 +2,41 @@
 {% load static %}
 
 {% block css %}
+<style>
+    .input-box {
+        width: 635px;
+        height: 50px;
+        border-style: solid;
+        border-width: 1px;
+        margin-top: 20px;
+        border-color: gray;
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-<!--datatable source-->
-<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
+    .textarea-box {
+        width: 100%;
+        height: 150px;
+        padding: 20px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: grey;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .box {
+        display: none;
+        width: 100%;
+    }
+
+    button:hover + .box, .box:hover {
+        display: block;
+        position: relative;
+        z-index: 100;
+    }
+
+</style>
 
 <!-- Bootstrap core CSS -->
 <link href="{% static 'mainpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -47,10 +77,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'sysop_view_quiz' %}">문항검토</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'sysop_view_question' %}">문항생성</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'sysop_view_notice' %}">공지사항</a>
                 </li>
             </ul>
@@ -69,77 +99,92 @@
 <!-- Page Content -->
 <div class="container">
 
+
     <!-- Heading Row -->
     <!--    <div class="row align-content-center my-5">-->
     <div class="row justify-content-center my-5">
+
         <div class="col-lg-2">
             <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
                  src="{% static 'mainpage/image/logo.png' %}" alt="">
         </div>
+
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
             <!--            <h1 class="font-weight-light">Welcome</h1>-->
             <p class="font-weight-bolder triangle-border left">
-                학생페이지, 평가연습에 업로드되는 문항들입니다.<br><br>
+                학생, 선생님 페이지에 업로드할 공지사항 입니다.<br><br>
 
-                1. 새로운 문항을 추가할 수 있습니다. <br>
-                2. 기존의 문항을 수정할 수 있습니다. <br>
-                3. 기존의 문항을 삭제할 수 있습니다. <br>
+                1. 공지사항 대상을 수정할 수 있습니다. <br>
+                2. 공지사항 제목을 수정할 수 있습니다. <br>
+                3. 공지사항 내용을 수정할 수 있습니다. <br>
             </p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <form action="{% url 'sysop_make_question' %}">
-                    <button style="width:100%" class="btn btn-outline-success">
-                        신규문항 작성하기
-                    </button>
-                </form>
-            </div>
-
-            <table style="text-align: center" id="question-table" class="display" style="width:100%">
-                <thead>
-                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th>문항번호</th>
-                    <th>문항명</th>
-                    <th>최초등록일자</th>
-                    <th>삭제하기</th>
-                    <th>수정하기</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in question %}
-                <tr style="border: 1px solid #d6d6d6;">
-                    <td> {{ forloop.counter }}</td>
-                    <td> {{ item.question_name }}</a></td>
-                    <td> {{ item.made_date }}</td>
-                    <td>
-                        <form name="delete_question_form" action="{% url 'sysop_delete_question' %}" method="GET">
-                            <button type="submit" class="delete_question_btn btn btn-outline-danger" name="question_id"
-                                    value="{{ item.question_id }}">
-                                삭제하기
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <form action="{% url 'sysop_detail_question' %}" method="GET">
-                            <button type="submit" class="btn btn-outline-info" name="question_id"
-                                    value="{{ item.question_id }}">
-                                자세히보기
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
-    <!-- /.row -->
+
+    <div class="row justify-content-center">
+        <form action="{% url 'sysop_view_notice' %}">
+            <button style="width:100%" class="btn btn-outline-success">
+                뒤로가기
+            </button>
+        </form>
+    </div>
+
+    <div class="row justify-content-center my-5">
+
+        <div>
+            <table style="text-align: center;">
+                <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
+                    <th width="100px">번호</th>
+                    <th width="200px">대상</th>
+                    <th width="600px">제목</th>
+                    <th width="240px">등록일자</th>
+                </tr>
+                <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ notice.notice_id }}</td>
+                    <td>{{ notice.notice_target }}</td>
+                    <td>{{ notice.notice_name }}</td>
+                    <td>{{ notice.made_date }}</td>
+                </tr>
+            </table>
+            <br>
+            <form name="change_notice_form" action="{% url 'sysop_change_notice_info' %}" method="POST"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <span>공지사항 대상 :
+                <div id="target" class="col-lg-4">
+                    <select class="input-box form-control form-control-a" name="notice_target">
+                        {% for notice_target in notice_target_list %}
+                            {% if notice_target == notice.notice_target %}
+                                <option selected="selected" value="{{ notice_target }}">{{ notice_target }}</option>
+                            {% else %}
+                                <option value="{{ notice_target }}">{{ notice_target }}</option>
+                            {% endif%}
+                        {% endfor %}
+                    </select>
+                </div>
+                    </span>
+                <input type="hidden" name="notice_id" value="{{ notice.notice_id }}">
+                <span>공지사항 제목 :
+                    <input class="input-box" type="text" style="width:100%" name="notice_name"
+                           value="{{ notice.notice_name }}">
+            </span>
+                <br>
+                <span>공지사항 내용 :
+                    <textarea class="textarea-box" type="text" style="width:100%"
+                              name="notice_content">{{ notice.notice_content }}</textarea>
+            </span>
+                <br>
+                <button style="width:100%" type="submit" class="change_notice btn btn-primary">
+                    저장하기
+                </button>
+            </form>
+        </div>
+
+    </div>
 </div>
 
+<!-- /.row -->
 
 <!-- /.container -->
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
@@ -153,17 +198,12 @@
 
 {% endblock %}
 
+
 {% block script %}
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#quiz_table').DataTable();
-    });
-</script>
 
 <!-- Bootstrap core JavaScript -->
-<!--<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>-->
-<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'mainpage/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'sysop/function/check.again.js' %}"></script>
-<script src="{% static 'sysop/function/datatable.js' %}"></script>
+<script src="{% static 'mainpage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 {% endblock %}

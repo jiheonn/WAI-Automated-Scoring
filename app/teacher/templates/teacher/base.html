@@ -26,80 +26,80 @@
 
 <body>
 
-<form id="view_result_form" action="{% url 'view_result' %}" method="POST">
-{% csrf_token %}
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'login' %}">WA3I</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto" id="menubar">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">홈
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'question_selection' %}">문항선택</a>
-                </li>
-                <li id="view_result" class="nav-item">
-                    <a class="nav-link" href="#">결과보기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'make_question' %}">문항생성</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bigram_tree' %}">Bigram Tree</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'topic_analysis' %}">주제분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'response_analysis' %}">응답분석</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qr_code' %}">QR코드</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_notice' %}">게시판</a>
-                </li>
-            </ul>
-            {% if user.is_authenticated %}
-            <input id="teacher_id" name="teacher_id" type="hidden" value="{{ user.teacher_id }}">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown" id="login-menu">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
-                            class="fa fa-user fa-fw"></i> {{ user.last_name }}{{ user.first_name }} 님 </a>
-                    <ul>
-                        <li><a class="nav-link" href="{% url 'logout' %}">로그아웃</a></li>
+    <form id="view_result_form" action="{% url 'teacher_view_result' %}" method="POST">
+        {% csrf_token %}
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'teacher_login' %}">WA3I</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto" id="menubar">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_login' %}">홈
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_question_selection' %}">문항선택</a>
+                        </li>
+                        <li id="view_result" class="nav-item">
+                            <a class="nav-link" href="#">결과보기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_make_question' %}">문항생성</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_bigram_tree' %}">Bigram Tree</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_topic_analysis' %}">주제분석</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_response_analysis' %}">응답분석</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_qr_code' %}">QR코드</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'teacher_notice' %}">공지사항</a>
+                        </li>
                     </ul>
-                </li>
-            </ul>
-            {% endif %}
+                    {% if user.is_authenticated %}
+                    <input id="teacher_id" name="teacher_id" type="hidden" value="{{ user.teacher_id }}">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown" id="login-menu">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="user-name"><i
+                                    class="fa fa-user fa-fw"></i> {{ user.last_name }}{{ user.first_name }} 님 </a>
+                            <ul>
+                                <li><a class="nav-link" href="{% url 'teacher_logout' %}">로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </form>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <img class="img-fluid rounded mb-4 mb-lg-0 cooper-img" src="{% static 'teacher/images/cooperation.png' %}">
+    <!-- Footer -->
+
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; WA3I 2020</p>
         </div>
-    </div>
-</nav>
-</form>
+        <!-- /.container -->
+    </footer>
 
-{% block content %}
-
-{% endblock %}
-
-<img class="img-fluid rounded mb-4 mb-lg-0 cooper-img" src="{% static 'teacher/images/cooperation.png' %}">
-<!-- Footer -->
-
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; WA3I 2020</p>
-    </div>
-    <!-- /.container -->
-</footer>
-
-<script src="{% static 'teacher/js/teacher.js' %}"></script>
+    <script src="{% static 'teacher/js/teacher.js' %}"></script>
 
 </body>
 
