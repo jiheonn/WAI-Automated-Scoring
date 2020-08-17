@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from utils import bigram
+from utils import bigram, topic_modeling
 
 import argparse
 import logging
@@ -19,11 +19,12 @@ stream_handler.setFormatter(logger_format)
 sa_logger.addHandler(stream_handler)
 
 
-@app.route("/get-tokenized/", methods=["GET"])
+# Bigram Tree 분석
+@app.route("/get-tokenized/", methods=["POST"])
 @cross_origin()
 def get_tokenized():
     sa_logger.info("get-tokenized")
-    raw_sentence = request.args.get('raw_sentence')
+    raw_sentence = request.form['raw_sentence']
     print(f"[INPUT] raw_sentence : {raw_sentence}")
     result, most_common_word, frequency = bigram.get_tokenized_words(raw_sentence)
     context = {
@@ -37,9 +38,39 @@ def get_tokenized():
     return context
 
 
+# 주제분석
+@app.route("/get-topic-analysis/", methods=["POST"])
+@cross_origin()
+def get_topic_analysis():
+    sa_logger.info("get-topic-analysis")
+    file_storage = request.files['file']
+    extension = request.form['extension']
+    num_topic = int(request.form['num_topic'])
+    version = request.form['version']
+
+    # 토픽 모델링 분석
+    topic_modeling_result, factorized_matrix_meta = topic_modeling.get_topic_modeling(file=file_storage, extension=extension, num_topic=num_topic)
+    if topic_modeling_result is None:
+        return "Wrong CSV format", 400
+
+    # T-SNE 분석
+    tsne_result = topic_modeling.get_tsne(factorized_matrix_meta, version=version)
+    
+    context = {
+        "id": "topic-analysis",
+        "data": {
+            "topics": topic_modeling_result,
+            "tsne": tsne_result,
+        },
+    }
+    file_storage.close()
+    return context
+
+
 @app.errorhandler(Exception)
 @cross_origin()
 def handling_exception(e):
+    print(e)
     sa_logger.error('Exception: %s', (e))
     context = {
         "id": "error",
