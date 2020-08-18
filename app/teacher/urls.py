@@ -26,7 +26,6 @@ urlpatterns = [
         views.view_result_detail,
         name="teacher_view_result_detail",
     ),
-    path("change_qr_code/", views.change_qr_code, name="teacher_change_qr_code"),
     path("question_search/", views.question_search, name="teacher_question_search"),
     path("assignment_copy/", views.assignment_copy, name="teacher_assignment_copy"),
     path("change_category/", views.change_category, name="teacher_change_category"),

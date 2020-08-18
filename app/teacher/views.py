@@ -238,21 +238,6 @@ def teacher_notice_detail(request):
     return render(request, "teacher/teacher_notice_detail.html", context)
 
 
-# QR 코드 > 버튼 클릭 시 QR 코드 이미지 변경 함수
-def change_qr_code(request):
-    question_name = request.GET["question_name"]
-    qst_data = Question.objects.all().filter(question_name=question_name)
-
-    question_data = []
-    for i in qst_data:
-        question_data_dict = dict()
-        question_data_dict["QR_code"] = json.dumps(str(i.qr_code)).replace('"', "")
-        question_data.append(question_data_dict)
-
-    context = {"question_data": question_data}
-    return JsonResponse(context)
-
-
 # 문항선택 > 문항 검색 함수
 def question_search(request):
     user_input = request.GET["user_input"]
