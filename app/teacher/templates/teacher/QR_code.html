@@ -15,6 +15,8 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'teacher/css/main.css' %}">
 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -31,11 +33,9 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <!--            <h1 class="font-weight-light">QR코드</h1><br>-->
             <p class="font-weight-bolder triangle-border left">
                 문항을 선택하면 QR코드가 생성됩니다. 생성된 QR코드를<br>
                 스마트폰으로도 인공지능 자동평가를 수행할 수 있습니다.</p>
-            <!--        <a class="btn btn-primary" href="#">Call to Action!</a>-->
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -50,8 +50,14 @@
                 </span>
             </div>
 
-            <input type="text" value="원하는문제를선택해주세요." class="form-control" id="qr_code_url"
+            <input style="height: 45px;" type="text" value="원하는문제를선택해주세요." class="form-control" id="qr_code_url"
                 aria-describedby="basic-addon3">
+            <input id="linkCopy-QRcode" style="margin-left: 20px;" type="button"
+                class="w3-button w3-large w3-round w3-blue" value="링크 복사">
+            <!-- <a id="downlad-QRcodeImage" href="" download> -->
+            <input id="downlad-QRcodeImage" style="margin-left: 20px;" type="button"
+                class="w3-button w3-large w3-round w3-blue" value="이미지 저장">
+            <!-- </a> -->
         </div>
         <div class="col-7 sct-center" id="qrcode" style="width:100px; height:100px; margin-top:30px;"></div>
     </div>
@@ -82,6 +88,33 @@
             var e = $.Event("keyup", { keyCode: 13 });
             $('#qr_code_url').focus();
             $('#qr_code_url').trigger(e);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#linkCopy-QRcode").click(function () {
+            var QRcodeLink = document.getElementById("qr_code_url");
+            QRcodeLink.select();
+            document.execCommand("copy");
+            alert("URL이 클립보드에 복사되었습니다.");
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#downlad-QRcodeImage").click(function () {
+            var src = $('#qrcode').children('img').attr("src");
+            var a = $("<a>")
+                .attr("href", src)
+                .attr("download", "QRcode.png")
+                .appendTo("body");
+
+            a[0].click();
+
+            a.remove();
         });
     });
 </script>
