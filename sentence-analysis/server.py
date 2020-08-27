@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from utils import bigram, topic_modeling
+from utils.score import ScoreModel
 
 import argparse
 import logging
@@ -18,6 +19,8 @@ stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logger_format)
 sa_logger.addHandler(stream_handler)
 
+file_path = './res/reference_data.csv'
+sm = ScoreModel(file_path)
 
 # Bigram Tree 분석
 @app.route("/get-tokenized/", methods=["POST"])
@@ -64,6 +67,22 @@ def get_topic_analysis():
         },
     }
     file_storage.close()
+    return context
+
+
+# 스코어 분석
+@app.route("/get-sentence-score/", methods=["POST"])
+@cross_origin()
+def get_sentence_score():
+    sa_logger.info("get-sentence-score")
+    sentence = request.form['sentence']
+    score = sm.get_score(sentence, option='normalized')
+    context = {
+        "id": "get-sentence-score",
+        "data": {
+            "score": score,
+        },
+    }
     return context
 
 
