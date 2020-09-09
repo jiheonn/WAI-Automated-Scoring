@@ -1,6 +1,6 @@
 teacher_id,teacher_name,school,email,password,approve
-0,admin,admin,ljhljh0125@gmail.com,teamlab,1
-1,홍길동1,ㄱ초등학교,hong1@naver.com,1431,1
+0,admin,admin,admin@gmail.com,test1234,1
+1,test-teacher,ㄱ초등학교,test-teacher@gmail.com,test1234,1
 2,홍길동2,ㄴ초등학교,hong2@naver.com,2143123423,0
 3,홍길동3,ㄷ중학교,hong3@naver.com,1324243,1
 4,홍길동4,ㄹ고등학교,hong4@naver.com,13423,1
