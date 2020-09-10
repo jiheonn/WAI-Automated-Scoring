@@ -495,16 +495,29 @@ def get_question_by_id(question_info):
     return join_by_assignment_id, first_data, join_by_assignment_id_question_id
 
 
-# 평가연습의 키워드로 문항 검색하기 함수
+# 평가연습의 문항 검색하기 함수
 def search_keyword(request):
     user_input = request.GET["user_input"]
+
+    # 키워드로 검색
     key_data = (
         Keyword.objects.select_related("question")
         .filter(keyword_name__icontains=user_input)
         .values_list("question_id", flat=True)
         .distinct()
     )
-    keys_of_question = Question.objects.filter(pk__in=key_data)
+
+    # 문항명으로 검색
+    name_data = (
+        Question.objects.filter(question_name__icontains=user_input)
+            .values_list("question_id", flat=True)
+            .distinct()
+    )
+
+    # 키워드와 문항명 검색 결과
+    result = list(chain(key_data, name_data))
+
+    keys_of_question = Question.objects.filter(pk__in=result)
 
     search_data = search_card_result(keys_of_question)
 

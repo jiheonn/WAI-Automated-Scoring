@@ -475,7 +475,6 @@ var api_server = 'http://' + document.domain + ':' + 5252,
   source = d3.select("#source"),
   state = {}, 
   most_common = '',
-  context = '',
   tokens, selectedLines = [];
 
 d3.select(window).on("keydown.hover", hoverKey).on("keyup.hover", hoverKey).on("resize", resize).on("popstate", change), change(), resize(), d3.select("#form").on("submit", function() {
@@ -502,10 +501,16 @@ d3.select(window).on("keydown.hover", hoverKey).on("keyup.hover", hoverKey).on("
 }), d3.select("#input-submitbutton").on("click", function() {
   input_text = document.getElementById("input-textarea").value
   if ( input_text.length <= 0 ) { return; }
-  context = { raw_sentence: input_text }
+  var form_data = new FormData();
+  form_data.append('raw_sentence', input_text);
+  
   $.ajax({
     url : api_server + '/get-tokenized',
-    data : context,
+    type: 'POST',
+    dataType: 'json',
+    processData: false,
+    contentType: false,
+    data: form_data,
     success: function(response) {
         if ( response.id == "get-tokenized" ) {
           input_text = response.data.tokenized.join(' ');
