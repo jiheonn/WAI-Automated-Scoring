@@ -57,7 +57,6 @@ class Category(models.Model):
 class Question(models.Model):
     question_id = models.AutoField(primary_key=True, auto_created=True)
     category = models.ForeignKey(Category, models.DO_NOTHING)
-    model_id = models.CharField(max_length=50)
     question_name = models.CharField(max_length=100)
     discription = models.TextField()
     answer = models.TextField()
@@ -65,6 +64,9 @@ class Question(models.Model):
     hint = models.TextField()
     made_date = models.DateField()
     ques_concept = models.CharField(max_length=255)
+    scoring_keyword = models.TextField(blank=True, null=True)
+    ml_model_check = models.IntegerField(blank=True, null=True)
+    upload_check = models.IntegerField(blank=True, null=True)
 
 
 class StudySolveData(models.Model):

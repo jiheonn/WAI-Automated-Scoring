@@ -108,8 +108,9 @@ class KeywordInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = [
-        'question_id', 'category', 'model_id', 'question_name', 'discription',
-        'answer', 'image', 'hint', 'made_date', 'ques_concept'
+        'question_id', 'category', 'question_name', 'discription',
+        'answer', 'image', 'hint', 'made_date', 'ques_concept',
+        'scoring_keyword', 'ml_model_check', 'upload_check'
     ]
     list_display_links = ['question_id']
     list_filter = (
