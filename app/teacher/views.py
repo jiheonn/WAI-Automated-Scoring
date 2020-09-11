@@ -241,13 +241,16 @@ def teacher_notice_detail(request):
 # 문항선택 > 문항 검색 함수
 def question_search(request):
     user_input = request.GET["user_input"]
-    sah_data = (
+    seach_data = (
         Keyword.objects.select_related("question")
-        .filter(keyword_name__icontains=user_input)
+        .filter(
+            Q(keyword_name__icontains=user_input)
+            | Q(question__question_name__icontains=user_input)
+        )
         .values_list("question_id", flat=True)
         .distinct()
     )
-    data = Question.objects.filter(pk__in=sah_data)
+    data = Question.objects.filter(pk__in=seach_data)
 
     search_data = []
     for i in data:
