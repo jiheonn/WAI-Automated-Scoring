@@ -150,8 +150,14 @@ def view_result_detail(request):
         all_avg = 0
         all_progress = 0
 
+    question_name = []
+    for i in solve_queryset:
+        if i.as_qurel.question.question_name not in question_name:
+            question_name.append(i.as_qurel.question.question_name)
+
     context = {
         "assignment_data": assignment_queryset,
+        "question_name": question_name,
         "question_count": count_question,
         "result": result.values(),
         "result_item": result.items(),
