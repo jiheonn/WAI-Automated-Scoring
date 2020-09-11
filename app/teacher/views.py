@@ -21,7 +21,7 @@ import json
 
 # 문항선택 화면 view 함수
 def question_selection(request):
-    question_queryset = Question.objects.all()
+    question_queryset = Question.objects.filter(upload_check=True)
     category_queryset = Category.objects.all()
 
     context = {"question_data": question_queryset, "category_data": category_queryset}
@@ -89,7 +89,10 @@ def view_result_detail(request):
     )
     solve_queryset = (
         Solve.objects.select_related("as_qurel")
-        .filter(as_qurel_id__assignment_id=request_selection_code)
+        .filter(
+            Q(as_qurel_id__assignment_id=request_selection_code)
+            & Q(as_qurel__question__upload_check=True)
+        )
         .order_by("student_id")
     )  # 요청된 코드에 속하는 solve queryset
     count_question = (
