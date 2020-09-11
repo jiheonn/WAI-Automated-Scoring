@@ -126,10 +126,11 @@
                         <td>{{ data.student_score }}</td>
                         <td>{{ data.student_progress}}</td>
                         <td style="text-align: left;">
-                            {% for i in data.student_response %}
-                            <br>
-                            {{ i }}
+                            {% for name in question_name %}
+                            {% for response in data.student_response %}
+                            <strong>{{ name }}</strong> : {{ response }}
                             <br><br>
+                            {% endfor %}
                             {% endfor %}
                         </td>
                     </tr>
