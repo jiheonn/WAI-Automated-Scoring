@@ -30,12 +30,12 @@
         width: 100%;
     }
 
-    button:hover + .box, .box:hover {
+    button:hover+.box,
+    .box:hover {
         display: block;
         position: relative;
         z-index: 100;
     }
-
 </style>
 
 <!-- Bootstrap core CSS -->
@@ -61,7 +61,7 @@
     <div class="container">
         <a class="navbar-brand" href="{% url 'sysop' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -106,7 +106,7 @@
 
         <div class="col-lg-2">
             <img style="width: 120px; height: auto;" class="img-fluid rounded mb-4 mb-lg-0"
-                 src="{% static 'mainpage/image/logo.png' %}" alt="">
+                src="{% static 'mainpage/image/logo.png' %}" alt="">
         </div>
 
         <!-- /.col-lg-8 -->
@@ -140,12 +140,22 @@
         <div>
             <table style="text-align: center;">
                 <tr style="border: 1px solid #d6d6d6; background-color: #343a40; color: white;">
-                    <th width="600px">문항명</th>
-                    <th width="440px">등록일자</th>
+                    <th width="150px">문항번호</th>
+                    <th width="500px">문항명</th>
+                    <th width="260px">등록일자</th>
+                    <th width="130px">등록여부</th>
                 </tr>
                 <tr style="border: 1px solid #d6d6d6;">
+                    <td>{{ question.question_id }}</td>
                     <td>{{ question.question_name }}</td>
-                    <td> {{ question.made_date }}</td>
+                    <td>{{ question.made_date }}</td>
+                    <td>
+                        {% if question.upload_check == 0 %}
+                        미등록
+                        {% else %}
+                        등록
+                        {% endif%}
+                    </td>
                 </tr>
             </table>
             <br>
@@ -154,7 +164,7 @@
                 <img src="/media/{{question.image}}" alt="이미지가 없습니다" width="300px" height=auto>
             </div>
             <form name="change_question_form" action="{% url 'sysop_change_question_info' %}" method="POST"
-                  enctype="multipart/form-data">
+                enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="question_id" value="{{ question.question_id }}">
                 <strong>사진을 수정할 경우 새로운 사진파일을 업로드해 주세요.</strong>
@@ -162,51 +172,77 @@
                 <br>
                 <span>문항제목 :
                     <input class="input-box" type="text" style="width:100%" name="question_name"
-                           value="{{ question.question_name }}">
-            </span><br>
+                        value="{{ question.question_name }}">
+                </span><br>
+
                 <div class="row">
-
                     <div id="category" class="col-lg-4">
+                        <span>카테고리 :
+                            <select class="input-box form-control form-control-a" name="question_category_id">
+                                <option disabled>카테고리</option>
+                                {% for category_data in category %}
+                                {% if category_data.category_id == question.category_id %}
+                                <option selected="selected" value="{{ category_data.category_id }}">
+                                    {{ category_data.category_name }}
+                                </option>
+                                {% else %}
 
-                    <span>카테고리 :
-                    <select class="input-box form-control form-control-a" name="question_category_id">
-                        <option disabled>카테고리</option>
-                        {% for category_data in category %}
-                        {% if category_data.category_id == question.category_id %}
-                        <!--                    <option selected="selected" value="{{ data.category_name }}">{{ category_data.category_name }}</option>-->
-                        <option selected="selected" value="{{ category_data.category_id }}">{{ category_data.category_name }}
-                        </option>
-                        {% else %}
+                                <option value="{{ category_data.category_id }}">{{ category_data.category_name }}
+                                </option>
+                                {% endif %}
 
-                        <option value="{{ category_data.category_id }}">{{ category_data.category_name }}</option>
-                        {% endif %}
-
-                        {% endfor %}
-                    </select>
-                      </span>
+                                {% endfor %}
+                            </select>
+                        </span>
                     </div>
-
                     <div class="col-lg-8">
-                    <span>배운개념 :
-                    <input class="input-box" type="text" style="width:100%" name="question_concept"
-                           value="{{ question.ques_concept }}">
-                    </span>
+                        <span>검색될 키워드 :
+                            <input class="input-box" type="text" style="width:100%" name="question_search_keyword"
+                                value="{{ question.search_keyword }}">
+                        </span>
                     </div>
-
                 </div>
 
+                <div class="row">
+                    <div id="model" class="col-lg-4">
+                        <span>학습모델 :
+                            <select class="input-box form-control form-control-a" name="question_ml_model_check">
+                                <option disabled>학습모델</option>
+                                {% if question.ml_model_check == 1 %}
+                                <option selected="selected" value="1">ML-Model</option>
+                                <option value="0" disabled>SA-Model</option>
+                                {% else %}
+                                <option value="1" disabled>ML-Model</option>
+                                <option selected="selected" value="0">SA-Model</option>
+                                {% endif %}
+                                </option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-lg-8">
+                        <span>모델이 될 키워드 :
+                            <input class="input-box" type="text" style="width:100%" name="question_scoring_keyword"
+                                value="{{ question.scoring_keyword }}">
+                        </span>
+                    </div>
+                </div>
+
+                <span>배우는 개념 :
+                    <textarea class="textarea-box" type="text" style="width:100%"
+                        name="question_concept">{{ question.ques_concept }}</textarea>
+                </span><br>
                 <span>문항내용 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="question_discription">{{ question.discription }}</textarea>
-            </span><br>
+                        name="question_discription">{{ question.discription }}</textarea>
+                </span><br>
                 <span>모범답안 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="question_answer">{{ question.answer }}</textarea>
-            </span><br>
+                        name="question_answer">{{ question.answer }}</textarea>
+                </span><br>
                 <span>힌트 :
                     <textarea class="textarea-box" type="text" style="width:100%"
-                              name="question_hint">{{ question.hint }}</textarea>
-            </span><br>
+                        name="question_hint">{{ question.hint }}</textarea>
+                </span><br>
 
                 <button style="width:100%" type="submit" class="change_question btn btn-primary">
                     저장하기
@@ -221,7 +257,7 @@
 
 <!-- /.container -->
 <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'sysop/image/mark.png' %}"
-     style="display: block; margin: 0px auto;">
+    style="display: block; margin: 0px auto;">
 
 {% else %}
 <script>
