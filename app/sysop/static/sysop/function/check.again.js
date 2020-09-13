@@ -32,7 +32,7 @@ $(".approve-cancel").on('click', function () {
     }
 });
 
-$(".upload-self-ok").on('click', function () {
+$(".upload-quiz-ok").on('click', function () {
     let currentTd = $(this);
     let currentRow = currentTd.closest("tr");
     let td1 = currentRow.find("td:eq(1)").text();
@@ -49,7 +49,7 @@ $(".upload-self-ok").on('click', function () {
     }
 });
 
-$(".upload-self-cancel").on('click', function () {
+$(".upload-quiz-cancel").on('click', function () {
     let currentTd = $(this);
     let currentRow = currentTd.closest("tr");
     let td1 = currentRow.find("td:eq(1)").text();
@@ -58,6 +58,36 @@ $(".upload-self-cancel").on('click', function () {
     const data = '문항명 : ' + td1 + '\n' +
         '등록자 : ' + td2 + '\n' +
         '최초등록일자 : ' + td3 + '\n\n' +
+        '문항등록을 취소하시겠습니까?';
+    if (confirm(data) == true) {    //확인
+        document.change_approve_cancel.submit();
+    } else {   //취소
+        return false;
+    }
+});
+
+$(".upload-question-ok").on('click', function () {
+    let currentTd = $(this);
+    let currentRow = currentTd.closest("tr");
+    let td1 = currentRow.find("td:eq(1)").text();
+    let td2 = currentRow.find("td:eq(2)").text();
+    const data = '문항명 : ' + td1 + '\n' +
+        '최초등록일자 : ' + td2 + '\n\n' +
+        '문항을 등록하시겠습니까?';
+    if (confirm(data) == true) {    //확인
+        document.change_approve_ok.submit();
+    } else {   //취소
+        return false;
+    }
+});
+
+$(".upload-question-cancel").on('click', function () {
+    let currentTd = $(this);
+    let currentRow = currentTd.closest("tr");
+    let td1 = currentRow.find("td:eq(1)").text();
+    let td2 = currentRow.find("td:eq(2)").text();
+    const data = '문항명 : ' + td1 + '\n' +
+        '최초등록일자 : ' + td2 + '\n\n' +
         '문항등록을 취소하시겠습니까?';
     if (confirm(data) == true) {    //확인
         document.change_approve_cancel.submit();
