@@ -105,7 +105,8 @@
                     <th>문항번호</th>
                     <th>문항명</th>
                     <th>최초등록일자</th>
-                    <th>삭제하기</th>
+                    <th>등록여부</th>
+                    <th>등록하기</th>
                     <th>수정하기</th>
                 </tr>
                 </thead>
@@ -116,12 +117,27 @@
                     <td> {{ item.question_name }}</a></td>
                     <td> {{ item.made_date }}</td>
                     <td>
-                        <form name="delete_question_form" action="{% url 'sysop_delete_question' %}" method="GET">
-                            <button type="submit" class="delete_question_btn btn btn-outline-danger" name="question_id"
-                                    value="{{ item.question_id }}">
-                                삭제하기
+                        {% if item.upload_check == 0 %}
+                        미등록
+                        {% else %}
+                        등록
+                        {% endif%}
+                    </td>
+                    <td>
+                        {% if item.upload_check == 0 %}
+                        <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_question' %}" method="get">
+                            <button type="submit" class="upload-question-ok btn btn-outline-primary" name="question_id"
+                                    value="{{ item.question_id }}"> 등록하기
                             </button>
                         </form>
+                        {% else %}
+                        <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_question' %}" method="get">
+                            <button type="submit" class="upload-question-cancel btn btn-outline-danger"
+                                    name="question_id"
+                                    value="{{ item.question_id }}"> 취소하기
+                            </button>
+                        </form>
+                        {% endif%}
                     </td>
                     <td>
                         <form action="{% url 'sysop_detail_question' %}" method="GET">
