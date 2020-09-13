@@ -129,13 +129,13 @@
                     <td>
                         {% if item.upload_check == 0 %}
                         <form name="change_approve_ok" action="{% url 'sysop_deny_to_allow_quiz' %}" method="get">
-                            <button type="submit" class="upload-self-ok btn btn-outline-primary" name="make_question_id"
+                            <button type="submit" class="upload-quiz-ok btn btn-outline-primary" name="make_question_id"
                                     value="{{ item.make_question_id }}"> 등록하기
                             </button>
                         </form>
                         {% else %}
                         <form name="change_approve_cancel" action="{% url 'sysop_allow_to_deny_quiz' %}" method="get">
-                            <button type="submit" class="upload-self-cancel btn btn-outline-danger"
+                            <button type="submit" class="upload-quiz-cancel btn btn-outline-danger"
                                     name="make_question_id"
                                     value="{{ item.make_question_id }}"> 취소하기
                             </button>
