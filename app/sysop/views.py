@@ -73,9 +73,12 @@ def detail_question(request):
     question_id = request.GET["question_id"]
     question = Question.objects.filter(question_id=question_id).first()
     all_category = Category.objects.all()
+    keyword_list=Keyword.objects.filter(question=question_id).values_list('keyword_name', flat=True)
+    keyword = ", ".join([i for i in keyword_list])
 
     context = {"question": question,
-               "category": all_category}
+               "category": all_category,
+               "keyword": keyword}
 
     return render(request, "sysop/detail_question.html", context)
 
@@ -263,19 +266,28 @@ def create_quiz(request):
         return redirect("sysop_make_quiz")
 
 
+# 문항생성시 keyword db 생성 함수
+def create_search_keyword_to_db(question_id, search_keyword):
+    keyword_list = search_keyword.split(',')
+    for keyword in keyword_list:
+        keyword_data = Keyword(
+            question=Question.objects.filter(question_id=question_id).first(),
+            keyword_name=keyword.strip()
+        )
+        keyword_data.save()
+
 # 문항생성 신규문항 생성 함수
 def create_question(request):
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
     try:
-        id_number = MakeQuestion.objects.all().last().make_question_id + 1
+        id_number = Question.objects.all().last().question_id + 1
         image = request.FILES["image"]
         image.name = str(id_number) + "_" + image.name
 
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
-            model_id=id_number,
             question_name=request.POST["question_name"],
             discription=request.POST["question_discription"],
             answer=request.POST["question_answer"],
@@ -283,8 +295,12 @@ def create_question(request):
             hint=request.POST["question_hint"],
             made_date=now_date,
             ques_concept=request.POST["question_concept"],
+            scoring_keyword=request.POST["question_scoring_keyword"].strip(),
+            ml_model_check=request.POST["question_ml_model_check"],
+            upload_check=APPROVED_DENY,
         )
         question_data.save()
+        create_search_keyword_to_db(id_number, request.POST["question_search_keyword"].strip())
 
         messages.success(request, "성공적으로 등록되었습니다.")
 
@@ -363,6 +379,18 @@ def change_quiz_info(request):
     return render(request, "sysop/detail_quiz.html", context)
 
 
+# 문항수정시 keyword db 수정 함수
+def change_search_keyword_to_db(question_id, search_keyword):
+    Keyword.objects.filter(question=question_id).delete()
+    keyword_list = search_keyword.split(',')
+    for keyword in keyword_list:
+        keyword_data = Keyword(
+            question=Question.objects.filter(question_id=question_id).first(),
+            keyword_name=keyword.strip()
+        )
+        keyword_data.save()
+
+
 # 문항생성 정보 수정 함수
 def change_question_info(request):
     question_id = request.POST["question_id"]
@@ -381,17 +409,24 @@ def change_question_info(request):
 
     question_info.question_name = request.POST["question_name"]
     question_info.category = Category.objects.filter(category_id=request.POST["question_category_id"]).first()
+    question_info.ml_model_check = request.POST["question_ml_model_check"]
+    question_info.scoring_keyword = request.POST["question_scoring_keyword"].strip()
     question_info.ques_concept = request.POST["question_concept"]
     question_info.discription = request.POST["question_discription"]
     question_info.answer = request.POST["question_answer"]
     question_info.hint = request.POST["question_hint"]
+
     question_info.save()
+    change_search_keyword_to_db(question_id, request.POST["question_search_keyword"].strip())
 
     question = Question.objects.filter(question_id=question_id).first()
     all_category = Category.objects.all()
+    keyword_list=Keyword.objects.filter(question=question_id).values_list('keyword_name', flat=True)
+    keyword = ", ".join([i for i in keyword_list])
 
     context = {"question": question,
-               "category": all_category}
+               "category": all_category,
+               "keyword": keyword}
 
     return render(request, "sysop/detail_question.html", context)
 
