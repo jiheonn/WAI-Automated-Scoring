@@ -285,10 +285,6 @@ def create_question(request):
         id_number = Question.objects.all().last().question_id + 1
         image = request.FILES["image"]
         image.name = str(id_number) + "_" + image.name
-                
-        print(request.POST["question_scoring_keyword"].strip())
-        print(type(request.POST["question_scoring_keyword"].strip()))
-        print(request.POST["question_scoring_keyword"].strip()[0])
 
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
@@ -385,8 +381,7 @@ def change_quiz_info(request):
 
 # 문항수정시 keyword db 수정 함수
 def change_search_keyword_to_db(question_id, search_keyword):
-    keyword_info = Keyword.objects.get(question=question_id)
-    keyword_info.delete()
+    Keyword.objects.filter(question=question_id).delete()
     keyword_list = search_keyword.split(',')
     for keyword in keyword_list:
         keyword_data = Keyword(
@@ -414,15 +409,15 @@ def change_question_info(request):
 
     question_info.question_name = request.POST["question_name"]
     question_info.category = Category.objects.filter(category_id=request.POST["question_category_id"]).first()
-    question_info.ml_model_check = request.POST["question_ml_model_check"]   
-    question_info.scoring_keyword = request.POST["question_scoring_keyword"].strip(),
+    question_info.ml_model_check = request.POST["question_ml_model_check"]
+    question_info.scoring_keyword = request.POST["question_scoring_keyword"].strip()
     question_info.ques_concept = request.POST["question_concept"]
     question_info.discription = request.POST["question_discription"]
     question_info.answer = request.POST["question_answer"]
     question_info.hint = request.POST["question_hint"]
+
     question_info.save()
-    print(request.POST["question_scoring_keyword"])
-    # change_search_keyword_to_db(question_id, request.POST["question_search_keyword"].strip())
+    change_search_keyword_to_db(question_id, request.POST["question_search_keyword"].strip())
 
     question = Question.objects.filter(question_id=question_id).first()
     all_category = Category.objects.all()
