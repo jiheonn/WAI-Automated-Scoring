@@ -7,7 +7,7 @@
     <div class="container">
         <a class="navbar-brand" href="{% url 'student' %}">WA3I</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -43,7 +43,7 @@
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/logo2.png' %}" width="120"
-                 height="120" alt="">
+                height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-3">
@@ -69,7 +69,8 @@
             <h2 class="mt-4">{{data.question.question_name}}</h2>
             <hr>
             <!-- Preview Image -->
-            <img class="img-fluid rounded mb-4 mb-lg-0" style="width:200px; height:200px;" src="{{ data.question.image.url }}">
+            <img class="img-fluid rounded mb-4 mb-lg-0" style="width:200px; height:200px;"
+                src="{{ data.question.image.url }}">
             <hr>
             <!-- Post Content -->
             <p>{{data.question.discription}}
@@ -84,7 +85,10 @@
 
             <div class="w3-bar w3-light-grey">
                 <button class="w3-bar-item w3-button tablink w3-indigo" onclick="openCity(event,'myans')">나의 답</button>
-                <button id="help_btn" class="w3-bar-item w3-button tablink" onclick="openCity(event,'ans')">도움생각 보기</button>
+                <button id="help_btn" class="w3-bar-item w3-button tablink" onclick="openCity(event,'ans')">도움생각
+                    보기</button>
+                <button id="result_btn" class="w3-bar-item w3-button tablink" onclick="openCity(event,'result')">결과
+                    보기</button>
                 <span id="sch_sex" class="w3-right">
                     <img src="{{school|safe}}" width="35" height="35" scale="0">
                     <img src="{{gender|safe}}" width="35" height="35" scale="0">
@@ -103,23 +107,13 @@
                 {{data.question.answer}}
                 </p>
             </div>
-        </div>
 
-        <script>
-            function openCity(evt, cityName) {
-                var i, x, tablinks;
-                x = document.getElementsByClassName("city");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("tablink");
-                for (i = 0; i < x.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" w3-indigo", "");
-                }
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " w3-indigo";
-            }
-        </script>
+            <div id="result" class="w3-container w3-border city" style="display:none">
+                <p class=" w3-section" id="calculated_score">
+                    <div id="whole_result"></div>
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="row my-5">
@@ -137,6 +131,9 @@
     <!--    </form>-->
 
 </div>
-<!-- /.container -->
 
+<script src="{% static 'student/js/get-sentence-score.js' %}"></script>
+
+<!-- /.container -->
 {% endblock %}
+
