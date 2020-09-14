@@ -36,9 +36,12 @@ services:
     command: conda run -n wai flask run
     ports:
       - 5000:5000
+    environment:
+      - POSTGRES_USER=teamlab
+      - POSTGRES_PASSWORD=teamlab_password
+      - POSTGRES_DB=wa3i_dev
     env_file:
       - ./.env.scoring_api
-      - ./.env.prod.db
     volumes:
       - ./scoring-api/:/usr/src/app/
     depends_on:
