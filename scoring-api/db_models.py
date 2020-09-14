@@ -9,7 +9,7 @@ class MainpageQuestion(db.Model):
 
     question_id = db.Column(db.Integer, primary_key=True)
     question_name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    discription = db.Column(db.Text, nullable=False)
     answer = db.Column(db.Text, nullable=False)
     image = db.Column(db.String(100), nullable=False)
     hint = db.Column(db.Text, nullable=False)
