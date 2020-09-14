@@ -196,6 +196,32 @@ def allow_to_deny_quiz(request):
     return render(request, "sysop/view_quiz.html", context)
 
 
+# 문항생성 등록 함수
+def deny_to_allow_question(request):
+    question_id = request.GET.get("question_id")
+    question_info = Question.objects.get(question_id=question_id)
+    question_info.upload_check = APPROVED_ALLOW
+    question_info.save()
+    all_question = Question.objects.all()
+
+    context = {"question": all_question}
+
+    return render(request, "sysop/view_question.html", context)
+
+
+# 문항생성 등록취소 함수
+def allow_to_deny_question(request):
+    question_id = request.GET.get("question_id")
+    question_info = Question.objects.get(question_id=question_id)
+    question_info.upload_check = APPROVED_DENY
+    question_info.save()
+    all_question = Question.objects.all()
+
+    context = {"question": all_question}
+
+    return render(request, "sysop/view_question.html", context)
+
+
 # 문항검토 신규문항 생성 함수
 def create_quiz(request):
     now = datetime.datetime.now()
@@ -388,29 +414,6 @@ def change_notice_info(request):
                "notice_target_list": notice_target_list}
 
     return render(request, "sysop/detail_notice.html", context)
-
-
-# 문항생성 정보 삭제 함수
-def delete_question(request):
-    question_id = request.GET.get("question_id")
-    question_info = Question.objects.get(question_id=question_id)
-    rel_info_list = AssignmentQuestionRel.objects.filter(question=question_id)
-    keyword_info = Keyword.objects.filter(question=question_id)
-    study_solve_info = StudySolveData.objects.filter(question=question_id)
-
-    for rel_info in rel_info_list:
-        solve_info = Solve.objects.filter(as_qurel=rel_info.as_qurel_id)
-        solve_info.delete()
-
-    rel_info_list.delete()
-    keyword_info.delete()
-    study_solve_info.delete()
-    question_info.delete()
-
-    all_question = Question.objects.all()
-    context = {"question": all_question}
-
-    return render(request, "sysop/view_question.html", context)
 
 
 # 공지사항 정보 삭제 함수
