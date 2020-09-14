@@ -23,13 +23,26 @@ services:
       - POSTGRES_DB=wa3i_dev
   sentence-analysis:
     build: ./sentence-analysis
-    command: flask run 
+    command: flask run
     ports:
       - 5252:5252
     env_file:
       - ./.env.sentence_api
     volumes:
       - ./sentence-analysis/:/usr/src/app/
-    
+  scoring-api:
+    container_name: scoring-api
+    build: ./scoring-api
+    command: conda run -n wai flask run
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env.scoring_api
+      - ./.env.prod.db
+    volumes:
+      - ./scoring-api/:/usr/src/app/
+    depends_on:
+      - db
+
 volumes:
-  wa3i_postgres_data: 
+  wa3i_postgres_data:
