@@ -43,6 +43,16 @@ urlpatterns = [
         name="sysop_allow_to_deny_quiz"
     ),
     path(
+        "deny_to_allow_question/",
+        views.deny_to_allow_question,
+        name="sysop_deny_to_allow_question"
+    ),
+    path(
+        "allow_to_deny_question/",
+        views.allow_to_deny_question,
+        name="sysop_allow_to_deny_question"
+    ),
+    path(
         "create_quiz/",
         views.create_quiz,
         name="sysop_create_quiz"
@@ -71,11 +81,6 @@ urlpatterns = [
         "change_notice_info/",
         views.change_notice_info,
         name="sysop_change_notice_info"
-    ),
-    path(
-        "delete_question/",
-        views.delete_question,
-        name="sysop_delete_question"
     ),
     path(
         "delete_notice/",

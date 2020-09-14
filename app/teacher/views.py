@@ -21,7 +21,7 @@ import json
 
 # 문항선택 화면 view 함수
 def question_selection(request):
-    question_queryset = Question.objects.all()
+    question_queryset = Question.objects.filter(upload_check=True)
     category_queryset = Category.objects.all()
 
     context = {"question_data": question_queryset, "category_data": category_queryset}
@@ -89,7 +89,10 @@ def view_result_detail(request):
     )
     solve_queryset = (
         Solve.objects.select_related("as_qurel")
-        .filter(as_qurel_id__assignment_id=request_selection_code)
+        .filter(
+            Q(as_qurel_id__assignment_id=request_selection_code)
+            & Q(as_qurel__question__upload_check=True)
+        )
         .order_by("student_id")
     )  # 요청된 코드에 속하는 solve queryset
     count_question = (
@@ -147,8 +150,14 @@ def view_result_detail(request):
         all_avg = 0
         all_progress = 0
 
+    question_name = []
+    for i in solve_queryset:
+        if i.as_qurel.question.question_name not in question_name:
+            question_name.append(i.as_qurel.question.question_name)
+
     context = {
         "assignment_data": assignment_queryset,
+        "question_name": question_name,
         "question_count": count_question,
         "result": result.values(),
         "result_item": result.items(),
@@ -241,13 +250,16 @@ def teacher_notice_detail(request):
 # 문항선택 > 문항 검색 함수
 def question_search(request):
     user_input = request.GET["user_input"]
-    sah_data = (
+    seach_data = (
         Keyword.objects.select_related("question")
-        .filter(keyword_name__icontains=user_input)
+        .filter(
+            Q(keyword_name__icontains=user_input)
+            | Q(question__question_name__icontains=user_input)
+        )
         .values_list("question_id", flat=True)
         .distinct()
     )
-    data = Question.objects.filter(pk__in=sah_data)
+    data = Question.objects.filter(pk__in=seach_data)
 
     search_data = []
     for i in data:

@@ -33,7 +33,7 @@ def good_explain(request):
 
 # 평가연습 view 함수
 def evaluate_exercise(request):
-    question = Question.objects.all()
+    question = Question.objects.filter(upload_check=1)
     category = Category.objects.all()
 
     context = {"question": question, "category": category}
@@ -346,7 +346,7 @@ def do_homework_diagnosis(request):
 
 # 스스로 평가하기 페이지 view 함수
 def evaluate_by_self(request):
-    make_question = MakeQuestion.objects.all()
+    make_question = MakeQuestion.objects.filter(upload_check=1)
 
     context = {
         "make_question": make_question,
@@ -510,8 +510,8 @@ def search_keyword(request):
     # 문항명으로 검색
     name_data = (
         Question.objects.filter(question_name__icontains=user_input)
-            .values_list("question_id", flat=True)
-            .distinct()
+        .values_list("question_id", flat=True)
+        .distinct()
     )
 
     # 키워드와 문항명 검색 결과
