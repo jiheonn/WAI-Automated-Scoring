@@ -25,8 +25,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#make-btn').click(function () {
         var as_name = $('#as_name').val();
-        var as_discription = $('#as_discription').val();
-        var result = confirm("문항제목 : " + as_name + "\n문항내용 :\n" + as_discription + "\n\n입력한 정보로 생성하겠습니까?");
+        var as_description = $('#as_description').val();
+        var result = confirm("문항제목 : " + as_name + "\n문항내용 :\n" + as_description + "\n\n입력한 정보로 생성하겠습니까?");
         if (result) {
         } else {
             return false
