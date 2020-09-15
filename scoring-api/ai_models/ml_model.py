@@ -42,7 +42,7 @@ def get_ml_score(question_id, sentence, model_dir=MODEL_DIR):
     filename = question_id + ".pkl"
     model_path = os.path.join(model_dir, filename)
     if not os.path.exists(model_path):
-        abort(404, description="ML model ID '{}' is not exists.".format(question_id))
+        abort(404, description="ML model '{}' is not exist.".format(question_id))
     model_dict = load_model_dict(model_path)
     sentence = clean_sentence(sentence)
 

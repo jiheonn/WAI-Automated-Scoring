@@ -14,8 +14,6 @@ POSTGRES_PW = os.environ.get("POSTGRES_PASSWORD")
 POSTGRES_URL = os.environ.get("POSTGRES_URL")
 POSTGRES_DB = os.environ.get("POSTGRES_DB")
 
-
-
 DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,
                                                                pw=POSTGRES_PW,
                                                                url=POSTGRES_URL,
@@ -35,7 +33,7 @@ api = api.namespace('', description='Scoring API')
 
 @api.route('/<model_type>')
 class Prediction(Resource):
-    @api.doc(responses={200: 'OK', 400: 'Invalid Argument', 404: 'Model is Not Exists'},
+    @api.doc(responses={200: 'OK', 400: 'Invalid Argument', 404: 'Model is Not Exist'},
              params={'model_type': {'description': 'model type (ML/SA)',
                                     'in': 'path',
                                     'default': 'ML'},
@@ -71,5 +69,6 @@ class Prediction(Resource):
 
 if __name__ == '__main__':
     # app.run('0.0.0.0', debug=True)
+
     http_server = WSGIServer(('', PORT), app)
     http_server.serve_forever()

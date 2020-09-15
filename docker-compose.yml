@@ -31,7 +31,6 @@ services:
     volumes:
       - ./sentence-analysis/:/usr/src/app/
   scoring-api:
-    container_name: scoring-api
     build: ./scoring-api
     command: conda run -n wai flask run
     ports:

@@ -48,13 +48,20 @@ $(document).ready(function () {
             $("#calculated_score").after('<div id="whole_result">' + '</div>');
             $("#whole_result").append(
                 '<p>' +
+                standard_answer +
+                '</p>' +
+                '<p>' +
+                '문장 점수 : ' +
                 '<b>' +
                 result +
                 '</b>' +
                 ' 점' +
-                '</p>' +
-                '<p>' +
-                standard_answer +
+                '<br/>' +
+                '개념 점수 : ' +
+                '<b>' +
+                result +
+                '</b>' +
+                ' 점' +
                 '</p>'
             )
         }, error: function (e) { return; },
