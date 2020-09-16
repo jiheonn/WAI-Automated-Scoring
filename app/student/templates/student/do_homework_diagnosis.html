@@ -42,11 +42,11 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static logo_img %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
-            <p class="font-weight-bolder triangle-border left">다시 한번 설명해 볼까요?</p>
+            <p class="font-weight-bolder triangle-border left">{{concept_text}}</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -102,7 +102,10 @@
                     
             <dd id="result" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section" id="calculated_score">
-                    <div id="whole_result"></div>
+                    <h5 class="w3-text-blue">문장 점수<br></h5>
+                    {{standard_answer}}<br><br>
+                    <h5 class="w3-text-blue">개념 점수<br></h5>
+                    {{concept_text}}<br><br>
                 </p>
             </dd>
         </dl>
@@ -112,7 +115,7 @@
     <div class="row my-5">
         <div class="col-lg-12">
             <form action="{% url 'student_do_homework_question' %}" method="get">
-                <a onclick="alert('제출이 완료되었습니다.'); document.location.href='{% url 'student_do_homework_question' %}'" style="cursor:pointer">
+                <a onclick="alert('제출이 완료되었습니다.(문장 점수와 개념 점수가 부족하면 답안은 저장되지 않습니다.)'); document.location.href='{% url 'student_do_homework_question' %}'" style="cursor:pointer">
                     <input type="hidden" name="ID_num" value="{{ student_id }}">
                     <input type="hidden" name="code_num" value="{{ data.assignment_id }}">
                     <input type="hidden" name="student_name" value="{{ student_name }}">
@@ -132,5 +135,5 @@
 </div>
 <!-- /.container -->
 
-<script src="{% static 'student/js/get-sentence-score.js' %}"></script>
+<script src="{% static 'student/js/moving_tab.js' %}"></script>
 {% endblock %}

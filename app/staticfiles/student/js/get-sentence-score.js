@@ -81,3 +81,56 @@ function hide_button() {
         $('#question_id').attr('hidden', true);
     }
 } 
+
+
+// var api_server = 'http://' + document.domain + ':' + 5000;
+
+// $(document).ready(function () {
+//     // var ml_model = $('#ml_model_check');
+//     // var question_id = $('#ml_model_check');
+//     // var score = $('#score');
+    
+//     input_text = $('#question_answer').text();
+//     // console.log(input_text);
+//     var form_data = new FormData();
+//     form_data.append('sentence', input_text);
+//     $.ajax({
+//         url: api_server,
+//         type: 'POST',
+//         dataType: 'json',
+//         processData: false,
+//         contentType: false,
+//         data: form_data,
+//         success: function (response) {
+//             if (response.id == "scoring-api") {
+//                 result = response.data.score;
+//                 console.log(result); // 문장의 점수 출력
+//             } else {
+//                 alert('error!');
+//                 return;
+//             }
+
+//             $("div").remove("#logo_say");
+//             $("#logo_after").after('p class="font-weight-bolder triangle-border left" id="logo_say">' + '</p>');
+
+//             if (score == 1){
+//                 $("#logo_say").append(
+//                     'p class="font-weight-bolder triangle-border left" id="logo_say">' +
+//                     '참 잘 설명했어요!' +
+//                     '</p>'
+//                 );
+//             }
+//             else {
+//                 $("div").remove("#logo_say");
+//                 $("#logo_after").after(
+//                     'p class="font-weight-bolder triangle-border left" id="logo_say">' +
+//                     '다시 한번 설명해볼까요?' +
+//                     '</p>'
+//                 );
+//             }
+
+            
+//             hide_button();
+//         }, error: function (e) { return; },
+//     });
+// });

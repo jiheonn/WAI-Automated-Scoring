@@ -42,12 +42,12 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'student/image/logo2.png' %}" width="120"
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static logo_img %}" width="120"
                 height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-3">
-            <p class="font-weight-bolder triangle-border left">잘 설명했어요!</p>
+            <p class="font-weight-bolder triangle-border left">{{concept_text}}</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -110,7 +110,10 @@
 
             <div id="result" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section" id="calculated_score">
-                    <div id="whole_result"></div>
+                    <h5 class="w3-text-blue">문장 점수<br></h5>
+                    {{standard_answer}}<br><br>
+                    <h5 class="w3-text-blue">개념 점수<br></h5>
+                    {{concept_text}}<br><br>
                 </p>
             </div>
         </div>
@@ -132,7 +135,7 @@
 
 </div>
 
-<script src="{% static 'student/js/get-sentence-score.js' %}"></script>
+<script src="{% static 'student/js/moving_tab.js' %}"></script>
 
 <!-- /.container -->
 {% endblock %}

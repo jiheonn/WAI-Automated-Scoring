@@ -25,3 +25,4 @@ urllib3==1.25.8
 wcwidth==0.2.4
 wrapt==1.11.2
 pillow==7.1.2
+requests==2.22.0
