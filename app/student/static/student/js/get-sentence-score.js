@@ -1,3 +1,4 @@
+// 피드백 결과 탭 이동 함수
 function openCity(evt, cityName) {
     var i, x, tablinks;
     x = document.getElementsByClassName("city");
@@ -12,6 +13,7 @@ function openCity(evt, cityName) {
     evt.currentTarget.className += " w3-indigo";
 }
 
+// 문장 채점 함수
 var api_server = 'http://' + document.domain + ':' + 5252; // sentence-analysis 서버의 포트로 수정
 
 $(document).ready(function () {
@@ -34,10 +36,10 @@ $(document).ready(function () {
                 alert('error!');
                 return;
             }
-            if (0 <= result < 0.046) {
+            if (0 <= result && result < 0.046) {
                 standard_answer = "핵심어를 사용하여 완결된 문장으로 답안을 잘 작성해 보세요."
             }
-            else if (0.046 <= result < 0.08) {
+            else if (0.046 <= result && result < 0.08) {
                 standard_answer = "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
             }
             else {
@@ -52,7 +54,9 @@ $(document).ready(function () {
                 '</p>' +
                 '<p>' +
                 '문장 점수 : ' +
-                '<b>' +
+                '<b id="sentence_score" value="' +
+                result +
+                '">' +
                 result +
                 '</b>' +
                 ' 점' +
@@ -63,7 +67,17 @@ $(document).ready(function () {
                 '</b>' +
                 ' 점' +
                 '</p>'
-            )
+            );
+            hide_button();
         }, error: function (e) { return; },
     });
 });
+
+// 점수 미달시 다음 문항 이동 불가
+function hide_button() {
+    var sentence_score = document.getElementById('sentence_score').innerText;
+
+    if (sentence_score < 0.08) {
+        $('#question_id').attr('hidden', true);
+    }
+} 
