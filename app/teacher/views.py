@@ -186,7 +186,7 @@ def make_question_save(request):
         make_question_data = MakeQuestion(
             teacher=Teacher.objects.get(teacher_id=teacher_id),
             question_name=request.POST["question_name"],
-            discription=request.POST["discription"],
+            description=request.POST["description"],
             answer=request.POST["answer"],
             image=image,
             hint=request.POST["hint"],

@@ -240,7 +240,7 @@ def create_quiz(request):
         make_question_data = MakeQuestion(
             teacher=Teacher.objects.get(teacher_id=TEACHER_ADMIN),
             question_name=request.POST["question_name"],
-            discription=request.POST["discription"],
+            description=request.POST["description"],
             answer=request.POST["answer"],
             image=image,
             hint=request.POST["hint"],
@@ -289,7 +289,7 @@ def create_question(request):
         question_data = Question(
             category=Category.objects.filter(category_id=request.POST["question_category_id"]).first(),
             question_name=request.POST["question_name"],
-            discription=request.POST["question_discription"],
+            description=request.POST["question_description"],
             answer=request.POST["question_answer"],
             image=image,
             hint=request.POST["question_hint"],
@@ -353,7 +353,7 @@ def change_quiz_info(request):
         self_question_info.image = image
 
     self_question_info.question_name = request.POST["self_question_name"]
-    self_question_info.discription = request.POST["self_question_discription"]
+    self_question_info.description = request.POST["self_question_description"]
     self_question_info.answer = request.POST["self_question_answer"]
     self_question_info.hint = request.POST["self_question_hint"]
     self_question_info.save()
@@ -412,7 +412,7 @@ def change_question_info(request):
     question_info.ml_model_check = request.POST["question_ml_model_check"]
     question_info.scoring_keyword = request.POST["question_scoring_keyword"].strip()
     question_info.ques_concept = request.POST["question_concept"]
-    question_info.discription = request.POST["question_discription"]
+    question_info.description = request.POST["question_description"]
     question_info.answer = request.POST["question_answer"]
     question_info.hint = request.POST["question_hint"]
 

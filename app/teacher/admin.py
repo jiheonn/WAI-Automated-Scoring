@@ -75,7 +75,7 @@ class MarkInline(admin.TabularInline):
 
 class MakeQuestionAdmin(admin.ModelAdmin):
     list_display = [
-        'make_question_id', 'teacher', 'question_name', 'discription',
+        'make_question_id', 'teacher', 'question_name', 'description',
         'answer', 'image', 'hint', 'made_date', 'upload_check'
     ]
     list_display_links = ['make_question_id']
@@ -108,7 +108,7 @@ class KeywordInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = [
-        'question_id', 'category', 'question_name', 'discription',
+        'question_id', 'category', 'question_name', 'description',
         'answer', 'image', 'hint', 'made_date', 'ques_concept',
         'scoring_keyword', 'ml_model_check', 'upload_check'
     ]
