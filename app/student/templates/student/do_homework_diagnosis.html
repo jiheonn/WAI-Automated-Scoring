@@ -1,21 +1,7 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
-<script>
-    function openCity(evt, cityName) {
-      var i, x, tablinks;
-      x = document.getElementsByClassName("city");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < x.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" w3-indigo", "");
-      }
-      document.getElementById(cityName).style.display = "block";
-      evt.currentTarget.className += " w3-indigo";
-    }
-</script>
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -97,15 +83,26 @@
             <dt class="w3-bar w3-light-grey">
                 <button class="w3-bar-item w3-button tablink w3-indigo" onclick="openCity(event,'myans')">나의 답</button>
                 <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'ans')">도움생각 보기</button>
+                <button id="result_btn" class="w3-bar-item w3-button tablink" onclick="openCity(event,'result')">결과
+                    보기</button>
             </dt>
 
             <dd id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">{{question_answer}}</p>
+                <p class=" w3-section" id="question_answer">{{question_answer}}</p>
             </dd>
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section">
-                    {{data.question.hint}}
+                    <h5 class="w3-text-blue">배움 개념<br></h5>
+                    {{data.question.ques_concept}}<br><br>
+                    <h5 class="w3-text-blue">이렇게 설명해 볼까요?<br></h5>
+                    {{data.question.answer}}
+                </p>
+            </dd>
+                    
+            <dd id="result" class="w3-container w3-border city" style="display:none">
+                <p class=" w3-section" id="calculated_score">
+                    <div id="whole_result"></div>
                 </p>
             </dd>
         </dl>
@@ -134,4 +131,5 @@
 </div>
 <!-- /.container -->
 
+<script src="{% static 'student/js/get-sentence-score.js' %}"></script>
 {% endblock %}
