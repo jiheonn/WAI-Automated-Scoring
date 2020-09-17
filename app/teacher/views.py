@@ -253,8 +253,11 @@ def question_search(request):
     seach_data = (
         Keyword.objects.select_related("question")
         .filter(
-            Q(keyword_name__icontains=user_input)
-            | Q(question__question_name__icontains=user_input)
+            (
+                Q(keyword_name__icontains=user_input)
+                | Q(question__question_name__icontains=user_input)
+            )
+            & Q(question__upload_check=True)
         )
         .values_list("question_id", flat=True)
         .distinct()
