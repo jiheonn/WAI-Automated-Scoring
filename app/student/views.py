@@ -9,6 +9,7 @@ from django.db.models import Q
 import datetime
 import json
 from itertools import chain
+import requests
 
 from mainpage.models import Question
 from mainpage.models import SelfSolveData
@@ -72,26 +73,54 @@ def evaluate_exercise_diagnosis(request):
     ).filter(question__question_id=question_id)
     data = join_by_question_id.first()
 
+    # 문장 점수와 개념 점수 채점 api
+    model_type = "ML" if data.question.ml_model_check == 1 else "SA"
+    sentence_url = 'http://sentence-analysis:5252/get-sentence-score'    
+    sentence_input = {'sentence': question_answer}    
+    sentence = requests.post(sentence_url, data=sentence_input)    
+    sentence_score = json.loads(sentence.text)['data']['score']    
+    concept_url = requests.get('http://scoring-api:5000/'+model_type+'?question_id='+question_id+'&answer='+question_answer)    
+    concept_score = json.loads(concept_url.text)['score']    
+    print(sentence_score, concept_score)
+
+    # 결과보기 안내문
+    if (0 <= sentence_score < 0.046):
+        standard_answer = "핵심어를 사용하여 완결된 문장으로 답안을 잘 작성해 보세요."
+    elif (0.046 <= sentence_score < 0.08):
+        standard_answer = "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+    else:
+        standard_answer = "좋은 문장으로 정말 잘 작성했어요."
+
+    # 로고 안내문
+    if (concept_score == 1):
+        concept_text = "참 잘 설명했어요!"
+        logo_img = "student/image/logo2.png"
+    else:
+        concept_text = "다시 한번 설명해볼까요?"
+        logo_img = "mainpage/image/logo.png"
+
     context = {
         "data": data,
         "question_answer": question_answer,
         "school": school,
         "gender": gender,
+        "logo_img": logo_img,
+        "concept_text": concept_text,
+        "standard_answer": standard_answer,
     }
 
     # 나의 답 DB에 저장
-    try:
+    if question_answer != "" and concept_score==1 and sentence_score>0.08:
         study_solve_data = StudySolveData(
             question_id=question_id,
             school=request_school,
             gender=request_gender,
             response=question_answer,
-            score=INIT_SCORE,
+            score=concept_score,
             submit_date=now_date,
         )
         study_solve_data.save()
-
-    except:
+    else:
         study_solve_data = None
 
     return render(request, "student/evaluate_exercise_diagnosis.html", context)
@@ -320,21 +349,49 @@ def do_homework_diagnosis(request):
     data = join_by_question_id.first()
     assignment_question_id = data.as_qurel_id
 
+    # 문장 점수와 개념 점수 채점 api
+    model_type = "ML" if data.question.ml_model_check == 1 else "SA"
+    sentence_url = 'http://sentence-analysis:5252/get-sentence-score'    
+    sentence_input = {'sentence': question_answer}    
+    sentence = requests.post(sentence_url, data=sentence_input)    
+    sentence_score = json.loads(sentence.text)['data']['score']    
+    concept_url = requests.get('http://scoring-api:5000/'+model_type+'?question_id='+question_id+'&answer='+question_answer)    
+    concept_score = json.loads(concept_url.text)['score']
+
+    # 결과보기 안내문
+    if (0 <= sentence_score < 0.046):
+        standard_answer = "핵심어를 사용하여 완결된 문장으로 답안을 잘 작성해 보세요."
+    elif (0.046 <= sentence_score < 0.08):
+        standard_answer = "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+    else:
+        standard_answer = "좋은 문장으로 정말 잘 작성했어요."
+
+    # 로고 안내문
+    if (concept_score == 1):
+        concept_text = "참 잘 설명했어요!"
+        logo_img = "student/image/logo2.png"
+    else:
+        concept_text = "다시 한번 설명해볼까요?"
+        logo_img = "mainpage/image/logo.png"
+
     context = {
         "student_id": student_id,
         "question_answer": question_answer,
         "data": data,
         "student_name": student_name,
+        "logo_img": logo_img,
+        "concept_text": concept_text,
+        "standard_answer": standard_answer,
     }
 
     # 나의 답 DB에 저장
-    if question_answer != "":
+    if question_answer != "" and concept_score==1 and sentence_score>0.08:
         solve_data = Solve(
             as_qurel_id=assignment_question_id,
             student_id=student_id,
             submit_date=now_date,
             response=question_answer,
-            score=INIT_SCORE,
+            score=concept_score,
             student_name=student_name,
         )
         solve_data.save()

@@ -1,21 +1,7 @@
 {% extends 'student/base.html' %}
 {% load static %}
 {% block content %}
-<script>
-    function openCity(evt, cityName) {
-      var i, x, tablinks;
-      x = document.getElementsByClassName("city");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < x.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" w3-indigo", "");
-      }
-      document.getElementById(cityName).style.display = "block";
-      evt.currentTarget.className += " w3-indigo";
-    }
-</script>
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -56,11 +42,11 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
         <div class="col-lg-2">
-            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static logo_img %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-4">
-            <p class="font-weight-bolder triangle-border left">다시 한번 설명해 볼까요?</p>
+            <p class="font-weight-bolder triangle-border left">{{concept_text}}</p>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -97,15 +83,29 @@
             <dt class="w3-bar w3-light-grey">
                 <button class="w3-bar-item w3-button tablink w3-indigo" onclick="openCity(event,'myans')">나의 답</button>
                 <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'ans')">도움생각 보기</button>
+                <button id="result_btn" class="w3-bar-item w3-button tablink" onclick="openCity(event,'result')">결과
+                    보기</button>
             </dt>
 
             <dd id="myans" class="w3-container w3-border city">
-                <p class=" w3-section">{{question_answer}}</p>
+                <p class=" w3-section" id="question_answer">{{question_answer}}</p>
             </dd>
 
             <dd id="ans" class="w3-container w3-border city" style="display:none">
                 <p class=" w3-section">
-                    {{data.question.hint}}
+                    <h5 class="w3-text-blue">배움 개념<br></h5>
+                    {{data.question.ques_concept}}<br><br>
+                    <h5 class="w3-text-blue">이렇게 설명해 볼까요?<br></h5>
+                    {{data.question.answer}}
+                </p>
+            </dd>
+                    
+            <dd id="result" class="w3-container w3-border city" style="display:none">
+                <p class=" w3-section" id="calculated_score">
+                    <h5 class="w3-text-blue">문장 점수<br></h5>
+                    {{standard_answer}}<br><br>
+                    <h5 class="w3-text-blue">개념 점수<br></h5>
+                    {{concept_text}}<br><br>
                 </p>
             </dd>
         </dl>
@@ -115,11 +115,12 @@
     <div class="row my-5">
         <div class="col-lg-12">
             <form action="{% url 'student_do_homework_question' %}" method="get">
-                <a onclick="alert('제출이 완료되었습니다.'); document.location.href='{% url 'student_do_homework_question' %}'" style="cursor:pointer">
+                <a onclick="alert('제출이 완료되었습니다.(문장 점수와 개념 점수가 부족하면 답안은 저장되지 않습니다.)'); document.location.href='{% url 'student_do_homework_question' %}'" style="cursor:pointer">
                     <input type="hidden" name="ID_num" value="{{ student_id }}">
                     <input type="hidden" name="code_num" value="{{ data.assignment_id }}">
                     <input type="hidden" name="student_name" value="{{ student_name }}">
-                    <button type="submit" class="w3-btn w3-round w3-indigo w3-display-bottomright w3-margin-bottom" name="question_id" value="{{ data.question_id }},{{ data.assignment_id }}">
+                    <button type="submit" class="w3-btn w3-round w3-indigo w3-display-bottomright w3-margin-bottom" name="question_id"
+                        id="question_id" value="{{ data.question_id }},{{ data.assignment_id }}">
                         다음 문제 >
                     </button>
                 </a>
@@ -134,4 +135,5 @@
 </div>
 <!-- /.container -->
 
+<script src="{% static 'student/js/moving_tab.js' %}"></script>
 {% endblock %}
