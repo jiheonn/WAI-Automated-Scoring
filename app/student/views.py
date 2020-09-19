@@ -75,24 +75,33 @@ def evaluate_exercise_diagnosis(request):
 
     # 문장 점수와 개념 점수 채점 api
     model_type = "ML" if data.question.ml_model_check == 1 else "SA"
-    sentence_url = 'http://sentence-analysis:5252/get-sentence-score'    
-    sentence_input = {'sentence': question_answer}    
-    sentence = requests.post(sentence_url, data=sentence_input)    
-    sentence_score = json.loads(sentence.text)['data']['score']    
-    concept_url = requests.get('http://scoring-api:5000/'+model_type+'?question_id='+question_id+'&answer='+question_answer)    
-    concept_score = json.loads(concept_url.text)['score']    
+    sentence_url = "http://sentence-analysis:5252/get-sentence-score"
+    sentence_input = {"sentence": question_answer}
+    sentence = requests.post(sentence_url, data=sentence_input)
+    sentence_score = json.loads(sentence.text)["data"]["score"]
+    concept_url = requests.get(
+        "http://scoring-api:5000/"
+        + model_type
+        + "?question_id="
+        + question_id
+        + "&answer="
+        + question_answer
+    )
+    concept_score = json.loads(concept_url.text)["score"]
     print(sentence_score, concept_score)
 
     # 결과보기 안내문
-    if (0 <= sentence_score < 0.046):
+    if 0 <= sentence_score < 0.046:
         standard_answer = "핵심어를 사용하여 완결된 문장으로 답안을 잘 작성해 보세요."
-    elif (0.046 <= sentence_score < 0.08):
-        standard_answer = "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+    elif 0.046 <= sentence_score < 0.08:
+        standard_answer = (
+            "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+        )
     else:
         standard_answer = "좋은 문장으로 정말 잘 작성했어요."
 
     # 로고 안내문
-    if (concept_score == 1):
+    if concept_score == 1:
         concept_text = "참 잘 설명했어요!"
         logo_img = "student/image/logo2.png"
     else:
@@ -110,7 +119,7 @@ def evaluate_exercise_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-    if question_answer != "" and concept_score==1 and sentence_score>0.08:
+    if question_answer != "" and concept_score == 1 and sentence_score > 0.08:
         study_solve_data = StudySolveData(
             question_id=question_id,
             school=request_school,
@@ -351,23 +360,32 @@ def do_homework_diagnosis(request):
 
     # 문장 점수와 개념 점수 채점 api
     model_type = "ML" if data.question.ml_model_check == 1 else "SA"
-    sentence_url = 'http://sentence-analysis:5252/get-sentence-score'    
-    sentence_input = {'sentence': question_answer}    
-    sentence = requests.post(sentence_url, data=sentence_input)    
-    sentence_score = json.loads(sentence.text)['data']['score']    
-    concept_url = requests.get('http://scoring-api:5000/'+model_type+'?question_id='+question_id+'&answer='+question_answer)    
-    concept_score = json.loads(concept_url.text)['score']
+    sentence_url = "http://sentence-analysis:5252/get-sentence-score"
+    sentence_input = {"sentence": question_answer}
+    sentence = requests.post(sentence_url, data=sentence_input)
+    sentence_score = json.loads(sentence.text)["data"]["score"]
+    concept_url = requests.get(
+        "http://scoring-api:5000/"
+        + model_type
+        + "?question_id="
+        + question_id
+        + "&answer="
+        + question_answer
+    )
+    concept_score = json.loads(concept_url.text)["score"]
 
     # 결과보기 안내문
-    if (0 <= sentence_score < 0.046):
+    if 0 <= sentence_score < 0.046:
         standard_answer = "핵심어를 사용하여 완결된 문장으로 답안을 잘 작성해 보세요."
-    elif (0.046 <= sentence_score < 0.08):
-        standard_answer = "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+    elif 0.046 <= sentence_score < 0.08:
+        standard_answer = (
+            "잘 작성했어요. 혹시 주어, 서술어, 목적어 등 문장의 주요 성분이 빠진 것은 없는지 다시 한 번 점검해 보세요."
+        )
     else:
         standard_answer = "좋은 문장으로 정말 잘 작성했어요."
 
     # 로고 안내문
-    if (concept_score == 1):
+    if concept_score == 1:
         concept_text = "참 잘 설명했어요!"
         logo_img = "student/image/logo2.png"
     else:
@@ -385,7 +403,7 @@ def do_homework_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-    if question_answer != "" and concept_score==1 and sentence_score>0.08:
+    if question_answer != "" and concept_score == 1 and sentence_score > 0.08:
         solve_data = Solve(
             as_qurel_id=assignment_question_id,
             student_id=student_id,
@@ -559,14 +577,14 @@ def search_keyword(request):
     # 키워드로 검색
     key_data = (
         Keyword.objects.select_related("question")
-        .filter(keyword_name__icontains=user_input)
+        .filter(keyword_name__icontains=user_input, question__upload_check=1)
         .values_list("question_id", flat=True)
         .distinct()
     )
 
     # 문항명으로 검색
     name_data = (
-        Question.objects.filter(question_name__icontains=user_input)
+        Question.objects.filter(question_name__icontains=user_input, upload_check=1)
         .values_list("question_id", flat=True)
         .distinct()
     )
@@ -586,7 +604,7 @@ def search_keyword(request):
 def search_name(request):
     name_input = request.GET["name_input"]
     name_data = (
-        MakeQuestion.objects.filter(question_name__icontains=name_input)
+        MakeQuestion.objects.filter(question_name__icontains=name_input, upload_check=1)
         .values_list("make_question_id", flat=True)
         .distinct()
     )
@@ -609,10 +627,10 @@ def change_category_evaluate_exercise(request):
     category_option = request.GET["option"]
 
     if category_option == "select":
-        options_of_question = Question.objects.all()
+        options_of_question = Question.objects.filter(upload_check=1)
     else:
         options_of_question = Question.objects.select_related("category").filter(
-            category__category_name=category_option
+            category__category_name=category_option, question_upload_check=1
         )
 
     option_data = search_card_result(options_of_question)
