@@ -630,7 +630,7 @@ def change_category_evaluate_exercise(request):
         options_of_question = Question.objects.filter(upload_check=1)
     else:
         options_of_question = Question.objects.select_related("category").filter(
-            category__category_name=category_option, question_upload_check=1
+            category__category_name=category_option, upload_check=1
         )
 
     option_data = search_card_result(options_of_question)
