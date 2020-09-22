@@ -61,12 +61,13 @@ def evaluate_exercise_diagnosis(request):
     request_school = request.GET.get("category_school")
     request_gender = request.GET.get("category_gender")
 
-    if (request_school != "") and (request_gender != ""):
+    if (request_school != None) and (request_gender != None):
         school = f"/staticfiles/student/school_gender_img/{request_school}.png"
         gender = f"/staticfiles/student/school_gender_img/{request_gender}.png"
     else:
-        school = ""
-        gender = ""
+        question_data = Question.objects.filter(question_id=question_id).first()
+        context = {"question_data": question_data}
+        return render(request, "student/evaluate_exercise_question.html", context)
 
     join_by_question_id = AssignmentQuestionRel.objects.select_related(
         "question"
@@ -76,6 +77,8 @@ def evaluate_exercise_diagnosis(request):
     # 문장 점수와 개념 점수 채점 api
     model_type = "ML" if data.question.ml_model_check == 1 else "SA"
     sentence_url = "http://sentence-analysis:5252/get-sentence-score"
+    if not question_answer.strip():
+        question_answer = 'NULL'
     sentence_input = {"sentence": question_answer}
     sentence = requests.post(sentence_url, data=sentence_input)
     sentence_score = json.loads(sentence.text)["data"]["score"]
@@ -361,6 +364,8 @@ def do_homework_diagnosis(request):
     # 문장 점수와 개념 점수 채점 api
     model_type = "ML" if data.question.ml_model_check == 1 else "SA"
     sentence_url = "http://sentence-analysis:5252/get-sentence-score"
+    if not question_answer.strip():
+        question_answer = 'NULL'
     sentence_input = {"sentence": question_answer}
     sentence = requests.post(sentence_url, data=sentence_input)
     sentence_score = json.loads(sentence.text)["data"]["score"]
@@ -630,7 +635,7 @@ def change_category_evaluate_exercise(request):
         options_of_question = Question.objects.filter(upload_check=1)
     else:
         options_of_question = Question.objects.select_related("category").filter(
-            category__category_name=category_option, question_upload_check=1
+            category__category_name=category_option, upload_check=1
         )
 
     option_data = search_card_result(options_of_question)
