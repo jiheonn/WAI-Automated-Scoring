@@ -279,7 +279,7 @@ def check_homework_question(request):
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
-                .filter(as_qurel_id=assignment_question_id)
+                .filter(as_qurel_id=assignment_question_id,student_id=student_id)
                 .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
