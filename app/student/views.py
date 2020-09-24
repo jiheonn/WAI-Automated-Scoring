@@ -283,6 +283,7 @@ def check_homework_question(request):
                 .values(
                     "as_qurel_id", "solve_id", "submit_date", "score", "student_name"
                 )
+                .order_by('-submit_date','-score')
             )
             result = list(chain(values_with_question, values_with_solve))
 
