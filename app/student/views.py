@@ -333,7 +333,7 @@ def do_homework_question(request):
         context = {}
         return render(request, "student/do_homework_by_code.html", context)
 
-    done_list = is_completed(join_by_assignment_id)
+    done_list = is_completed_homework(join_by_assignment_id)
 
     context = {
         "student_id": student_id,
@@ -408,7 +408,7 @@ def do_homework_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-    if question_answer != "" and concept_score == 1 and sentence_score > 0.08:
+   if question_answer != "":
         solve_data = Solve(
             as_qurel_id=assignment_question_id,
             student_id=student_id,
@@ -537,7 +537,7 @@ def is_in_db(first_data, student_id, student_name):
     return (first_data == None) or (student_id == "") or (student_name == "")
 
 
-# 문항 학습 완료여부 판단 함수
+# 문항 학습 완료여부 판단 함수 - 평가연습
 def is_completed(join_by_assignment_id):
     result_list = []
     done_list = []
@@ -545,6 +545,24 @@ def is_completed(join_by_assignment_id):
     for join_data in join_by_assignment_id:
         assignment_question_id = join_data.as_qurel_id
         solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id)
+        result_list.append(solve_data)
+    for result_data in result_list:
+        if result_data.values("as_qurel_id"):
+            done = "O"
+        else:
+            done = "X"
+        done_list.append(done)
+    return done_list
+
+
+# 문항 학습 완료여부 판단 함수 - 숙제하기
+def is_completed_homework(join_by_assignment_id):
+    result_list = []
+    done_list = []
+
+    for join_data in join_by_assignment_id:
+        assignment_question_id = join_data.as_qurel_id
+        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, score=1.00)
         result_list.append(solve_data)
     for result_data in result_list:
         if result_data.values("as_qurel_id"):
