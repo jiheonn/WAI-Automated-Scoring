@@ -409,7 +409,7 @@ def do_homework_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-   if question_answer != "":
+    if question_answer != "":
         solve_data = Solve(
             as_qurel_id=assignment_question_id,
             student_id=student_id,
