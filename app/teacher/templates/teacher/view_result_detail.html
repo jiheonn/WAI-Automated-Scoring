@@ -129,11 +129,10 @@
                         <td>{{ data.student_score }}</td>
                         <td>{{ data.student_progress}}</td>
                         <td style="text-align: left;">
-                            {% for name in question_name %}
+                            <br>
                             {% for response in data.student_response %}
-                            <strong>{{ name }}</strong> : {{ response }}
+                            <strong>문제 {{ forloop.counter }})</strong> {{ response }}
                             <br><br>
-                            {% endfor %}
                             {% endfor %}
                         </td>
                     </tr>
@@ -196,11 +195,10 @@
                     <td>{{ data.student_name }}</td>
                     <td>{{ data.student_progress}}</td>
                     <td style="text-align: left;">
-                        {% for name in question_name %}
+                        <br>
                         {% for response in data.student_response %}
-                        <strong>{{ name }}</strong> : {{ response }}
+                        <strong>문제 {{ forloop.counter }})</strong> {{ response }}
                         <br><br>
-                        {% endfor %}
                         {% endfor %}
                     </td>
                 </tr>
