@@ -87,6 +87,10 @@ def view_result_detail(request):
     assignment_queryset = Assignment.objects.all().filter(
         assignment_id=request_selection_code
     )
+    assignment_type = ""
+    for i in assignment_queryset:
+        assignment_type = i.type
+
     solve_queryset = (
         Solve.objects.select_related("as_qurel")
         .filter(
@@ -157,6 +161,7 @@ def view_result_detail(request):
 
     context = {
         "assignment_data": assignment_queryset,
+        "assignment_type": assignment_type,
         "question_name": question_name,
         "question_count": count_question,
         "result": result.values(),
