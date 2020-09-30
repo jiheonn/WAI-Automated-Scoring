@@ -69,13 +69,10 @@ def evaluate_exercise_diagnosis(request):
         context = {"question_data": question_data}
         return render(request, "student/evaluate_exercise_question.html", context)
 
-    join_by_question_id = AssignmentQuestionRel.objects.select_related(
-        "question"
-    ).filter(question__question_id=question_id)
-    data = join_by_question_id.first()
+    data = Question.objects.filter(question_id=question_id).first()
 
     # 문장 점수와 개념 점수 채점 api
-    model_type = "ML" if data.question.ml_model_check == 1 else "SA"
+    model_type = "ML" if data.ml_model_check == 1 else "SA"
     sentence_url = "http://sentence-analysis:5252/get-sentence-score"
     if not question_answer.strip():
         question_answer = 'NULL'
@@ -122,7 +119,7 @@ def evaluate_exercise_diagnosis(request):
     }
 
     # 나의 답 DB에 저장
-    if question_answer != "" and concept_score == 1 and sentence_score > 0.08:
+    if question_answer != "":
         study_solve_data = StudySolveData(
             question_id=question_id,
             school=request_school,
@@ -148,55 +145,56 @@ def study_evaluate(request):
 # 학습평가 문항 페이지 view 함수
 def study_evaluate_question(request):
     # study 페이지에서 숙제 코드 가져오기
-    assignment_id = request.GET.get("code_num")
-    student_id = request.GET.get("ID_num")
-    student_name = request.GET.get("student_name")
+    assignment_id = request.POST.get("code_num")
+    student_id = request.POST.get("ID_num")
+    student_name = request.POST.get("student_name")
 
     join_by_assignment_id = (
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="학습평가")
     )
-
-    # id로 문항 불러오기
-    question_info = request.GET.get("question_id")
-
-    # 학습목록을 선택한 경우
-    if question_info is not None:
-        question_info = question_info.split(",")
-        join_by_assignment_id = get_question_by_id(question_info)[0]
-        first_data = get_question_by_id(question_info)[1]
-        assignment_question_id = get_question_by_id(question_info)[2]
-    # 학습목록을 선택하지 않은 경우
-    else:
-        first_data = join_by_assignment_id.first()
-
-    # 코드가 db에 없으면 원상복귀
+    first_data=join_by_assignment_id.first()
+    # DB에 입력한 코드가 있는지 확인
     if is_in_db(first_data, student_id, student_name):
         context = {}
         return render(request, "student/study_evaluate.html", context)
 
-    assignment_question_id = first_data.as_qurel_id
+    # id로 문항 불러오기
+    question_info = request.POST.get("question_id")
+
+    # 학습목록을 선택하지 않은 경우
+    if question_info is None:
+        question_info = str(join_by_assignment_id.first().question_id)+','+assignment_id
+
+    question_info = question_info.split(",")
+
+    join_by_assignment_id = get_question_by_id(question_info)[0]
+    first_data = get_question_by_id(question_info)[1]
+    assignment_question_id = get_question_by_id(question_info)[2]
 
     # 학습 완료 목록
-    done_list = is_completed(join_by_assignment_id)
+    done_list = is_completed(join_by_assignment_id, student_id, student_name)
 
     now = datetime.datetime.now()
     now_date = now.strftime("%Y-%m-%d")
 
+    solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, student_id=student_id, student_name=student_name)
+    
     # 나의 답 DB에 저장
     try:
-        if request.GET["question_answer"] != "":
+        if request.POST["question_answer"] != "" and solve_data.values_list().count()==0:
             solve_data = Solve(
                 as_qurel_id=assignment_question_id,
                 student_id=student_id,
                 submit_date=now_date,
-                response=request.GET["question_answer"],
+                response=request.POST["question_answer"],
                 sentence_score=INIT_SCORE,
                 answer_score=INIT_SCORE,
                 student_name=student_name,
             )
             solve_data.save()
+            done_list = is_completed(join_by_assignment_id, student_id, student_name)
     except:
         solve_data = None
 
@@ -541,14 +539,14 @@ def is_in_db(first_data, student_id, student_name):
     return (first_data == None) or (student_id == "") or (student_name == "")
 
 
-# 문항 학습 완료여부 판단 함수 - 평가연습
-def is_completed(join_by_assignment_id):
+# 문항 학습 완료여부 판단 함수 - 학습평가
+def is_completed(join_by_assignment_id,student_id,student_name):
     result_list = []
     done_list = []
 
     for join_data in join_by_assignment_id:
         assignment_question_id = join_data.as_qurel_id
-        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id)
+        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, student_id=student_id, student_name=student_name)
         result_list.append(solve_data)
     for result_data in result_list:
         if result_data.values("as_qurel_id"):
