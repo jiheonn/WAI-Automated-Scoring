@@ -334,7 +334,7 @@ def do_homework_question(request):
         context = {}
         return render(request, "student/do_homework_by_code.html", context)
 
-    done_list = is_completed_homework(join_by_assignment_id)
+    done_list = is_completed_homework(join_by_assignment_id, student_id)
 
     context = {
         "student_id": student_id,
@@ -558,13 +558,13 @@ def is_completed(join_by_assignment_id,student_id,student_name):
 
 
 # 문항 학습 완료여부 판단 함수 - 숙제하기
-def is_completed_homework(join_by_assignment_id):
+def is_completed_homework(join_by_assignment_id,student_id):
     result_list = []
     done_list = []
 
     for join_data in join_by_assignment_id:
         assignment_question_id = join_data.as_qurel_id
-        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, answer_score=1.00)
+        solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, student_id=student_id, answer_score=1.00)
         result_list.append(solve_data)
     for result_data in result_list:
         if result_data.values("as_qurel_id"):
