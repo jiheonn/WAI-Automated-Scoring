@@ -45,16 +45,17 @@
             <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'mainpage/image/logo.png' %}" width="120" height="120" alt="">
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <p class="font-weight-bolder triangle-border left">선생님이 선택한 문항입니다.<br>
-                성실하게 응답해주세요.
+                답안 제출을 한번만 할 수 있으므로 성실하게 응답해주세요.
             </p>
         </div>
         <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-    <form action="{% url 'student_study_evaluate_question' %}" method="GET">
+    <form action="{% url 'student_study_evaluate_question' %}" method="POST">
+        {% csrf_token %}
         <div class="row">
             <div class="col-lg-3">
                 <table class="w3-table-all w3-centered" id="question_table">
@@ -83,7 +84,6 @@
                     {% endfor %}
                 </table>
             </div>
-
             <!--문항 작성-->
             <div class="col-lg-9">
                 <input type="hidden" name="code_num" value="{{first_data.assignment_id}}">
@@ -109,14 +109,14 @@
                             <table width="600">
                                 <td>
                                     <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.');" style="cursor:pointer">
-                                        <button type="submit" id="submit_btn" class="w3-btn w3-round w3-blue">제출하기</button>
+                                        <button type="submit" class="w3-btn w3-round w3-blue" name="question_id"
+                                    value="{{first_data.question.question_id}},{{first_data.assignment_id}}" id="question_id">제출하기</button>
                                     </a>
                                 </td>
                             </table>
                         </div>
                   </div>
                 </div>
-
             </div>
         </div>
     </form>

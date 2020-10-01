@@ -58,7 +58,8 @@
     <br>
     <center>
         <div class="w3-container">
-            <form action="{% url 'student_study_evaluate_question' %}" method="get" >
+            <form action="{% url 'student_study_evaluate_question' %}" method="POST" >
+                {% csrf_token %}
                 <table style="text-align: center; width:600px; height:160px;">
                     <tr>
                         <td><input id="code_num" type="text" name="code_num" placeholder="0000 0000 (8자리 코드를 입력하세요.)" style="width:280px; height: 50px;"></td>

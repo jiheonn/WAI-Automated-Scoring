@@ -19,10 +19,9 @@ admin.site.register(SelfSolveData, SelfSolveDataAdmin)
 
 class StudySolveDataAdmin(admin.ModelAdmin):
     list_display = [
-        'study_id', 'question', 'school', 'gender', 'response', 'score', 'submit_date'
+        'study_id', 'question', 'school', 'gender', 'response', 'sentence_score', 'answer_score', 'submit_date'
     ]
     list_display_links = ['study_id']
-    list_filter = ('score', ('submit_date', DateRangeFilter))
 
 
 admin.site.register(StudySolveData, StudySolveDataAdmin)

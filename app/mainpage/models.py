@@ -75,7 +75,8 @@ class StudySolveData(models.Model):
     school = models.CharField(max_length=30)
     gender = models.CharField(max_length=30)
     response = models.TextField()
-    score = models.DecimalField(max_digits=5, decimal_places=2)
+    sentence_score = models.DecimalField(max_digits=5, decimal_places=5,null = True)
+    answer_score = models.DecimalField(max_digits=5, decimal_places=2,null = True)
     submit_date = models.DateField()
 
 
@@ -97,7 +98,8 @@ class Solve(models.Model):
     student_id = models.IntegerField()
     submit_date = models.DateField()
     response = models.TextField()
-    score = models.DecimalField(max_digits=5, decimal_places=2)
+    sentence_score = models.DecimalField(max_digits=5, decimal_places=5,null = True)
+    answer_score = models.DecimalField(max_digits=5, decimal_places=2,null = True)
     student_name = models.CharField(max_length=50, null=True)
 
 
