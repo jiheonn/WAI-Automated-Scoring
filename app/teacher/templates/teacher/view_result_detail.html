@@ -59,6 +59,9 @@
         </div>
         <!-- /.col-md-4 -->
     </div>
+
+    {% if assignment_type == '숙제하기' %}
+
     <form action="{% url 'teacher_chart' %}" method="POST">
         {% csrf_token %}
         {% for data in result %}
@@ -139,6 +142,74 @@
             </table>
         </div>
     </form>
+
+    {% elif assignment_type == '학습평가' %}
+    <div style="margin-bottom: 100px;">
+        <table border="1" bordercolor="gray" width="1200" height="100" align="center" class="display">
+            <thead>
+                <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
+                    <td>제목</td>
+                    <td>타입</td>
+                    <td>코드</td>
+                    <td>기간</td>
+                    <td>학년</td>
+                    <td class="class-box-width">반</td>
+                    <td>문항수</td>
+                    <td>평균 진행률(%)</td>
+                    <td>결과 저장</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in assignment_data|slice:":1" %}
+                <tr align="center">
+                    <td>{{ data.assignment_title }}</td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.assignment_id }}</td>
+                    <td>{{ data.start_date }} ~<br> {{ data.end_date }}</td>
+                    <td>{{ data.grade }}</td>
+                    <td>{{ data.school_class }}</td>
+                    <td>{{ question_count }}</td>
+                    <td>{{ all_pgs }}</td>
+                    <td>
+                        <button type="button" class="btn21" onclick="tableToExcel('asi_info')">다운로드</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <table id="asi_info" class="display" width="1200">
+            <thead>
+                <tr class="asi_info_tr">
+                    <th width="90">학생ID</th>
+                    <th width="70">학생이름</th>
+                    <th width="80">진행률(%)</th>
+                    <th>학생응답</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in result %}
+                <tr id="asi_tr" align="center">
+                    <td>{{ data.student_id }}</td>
+                    <td>{{ data.student_name }}</td>
+                    <td>{{ data.student_progress}}</td>
+                    <td style="text-align: left;">
+                        {% for name in question_name %}
+                        {% for response in data.student_response %}
+                        <strong>{{ name }}</strong> : {{ response }}
+                        <br><br>
+                        {% endfor %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endif %}
 
     <!-- /.row -->
 </div>
