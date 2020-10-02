@@ -146,8 +146,9 @@ def view_result_detail(request):
             count = len(j["student_response"])
             j["student_progress"] = round(count / count_question * 100)
         total_progress += j["student_progress"]
-
-    if len(result.values()):
+    
+    number_of_students = len(result.values())
+    if number_of_students != 0:
         all_avg = round(total_score / len(result.values()), 2)  # 전체 학생 평균 점수
         all_progress = round(total_progress / len(result.values()))  # 전체 학생 평균 진행률
     else:
