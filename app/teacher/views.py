@@ -146,23 +146,18 @@ def view_result_detail(request):
             count = len(j["student_response"])
             j["student_progress"] = round(count / count_question * 100)
         total_progress += j["student_progress"]
-
-    if all_avg and all_progress:
+    
+    number_of_students = len(result.values())
+    if number_of_students != 0:
         all_avg = round(total_score / len(result.values()), 2)  # 전체 학생 평균 점수
         all_progress = round(total_progress / len(result.values()))  # 전체 학생 평균 진행률
     else:
         all_avg = 0
         all_progress = 0
 
-    question_name = []
-    for i in solve_queryset:
-        if i.as_qurel.question.question_name not in question_name:
-            question_name.append(i.as_qurel.question.question_name)
-
     context = {
         "assignment_data": assignment_queryset,
         "assignment_type": assignment_type,
-        "question_name": question_name,
         "question_count": count_question,
         "result": result.values(),
         "result_item": result.items(),
