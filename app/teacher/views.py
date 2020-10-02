@@ -88,8 +88,8 @@ def view_result_detail(request):
         assignment_id=request_selection_code
     )
     assignment_type = ""
-    for i in assignment_queryset:
-        assignment_type = i.type
+    for assignment_information in assignment_queryset:
+        assignment_type = assignment_information.type
 
     solve_queryset = (
         Solve.objects.select_related("as_qurel")
