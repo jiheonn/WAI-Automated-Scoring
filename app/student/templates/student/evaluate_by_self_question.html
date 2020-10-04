@@ -64,45 +64,36 @@
 
     <!-- Content Row -->
     <div class="row">
-    <form action="{% url 'student_evaluate_by_self_diagnosis' %}" method="GET">
-      <!-- Post Content Column -->
-      <div class="col-lg-12">
-          <input type="hidden" class="w3-btn w3-round w3-blue" name="question" value="{{ data.make_question_id }}"
-                                               id="{{ data.make_question_id }}">
-        <!-- Preview Image -->
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}" style="width:200px; height:200px;">
-
-        <hr>
-
-        <!-- Post Content -->
-        <p>{{data.description}}
-        </p>
-
-        <hr>
-          <!-- Comments Form -->
-          <div class="card my-4">
-              <input type="hidden" name="q_no" value="1" />
-              <h5 class="card-header">생각을 적어보세요:</h5>
-              <div class="card-body">
-                <form>
-                  <div class="form-group">
-                    <textarea class="form-control" name='question_answer' rows="3" id="question_answer"></textarea>
-                  </div>
-                    <div class="col-lg-6">
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+            <form action="{% url 'student_evaluate_by_self_diagnosis' %}" method="GET">
+                <input type="hidden" class="w3-btn w3-round w3-blue" name="question" value="{{ data.make_question_id }}"
+                    id="{{ data.make_question_id }}">
+                <!-- Preview Image -->
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ data.image.url }}" style="width:200px; height:200px;">
+                <hr>
+                <!-- Post Content -->
+                <p>{{data.description}}
+                </p>
+                <hr>
+                <!-- Comments Form -->
+                <div class="card my-4">
+                    <input type="hidden" name="q_no" value="1" />
+                    <h5 class="card-header">생각을 적어보세요:</h5>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" name='question_answer' rows="3" id="question_answer"></textarea>
+                        </div>
+                        <div class="col-lg-6">
                             <button type="submit" class="w3-btn w3-round w3-indigo">스스로 평가하기</button>
-                        <br>
+                            <br>
+                        </div>
                     </div>
-                </form>
-              </div>
-          </div>
-      </div>
-
-    </form>
+                </div>
+            </form>
+        </div>
     </div>
     <!-- /.row -->
-
 </div>
 <!-- /.container -->
-
-
 {% endblock %}
