@@ -118,6 +118,7 @@
                         <th width="70">학생이름</th>
                         <th width="70">평균점수</th>
                         <th width="80">진행률(%)</th>
+                        <th width="110">문제별 제출 횟수</th>
                         <th>학생응답</th>
                     </tr>
                 </thead>
@@ -128,6 +129,13 @@
                         <td>{{ data.student_name }}</td>
                         <td>{{ data.student_score }}</td>
                         <td>{{ data.student_progress}}</td>
+                        <td>
+                            <br>
+                            {% for submission in data.student_submission %}
+                            {{ submission }}
+                            <br><br>
+                            {% endfor %}
+                        </td>
                         <td style="text-align: left;">
                             <br>
                             {% for response in data.student_response %}

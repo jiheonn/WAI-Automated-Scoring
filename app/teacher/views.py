@@ -91,17 +91,28 @@ def view_result_detail(request):
     for assignment_information in assignment_queryset:
         assignment_type = assignment_information.type
 
+    # 요청된 과제 코드에 속하는 solve, assignment_question_rel queryset
     solve_queryset = (
         Solve.objects.select_related("as_qurel")
         .filter(
             Q(as_qurel_id__assignment_id=request_selection_code)
             & Q(as_qurel__question__upload_check=True)
         )
-        .order_by("student_id")
-    )  # 요청된 코드에 속하는 solve queryset
+        .order_by("as_qurel_id")
+    )
+    assignment_question_rel_queryset = AssignmentQuestionRel.objects.filter(
+        assignment_id=request_selection_code
+    )
+
+    # 중복 제외 문항 수
     count_question = (
         solve_queryset.values("as_qurel_id__question_id").distinct().count()
-    )  # 중복 제외 문항 수
+    )
+
+    # 문항별 인덱스 할당
+    relation = {}
+    for index, related_question in enumerate(assignment_question_rel_queryset):
+        relation[related_question.as_qurel_id] = index
 
     # 한 학생은 여러 score 와 response 를 가집니다.
     # 따라서 하나의 student_id(=result key 값)에 여러 해당하는 데이터의 삽입이 필요합니다. (중복 해결)
@@ -113,47 +124,73 @@ def view_result_detail(request):
             result[solve_information.student_id][
                 "student_id"
             ] = solve_information.student_id
-            result[solve_information.student_id]["student_score"].append(
-                int(solve_information.score)
-            )
-            result[solve_information.student_id]["student_response"].append(
-                solve_information.response
-            )
+            # 문항별로 지정된 인덱스 자리에 문항별 학생의 score, reponse 할당 (첫번째 이후 데이터)
+            result[solve_information.student_id]["student_score"][
+                relation[solve_information.as_qurel_id]
+            ] = int(solve_information.answer_score)
+            result[solve_information.student_id]["student_response"][
+                relation[solve_information.as_qurel_id]
+            ] = solve_information.response
         else:
+            solve_question_data["student_submission"] = []
             solve_question_data["student_progress"] = []
             solve_question_data["student_score"] = []
             solve_question_data["student_response"] = []
             solve_question_data["student_id"] = solve_information.student_id
             solve_question_data["student_name"] = solve_information.student_name
-            solve_question_data["student_score"].append(int(solve_information.score))
-            solve_question_data["student_response"].append(solve_information.response)
+            # 학생의 score = 0, response = 'None' 초기화
+            count = 0
+            while count < count_question:
+                solve_question_data["student_score"].append(0)
+                solve_question_data["student_response"].append("None")
+                count += 1
+            # 문항별로 지정된 인덱스 자리에 문항별 학생의 score, reponse 할당 (첫번째 데이터)
+            solve_question_data["student_score"][
+                relation[solve_information.as_qurel_id]
+            ] = int(solve_information.answer_score)
+            solve_question_data["student_response"][
+                relation[solve_information.as_qurel_id]
+            ] = solve_information.response
+            # 문항별 제출 횟수
+            for as_qurel_id in relation.keys():
+                submission = solve_queryset.filter(
+                    Q(student_id=solve_information.student_id)
+                    & Q(as_qurel_id=as_qurel_id)
+                ).count()
+                solve_question_data["student_submission"].append(submission)
 
             result[solve_information.student_id] = solve_question_data
 
-    for student_id in result:  # 한 학생의 평균 점수 구하기
+    # 한 학생의 평균 점수 구하기
+    for student_id in result:
         student_data = result[student_id]
-        result[student_id]["student_score"] = sum(student_data["student_score"]) / len(
-            student_data["student_score"]
+        result[student_id]["student_score"] = round(
+            sum(student_data["student_score"])
+            / len(student_data["student_score"])
+            * 100,
+            1,
         )
 
     total_score = 0  # 총 점수
     total_progress = 0  # 총 진행률
     all_avg = 0  # 전체 학생 평균 점수
     all_progress = 0  # 전체 학생 평균 진행률
-    for j in result.values():
-        total_score += j["student_score"]
-        if len(j["student_response"]) >= 1:
-            count = len(j["student_response"])
-            j["student_progress"] = round(count / count_question * 100)
-        total_progress += j["student_progress"]
-    
+    for student_information in result.values():
+        total_score += student_information["student_score"]
+        response_count = len(student_information["student_response"])
+        for response in student_information["student_response"]:
+            # None 이라면 학생이 풀지 않은 것으로 간주
+            if response == "None":
+                response_count -= 1
+        student_information["student_progress"] = round(
+            response_count / count_question * 100
+        )
+        total_progress += student_information["student_progress"]
+
     number_of_students = len(result.values())
     if number_of_students != 0:
-        all_avg = round(total_score / len(result.values()), 2)  # 전체 학생 평균 점수
-        all_progress = round(total_progress / len(result.values()))  # 전체 학생 평균 진행률
-    else:
-        all_avg = 0
-        all_progress = 0
+        all_avg = round(total_score / number_of_students, 1)  # 전체 학생 평균 점수
+        all_progress = round(total_progress / number_of_students)  # 전체 학생 평균 진행률
 
     context = {
         "assignment_data": assignment_queryset,
