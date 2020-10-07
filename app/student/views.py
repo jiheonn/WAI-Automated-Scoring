@@ -236,17 +236,19 @@ def check_homework_list(request):
             return render(request, "student/check_homework_by_id.html", context)
     # 입력된 학생 ID가 DB에 존재하여 숙제 리스트 출력
     else:
-        join_by_assignment_id = (
-            Solve.objects.select_related("as_qurel")
-            .filter(student_id=student_id)
-            .values("as_qurel_id", "solve_id")
-        )
-        assignment_question_id = join_by_assignment_id.values("as_qurel_id")[0][
-            "as_qurel_id"
-        ]
-        join_assignment = AssignmentQuestionRel.objects.prefetch_related(
-            "assignment"
-        ).filter(as_qurel_id=assignment_question_id)
+        join_assignment=[]
+        join_by_assignment_id = Solve.objects.select_related("as_qurel").filter(student_id=student_id).values_list("as_qurel__assignment_id",flat=True).distinct()
+
+        for assignment_id in join_by_assignment_id:
+            assignment_data = AssignmentQuestionRel.objects.prefetch_related(
+                "assignment"
+            ).filter(assignment_id=assignment_id,assignment__type="숙제하기").all()
+            assignment_list = list(chain(assignment_data))
+            # 숙제하기 답안이 존재하지 않는 경우
+            if assignment_list==[]:
+                assignment_data=None
+            else:
+                join_assignment.append(assignment_list[0])
 
     context = {"join_assignment": join_assignment, "student_id": student_id}
 
@@ -283,7 +285,7 @@ def check_homework_question(request):
                 .values(
                     "as_qurel_id", "solve_id", "submit_date", "answer_score", "student_name"
                 )
-                .order_by('-submit_date','-answer_score')
+                .order_by('-answer_score','-submit_date')
             )
             result = list(chain(values_with_question, values_with_solve))
 
@@ -583,16 +585,12 @@ def get_question_by_id(question_info):
     join_by_assignment_id = AssignmentQuestionRel.objects.select_related(
         "question"
     ).filter(assignment_id=assignment_id)
-    join_by_question_id = AssignmentQuestionRel.objects.select_related(
+    join_by_assignment_id_question_id = AssignmentQuestionRel.objects.select_related(
         "question"
-    ).filter(question__question_id=question_id)
-    join_by_assignment_id_question_id = (
-        AssignmentQuestionRel.objects.select_related("question")
-        .filter(question__question_id=question_id, assignment_id=assignment_id)
-        .values("as_qurel_id")[0]["as_qurel_id"]
-    )
-    first_data = join_by_question_id[0]
-    return join_by_assignment_id, first_data, join_by_assignment_id_question_id
+    ).filter(question__question_id=question_id, assignment_id=assignment_id)
+    as_qurel_id = join_by_assignment_id_question_id.values("as_qurel_id")[0]["as_qurel_id"]
+    first_data = join_by_assignment_id_question_id[0]
+    return join_by_assignment_id, first_data, as_qurel_id
 
 
 # 평가연습의 문항 검색하기 함수
