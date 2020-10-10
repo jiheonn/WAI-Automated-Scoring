@@ -180,7 +180,13 @@ def study_evaluate_question(request):
     now_date = now.strftime("%Y-%m-%d")
 
     solve_data = Solve.objects.filter(as_qurel_id=assignment_question_id, student_id=student_id, student_name=student_name)
-    
+
+    # 제출 답안이 있으면 제출 버튼 비활성화
+    if solve_data.count()==0:
+        button_click=1
+    else:
+        button_click=0
+
     # 나의 답 DB에 저장
     try:
         if request.POST["question_answer"] != "" and solve_data.values_list().count()==0:
@@ -195,6 +201,7 @@ def study_evaluate_question(request):
             )
             solve_data.save()
             done_list = is_completed(join_by_assignment_id, student_id, student_name)
+            button_click=0
     except:
         solve_data = None
 
@@ -204,6 +211,7 @@ def study_evaluate_question(request):
         "join_by_assignment_id": join_by_assignment_id,
         "first_data": first_data,
         "done_list": done_list,
+        "button_click": button_click,
     }
     return render(request, "student/study_evaluate_question.html", context)
 
