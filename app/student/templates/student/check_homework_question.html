@@ -60,20 +60,22 @@
               <th>최종 점수</th>
             </tr>
             {% for data in result_list %}
-            <tr>
-              <td>
-                  <form action="{% url 'student_do_homework_question' %}" method="get">
-                      <input type="hidden" name="ID_num" value="{{ student_id }}">
-                      <input type="hidden" name="code_num" value="{{ assignment_id }}">
-                      <input type="hidden" name="student_name" value="{{ data.student_name }}">
-                      <button type="submit" class="btn btn-outline-primary w3-border-0" name="question_id" value="{{ data.question_id }},{{ assignment_id }}">
-                            {{data.question_name}}
-                      </button>
-                  </form>
-              </td>
-              <td>{{data.submit_date}}</td>
-              <td>{{data.answer_score}}</td>
-            </tr>
+                <tr>
+                    {% if data.upload_check %}
+                        <td>
+                            <form action="{% url 'student_do_homework_question' %}" method="get">
+                                <input type="hidden" name="ID_num" value="{{ student_id }}">
+                                <input type="hidden" name="code_num" value="{{ assignment_id }}">
+                                <input type="hidden" name="student_name" value="{{ data.student_name }}">
+                                <button type="submit" class="btn btn-outline-primary w3-border-0" name="question_id" value="{{ data.question_id }},{{ assignment_id }}">
+                                    {{data.question_name}}
+                                </button>
+                            </form>
+                        </td>
+                        <td>{{data.submit_date}}</td>
+                        <td>{{data.answer_score}}</td>
+                    {% endif %}
+                </tr>
             {% endfor %}
         </table>
 

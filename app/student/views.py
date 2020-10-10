@@ -286,7 +286,7 @@ def check_homework_question(request):
             values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
                 .filter(assignmentquestionrel=assignment_question_id)
-                .values("assignmentquestionrel", "question_id", "question_name")
+                .values("assignmentquestionrel", "question_id", "question_name", "upload_check")
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
@@ -326,6 +326,7 @@ def do_homework_question(request):
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="숙제하기")
+        .filter(question__upload_check=1)
     )
 
     # id로 문항 불러오기
