@@ -100,9 +100,9 @@ def view_result_detail(request):
         )
         .order_by("as_qurel_id")
     )
-    assignment_question_rel_queryset = AssignmentQuestionRel.objects.filter(
-        assignment_id=request_selection_code
-    )
+    assignment_question_rel_queryset = AssignmentQuestionRel.objects.select_related(
+        "question"
+    ).filter(Q(assignment_id=request_selection_code) & Q(question__upload_check=True))
 
     # 중복 제외 문항 수
     count_question = (
