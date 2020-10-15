@@ -86,6 +86,12 @@
                 </tr>
                 {% endfor %}
             </table>
+            
+            <form action="{% url 'student_check_homework_list' %}" method="GET">
+                <input type="hidden" name="ID_num" id="ID_num" value="{{student_id}}">
+                <button type="submit" class="w3-button w3-xlarge w3-round w3-indigo w3-padding-large w3-section">숙제 조회하러 가기
+                </button>
+            </form>
         </div>
 
       <!-- Post Content Column -->
