@@ -153,6 +153,7 @@ def study_evaluate_question(request):
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="학습평가")
+        .filter(question__upload_check=1)
     )
     first_data=join_by_assignment_id.first()
     # DB에 입력한 코드가 있는지 확인
@@ -285,7 +286,7 @@ def check_homework_question(request):
             values_with_question = (
                 Question.objects.select_related("assignment_question_rel")
                 .filter(assignmentquestionrel=assignment_question_id)
-                .values("assignmentquestionrel", "question_id", "question_name")
+                .values("assignmentquestionrel", "question_id", "question_name", "upload_check")
             )
             values_with_solve = (
                 Solve.objects.select_related("assignment_question_rel")
@@ -325,6 +326,7 @@ def do_homework_question(request):
         AssignmentQuestionRel.objects.select_related("question")
         .filter(assignment_id=assignment_id)
         .filter(assignment__type="숙제하기")
+        .filter(question__upload_check=1)
     )
 
     # id로 문항 불러오기
@@ -592,7 +594,7 @@ def get_question_by_id(question_info):
 
     join_by_assignment_id = AssignmentQuestionRel.objects.select_related(
         "question"
-    ).filter(assignment_id=assignment_id)
+    ).filter(assignment_id=assignment_id, question__upload_check=1)
     join_by_assignment_id_question_id = AssignmentQuestionRel.objects.select_related(
         "question"
     ).filter(question__question_id=question_id, assignment_id=assignment_id)
