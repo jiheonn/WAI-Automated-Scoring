@@ -109,8 +109,11 @@
                             <table width="600">
                                 <td>
                                     <a onclick="alert('수고하셨습니다. 제출이 완료되었습니다.\n선생님께 첨삭이 요청되었습니다.');" style="cursor:pointer">
-                                        <button type="submit" class="w3-btn w3-round w3-blue" name="question_id"
-                                    value="{{first_data.question.question_id}},{{first_data.assignment_id}}" id="question_id">제출하기</button>
+                                        {% if button_click %}
+                                            <button type="submit" class="w3-btn w3-round w3-blue" name="question_id" value="{{first_data.question.question_id}},{{first_data.assignment_id}}" id="question_id">제출하기</button>
+                                        {% else %}
+                                            <button type="submit" class="w3-btn w3-round w3-blue" name="question_id" value="{{first_data.question.question_id}},{{first_data.assignment_id}}" id="question_id" disabled>제출하기</button>
+                                        {% endif %}
                                     </a>
                                 </td>
                             </table>
