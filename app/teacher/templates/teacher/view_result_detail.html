@@ -79,7 +79,7 @@
                         <td>기간</td>
                         <td>학년</td>
                         <td class="class-box-width">반</td>
-                        <td>문항수</td>
+                        <td>문항 수</td>
                         <td>전체 평균점수</td>
                         <td>평균 진행률(%)</td>
                         <td>결과 저장</td>
@@ -110,6 +110,25 @@
             </table>
         </div>
 
+        <div style="margin-bottom: 100px;">
+            <table border="1" bordercolor="gray" width="1200" height="100" align="center" class="display">
+                <thead>
+                    <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
+                        <td>문제 번호</td>
+                        <td>문제 명</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in question_name_list %}
+                    <tr align="center" style="height: 40px;">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ data.question__question_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         <div>
             <table id="asi_info" class="display" width="1200">
                 <thead>
@@ -119,6 +138,7 @@
                         <th width="70">평균점수</th>
                         <th width="80">진행률(%)</th>
                         <th width="110">문제별 제출 횟수</th>
+                        <th width="110">문제별 정답 여부</th>
                         <th>학생응답</th>
                     </tr>
                 </thead>
@@ -127,7 +147,7 @@
                     <tr id="asi_tr" align="center">
                         <td>{{ data.student_id }}</td>
                         <td>{{ data.student_name }}</td>
-                        <td>{{ data.student_score }}</td>
+                        <td>{{ data.student_average_score }}</td>
                         <td>{{ data.student_progress}}</td>
                         <td>
                             <br>
@@ -136,10 +156,22 @@
                             <br><br>
                             {% endfor %}
                         </td>
+                        <td>
+                            <br>
+                            {% for score in data.student_score %}
+                            {% if score == 1 %}
+                            <span style="color: blue;">O</span>
+                            <br><br>
+                            {% else %}
+                            <span style="color: red;">X</span>
+                            <br><br>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
                         <td style="text-align: left;">
                             <br>
                             {% for response in data.student_response %}
-                            <strong>문제 {{ forloop.counter }})</strong> {{ response }}
+                            <strong>문제 {{ forloop.counter }})</strong><span> {{ response }}</span>
                             <br><br>
                             {% endfor %}
                         </td>
@@ -180,6 +212,25 @@
                     <td>
                         <button type="button" class="btn21" onclick="tableToExcel('asi_info')">다운로드</button>
                     </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-bottom: 100px;">
+        <table border="1" bordercolor="gray" width="1200" height="100" align="center" class="display">
+            <thead>
+                <tr align="center" class="table-tr asi_info_tr" style="height: 50px;">
+                    <td>문제 번호</td>
+                    <td>문제 명</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in question_name_list %}
+                <tr align="center" style="height: 40px;">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ data.question__question_name }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

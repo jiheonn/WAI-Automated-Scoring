@@ -109,6 +109,11 @@ def view_result_detail(request):
         solve_queryset.values("as_qurel_id__question_id").distinct().count()
     )
 
+    # 과제에 포함되는 문항 명 리스트
+    question_name_list = assignment_question_rel_queryset.values(
+        "question__question_name"
+    )
+
     # 문항별 인덱스 할당
     relation = {}
     for index, related_question in enumerate(assignment_question_rel_queryset):
@@ -164,7 +169,7 @@ def view_result_detail(request):
     # 한 학생의 평균 점수 구하기
     for student_id in result:
         student_data = result[student_id]
-        result[student_id]["student_score"] = round(
+        result[student_id]["student_average_score"] = round(
             sum(student_data["student_score"])
             / len(student_data["student_score"])
             * 100,
@@ -176,7 +181,7 @@ def view_result_detail(request):
     all_avg = 0  # 전체 학생 평균 점수
     all_progress = 0  # 전체 학생 평균 진행률
     for student_information in result.values():
-        total_score += student_information["student_score"]
+        total_score += student_information["student_average_score"]
         response_count = len(student_information["student_response"])
         for response in student_information["student_response"]:
             # None 이라면 학생이 풀지 않은 것으로 간주
@@ -196,6 +201,7 @@ def view_result_detail(request):
         "assignment_data": assignment_queryset,
         "assignment_type": assignment_type,
         "question_count": count_question,
+        "question_name_list": question_name_list,
         "result": result.values(),
         "result_item": result.items(),
         "all_avg": all_avg,
