@@ -18,7 +18,7 @@ def get_SAI_keywords(question_id):
                                            MainpageQuestion.ml_model_check == 0).first()
     if not result:
         abort(404, description="SA model '{}' is not exist.".format(question_id))
-    keywords = result.scoring_keyword.split()
+    keywords = result.scoring_keyword.split(",")
     return keywords
 
 
