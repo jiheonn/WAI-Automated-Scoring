@@ -104,15 +104,13 @@ def view_result_detail(request):
         "question"
     ).filter(Q(assignment_id=request_selection_code) & Q(question__upload_check=True))
 
-    # 중복 제외 문항 수
-    count_question = (
-        solve_queryset.values("as_qurel_id__question_id").distinct().count()
-    )
-
     # 과제에 포함되는 문항 명 리스트
     question_name_list = assignment_question_rel_queryset.values(
         "question__question_name"
     )
+
+    # 문항 수
+    count_question = len(question_name_list)
 
     # 문항별 인덱스 할당
     relation = {}
@@ -129,13 +127,26 @@ def view_result_detail(request):
             result[solve_information.student_id][
                 "student_id"
             ] = solve_information.student_id
-            # 문항별로 지정된 인덱스 자리에 문항별 학생의 score, reponse 할당 (첫번째 이후 데이터)
-            result[solve_information.student_id]["student_score"][
-                relation[solve_information.as_qurel_id]
-            ] = int(solve_information.answer_score)
-            result[solve_information.student_id]["student_response"][
-                relation[solve_information.as_qurel_id]
-            ] = solve_information.response
+
+            if int(solve_information.answer_score) == 1:
+                # 문항별로 지정된 인덱스 자리에 문항별 학생의 score, reponse 할당 (첫번째 이후 데이터)
+                result[solve_information.student_id]["student_score"][
+                    relation[solve_information.as_qurel_id]
+                ] = int(solve_information.answer_score)
+                result[solve_information.student_id]["student_response"][
+                    relation[solve_information.as_qurel_id]
+                ] = solve_information.response
+
+            elif (
+                result[solve_information.student_id]["student_score"][
+                    relation[solve_information.as_qurel_id]
+                ]
+                != 1
+            ):
+                result[solve_information.student_id]["student_response"][
+                    relation[solve_information.as_qurel_id]
+                ] = solve_information.response
+
         else:
             solve_question_data["student_submission"] = []
             solve_question_data["student_progress"] = []
@@ -143,12 +154,14 @@ def view_result_detail(request):
             solve_question_data["student_response"] = []
             solve_question_data["student_id"] = solve_information.student_id
             solve_question_data["student_name"] = solve_information.student_name
+
             # 학생의 score = 0, response = 'None' 초기화
             count = 0
             while count < count_question:
                 solve_question_data["student_score"].append(0)
                 solve_question_data["student_response"].append("None")
                 count += 1
+
             # 문항별로 지정된 인덱스 자리에 문항별 학생의 score, reponse 할당 (첫번째 데이터)
             solve_question_data["student_score"][
                 relation[solve_information.as_qurel_id]
@@ -156,6 +169,7 @@ def view_result_detail(request):
             solve_question_data["student_response"][
                 relation[solve_information.as_qurel_id]
             ] = solve_information.response
+
             # 문항별 제출 횟수
             for as_qurel_id in relation.keys():
                 submission = solve_queryset.filter(
