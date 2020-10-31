@@ -1,6 +1,15 @@
 version: '3.7'
 
 services:
+  nginx:
+    image: nginx:latest # nginx 서비스에서 사용할 도커 이미지
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/:/usr/src/app/
+      - ./nginx/:/etc/nginx/conf.d
+    depends_on: # 서비스 간의 종속성 표현
+      - web
   web:
     build: ./app
     command: python manage.py runserver 0.0.0.0:8000
