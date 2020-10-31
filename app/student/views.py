@@ -190,14 +190,34 @@ def study_evaluate_question(request):
 
     # 나의 답 DB에 저장
     try:
-        if request.POST["question_answer"] != "" and solve_data.values_list().count()==0:
+        question_answer = request.POST.get("question_answer")
+        question_id=str(first_data.question_id)
+        if question_answer != "" and solve_data.values_list().count()==0:
+             # 문장 점수와 개념 점수 채점 api
+            model_type = "ML" if first_data.question.ml_model_check == 1 else "SA"
+            sentence_url = "http://sentence-analysis:5252/get-sentence-score"
+            if not question_answer.strip():
+                question_answer = 'NULL'
+            sentence_input = {"sentence": question_answer}
+            sentence = requests.post(sentence_url, data=sentence_input)
+            sentence_score = json.loads(sentence.text)["data"]["score"]
+            concept_url = requests.get(
+                "http://scoring-api:5000/"
+                + model_type
+                + "?question_id="
+                + question_id
+                + "&answer="
+                + question_answer
+            )
+            concept_score = json.loads(concept_url.text)["score"]
+
             solve_data = Solve(
                 as_qurel_id=assignment_question_id,
                 student_id=student_id,
                 submit_date=now_date,
-                response=request.POST["question_answer"],
-                sentence_score=INIT_SCORE,
-                answer_score=INIT_SCORE,
+                response=question_answer,
+                sentence_score=sentence_score,
+                answer_score=concept_score,
                 student_name=student_name,
             )
             solve_data.save()
