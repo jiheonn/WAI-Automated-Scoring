@@ -88,6 +88,8 @@
             var e = $.Event("keyup", { keyCode: 13 });
             $('#qr_code_url').focus();
             $('#qr_code_url').trigger(e);
+            $('#'+question_id).focus();
+            $('#'+question_id).trigger(e);
         });
     });
 </script>
