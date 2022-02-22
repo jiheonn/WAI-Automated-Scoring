@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   nginx:
@@ -27,9 +27,9 @@ services:
     volumes:
       - wa3i_postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=teamlab
-      - POSTGRES_PASSWORD=teamlab_password
-      - POSTGRES_DB=wa3i_dev
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
   sentence-analysis:
     build: ./sentence-analysis
     command: flask run
@@ -45,9 +45,9 @@ services:
     ports:
       - 5000:5000
     environment:
-      - POSTGRES_USER=teamlab
-      - POSTGRES_PASSWORD=teamlab_password
-      - POSTGRES_DB=wa3i_dev
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     env_file:
       - ./.env.scoring_api
     volumes:
